@@ -24,7 +24,7 @@ public class CarEngine : MonoBehaviour
     public Transform offset;
     public float sensorLength = 3f;
     //public Vector3 frontSensorPosition = new Vector3(0f, 1f, 0.5f);
-    public float frontSideSensorPosition = 0.9f;
+    public float frontSideSensorPosition = 0.2f;
     public float frontSensorAngle = 30f;
 
     private List<Transform> nodes;
@@ -51,7 +51,7 @@ public class CarEngine : MonoBehaviour
 
     void FixedUpdate()
     {
-        Sensors();
+        RaycastHit hit = Sensors();
         /*
         if (hit.transform != null && Vector3.Distance(transform.position, hit.transform.position) < 5f)
         {
@@ -65,7 +65,7 @@ public class CarEngine : MonoBehaviour
         LerpToSteerAngle();
     }
 
-    private void Sensors()
+    private RaycastHit Sensors()
     {
         RaycastHit hit;
         Vector3 sensorStartPos = offset.position;
@@ -139,12 +139,12 @@ public class CarEngine : MonoBehaviour
                 }
             } 
         }
-        print(avoiding);
 
         if (avoiding)
         {
             targetSteerAngle = maxSteerAngle * avoidMultiplier;
         }
+        return hit;
     }
 
     private void Braking()
