@@ -14,6 +14,6 @@ public class Move_Alvo : MonoBehaviour
         if (currentTimeToLive > TempoVida) //Se Cronometro for Maior que Tempo do avião.
             Destroy(gameObject);    //avião Vai Ser Destruidao.
         /////////////////
-        transform.Translate(0, 0, velocidade * Time.deltaTime);
+        transform.Translate(velocidade * Time.deltaTime, 0, 0);
     }
 }

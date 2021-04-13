@@ -4,26 +4,26 @@ using System.Collections;
 public class Inimigo : MonoBehaviour
 {
 
-  public float vida = 100;
-  bool chamouMorte = false;
+    public float vida = 100;
+    bool chamouMorte = false;
 
-  void Update()
-  {
-    if (vida <= 0)
+    void Update()
     {
-      vida = 0;
-      if (chamouMorte == false)
-      {
-        chamouMorte = true;
-        StartCoroutine("Morrer");
-      }
+        if (vida <= 0)
+        {
+            vida = 0;
+            if (chamouMorte == false)
+            {
+                chamouMorte = true;
+                StartCoroutine("Morrer");
+            }
+        }
     }
-  }
 
-  IEnumerator Morrer()
-  {
-    GetComponent<MeshRenderer>().material.color = Color.red;
-    yield return new WaitForSeconds(2);
-    Destroy(gameObject);
-  }
+    IEnumerator Morrer()
+    {
+        GetComponent<MeshRenderer>().material.color = Color.red;
+        yield return new WaitForSeconds(2);
+        Destroy(gameObject);
+    }
 }

@@ -57,7 +57,7 @@
           luzColisao.GetComponent<Light> ().color = Color.red;
           LineRenderer lineRenderer = gameObject.AddComponent<LineRenderer> ();
           lineRenderer.material = MaterialLasers;
-          lineRenderer.SetColors (Color.white, Color.white);
+          //lineRenderer.SetColors (Color.white, Color.white);
           lineRenderer.SetWidth (0.015f, 0.05f);
           lineRenderer.SetVertexCount (2);
           linhaDoLaser = GetComponent<LineRenderer> ();
@@ -101,7 +101,7 @@
              AtivarArmaAtual ();
           } */
           //atirar
-          if (Input.GetMouseButtonDown (0) && armas[armaAtual].balasNoPente > 0 && recarregando == false && atirando == false) {
+          if (Input.GetMouseButton (0) && armas[armaAtual].balasNoPente > 0 && recarregando == false && atirando == false) {
              atirando = true;
              StartCoroutine (TempoTiro (armas [armaAtual].tempoPorTiro));
              emissorSom.clip = armas [armaAtual].somTiro;

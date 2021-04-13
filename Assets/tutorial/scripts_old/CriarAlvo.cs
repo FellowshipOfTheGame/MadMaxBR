@@ -9,9 +9,10 @@ public class CriarAlvo : MonoBehaviour
     private float segundoConfig;
     public GameObject ObjtoPraSpawn;
     // Start is called before the first frame update
-  private void Start(){
-      segundoConfig = segundoPraSpawn;
-  }
+    private void Start()
+    {
+        segundoConfig = segundoPraSpawn;
+    }
     // Update is called once per frame
     void Update()
     {
@@ -26,6 +27,7 @@ public class CriarAlvo : MonoBehaviour
 
     private void SpawnObjeto()
     {
-        Instantiate(ObjtoPraSpawn, new Vector3(UnityEngine.Random.Range(-13.0f, 13.0f), UnityEngine.Random.Range(-7.0f, 7.0f), 250), ObjtoPraSpawn.transform.rotation);
+        //Instantiate(ObjtoPraSpawn, new Vector3(UnityEngine.Random.Range(-13.0f, 13.0f), UnityEngine.Random.Range(-7.0f, 7.0f), 250), ObjtoPraSpawn.transform.rotation);
+        Instantiate(ObjtoPraSpawn, transform.position, ObjtoPraSpawn.transform.rotation);
     }
 }
