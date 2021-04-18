@@ -8,8 +8,7 @@ public class Countdown : MonoBehaviour {
     public GameObject CountdownUI;
     public AudioSource GetReadyAudio;
     public AudioSource GoAudio;
-    public GameObject LapTimeManager;
-    public GameObject CarControls;
+    public GameObject[] Racers;
 
     // Start is called before the first frame update
     void Start() {
@@ -34,8 +33,13 @@ public class Countdown : MonoBehaviour {
         yield return new WaitForSeconds(1);
         CountdownUI.SetActive(false);
         GoAudio.Play();
-        CarControls.GetComponent<VehicleControl>().activeControl = true;
-        LapTimeManager.SetActive(true);
+        //Player.transform.GetChild(0).GetComponent<VehicleControl>().activeControl = true;
+        //PlayerControls.GetComponent<VehicleControl>().activeControl = true;
+        
+        for (int i = 0; i < Racers.Length; i++) {
+            Racers[i].transform.GetChild(0).GetComponent<VehicleControl>().activeControl = true; // active control for the racer 'i'
+            Racers[i].transform.GetChild(0).GetComponent<VehicleRaceData>().enabled = true; // active the racer 'i' data script
+        }
     }
     
 }
