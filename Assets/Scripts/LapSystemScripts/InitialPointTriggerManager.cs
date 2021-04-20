@@ -7,8 +7,8 @@ public class InitialPointTriggerManager : MonoBehaviour {
     public GameObject InitialPointTrigger;
     public GameObject HalfLapTrigger;
     public GameObject LapTimeManager;
-
-    private bool firstActivation;
+    [HideInInspector]
+    public bool firstActivation;
     private void Start() {
         firstActivation = true;
     }
@@ -19,7 +19,9 @@ public class InitialPointTriggerManager : MonoBehaviour {
             HalfLapTrigger.SetActive(true);
             InitialPointTrigger.SetActive(false);
         } else {
-            LapTimeManager.GetComponent<LapTimeManager>().LapCompleted();
+            //LapTimeManager.GetComponent<RaceDataDisplayer>().LapCompleted();
+            HalfLapTrigger.SetActive(true);
+            InitialPointTrigger.SetActive(false);
         }
     }
 }

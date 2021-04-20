@@ -8,8 +8,7 @@ public class CarSwitch : MonoBehaviour
     public Transform MyCamera;
 
 
-    public void CurrentCarActive(int current)
-    {
+    public void CurrentCarActive(int current) {
 
         int amount = 0;
 
