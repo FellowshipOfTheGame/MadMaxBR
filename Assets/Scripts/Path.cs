@@ -28,7 +28,7 @@ public class Path : MonoBehaviour
             Vector3 currentNode = nodes[i].position;
             Vector3 previousNode = nodes[(nodes.Count - 1 + i) % nodes.Count].position;
             Gizmos.DrawLine(previousNode, currentNode);
-            Gizmos.DrawWireSphere(currentNode, 0.3f);
+            Gizmos.DrawWireSphere(currentNode, 5f);
         }
     }
 }

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine.UI;
 
 public enum ControlMode { 
-    simple = 1, touch = 2 
+    simple = 1, touch = 2, ai = 3 
 }
 
 public class VehicleControl : MonoBehaviour {
@@ -14,6 +14,8 @@ public class VehicleControl : MonoBehaviour {
     public bool activeControl = false;
 
     public GameObject NitroPU;
+
+    [SerializeField] private CarMovementAI carMovementAI;
 
     // Wheels Settings /////////////////////////////////
 
@@ -189,7 +191,7 @@ public class VehicleControl : MonoBehaviour {
 
     private Vector3 steerCurAngle; // stores the steering wheel tilt angle
 
-    private Rigidbody myRigidbody;
+    protected Rigidbody myRigidbody;
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -240,6 +242,7 @@ public class VehicleControl : MonoBehaviour {
         }
 
         myRigidbody = transform.GetComponent<Rigidbody>();
+        carMovementAI = GetComponent<CarMovementAI>();
 
         wheels = new WheelComponent[4];
 
@@ -380,6 +383,7 @@ public class VehicleControl : MonoBehaviour {
     // responsible to apply the physics on car
     [System.Obsolete]
     void FixedUpdate() {
+        
         // speed of car 
         speed = myRigidbody.velocity.magnitude * 2.7f;
 
@@ -415,6 +419,18 @@ public class VehicleControl : MonoBehaviour {
                 }
 
                 steer = Mathf.MoveTowards(steer, steerAmount, 0.07f);
+            }
+            else if (controlMode == ControlMode.ai)
+            {
+                if (carWheels.wheels.frontWheelDrive || carWheels.wheels.backWheelDrive)
+                {
+                    
+                    steer = carMovementAI.steer;
+                    accel = carMovementAI.throttle;
+                    brake = carMovementAI.brake;
+                    nitroEnabled = carMovementAI.nitroEnabled;
+                    
+                }
             }
         } else { // if car controllers are inactive
             accel = 0.0f;
@@ -774,7 +790,6 @@ public class VehicleControl : MonoBehaviour {
 
             PitchDelay = Pitch;
         }
-
     }
 
     /////////////// Show Normal Gizmos ////////////////////////////
