@@ -6,9 +6,8 @@ public class CarMovementAI : MonoBehaviour
 {
     [Header("Sensors")]
     public Transform offset;
-    public float sensorLength = 3f;
-    //public Vector3 frontSensorPosition = new Vector3(0f, 1f, 0.5f);
-    public float frontSideSensorPosition = 0.2f;
+    public float sensorLength = 5f;
+    public float frontSideSensorPosition = 1f;
     public float frontSensorAngle = 30f;
 
     [Header("Path to follow")]
@@ -17,8 +16,8 @@ public class CarMovementAI : MonoBehaviour
     [SerializeField] private int currentNode = 0;
 
     private bool avoiding = false;
-    private Vector3 acceleration = Vector3.zero;
-    private Vector3 lastVelocity = Vector3.zero;
+    private Vector2 acceleration = Vector2.zero;
+    private Vector2 lastVelocity = Vector2.zero;
 
     
     [Header("AI variables")]
@@ -28,46 +27,34 @@ public class CarMovementAI : MonoBehaviour
     public bool nitroEnabled = false;
 
     private Rigidbody rb;
-    
 
     void Start()
     {
-        //
-
         rb = GetComponent<Rigidbody>();
         BoxCollider[] pathTransforms = path.GetComponentsInChildren<BoxCollider>();
         nodes = new List<BoxCollider>();
 
         for (int i = 0; i < pathTransforms.Length; i++)
         {
-
-                nodes.Add(pathTransforms[i]);
-                print("indicee = " + pathTransforms[i].transform.GetSiblingIndex());
-            
+            nodes.Add(pathTransforms[i]);         
         }
     }
 
     void FixedUpdate()
     {
-        acceleration = (rb.velocity - lastVelocity) / Time.fixedDeltaTime;
-        lastVelocity = rb.velocity;
-
         Sensors();
         FollowPath();
-        throttle = .1f;
-        /*
-        if (TimeToCollision() < 5f)
+        throttle = 0.1f;
+        if (rb.velocity.x <= Mathf.Abs(Mathf.Epsilon) || rb.velocity.z <= Mathf.Abs(Mathf.Epsilon))
         {
-            brake = true;
+
         }
-        */
     }
 
     private void Sensors()
     {
         RaycastHit hit;
         Vector3 sensorStartPos = offset.position;
-        float avoidMultiplier = 0f;
         avoiding = false;
 
         // front right sensor
@@ -77,8 +64,34 @@ public class CarMovementAI : MonoBehaviour
             if (!hit.collider.CompareTag("Terrain"))
             {
                 Debug.DrawLine(sensorStartPos, hit.point);
-                avoiding = true;
-                avoidMultiplier -= 1f;
+
+                Vector2 thisVelocity = new Vector2(rb.velocity.x, rb.velocity.z);
+                Vector2 otherVelocity;
+                Vector2 otherAcceleration;
+
+                if (hit.rigidbody)
+                {
+                    otherVelocity = new Vector2(hit.rigidbody.velocity.x, hit.rigidbody.velocity.z);
+                    otherAcceleration = hit.transform.GetComponent<VehicleControl>().acceleration;
+                }
+                else
+                {
+                    otherVelocity = Vector2.zero;
+                    otherAcceleration = Vector2.zero;
+                }
+
+                if (Vector2.Distance(TimeToCollisionV(thisVelocity, otherVelocity, acceleration, otherAcceleration, hit.distance), Vector2.zero) <= 5f)
+                {
+                    avoiding = true;
+                    steer = Mathf.MoveTowards(steer, -1f, 0.2f);
+                    throttle = -1f;
+                    brake = true;
+
+                    if (rb.velocity.x <= Mathf.Abs(5f) || rb.velocity.z <= Mathf.Abs(5f))
+                    {
+                        brake = false;
+                    }
+                }
             }
         }
 
@@ -88,8 +101,34 @@ public class CarMovementAI : MonoBehaviour
             if (!hit.collider.CompareTag("Terrain"))
             {
                 Debug.DrawLine(sensorStartPos, hit.point);
-                avoiding = true;
-                avoidMultiplier -= 0.5f;
+
+                Vector2 thisVelocity = new Vector2(rb.velocity.x, rb.velocity.z);
+                Vector2 otherVelocity;
+                Vector2 otherAcceleration;
+
+                if (hit.rigidbody)
+                {
+                    otherVelocity = new Vector2(hit.rigidbody.velocity.x, hit.rigidbody.velocity.z);
+                    otherAcceleration = hit.transform.GetComponent<VehicleControl>().acceleration;
+                }
+                else
+                {
+                    otherVelocity = Vector2.zero;
+                    otherAcceleration = Vector2.zero;
+                }
+
+                if (Vector2.Distance(TimeToCollisionV(thisVelocity, otherVelocity, acceleration, otherAcceleration, hit.distance), Vector2.zero) <= 5f)
+                {
+                    avoiding = true;
+                    steer = Mathf.MoveTowards(steer, -0.5f, 0.2f);
+                    throttle = -1f;
+                    brake = true;
+
+                    if (rb.velocity.x <= Mathf.Abs(5f) || rb.velocity.z <= Mathf.Abs(5f))
+                    {
+                        brake = false;
+                    }
+                }
             }
         }
 
@@ -100,8 +139,33 @@ public class CarMovementAI : MonoBehaviour
             if (!hit.collider.CompareTag("Terrain"))
             {
                 Debug.DrawLine(sensorStartPos, hit.point);
-                avoiding = true;
-                avoidMultiplier += 1f;
+                Vector2 thisVelocity = new Vector2(rb.velocity.x, rb.velocity.z);
+                Vector2 otherVelocity;
+                Vector2 otherAcceleration;
+
+                if (hit.rigidbody)
+                {
+                    otherVelocity = new Vector2(hit.rigidbody.velocity.x, hit.rigidbody.velocity.z);
+                    otherAcceleration = hit.transform.GetComponent<VehicleControl>().acceleration;
+                }
+                else
+                {
+                    otherVelocity = Vector2.zero;
+                    otherAcceleration = Vector2.zero;
+                }
+
+                if (Vector2.Distance(TimeToCollisionV(thisVelocity, otherVelocity, acceleration, otherAcceleration, hit.distance), Vector2.zero) <= 5f)
+                {
+                    avoiding = true;
+                    steer = Mathf.MoveTowards(steer, 1f, 0.2f);
+                    throttle = -1f;
+                    brake = true;
+
+                    if (rb.velocity.x <= Mathf.Abs(5f) || rb.velocity.z <= Mathf.Abs(5f))
+                    {
+                        brake = false;
+                    }
+                }
             }
         }
 
@@ -111,28 +175,79 @@ public class CarMovementAI : MonoBehaviour
             if (!hit.collider.CompareTag("Terrain"))
             {
                 Debug.DrawLine(sensorStartPos, hit.point);
-                avoiding = true;
-                avoidMultiplier += 0.5f;
+
+                Vector2 thisVelocity = new Vector2(rb.velocity.x, rb.velocity.z);
+                Vector2 otherVelocity;
+                Vector2 otherAcceleration;
+
+                if (hit.rigidbody)
+                {
+                    otherVelocity = new Vector2(hit.rigidbody.velocity.x, hit.rigidbody.velocity.z);
+                    otherAcceleration = hit.transform.GetComponent<VehicleControl>().acceleration;
+                }
+                else
+                {
+                    otherVelocity = Vector2.zero;
+                    otherAcceleration = Vector2.zero;
+                }
+
+                if (Vector2.Distance(TimeToCollisionV(thisVelocity, otherVelocity, acceleration, otherAcceleration, hit.distance), Vector2.zero) <= 5f)
+                {
+                    avoiding = true;
+                    steer = Mathf.MoveTowards(steer, 0.5f, 0.2f);
+                    throttle = -1f;
+                    brake = true;
+
+                    if (rb.velocity.x <= Mathf.Abs(5f) || rb.velocity.z <= Mathf.Abs(5f))
+                    {
+                        brake = false;
+                    }
+                }
             }
+            brake = false;
         }
 
         // front center sensor
-        if (avoidMultiplier == 0)
+
+        if (Physics.Raycast(sensorStartPos, transform.forward, out hit, sensorLength))
         {
-            if (Physics.Raycast(sensorStartPos, transform.forward, out hit, sensorLength))
+            if (!hit.collider.CompareTag("Terrain"))
             {
-                if (!hit.collider.CompareTag("Terrain"))
+                Debug.DrawLine(sensorStartPos, hit.point);
+
+                Vector2 thisVelocity = new Vector2(rb.velocity.x, rb.velocity.z);
+                Vector2 otherVelocity;
+                Vector2 otherAcceleration;
+
+                if (hit.rigidbody)
                 {
-                    Debug.DrawLine(sensorStartPos, hit.point);
+                    otherVelocity = new Vector2(hit.rigidbody.velocity.x, hit.rigidbody.velocity.z);
+                    otherAcceleration = hit.transform.GetComponent<VehicleControl>().acceleration;
+                }
+                else
+                {
+                    otherVelocity = Vector2.zero;
+                    otherAcceleration = Vector2.zero;
+                }
+
+                if (Vector2.Distance(TimeToCollisionV(thisVelocity, otherVelocity, acceleration, otherAcceleration, hit.distance), Vector2.zero) <= 5f)
+                {
                     avoiding = true;
+                    throttle = -1f;
+                    brake = true;
 
                     if (hit.normal.x < 0)
                     {
-                        avoidMultiplier = -1f;
+                        steer = Mathf.MoveTowards(steer, -1f, 0.2f);
                     }
                     else
                     {
-                        avoidMultiplier = 1f;
+                        steer = Mathf.MoveTowards(steer, 1f, 0.2f);
+                    }
+
+                    if (rb.velocity.x <= Mathf.Abs(5f) || rb.velocity.z <= Mathf.Abs(5f))
+                    {
+                        brake = false;
                     }
                 }
             }
@@ -156,7 +271,7 @@ public class CarMovementAI : MonoBehaviour
         steer = Mathf.MoveTowards(steer, newSteer, 0.2f);
     }
 
-    private float TimeToCollision(float initialVelocityA, float initialVelocityB, float accelerationA, float accelerationB, float distance)
+    private float TimeToCollisionF(float initialVelocityA, float initialVelocityB, float accelerationA, float accelerationB, float distance)
     {
         float a = accelerationB - accelerationA;
         float b = 2 * (initialVelocityB - initialVelocityA);
@@ -170,6 +285,35 @@ public class CarMovementAI : MonoBehaviour
         }
 
         return time;
+    }
+
+    private Vector2 TimeToCollisionV(Vector2 initialVelocityA, Vector2 initialVelocityB, Vector2 accelerationA, Vector2 accelerationB, float distance)
+    {
+        float ax = accelerationB.x - accelerationA.x;
+        float bx = 2 * (initialVelocityB.x - initialVelocityA.x);
+        float c = -2 * distance;
+
+        float timex = (-bx + Mathf.Sqrt(bx * bx - 4 * ax * c)) / (2 * ax);
+
+        float ay = accelerationB.y - accelerationA.y;
+        float by = 2 * (initialVelocityB.y - initialVelocityA.y);
+
+        float timez = (-by + Mathf.Sqrt(by * by - 4 * ay * c)) / (2 * ay);
+
+        if (timex < 0f && timez < 0f)
+        {
+            return new Vector2(Mathf.Infinity, Mathf.Infinity);
+        }
+        else if (timex < 0f)
+        {
+            return new Vector2(Mathf.Infinity, timez);
+        }
+        else if (timez < 0f)
+        {
+            return new Vector2(timex, Mathf.Infinity);
+        }
+
+        return new Vector2(timex, timez);
     }
 
     int GetSiblingIndex(Transform child, Transform parent)

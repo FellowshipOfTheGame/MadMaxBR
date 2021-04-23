@@ -16,6 +16,8 @@ public class VehicleControl : MonoBehaviour {
     public GameObject NitroPU;
 
     [SerializeField] private CarMovementAI carMovementAI;
+    public Vector2 acceleration = Vector2.zero;
+    private Vector2 lastVelocity = Vector2.zero;
 
     // Wheels Settings /////////////////////////////////
 
@@ -383,7 +385,11 @@ public class VehicleControl : MonoBehaviour {
     // responsible to apply the physics on car
     [System.Obsolete]
     void FixedUpdate() {
-        
+
+        // acceleration of car
+        acceleration = new Vector2((myRigidbody.velocity.x - lastVelocity.x) / Time.fixedDeltaTime, (myRigidbody.velocity.z - lastVelocity.y) / Time.fixedDeltaTime);
+        lastVelocity = new Vector2(myRigidbody.velocity.x, myRigidbody.velocity.z);
+
         // speed of car 
         speed = myRigidbody.velocity.magnitude * 2.7f;
 
