@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine.UI;
 
 public enum ControlMode { 
-    simple = 1, touch = 2 
+    simple = 1, touch = 2, ai = 3 
 }
 
 public class VehicleControl : MonoBehaviour {
@@ -14,8 +14,8 @@ public class VehicleControl : MonoBehaviour {
     public bool activeControl = false;
 
     public GameObject NitroPU;
-    public GameObject NitroUI;
 
+    [SerializeField] private CarMovementAI carMovementAI;
 
     // Wheels Settings /////////////////////////////////
 
@@ -148,12 +148,9 @@ public class VehicleControl : MonoBehaviour {
 
     private float lastSpeed = -10.0f;
 
-
     private bool shifting = false;
 
-
     float[] efficiencyTable = { 0.6f, 0.65f, 0.7f, 0.75f, 0.8f, 0.85f, 0.9f, 1.0f, 1.0f, 0.95f, 0.80f, 0.70f, 0.60f, 0.5f, 0.45f, 0.40f, 0.36f, 0.33f, 0.30f, 0.20f, 0.10f, 0.05f };
-
 
     float efficiencyTableStep = 250.0f;
 
@@ -163,7 +160,6 @@ public class VehicleControl : MonoBehaviour {
     private float shiftTime = 0.0f;
 
     private float shiftDelay = 0.0f;
-
 
     [HideInInspector]
     public int currentGear = 0;
@@ -178,14 +174,12 @@ public class VehicleControl : MonoBehaviour {
 
     ////////////////////////////////////////////// TouchMode (Control) ////////////////////////////////////////////////////////////////////
 
-
     [HideInInspector]
-    public float accelForward = 0.0f;
+    public float accelForward = 0.0f; 
     [HideInInspector]
     public float accelBack = 0.0f;
     [HideInInspector]
     public float steerAmount = 0.0f;
-
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -193,12 +187,11 @@ public class VehicleControl : MonoBehaviour {
     private float w_rotate;
     private float slip, slip2 = 0.0f;
 
-
     private GameObject[] Particle = new GameObject[4];
 
     private Vector3 steerCurAngle; // stores the steering wheel tilt angle
 
-    private Rigidbody myRigidbody;
+    protected Rigidbody myRigidbody;
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -244,12 +237,12 @@ public class VehicleControl : MonoBehaviour {
 
 
     void Awake() {
-
         if (carSetting.automaticGear) {
             NeutralGear = false;
         }
 
         myRigidbody = transform.GetComponent<Rigidbody>();
+        carMovementAI = GetComponent<CarMovementAI>();
 
         wheels = new WheelComponent[4];
 
@@ -385,15 +378,12 @@ public class VehicleControl : MonoBehaviour {
                 ShiftGearDown();
             }
         }
-        if (Input.GetKey(KeyCode.P)) {
-            NitroPU.SetActive(false);
-            NitroUI.SetActive(false);
-        }
     }
 
     // responsible to apply the physics on car
     [System.Obsolete]
     void FixedUpdate() {
+        
         // speed of car 
         speed = myRigidbody.velocity.magnitude * 2.7f;
 
@@ -418,8 +408,7 @@ public class VehicleControl : MonoBehaviour {
                 if (carWheels.wheels.frontWheelDrive || carWheels.wheels.backWheelDrive) { // if car wheels are connected
                     steer = Mathf.MoveTowards(steer, Input.GetAxis("Horizontal"), 0.2f); // get the horizontal vertical axis [-1,1], mapped to 'A' 'D' and arrow keys, multiplies it by 0.2 and sum it to the current steering angle
                     accel = Input.GetAxis("Vertical"); // get the vertical axis [-1,1], mapped to 'S' 'W' and arrow keys, to get the current value of acceleration
-                    //Debug.Log(accel);
-                    brake = Input.GetButton("Jump"); // gets boolean braking control
+                    brake = Input.GetButton("Jump"); // gets boolean hand braking control
                     nitroEnabled = Input.GetKey(KeyCode.LeftShift) | Input.GetKey(KeyCode.RightShift); // boolean gets shifting control
                 }
             } else if (controlMode == ControlMode.touch) { // if control mode is touch
@@ -430,6 +419,18 @@ public class VehicleControl : MonoBehaviour {
                 }
 
                 steer = Mathf.MoveTowards(steer, steerAmount, 0.07f);
+            }
+            else if (controlMode == ControlMode.ai)
+            {
+                if (carWheels.wheels.frontWheelDrive || carWheels.wheels.backWheelDrive)
+                {
+                    
+                    steer = carMovementAI.steer;
+                    accel = carMovementAI.throttle;
+                    brake = carMovementAI.brake;
+                    nitroEnabled = carMovementAI.nitroEnabled;
+                    
+                }
             }
         } else { // if car controllers are inactive
             accel = 0.0f;
@@ -538,7 +539,6 @@ public class VehicleControl : MonoBehaviour {
                         //Debug.Log(rpm);
                     }
                 }
-
                 motorizedWheels++;
             }
 
@@ -589,18 +589,16 @@ public class VehicleControl : MonoBehaviour {
             fc.extremumSlip = 0.2f + Mathf.Abs(steer);
             col.sidewaysFriction = fc;
 
-            float nitroAmount;
             // detects when the nitro is being used
             if (nitroEnabled && (currentGear > 1 && speed > 50.0f) && NitroPU.activeSelf /* shifmotor /* && Mathf.Abs(steer) < 0.2f */) {
-                nitroAmount = NitroPU.GetComponent<NitroPU>().NitroAmount;
-
-                if (nitroAmount == 0) {
+                NitroPU Nitro = NitroPU.GetComponent<NitroPU>();
+                float nitroUsageTax = Time.deltaTime * 10.0f;
+               
+                Nitro.UpdateNitroAmount(Mathf.MoveTowards(Nitro.GetNitroAmount(), 0.0f, nitroUsageTax)); // decreases value of NitroAmount according to nitroUsageTax
+                
+                if (Nitro.GetNitroAmount() == 0) {
                     NitroPU.SetActive(false);
                 }
-
-                nitroAmount = Mathf.MoveTowards(nitroAmount, 0.0f, Time.deltaTime * 10.0f);
-
-                NitroPU.GetComponent<NitroPU>().UpdateNitroBar(nitroAmount);
 
                 carSounds.nitro.volume = Mathf.Lerp(carSounds.nitro.volume, 1.0f, Time.deltaTime * 10.0f);
 
@@ -608,17 +606,17 @@ public class VehicleControl : MonoBehaviour {
                     carSounds.nitro.GetComponent<AudioSource>().Play();
                 }
 
-                curTorque = nitroAmount > 0 ? carSetting.shiftPower : carSetting.carPower;
+                curTorque = Nitro.GetNitroAmount() > 0 ? carSetting.shiftPower : carSetting.carPower;
 
                 //var emissionRateShiftParticle1 = carParticles.shiftParticle1.emission.rateOverTime.constantMax;
                 //carParticles.shiftParticle1.emission.rateOverTime.constantMax = Mathf.Lerp(emissionRateShiftParticle1.constantMax, nitroAmount > 0 ? 50 : 0, Time.deltaTime * 10.0f);
                 //emissionRateShiftParticle1.constantMax = Mathf.Lerp(emissionRateShiftParticle1.constantMax, nitroAmount > 0 ? 50 : 0, Time.deltaTime * 10.0f);
                 //var emission2 = carParticles.shiftParticle2.emission;
 
-                carParticles.shiftParticle1.emissionRate = Mathf.Lerp(carParticles.shiftParticle1.emissionRate, nitroAmount > 0 ? 50 : 0, Time.deltaTime * 10.0f);
-                carParticles.shiftParticle2.emissionRate = Mathf.Lerp(carParticles.shiftParticle2.emissionRate, nitroAmount > 0 ? 50 : 0, Time.deltaTime * 10.0f);
+                carParticles.shiftParticle1.emissionRate = Mathf.Lerp(carParticles.shiftParticle1.emissionRate, Nitro.GetNitroAmount() > 0 ? 50 : 0, Time.deltaTime * 10.0f);
+                carParticles.shiftParticle2.emissionRate = Mathf.Lerp(carParticles.shiftParticle2.emissionRate, Nitro.GetNitroAmount() > 0 ? 50 : 0, Time.deltaTime * 10.0f);
 
-                NitroPU.GetComponent<NitroPU>().NitroAmount = nitroAmount;
+                //NitroPU.GetComponent<NitroPU>().NitroAmount = nitroAmount;
             } else {
                 /*
                 if (nitroAmount > 20) {
@@ -792,7 +790,6 @@ public class VehicleControl : MonoBehaviour {
 
             PitchDelay = Pitch;
         }
-
     }
 
     /////////////// Show Normal Gizmos ////////////////////////////
