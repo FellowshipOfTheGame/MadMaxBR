@@ -13,8 +13,8 @@ public class CarMovementAI : MonoBehaviour
 
     [Header("Path to follow")]
     public Transform path;
-    private List<Transform> nodes;
-    private int currentNode = 0;
+    private List<BoxCollider> nodes;
+    [SerializeField] private int currentNode = 0;
 
     private bool avoiding = false;
     private Vector3 acceleration = Vector3.zero;
@@ -32,16 +32,18 @@ public class CarMovementAI : MonoBehaviour
 
     void Start()
     {
+        //
+
         rb = GetComponent<Rigidbody>();
-        Transform[] pathTransforms = path.GetComponentsInChildren<Transform>();
-        nodes = new List<Transform>();
+        BoxCollider[] pathTransforms = path.GetComponentsInChildren<BoxCollider>();
+        nodes = new List<BoxCollider>();
 
         for (int i = 0; i < pathTransforms.Length; i++)
         {
-            if (pathTransforms[i] != path.transform)
-            {
+
                 nodes.Add(pathTransforms[i]);
-            }
+                print("indicee = " + pathTransforms[i].transform.GetSiblingIndex());
+            
         }
     }
 
@@ -52,8 +54,7 @@ public class CarMovementAI : MonoBehaviour
 
         Sensors();
         FollowPath();
-        CheckWaypointDistance();
-        throttle = 1f;
+        throttle = .1f;
         /*
         if (TimeToCollision() < 5f)
         {
@@ -138,18 +139,11 @@ public class CarMovementAI : MonoBehaviour
         }
     }
 
-    private void CheckWaypointDistance()
+    private void OnTriggerEnter(Collider other)
     {
-        if (Vector3.Distance(transform.position, nodes[currentNode].position) < 1f)
+        if (other.CompareTag("Node") && currentNode == GetSiblingIndex(other.transform, other.transform.parent))
         {
-            if (currentNode == nodes.Count - 1)
-            {
-                currentNode = 0;
-            }
-            else
-            {
-                currentNode++;
-            }
+            currentNode = (currentNode + 1) % nodes.Count;
         }
     }
 
@@ -157,7 +151,7 @@ public class CarMovementAI : MonoBehaviour
     {
         if (avoiding) return;
 
-        Vector3 relativeVector = transform.InverseTransformPoint(nodes[currentNode].position);
+        Vector3 relativeVector = transform.InverseTransformPoint(nodes[currentNode].transform.position);
         float newSteer = relativeVector.x / relativeVector.magnitude;
         steer = Mathf.MoveTowards(steer, newSteer, 0.2f);
     }
@@ -176,5 +170,16 @@ public class CarMovementAI : MonoBehaviour
         }
 
         return time;
+    }
+
+    int GetSiblingIndex(Transform child, Transform parent)
+    {
+        for (int i = 0; i < parent.childCount; ++i)
+        {
+            if (child == parent.GetChild(i))
+                return i;
+        }
+        Debug.LogWarning("Child doesn't belong to this parent.");
+        return 0;
     }
 }
