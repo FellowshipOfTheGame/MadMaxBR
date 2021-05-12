@@ -16,8 +16,6 @@ public class VehicleControl : MonoBehaviour {
     public GameObject NitroPU;
 
     [SerializeField] private CarMovementAI carMovementAI;
-    public Vector2 acceleration = Vector2.zero;
-    private Vector2 lastVelocity = Vector2.zero;
 
     // Wheels Settings /////////////////////////////////
 
@@ -101,13 +99,13 @@ public class VehicleControl : MonoBehaviour {
 
         public Vector3 shiftCentre = new Vector3(0.0f, -0.8f, 0.0f);
 
-        public float maxSteerAngle = 25.0f; // Controls to maximum angle of the steering wheel of the car: the higher it gets, more quickly it turns
+        public float maxSteerAngle = 200.0f; // Controls to maximum angle of the steering wheel of the car: the higher it gets, more quickly it turns
 
         public float shiftDownRPM = 1500.0f;
         public float shiftUpRPM = 2500.0f;
         public float idleRPM = 500.0f;
 
-        public float stiffness = 2.0f; // Controls the friction of the car and wheel: the higher it gets the softer it gets to drive
+        public float stiffness = 100.0f; // Controls the friction of the car and wheel: the higher it gets the softer it gets to drive
 
         public bool automaticGear = true; // Controls if the car is in Automatic or not
 
@@ -386,10 +384,6 @@ public class VehicleControl : MonoBehaviour {
     [System.Obsolete]
     void FixedUpdate() {
 
-        // acceleration of car
-        acceleration = new Vector2((myRigidbody.velocity.x - lastVelocity.x) / Time.fixedDeltaTime, (myRigidbody.velocity.z - lastVelocity.y) / Time.fixedDeltaTime);
-        lastVelocity = new Vector2(myRigidbody.velocity.x, myRigidbody.velocity.z);
-
         // speed of car 
         speed = myRigidbody.velocity.magnitude * 2.7f;
 
@@ -435,7 +429,6 @@ public class VehicleControl : MonoBehaviour {
                     accel = carMovementAI.throttle;
                     brake = carMovementAI.brake;
                     nitroEnabled = carMovementAI.nitroEnabled;
-                    
                 }
             }
         } else { // if car controllers are inactive

@@ -5020,6 +5020,7 @@ MonoBehaviour:
   activeControl: 0
   NitroPU: {fileID: 1365044782}
   carMovementAI: {fileID: 0}
+  acceleration: {x: 0, y: 0}
   carWheels:
     wheels:
       frontWheelDrive: 1
@@ -5167,13 +5168,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b2ad9f42a8ed664ab0a309506008e3d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  offset: {fileID: 0}
+  offset: {fileID: 4264425076337376466}
   sensorLength: 3
   frontSideSensorPosition: 0.2
   frontSensorAngle: 30
   path: {fileID: 0}
+  currentNode: 0
+  nodeLayerMask:
+    serializedVersion: 2
+    m_Bits: 8
   steer: 0
-  acceleration: 0
+  throttle: 0
   brake: 0
   nitroEnabled: 0
 --- !u!1 &119316
