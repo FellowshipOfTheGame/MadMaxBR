@@ -15,12 +15,9 @@ public class Path : MonoBehaviour
         Transform[] pathTransform = GetComponentsInChildren<Transform>();
         nodes = new List<Transform>();
 
-        for (int i = 0; i < pathTransform.Length; i++)
+        for (int i = 1; i < pathTransform.Length; i++)
         {
-            if (pathTransform[i] != transform)
-            {
-                nodes.Add(pathTransform[i]);
-            }
+            nodes.Add(pathTransform[i]); 
         }
 
         for (int i = 0; i < nodes.Count; i++)
@@ -28,7 +25,7 @@ public class Path : MonoBehaviour
             Vector3 currentNode = nodes[i].position;
             Vector3 previousNode = nodes[(nodes.Count - 1 + i) % nodes.Count].position;
             Gizmos.DrawLine(previousNode, currentNode);
-            Gizmos.DrawWireSphere(currentNode, 5f);
+            Gizmos.DrawSphere(currentNode, 3f);
         }
     }
 }
