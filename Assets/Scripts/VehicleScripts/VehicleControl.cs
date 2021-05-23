@@ -594,11 +594,11 @@ public class VehicleControl : MonoBehaviour {
                 float nitroUsageTax = Time.deltaTime * 10.0f;
                
                 Nitro.UpdateNitroAmount(Mathf.MoveTowards(Nitro.GetNitroAmount(), 0.0f, nitroUsageTax)); // decreases value of NitroAmount according to nitroUsageTax
-                
+                /*
                 if (Nitro.GetNitroAmount() == 0) {
                     NitroPU.SetActive(false);
                 }
-
+                */
                 carSounds.nitro.volume = Mathf.Lerp(carSounds.nitro.volume, 1.0f, Time.deltaTime * 10.0f);
 
                 if (!carSounds.nitro.isPlaying) {
