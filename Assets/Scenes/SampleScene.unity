@@ -14275,6 +14275,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 7393576676570116014, guid: 2e80902767113da47a53189fb10ed1dd, type: 3}
+      propertyPath: RaceInfoDisplayer
+      value: 
+      objectReference: {fileID: 1743421668}
+    - target: {fileID: 7393576676570116014, guid: 2e80902767113da47a53189fb10ed1dd, type: 3}
       propertyPath: Racers.Array.size
       value: 3
       objectReference: {fileID: 0}
@@ -21846,6 +21850,11 @@ PrefabInstance:
 Transform:
   m_CorrespondingSourceObject: {fileID: 2996825606841676117, guid: edc16abb140120e478ef04793cf6252e, type: 3}
   m_PrefabInstance: {fileID: 1742581623}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1743421668 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7393576677097159949, guid: 2e80902767113da47a53189fb10ed1dd, type: 3}
+  m_PrefabInstance: {fileID: 1197132065}
   m_PrefabAsset: {fileID: 0}
 --- !u!4 &1744059106 stripped
 Transform:
