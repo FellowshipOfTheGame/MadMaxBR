@@ -519,7 +519,7 @@ public class VehicleControl : MonoBehaviour {
             if (w.drive) { // when wheel are able to drive
                 if (!NeutralGear && brake && currentGear < 2) {
                     rpm += accel * carSetting.idleRPM;
-                    Debug.Log(rpm);
+                    //Debug.Log(rpm);
                     /*
                     if (rpm > 1) {
                         carSetting.shiftCentre.z = Mathf.PingPong(Time.time * (accel * 10), 2.0f) - 1.0f;
