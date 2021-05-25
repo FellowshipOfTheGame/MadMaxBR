@@ -10,7 +10,7 @@ public class CarMovementAI : MonoBehaviour
 {
     [Header("Sensors")]
     public Transform[] sensorsTransforms;
-    public float sensorLength = 20f;
+    public float sensorLength = 5f;
     public float frontSideSensorPosition = 1f;
     public float frontSensorInnerAngle = 15f;
     public float frontSensorOuterAngle = 30f;
@@ -30,6 +30,7 @@ public class CarMovementAI : MonoBehaviour
     private float maxThrottle = 1f;
     private float maxAngleforMinThrottle = 35f;
     private bool startedReverse = false;
+    private float minDistanceToReverse = 3f;
 
     private Rigidbody rb;
     private VehicleControl vehicleControl;
@@ -91,7 +92,7 @@ public class CarMovementAI : MonoBehaviour
 
     private void Sensors()
     {
-        RaycastHit[] hits = new RaycastHit[4];
+        RaycastHit[] hits = new RaycastHit[5];
 
         // first front left sensor
         if (Physics.Raycast(sensorsTransforms[0].position, Quaternion.AngleAxis(-frontSensorOuterAngle, transform.up) * transform.forward, out hits[0], sensorLength, ~nodeTerrainLayerMask))
@@ -101,129 +102,90 @@ public class CarMovementAI : MonoBehaviour
 
             aiState = AiState.Avoiding;
             steer = 1f;
-            
-            if (Vector3.Distance(hits[0].point, sensorsTransforms[0].position) <= .3f || rb.velocity.magnitude <= 5f)
+            throttle = 0.1f;
+
+            if (Vector3.Distance(hits[0].point, sensorsTransforms[0].position) <= minDistanceToReverse)
             {
                 throttle = -1f;
-            }
-            else if (Vector3.Distance(hits[0].point, sensorsTransforms[0].position) > 2f)
-            {
-                throttle = 0.1f;
-            }
-
-            if (vehicleControl.Backward && !startedReverse)
-            {
-                startedReverse = true;
-                steer = -steer;
-            }
-            else if (!vehicleControl.Backward)
-            {
-                startedReverse = false;
-            }
-        }
-
-        // second front left sensor
-        if (Physics.Raycast(sensorsTransforms[1].position, Quaternion.AngleAxis(-frontSensorInnerAngle, transform.up) * transform.forward, out hits[1], sensorLength, ~nodeTerrainLayerMask))
-        {
-            Debug.DrawLine(sensorsTransforms[1].position, hits[1].point);
-            Debug.Log("Sensor 2 da esquerda");
-
-            aiState = AiState.Avoiding;
-            steer = 0.5f;
-
-            if (Vector3.Distance(hits[1].point, sensorsTransforms[1].position) <= .3f || rb.velocity.magnitude <= 5f)
-            {
-                throttle = -1f;
-            }
-            else if (Vector3.Distance(hits[1].point, sensorsTransforms[1].position) > 2f)
-            {
-                throttle = 0.1f;
-            }
-
-            if (vehicleControl.Backward && !startedReverse)
-            {
-                startedReverse = true;
-                steer = -steer;
-            }
-            else if (!vehicleControl.Backward)
-            {
-                startedReverse = false;
-            }
-        }
-
-        // first front right sensor;
-        if (Physics.Raycast(sensorsTransforms[2].position, Quaternion.AngleAxis(frontSensorInnerAngle, transform.up) * transform.forward, out hits[2], sensorLength, ~nodeTerrainLayerMask))
-        {
-            Debug.DrawLine(sensorsTransforms[2].position, hits[2].point);
-            Debug.Log("Sensor 1 da direita");
-
-            aiState = AiState.Avoiding;
-            steer = -0.5f;
-
-            if (Vector3.Distance(hits[2].point, sensorsTransforms[2].position) <= .3f || rb.velocity.magnitude <= 5f)
-            {
-                throttle = -1f;
-            }
-            else if (Vector3.Distance(hits[2].point, sensorsTransforms[2].position) > 2f)
-            {
-                throttle = 0.1f;
-            }
-
-            if (vehicleControl.Backward && !startedReverse)
-            {
-                startedReverse = true;
-                steer = -steer;
-            }
-            else if (!vehicleControl.Backward)
-            {
-                startedReverse = false;
+                steer = -1f;
             }
         }
 
         // second front right angle
-        if (Physics.Raycast(sensorsTransforms[3].position, Quaternion.AngleAxis(frontSensorOuterAngle, transform.up) * transform.forward, out hits[3], sensorLength, ~nodeTerrainLayerMask))
+        else if (Physics.Raycast(sensorsTransforms[3].position, Quaternion.AngleAxis(frontSensorOuterAngle, transform.up) * transform.forward, out hits[3], sensorLength, ~nodeTerrainLayerMask))
         {
             Debug.DrawLine(sensorsTransforms[3].position, hits[3].point);
             Debug.Log("Sensor 2 da direita");
 
             aiState = AiState.Avoiding;
             steer = -1f;
+            throttle = 0.1f;
 
-            if (Vector3.Distance(hits[3].point, sensorsTransforms[3].position) <= .3f || rb.velocity.magnitude <= 5f)
+            if (Vector3.Distance(hits[3].point, sensorsTransforms[3].position) <= minDistanceToReverse)
             {
                 throttle = -1f;
-            }
-            else if (Vector3.Distance(hits[3].point, sensorsTransforms[3].position) > 2f)
-            {
-                throttle = 0.1f;
-            }
-
-            if (vehicleControl.Backward && !startedReverse)
-            {
-                startedReverse = true;
-                steer = -steer;
-            }
-            else if (!vehicleControl.Backward)
-            {
-                startedReverse = false;
+                steer = 1f;
             }
         }
 
-        if (hits[0].collider && hits[1].collider && hits[2].collider && hits[3].collider)
+        // second front left sensor
+        else if (Physics.Raycast(sensorsTransforms[1].position, Quaternion.AngleAxis(-frontSensorInnerAngle, transform.up) * transform.forward, out hits[1], sensorLength, ~nodeTerrainLayerMask))
         {
-            throttle = -1f;
-            /*
-            if (vehicleControl.Backward && !startedReverse)
+            Debug.DrawLine(sensorsTransforms[1].position, hits[1].point);
+            Debug.Log("Sensor 2 da esquerda");
+
+            aiState = AiState.Avoiding;
+            steer = 0.5f;
+            throttle = 0.1f;
+
+            if (Vector3.Distance(hits[1].point, sensorsTransforms[1].position) <= minDistanceToReverse)
             {
-                startedReverse = true;
-                steer = -steer;
-            }*/
+                throttle = -1f;
+                steer = -0.5f;
+            }
         }
-        else if (!hits[0].collider && !hits[1].collider && !hits[2].collider && !hits[3].collider)
+
+        // first front right sensor;
+        else if (Physics.Raycast(sensorsTransforms[2].position, Quaternion.AngleAxis(frontSensorInnerAngle, transform.up) * transform.forward, out hits[2], sensorLength, ~nodeTerrainLayerMask))
+        {
+            Debug.DrawLine(sensorsTransforms[2].position, hits[2].point);
+            Debug.Log("Sensor 1 da direita");
+
+            aiState = AiState.Avoiding;
+            steer = -0.5f;
+            throttle = 0.1f;
+
+            if (Vector3.Distance(hits[2].point, sensorsTransforms[2].position) <= minDistanceToReverse)
+            {
+                throttle = -1f;
+                steer = 0.5f;
+            }
+        }
+        else if (Physics.Raycast(sensorsTransforms[4].position, transform.right, out hits[4], 2f, ~nodeTerrainLayerMask))
+        {
+            Debug.DrawLine(sensorsTransforms[0].position, hits[4].point);
+            Debug.Log("Sensor horizontal");
+
+            aiState = AiState.Avoiding;
+            throttle = -1f;
+            steer = -1f;
+        }
+        else
         {
             aiState = AiState.FollowingTrack;
             brake = false;
         }
+        /*
+        if (vehicleControl.Backward && !startedReverse)
+        {
+            Debug.Log("E verdade emilio");
+            startedReverse = true;
+            steer = -steer;
+        }
+        else if (!vehicleControl.Backward)
+        {
+            startedReverse = false;
+        }*/
     }
 
     private void OnTriggerEnter(Collider other)
@@ -258,7 +220,7 @@ public class CarMovementAI : MonoBehaviour
 
         float percentDistance = carToWaypoint.magnitude * Mathf.Cos(Vector3.Angle(trackDirection, carToWaypoint) * Mathf.Deg2Rad) / trackDirection.magnitude;
 
-        if (DistanceFromTrack() > 10f || Vector3.Angle(trackDirection, carToWaypoint) > 90) // Distancia maior que a largura da pista
+        if (DistanceFromTrack() > 15f || Vector3.Angle(trackDirection, carToWaypoint) > 90) // Distancia maior que a largura da pista
         {
             relativeVector = transform.InverseTransformPoint(currentNodePosition);
         }
