@@ -7,13 +7,15 @@ public class Mouse : MonoBehaviour
 {
     //[Range(0.0f, 100.0f)]
     //public float limiteRotacaoX = 45.0f;
-    //[Range(0.0f, 100.0f)]
-    //public float limiteRotacaoY = 45.0f;
+    [Range(0.0f, 1.0f)]
+    public float limiteRotacaoY = 60.0f;
     //Vector3 mouse;
     //Vector3 mouseWorld;
     //Vector3 forward;
     [Range(0.0f, 3.0f)]
     public float velocidadeRotacao = 0.5f;
+
+    public Text textT;
 
     public Camera cam;
     public Transform rectTranform;
@@ -36,27 +38,12 @@ public class Mouse : MonoBehaviour
         HandleTurret();
     }
 
-
-    //void Update()
-    //{
-    //    mouse = Input.mousePosition;
-    //    mouseWorld = cam.ScreenToWorldPoint(new Vector3(mouse.x, mouse.y, 180));
-    //    forward = mouseWorld - transform.position;
-    //    //forward.x = 0;
-    //    //forward.z = 0;
-    //    // transform.rotation = Quaternion.LookRotation(forward, Vector3.up);
-    //    if (transform.rotation.x > (limiteRotacaoY * -1) && transform.rotation.x < limiteRotacaoY)
-    //    {
-    //        transform.rotation = Quaternion.LookRotation(forward, Vector3.up);
-    //    }
-    //}
-
     public Vector3 RectPosition()
     {
         return rectPosition;
     }
 
-    public Vector3 RectNomal()
+    public Vector3 RectNormal()
     {
         return rectNormal;
     }
@@ -90,6 +77,8 @@ public class Mouse : MonoBehaviour
         Vector3 turretLookDir = rectPosition - transform.position;
         finalTurretLookDir = Vector3.Lerp(finalTurretLookDir, turretLookDir, Time.deltaTime * velocidadeRotacao);
         transform.rotation = Quaternion.LookRotation(turretLookDir);
+       // transform.rotation = new Quaternion(transform.rotation.x, Mathf.Clamp(transform.rotation.y, (limiteRotacaoY * -1), limiteRotacaoY), 0f, transform.rotation.w);
+        textT.text = transform.rotation.ToString();
     }
 
     protected virtual void HandleReticle()

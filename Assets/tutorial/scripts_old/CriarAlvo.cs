@@ -27,7 +27,7 @@ public class CriarAlvo : MonoBehaviour
 
     private void SpawnObjeto()
     {
-        //Instantiate(ObjtoPraSpawn, new Vector3(UnityEngine.Random.Range(-13.0f, 13.0f), UnityEngine.Random.Range(-7.0f, 7.0f), 250), ObjtoPraSpawn.transform.rotation);
-        Instantiate(ObjtoPraSpawn, transform.position, ObjtoPraSpawn.transform.rotation);
+        //Instantiate(ObjtoPraSpawn, new Vector3(transform.position, UnityEngine.Random.Range(-7.0f, 7.0f), 250), ObjtoPraSpawn.transform.rotation);
+        Instantiate(ObjtoPraSpawn, transform.position +  new Vector3(0,UnityEngine.Random.Range(-7.0f, 7.0f),UnityEngine.Random.Range(-7.0f, 7.0f)), ObjtoPraSpawn.transform.rotation);
     }
 }
