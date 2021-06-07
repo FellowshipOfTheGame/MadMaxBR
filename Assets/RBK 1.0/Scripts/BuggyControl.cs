@@ -3,14 +3,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.UI;
 
-public enum ControlMode { simple = 1, touch = 2 }
+public enum ControlModeB { simple = 1, touch = 2 }
 
 
 public class BuggyControl : MonoBehaviour
 {
 
 
-    public ControlMode controlMode = ControlMode.simple;
+    public ControlModeB controlMode = ControlModeB.simple;
 
     public bool activeControl = false;
 
@@ -477,7 +477,7 @@ public class BuggyControl : MonoBehaviour
 
         if (activeControl)
         {
-            if (controlMode == ControlMode.simple)
+            if (controlMode == ControlModeB.simple)
             {
 
                 accel = 0;
@@ -493,7 +493,7 @@ public class BuggyControl : MonoBehaviour
                 }
 
             }
-            else if (controlMode == ControlMode.touch)
+            else if (controlMode == ControlModeB.touch)
             {
 
                 if (accelFwd != 0) { accel = accelFwd; } else { accel = accelBack; }
