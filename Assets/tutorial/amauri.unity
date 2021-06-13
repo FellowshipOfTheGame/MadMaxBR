@@ -3052,7 +3052,39 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 936618119813952187, guid: 0dc1fc9944fad5d4e83dbcdde8e08261, type: 3}
       propertyPath: turnSpeed
-      value: 30
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 936618120825251702, guid: 0dc1fc9944fad5d4e83dbcdde8e08261, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 936618120825251702, guid: 0dc1fc9944fad5d4e83dbcdde8e08261, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 936618120825251702, guid: 0dc1fc9944fad5d4e83dbcdde8e08261, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -5
+      objectReference: {fileID: 0}
+    - target: {fileID: 936618120825251702, guid: 0dc1fc9944fad5d4e83dbcdde8e08261, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 936618120825251702, guid: 0dc1fc9944fad5d4e83dbcdde8e08261, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 936618120825251702, guid: 0dc1fc9944fad5d4e83dbcdde8e08261, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 936618120825251702, guid: 0dc1fc9944fad5d4e83dbcdde8e08261, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 936618120825251702, guid: 0dc1fc9944fad5d4e83dbcdde8e08261, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1493934755545644333, guid: 0dc1fc9944fad5d4e83dbcdde8e08261, type: 3}
       propertyPath: m_RootOrder
@@ -3106,6 +3138,18 @@ PrefabInstance:
       propertyPath: BalasArmaText
       value: 
       objectReference: {fileID: 456910933}
+    - target: {fileID: 3439948333360834494, guid: 0dc1fc9944fad5d4e83dbcdde8e08261, type: 3}
+      propertyPath: armas.Array.data[1].balasPorPente
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 3439948333360834494, guid: 0dc1fc9944fad5d4e83dbcdde8e08261, type: 3}
+      propertyPath: armas.Array.data[1].numeroDeBalas
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3439948333360834494, guid: 0dc1fc9944fad5d4e83dbcdde8e08261, type: 3}
+      propertyPath: armas.Array.data[2].balasPorPente
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0dc1fc9944fad5d4e83dbcdde8e08261, type: 3}
 --- !u!1001 &1675414101
@@ -3204,7 +3248,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 20, y: 20}
+  m_SizeDelta: {x: 24, y: 24}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1690512440
 MonoBehaviour:
