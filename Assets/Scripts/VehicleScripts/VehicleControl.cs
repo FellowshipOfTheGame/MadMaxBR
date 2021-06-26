@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine.UI;
 
 public enum ControlMode { 
-    simple = 1, touch = 2, ai = 3 
+    simple = 1, touch = 2 
 }
 
 public class VehicleControl : MonoBehaviour {
@@ -14,8 +14,6 @@ public class VehicleControl : MonoBehaviour {
     public bool activeControl = false;
 
     public GameObject NitroPU;
-
-    [SerializeField] private CarMovementAI carMovementAI;
 
     // Wheels Settings /////////////////////////////////
 
@@ -99,13 +97,13 @@ public class VehicleControl : MonoBehaviour {
 
         public Vector3 shiftCentre = new Vector3(0.0f, -0.8f, 0.0f);
 
-        public float maxSteerAngle = 200.0f; // Controls to maximum angle of the steering wheel of the car: the higher it gets, more quickly it turns
+        public float maxSteerAngle = 25.0f; // Controls to maximum angle of the steering wheel of the car: the higher it gets, more quickly it turns
 
         public float shiftDownRPM = 1500.0f;
         public float shiftUpRPM = 2500.0f;
         public float idleRPM = 500.0f;
 
-        public float stiffness = 100.0f; // Controls the friction of the car and wheel: the higher it gets the softer it gets to drive
+        public float stiffness = 2.0f; // Controls the friction of the car and wheel: the higher it gets the softer it gets to drive
 
         public bool automaticGear = true; // Controls if the car is in Automatic or not
 
@@ -191,7 +189,7 @@ public class VehicleControl : MonoBehaviour {
 
     private Vector3 steerCurAngle; // stores the steering wheel tilt angle
 
-    protected Rigidbody myRigidbody;
+    private Rigidbody myRigidbody;
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -242,7 +240,6 @@ public class VehicleControl : MonoBehaviour {
         }
 
         myRigidbody = transform.GetComponent<Rigidbody>();
-        carMovementAI = GetComponent<CarMovementAI>();
 
         wheels = new WheelComponent[4];
 
@@ -383,7 +380,6 @@ public class VehicleControl : MonoBehaviour {
     // responsible to apply the physics on car
     [System.Obsolete]
     void FixedUpdate() {
-
         // speed of car 
         speed = myRigidbody.velocity.magnitude * 2.7f;
 
@@ -419,17 +415,6 @@ public class VehicleControl : MonoBehaviour {
                 }
 
                 steer = Mathf.MoveTowards(steer, steerAmount, 0.07f);
-            }
-            else if (controlMode == ControlMode.ai)
-            {
-                if (carWheels.wheels.frontWheelDrive || carWheels.wheels.backWheelDrive)
-                {
-                    
-                    steer = carMovementAI.steer;
-                    accel = carMovementAI.throttle;
-                    brake = carMovementAI.brake;
-                    nitroEnabled = carMovementAI.nitroEnabled;
-                }
             }
         } else { // if car controllers are inactive
             accel = 0.0f;
@@ -519,7 +504,7 @@ public class VehicleControl : MonoBehaviour {
             if (w.drive) { // when wheel are able to drive
                 if (!NeutralGear && brake && currentGear < 2) {
                     rpm += accel * carSetting.idleRPM;
-                    //Debug.Log(rpm);
+                    Debug.Log(rpm);
                     /*
                     if (rpm > 1) {
                         carSetting.shiftCentre.z = Mathf.PingPong(Time.time * (accel * 10), 2.0f) - 1.0f;
@@ -789,6 +774,7 @@ public class VehicleControl : MonoBehaviour {
 
             PitchDelay = Pitch;
         }
+
     }
 
     /////////////// Show Normal Gizmos ////////////////////////////

@@ -8,9 +8,9 @@ public class VehicleRaceData : MonoBehaviour {
     [HideInInspector]
     public Timer LapTime;
 
-    private int LapCounter;
-    private int MinCountBest;
-    private int SecCountBest;
+    private float LapCounter;
+    private float MinCountBest;
+    private float SecCountBest;
     private float MilliCountBest;
     private bool firstTrigger;
     public void LapCompleted() {
@@ -35,13 +35,13 @@ public class VehicleRaceData : MonoBehaviour {
         LapTime.ResetTimer();
     }
 
-    public int GetLapCount() {
+    public float GetLapCount() {
         return LapCounter;
     }
-    public int GetMinCountBest() {
+    public float GetMinCountBest() {
         return MinCountBest;
     }
-    public int GetSecCountBest() {
+    public float GetSecCountBest() {
         return SecCountBest;
     }
     public float GetMilliCountBest() {

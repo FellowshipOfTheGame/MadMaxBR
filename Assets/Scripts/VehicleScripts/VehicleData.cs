@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Script responsible to store information about the car such health, shield, powerUps, etc.
+/// </summary>
 public class VehicleData : MonoBehaviour {
     public float MaxCarHealth;
     public float MaxCarShield;
@@ -116,9 +119,9 @@ public class VehicleData : MonoBehaviour {
     }
     // Update is called once per frame
     void Update() {
-        if (playerPowerUps.transform.GetChild(0).gameObject.activeSelf) { // if nitro power up is active
+        //if (playerPowerUps.transform.GetChild(0).gameObject.activeSelf) { // if nitro power up is active
 
-        }
+        //}
     }
 
     public void SetCurrentHealth(float val) {
@@ -133,6 +136,9 @@ public class VehicleData : MonoBehaviour {
     }
 
     public float GetCurrentHealth() {
+        if (CurCarHealth < 0) {
+            return 0;
+        }
         return CurCarHealth;
     }
 

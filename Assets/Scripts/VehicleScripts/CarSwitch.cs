@@ -7,6 +7,18 @@ public class CarSwitch : MonoBehaviour
     public Transform[] Cars;
     public Transform MyCamera;
 
+    private int carNum = 0;
+
+    public void Update() {
+        if (Input.GetKeyDown(KeyCode.Z)) {
+            carNum++;
+            if (carNum == Cars.Length) {
+                carNum = 0;
+      
+            }
+            CurrentCarActive(carNum);
+        }
+    }
 
     public void CurrentCarActive(int current) {
 

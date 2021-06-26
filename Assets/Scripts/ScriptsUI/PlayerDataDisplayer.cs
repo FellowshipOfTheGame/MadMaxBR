@@ -21,7 +21,7 @@ public class PlayerDataDisplayer : MonoBehaviour {
     // Start is called before the first frame update
     void Start() {
         PlayerCar = Player.transform.GetChild(0).gameObject;
-        PlayerPowerUps = PlayerCar.transform.GetChild(8).gameObject;
+        PlayerPowerUps = PlayerCar.transform.GetChild(7).gameObject;
         //NitroUI = PlayerCarDataUI.transform.GetChild(1).gameObject;
         //PlayerHealthBar = PlayerCarDataUI.transform.GetChild(2).transform.GetChild(0).gameObject;
         //PlayerShieldBar = PlayerCarDataUI.transform.GetChild(3).transform.GetChild(0).gameObject;
