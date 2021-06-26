@@ -15,8 +15,6 @@ public class Mouse : MonoBehaviour
     [Range(0.0f, 3.0f)]
     public float velocidadeRotacao = 0.5f;
 
-    public Text textT;
-
     public Camera cam;
     public Transform rectTranform;
     private Vector3 rectPosition;
@@ -77,8 +75,6 @@ public class Mouse : MonoBehaviour
         Vector3 turretLookDir = rectPosition - transform.position;
         finalTurretLookDir = Vector3.Lerp(finalTurretLookDir, turretLookDir, Time.deltaTime * velocidadeRotacao);
         transform.rotation = Quaternion.LookRotation(turretLookDir);
-       // transform.rotation = new Quaternion(transform.rotation.x, Mathf.Clamp(transform.rotation.y, (limiteRotacaoY * -1), limiteRotacaoY), 0f, transform.rotation.w);
-        textT.text = transform.rotation.ToString();
     }
 
     protected virtual void HandleReticle()

@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.UI;
 
-public enum ControlMode { simple = 1, touch = 2 }
+// public enum ControlMode { simple = 1, touch = 2 }
 
 
 public class BuggyControl : MonoBehaviour

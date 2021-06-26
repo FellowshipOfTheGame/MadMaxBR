@@ -8,8 +8,7 @@ public class CarSwitch : MonoBehaviour
     public Transform MyCamera;
 
 
-    public void CurrentCarActive(int current)
-    {
+    public void CurrentCarActive(int current) {
 
         int amount = 0;
 
@@ -20,19 +19,15 @@ public class CarSwitch : MonoBehaviour
                 MyCamera.GetComponent<VehicleCamera>().target = Car;
 
                 MyCamera.GetComponent<VehicleCamera>().Switch = 0;
-                MyCamera.GetComponent<VehicleCamera>().cameraSwitchView = Car.GetComponent<BuggyControl>().carSetting.cameraSwitchView;
-                Car.GetComponent<BuggyControl>().activeControl = true;
+                MyCamera.GetComponent<VehicleCamera>().cameraSwitchView = Car.GetComponent<VehicleControl>().carSetting.cameraSwitchView;
+                Car.GetComponent<VehicleControl>().activeControl = true;
             }
             else
             {
-                Car.GetComponent<BuggyControl>().activeControl = false;
+                Car.GetComponent<VehicleControl>().activeControl = false;
             }
 
             amount++;
         }
     }
-
-
-
-
 }
