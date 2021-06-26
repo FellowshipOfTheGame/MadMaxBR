@@ -6,6 +6,7 @@ using System;
 
 public class SpawnCar : MonoBehaviour
 {
+    public GameObject modelos;
     public int selectedId;
     public int selectedIdColor;
     private MeshRenderer m_Renderer;
@@ -18,6 +19,7 @@ public class SpawnCar : MonoBehaviour
         selectedIdColor = PlayerPrefs.GetInt("selectedIdColor");
         SetCarColor();
         Instantiate(cars[selectedId].car, new Vector3(transform.position.x, transform.position.y, transform.position.z), Quaternion.identity);
+        Destroy(modelos, 0.01f);
     }
 
     private void SetCarColor()
