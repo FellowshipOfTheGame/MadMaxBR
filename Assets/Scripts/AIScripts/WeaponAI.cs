@@ -6,7 +6,6 @@ using UnityEngine;
 public class WeaponAI : MonoBehaviour
 {
     [SerializeField] private LayerMask carMask;
-    [SerializeField] private GameObject weaponBase;
     [SerializeField] private GameObject weaponBarrel;
     [SerializeField] private GameObject weaponBarrelEnd;
 
@@ -14,10 +13,11 @@ public class WeaponAI : MonoBehaviour
     [SerializeField] private float damage = 1f;
     [SerializeField] private float shootRadius = 10f;
     [SerializeField] private WeaponState weaponState = WeaponState.idle;
+    [SerializeField] private Animator weaponAnimator;
 
     void Start()
     {
-        
+
     }
 
     void FixedUpdate()
@@ -64,18 +64,21 @@ public class WeaponAI : MonoBehaviour
             {
                 Transform directionPoint = hitCollidersList[smallestDistanceIndex].transform;
                 weaponBarrel.transform.LookAt(directionPoint);
-                weaponBarrel.transform.Rotate(325f, 0f, 0f);
+                //weaponBarrel.transform.Rotate(10f, 0f, 0f);
+                weaponAnimator.SetBool("IsShooting", true);
                 //StartCoroutine(Shoot(shootRate));
             }
         }
         else
         {
+            weaponAnimator.SetBool("IsShooting", false);
             weaponState = WeaponState.idle;
         }
     }
 
     IEnumerator Shoot(float firingRate)
     {
+
         yield return new WaitForSeconds(firingRate);
     }
 }
