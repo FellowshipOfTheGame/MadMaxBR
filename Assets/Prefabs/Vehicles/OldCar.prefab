@@ -4987,6 +4987,7 @@ GameObject:
   - component: {fileID: 1779977075}
   - component: {fileID: 1779977076}
   - component: {fileID: 1779977077}
+  - component: {fileID: 1729348532}
   m_Layer: 1
   m_Name: OldCar
   m_TagString: Player
@@ -5046,10 +5047,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   controlMode: 1
-  activeControl: 0
+  activeControl: 1
   NitroPU: {fileID: 1365044782}
   carMovementAI: {fileID: 0}
-  acceleration: {x: 0, y: 0}
   carWheels:
     wheels:
       frontWheelDrive: 1
@@ -5160,6 +5160,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Nitro: {fileID: 1365044782}
   Shield: {fileID: 160241694}
+  Fix: {fileID: 0}
+  Thorns: {fileID: 0}
 --- !u!114 &1779977076
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5188,6 +5190,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MaxCarHealth: 1000
   MaxCarShield: 500
+--- !u!45 &1729348532
+Skybox:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 118030}
+  m_Enabled: 1
+  m_CustomSkybox: {fileID: 0}
 --- !u!1 &118324
 GameObject:
   m_ObjectHideFlags: 0
@@ -12594,6 +12605,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4ace8b19eeeeef49b371a7c43fc51ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  NitroObject: {fileID: 0}
 --- !u!1 &1375049534
 GameObject:
   m_ObjectHideFlags: 0
