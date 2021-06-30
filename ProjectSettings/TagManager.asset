@@ -5,21 +5,25 @@ TagManager:
   serializedVersion: 2
   tags:
   - Terrain
-  - Stone
-  - Grass
   - Street
-  - inimigo
+  - NitroPU
+  - Grass
+  - SmokePU
+  - ShieldPU
+  - Node
+  - FixPU
+  - ThornsPU
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Node
   - Water
   - UI
-  - 
-  - 
-  - 
-  - 
+  - Terrain
+  - PowerUp
+  - LapTrigger
+  - CarCollider
   - 
   - 
   - 

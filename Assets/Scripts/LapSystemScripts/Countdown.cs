@@ -6,6 +6,8 @@ using UnityEngine.UI;
 public class Countdown : MonoBehaviour {
 
     public GameObject CountdownUI;
+
+    public GameObject RaceInfoDisplayer;
     public AudioSource GetReadyAudio;
     public AudioSource GoAudio;
     public GameObject[] Racers;
@@ -32,6 +34,8 @@ public class Countdown : MonoBehaviour {
         CountdownUI.SetActive(true);
         yield return new WaitForSeconds(1);
         CountdownUI.SetActive(false);
+        RaceInfoDisplayer.SetActive(true);
+
         GoAudio.Play();
         //Player.transform.GetChild(0).GetComponent<VehicleControl>().activeControl = true;
         //PlayerControls.GetComponent<VehicleControl>().activeControl = true;

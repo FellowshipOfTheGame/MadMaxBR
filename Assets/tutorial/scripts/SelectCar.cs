@@ -1,6 +1,4 @@
 using UnityEngine;
-using System.Collections;
-using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using System;
 using Cinemachine;
@@ -13,6 +11,7 @@ public class Car
     public GameObject carBody;
     public String carBodyName;
     public Texture[] materials;
+    public Vector3 lookAtFixVector;
 }
 
 public class SelectCar : MonoBehaviour
@@ -23,10 +22,8 @@ public class SelectCar : MonoBehaviour
     public CinemachineFreeLook freeLookCamera;
 
     private int selectedId = 0;
-   private int selectedIdColor = 0;
-   // private Renderer m_Renderer;
+    private int selectedIdColor = 0;
     private MeshRenderer m_Renderer;
-
 
     private void Awake()
     {
@@ -35,12 +32,6 @@ public class SelectCar : MonoBehaviour
         ShowCar();
         SetCarColor();
     }
-
-    private void Start()
-    {
-
-    }
-
 
     void Update()
     {
@@ -64,11 +55,14 @@ public class SelectCar : MonoBehaviour
             DownColor();
         }
 
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            SceneManager.LoadScene(gameCene, LoadSceneMode.Single);
-        }
         freeLookCamera.m_XAxis.Value = 0.05f;
+    }
+
+    public void LoadGame()
+    {
+        PlayerPrefs.SetInt("selectedIdColor", selectedIdColor);//grava no salve
+        PlayerPrefs.SetInt("SelecedCar", selectedId);//grava no salve
+        SceneManager.LoadScene(gameCene, LoadSceneMode.Single);
     }
 
     private void UpColor()
@@ -103,17 +97,15 @@ public class SelectCar : MonoBehaviour
     private void SetCarColor()
     {
         m_Renderer = cars[selectedId].carBody.GetComponent<MeshRenderer>();
-           for (int i = 0; i < m_Renderer.sharedMaterials.Length; i++)
-           {
+        for (int i = 0; i < m_Renderer.sharedMaterials.Length; i++)
+        {
             Debug.Log(m_Renderer.sharedMaterials[i].name);
             if (m_Renderer.sharedMaterials[i].name == cars[selectedId].carBodyName)
-               {
-                 m_Renderer.sharedMaterials[i].mainTexture= cars[selectedId].materials[selectedIdColor];
+            {
+                m_Renderer.sharedMaterials[i].mainTexture = cars[selectedId].materials[selectedIdColor];
             }
         }
     }
-
-
 
     private void LeftCar()
     {
@@ -129,6 +121,7 @@ public class SelectCar : MonoBehaviour
         PlayerPrefs.SetInt("SelecedCar", selectedId);//grava no salve
         ShowCar();//carrega
     }
+
     private void RightCar()
     {
         if (selectedId >= (cars.Length - 1))
@@ -146,8 +139,7 @@ public class SelectCar : MonoBehaviour
     private void ShowCar()
     {
         selectedIdColor = 0;
-      //  m_Renderer.material.EnableKeyword(cars[selectedId].carBodyName);
-        lookAt.transform.position = new Vector3(cars[selectedId].car.transform.position.x, cars[selectedId].car.transform.position.y, cars[selectedId].car.transform.position.z);
+        lookAt.transform.position = new Vector3(cars[selectedId].car.transform.position.x + cars[selectedId].lookAtFixVector.x, cars[selectedId].car.transform.position.y + cars[selectedId].lookAtFixVector.y, cars[selectedId].car.transform.position.z + cars[selectedId].lookAtFixVector.z);
         SetCarColor();
     }
 }
