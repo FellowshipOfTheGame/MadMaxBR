@@ -33,9 +33,9 @@ public class Municao : MonoBehaviour
         if (Input.GetKeyDown(TeclaPegarMunicao) && podePegarOItem)
         {
             int numBalasExtra = ScriptAtirar.armas[numeroDaArma].numeroDeBalas - ScriptAtirar.armas[numeroDaArma].balasPorPente;
-            if (ScriptAtirar.armas[numeroDaArma].balasExtra < numBalasExtra)
+            if (ScriptAtirar.armas[numeroDaArma].balasNaArma < numBalasExtra)
             {
-                ScriptAtirar.armas[numeroDaArma].balasExtra += numeroDeBalas;
+                ScriptAtirar.armas[numeroDaArma].balasNaArma += numeroDeBalas;
                 GameObject emissorSom = new GameObject();
                 emissorSom.AddComponent(typeof(AudioSource));
                 emissorSom.GetComponent<AudioSource>().PlayOneShot(SomPegarMunicao);
