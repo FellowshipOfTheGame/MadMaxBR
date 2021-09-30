@@ -1,12 +1,95 @@
 fileFormatVersion: 2
-guid: 67cb21ca69f594e47991d21302eec873
+guid: 4c9700999f2466d47946f62f8644ba07
 ModelImporter:
   serializedVersion: 20200
   internalIDToNameTable:
   - first:
       74: -623603649343465320
-    second: Scene
-  externalObjects: {}
+    second: arma parada
+  - first:
+      74: 1892140247355704034
+    second: arma atirando
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: BASE ARMA
+    second: {fileID: 2100000, guid: 9faf583fe7215b843a2c625067ef9ba0, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: BASE CARRO
+    second: {fileID: 2100000, guid: 8f2c4aeadb5042c46a6907f983002827, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Black paint
+    second: {fileID: 2100000, guid: 916612979597b0d47ae9e038d2ebefba, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: CARBURADOR
+    second: {fileID: 2100000, guid: 82ee2458a45d32c458c0f0200c66676f, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: CORRENTE
+    second: {fileID: 2100000, guid: 136a3d73616527748a1c6a8c65eb1691, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: FUSCA ITENS
+    second: {fileID: 2100000, guid: 6d23fb7c02ffb884db130ffbd657bd12, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: METALMAT
+    second: {fileID: 2100000, guid: 826f25aa51a6ffc49a1bc73ceee7b082, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: MOTOR FRENTE
+    second: {fileID: 2100000, guid: 25f742801041d624a8d0e2ae406b195e, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: PARACHOQUE
+    second: {fileID: 2100000, guid: ea6db81f3d1d32a429a798b7b29d1f04, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: PNEUMAT
+    second: {fileID: 2100000, guid: 059d4875c8562534fb34c43548241dd0, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: VIDRO
+    second: {fileID: 2100000, guid: 4b96bbf2719aef2418aa634a5d817cd2, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: VIDROS EM CROMA
+    second: {fileID: 2100000, guid: 79e85fa4c83017a40bc3f5d63302de5e, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: adesivo arma
+    second: {fileID: 2100000, guid: e65333895b6dece488370d3899726905, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: bala
+    second: {fileID: 2100000, guid: 2ed13e8c23ecbae49adcf981ffe97fcd, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: capa bala
+    second: {fileID: 2100000, guid: ee397a307d31b0b41bf832bbf3c5c0db, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: metralhadora
+    second: {fileID: 2100000, guid: 4ab6539e784e4ff4a9042099093d0257, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -33,7 +116,65 @@ ModelImporter:
     animationWrapMode: 0
     extraExposedTransformPaths: []
     extraUserProperties: []
-    clipAnimations: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: arma parada
+      takeName: Scene
+      internalID: 0
+      firstFrame: 1
+      lastFrame: 2
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 1
+    - serializedVersion: 16
+      name: arma atirando
+      takeName: Scene
+      internalID: 0
+      firstFrame: 10
+      lastFrame: 30
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 1
     isReadable: 0
   meshes:
     lODScreenPercentages: []

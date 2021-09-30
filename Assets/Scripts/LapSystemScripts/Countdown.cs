@@ -39,7 +39,7 @@ public class Countdown : MonoBehaviour {
         //PlayerControls.GetComponent<VehicleControl>().activeControl = true;
         
         for (int i = 0; i < Racers.Length; i++) {
-            Racers[i].transform.GetChild(0).GetComponent<VehicleControl>().activeControl = true; // active control for the racer 'i'
+            //Racers[i].transform.GetChild(0).GetComponent<VehicleControl>().activeControl = true; // active control for the racer 'i'
             Racers[i].transform.GetChild(0).GetComponent<VehicleRaceData>().enabled = true; // active the racer 'i' data script
         }
     }

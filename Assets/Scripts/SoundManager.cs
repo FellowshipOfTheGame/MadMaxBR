@@ -23,13 +23,21 @@ public class SoundManager : MonoBehaviour
     private float musicVolume = 1f;
     private float SFXVolume = 1f;
 
-    private AudioClip  mainMusic;
+    private AudioClip mainMusic;
+    private AudioClip partidaCarro;
+    private AudioClip bigBoom;
+    private AudioClip ninaTheme;
+    private AudioClip openSong;
     private AudioSource audioSource;
 
     void Start()
     {
         audioSource = GetComponent<AudioSource>();
         mainMusic = Resources.Load<AudioClip>("");
+        partidaCarro = Resources.Load<AudioClip>("INSANE NINA_SFX_PARTIDA PLAY B");
+        bigBoom = Resources.Load<AudioClip>("INSANE NINA_BIG BOOM");
+        ninaTheme = Resources.Load<AudioClip>("INSANE NINA_NINA THEME");
+        openSong = Resources.Load<AudioClip>("INSANE NINE_OPEN SONG_02");
         musicVolume = PlayerPrefsController.GetMusicVolume();
         SFXVolume = PlayerPrefsController.GetSFXVolume();
         audioSource.volume = musicVolume;
@@ -40,8 +48,8 @@ public class SoundManager : MonoBehaviour
     {
         switch (sound)
         {
-            case "clip":
-                //audioSource.PlayOneShot(clip, SFXVolume);
+            case "PartidaCarro":
+                audioSource.PlayOneShot(partidaCarro, SFXVolume);
                 break;
             default:
                 break;
@@ -54,6 +62,18 @@ public class SoundManager : MonoBehaviour
         {
             case "Main Music":
                 audioSource.clip = mainMusic;
+                audioSource.Play();
+                break;
+            case "Big Boom":
+                audioSource.clip = bigBoom;
+                audioSource.Play();
+                break;
+            case "Nina Theme":
+                audioSource.clip = ninaTheme;
+                audioSource.Play();
+                break;
+            case "Open Song":
+                audioSource.clip = openSong;
                 audioSource.Play();
                 break;
             default:

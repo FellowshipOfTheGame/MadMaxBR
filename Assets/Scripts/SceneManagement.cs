@@ -26,14 +26,22 @@ public class SceneManagement : MonoBehaviour
 
     }
 
-    public void LoadMenu()
+    public void LoadMenuScene()
     {
-        SceneManager.LoadScene(0);
+        SceneManager.LoadScene("Menu", LoadSceneMode.Single);
     }
 
     public void LoadGameScene()
     {
-        SceneManager.LoadScene(1);
+        SceneManager.LoadScene("Game", LoadSceneMode.Single);
+    }
+    public void LoadGarageScene()
+    {
+        SceneManager.LoadScene("Garage", LoadSceneMode.Single);
+    }
+    public void LoadLoadingScene()
+    {
+        SceneManager.LoadScene("Loading Scene", LoadSceneMode.Single);
     }
 
     public void Exit()
