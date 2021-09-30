@@ -1,9 +1,5 @@
 using System.Collections.Generic;
 using UnityEngine;
-using Unity.Mathematics;
-using Unity.Jobs;
-using Unity.Collections;
-using Unity.Burst;
 
 public enum AiState
 {
@@ -16,7 +12,6 @@ public class CarMovementAI : MonoBehaviour
     [SerializeField] private Transform[] sensorsTransforms;
     [SerializeField] private float sensorLength = 5f;
     [SerializeField] private float horizontalSensorLength = 2f;
-    [SerializeField] private float frontSideSensorPosition = 1f;
     [SerializeField] private float frontSensorInnerAngle = 15f;
     [SerializeField] private float frontSensorOuterAngle = 30f;
     [SerializeField] private LayerMask ignoredLayerMasks;
@@ -34,8 +29,9 @@ public class CarMovementAI : MonoBehaviour
     public bool nitroEnabled = false;
     [SerializeField] private float minPositiveThrottle = 0.03f;
     [SerializeField] private float maxThrottle = 1f;
-    [SerializeField] private float maxAngleforMinThrottle = 35f;
+    [SerializeField] private float maxAngleForMinThrottle = 35f;
     [SerializeField] private float minDistanceToReverse = 3f;
+    [SerializeField] private float distanceFromTrackToBreak = 30f;
 
     private Rigidbody rb;
 
@@ -68,13 +64,13 @@ public class CarMovementAI : MonoBehaviour
     {
         float curveAngle = CurveAngle();
 
-        if (curveAngle > maxAngleforMinThrottle)
+        if (curveAngle > maxAngleForMinThrottle)
         {
             throttle = minPositiveThrottle;
 
             print(rb.velocity.magnitude + " velocity");
             
-            if (rb.velocity.magnitude > 10f && DistanceFromTrack() < 30f)
+            if (rb.velocity.magnitude > 10f && DistanceFromTrack() < distanceFromTrackToBreak)
             {
                 brake = true;
             }
@@ -87,8 +83,8 @@ public class CarMovementAI : MonoBehaviour
         else
         {
             brake = false;
-            float percentThrottle = 1 - curveAngle / maxAngleforMinThrottle;
-            percentThrottle *= percentThrottle * percentThrottle;
+            float percentThrottle = 1 - curveAngle / maxAngleForMinThrottle;
+            percentThrottle *= percentThrottle;
             throttle = (maxThrottle - minPositiveThrottle) * percentThrottle + minPositiveThrottle;
         }
     }
@@ -105,7 +101,7 @@ public class CarMovementAI : MonoBehaviour
 
             aiState = AiState.Avoiding;
             steer = 1f;
-            throttle = 0.1f;
+            throttle = minPositiveThrottle;
 
             if (Vector3.Distance(hits[0].point, sensorsTransforms[0].position) <= minDistanceToReverse)
             {
@@ -122,7 +118,7 @@ public class CarMovementAI : MonoBehaviour
 
             aiState = AiState.Avoiding;
             steer = -1f;
-            throttle = 0.1f;
+            throttle = minPositiveThrottle;
 
             if (Vector3.Distance(hits[3].point, sensorsTransforms[3].position) <= minDistanceToReverse)
             {
@@ -139,7 +135,7 @@ public class CarMovementAI : MonoBehaviour
 
             aiState = AiState.Avoiding;
             steer = 0.5f;
-            throttle = 0.1f;
+            throttle = minPositiveThrottle;
 
             if (Vector3.Distance(hits[1].point, sensorsTransforms[1].position) <= minDistanceToReverse)
             {
@@ -156,7 +152,7 @@ public class CarMovementAI : MonoBehaviour
 
             aiState = AiState.Avoiding;
             steer = -0.5f;
-            throttle = 0.1f;
+            throttle = minPositiveThrottle;
 
             if (Vector3.Distance(hits[2].point, sensorsTransforms[2].position) <= minDistanceToReverse)
             {
@@ -195,7 +191,7 @@ public class CarMovementAI : MonoBehaviour
         Vector3 direction = nodes[nextNode].transform.position - nodes[currentNode].transform.position;
         Debug.DrawRay(transform.position, direction);
 
-        return Vector3.Angle(nodes[nextNode].transform.position - nodes[currentNode].transform.position, transform.forward);
+        return Vector3.Angle(direction, transform.forward);
     }
 
     public void FollowPath()
@@ -210,7 +206,7 @@ public class CarMovementAI : MonoBehaviour
         Vector3 carToWaypoint = currentNodePosition - position;
         Vector3 relativeVector;
 
-        float percentDistance = carToWaypoint.magnitude * math.cos(Vector3.Angle(trackDirection, carToWaypoint) * Mathf.Deg2Rad) / trackDirection.magnitude;
+        float percentDistance = carToWaypoint.magnitude * Mathf.Cos(Vector3.Angle(trackDirection, carToWaypoint) * Mathf.Deg2Rad) / trackDirection.magnitude;
 
         if (DistanceFromTrack() > trackWidth || Vector3.Angle(trackDirection, carToWaypoint) > 90f) // Distancia maior que a largura da pista
         {
@@ -218,7 +214,7 @@ public class CarMovementAI : MonoBehaviour
         }
         else
         {
-            Vector3 interpolatedDirection = Vector3.Lerp(trackDirection, nextTrackDirection, math.clamp((1 - percentDistance) * (1 - percentDistance), 0, 1)); // ease function
+            Vector3 interpolatedDirection = Vector3.Lerp(trackDirection, nextTrackDirection, Mathf.Clamp((1 - percentDistance) * (1 - percentDistance), 0, 1)); // ease function
             Vector3 trackDirectionPosition = position + interpolatedDirection;
             relativeVector = transform.InverseTransformPoint(trackDirectionPosition);
         }
@@ -239,7 +235,9 @@ public class CarMovementAI : MonoBehaviour
         Vector2 previousNodePositionXZ = new Vector2(previousNodePosition.x, previousNodePosition.z);
         Vector2 carPositionXZ = new Vector2(position.x, position.z);
 
-        return math.abs((previousNodePositionXZ.x - currentNodePositionXZ.x) * (currentNodePositionXZ.y - carPositionXZ.y) - (previousNodePositionXZ.y - currentNodePositionXZ.y) * (currentNodePositionXZ.x - carPositionXZ.x)) / math.sqrt((previousNodePositionXZ.x - currentNodePositionXZ.x) * (previousNodePositionXZ.x - currentNodePositionXZ.x) + (previousNodePositionXZ.y - currentNodePositionXZ.y) * (previousNodePositionXZ.y - currentNodePositionXZ.y));
+        return Mathf.Abs((previousNodePositionXZ.x - currentNodePositionXZ.x) * (currentNodePositionXZ.y - carPositionXZ.y) - (previousNodePositionXZ.y - currentNodePositionXZ.y) * 
+            (currentNodePositionXZ.x - carPositionXZ.x)) / Mathf.Sqrt((previousNodePositionXZ.x - currentNodePositionXZ.x) * (previousNodePositionXZ.x - currentNodePositionXZ.x) + 
+            (previousNodePositionXZ.y - currentNodePositionXZ.y) * (previousNodePositionXZ.y - currentNodePositionXZ.y));
 
         //return Mathf.Abs((p2.x - p1.x) * (p1.y - carPosition.y) - (p2.y - p1.y) * (p1.x - carPosition.x)) / Mathf.Sqrt((p2.x - p1.x) * (p2.x - p1.x) + (p2.y - p1.y) * (p2.y - p1.y));
     }
@@ -254,131 +252,4 @@ public class CarMovementAI : MonoBehaviour
         Debug.LogWarning("Child doesn't belong to this parent.");
         return -1;
     }
-}
-
-[BurstCompile]
-public struct FollowJob : IJob
-{
-    public float3 carPositionArrayJob;
-    public float3 nodePositionArrayJob;
-    public float steerJob;
-    public float trackWidthJob;
-    public int nodesQuantityJob;
-    public int currentNode;
-    public AiState aiStates;
-    public Matrix4x4 localToWorldPosMatrix;
-
-    public void Execute()
-    {
-        if (aiStates == AiState.FollowingTrack)
-        {
-            int previousNode = (currentNode + nodesQuantityJob - 1) % nodesQuantityJob;
-            int nextNode = (currentNode + 1) % nodesQuantityJob;
-            float3 position = carPositionArrayJob;
-            float3 currentNodePosition = nodePositionArrayJob[currentNode];
-            float3 previousNodePosition = nodePositionArrayJob[previousNode];
-            float3 trackDirection = currentNodePosition - previousNodePosition;
-            float3 nextTrackDirection = nodePositionArrayJob[nextNode] - currentNodePosition;
-            float3 carToWaypoint = currentNodePosition - position;
-            float3 relativeVector;
-
-            float percentDistance = Vector3Magnitude(carToWaypoint) * math.cos(Vector3.Angle(trackDirection, carToWaypoint) * math.PI / 180) / Vector3Magnitude(trackDirection);
-
-            float2 currentNodePositionXZ = new float2(currentNodePosition.x, currentNodePosition.z);
-            float2 previousNodePositionXZ = new float2(previousNodePosition.x, previousNodePosition.z);
-            float2 carPositionXZ = new float2(position.x, position.z);
-
-            if (DistanceFromTrack(currentNodePositionXZ, previousNodePositionXZ, carPositionXZ) > trackWidthJob || Vector3.Angle(trackDirection, carToWaypoint) > 90f) // Distancia maior que a largura da pista
-            {
-                relativeVector = math.transform(math.inverse(localToWorldPosMatrix), currentNodePosition);
-            }
-            else
-            {
-                float3 interpolatedDirection = Vector3.Lerp(trackDirection, nextTrackDirection, math.clamp((1 - percentDistance) * (1 - percentDistance), 0, 1)); // ease function
-                float3 trackDirectionPosition = position + interpolatedDirection;
-                relativeVector = math.transform(math.inverse(localToWorldPosMatrix), trackDirectionPosition);
-            }
-
-            //Debug.DrawLine(position, transform.TransformPoint(relativeVector), Color.red);
-
-            float newSteer = relativeVector.x / Vector3Magnitude(relativeVector);
-            steerJob = newSteer;
-        }
-    }
-
-    public float Vector3Magnitude(float3 vector)
-    {
-        return math.sqrt(vector.x * vector.x + vector.y * vector.y + vector.z * vector.z);
-    }
-
-    public float DistanceFromTrack(float2 p1, float2 p2, float2 carPosition)
-    {
-        return math.abs((p2.x - p1.x) * (p1.y - carPosition.y) - (p2.y - p1.y) * (p1.x - carPosition.x)) / math.sqrt((p2.x - p1.x) * (p2.x - p1.x) + (p2.y - p1.y) * (p2.y - p1.y));
-    }
-}
-
-public struct GetThrottle : IJob
-{
-    public float3 TransformForward;
-    public float3 CarPosition;
-    public float3 NodePosition;
-    public float Throttle;
-    public float MinPositiveThrottle;
-    public float MaxThrottle;
-    public float MaxAngleforMinThrottle;
-    public bool Brake;
-    public int CurrentNode;
-    public int NodesQuantity;
-
-    public void Execute()
-    {
-        float curveAngle = 1;//CurveAngle();
-
-        if (curveAngle > MaxAngleforMinThrottle)
-        {
-            Throttle = MinPositiveThrottle;
-
-            //print(rb.velocity.magnitude + " velocity");
-
-            int previousNode = (CurrentNode + NodesQuantity - 1) % NodesQuantity;
-            int nextNode = (CurrentNode + 1) % NodesQuantity;
-            float3 position = CarPosition;
-            float3 currentNodePosition = NodePosition[CurrentNode];
-            float3 previousNodePosition = NodePosition[previousNode];
-            float2 currentNodePositionXZ = new float2(currentNodePosition.x, currentNodePosition.z);
-            float2 previousNodePositionXZ = new float2(previousNodePosition.x, previousNodePosition.z);
-            float2 carPositionXZ = new float2(position.x, position.z);
-            /*
-            if (rb.velocity.magnitude > 10f && DistanceFromTrack(currentNodePositionXZ, previousNodePositionXZ, carPositionXZ) < 30f)
-            {
-                Brake = true;
-            }
-            else
-            {
-                Brake = false;
-            }*/
-        }
-
-        else
-        {
-            Brake = false;
-            float percentThrottle = 1 - curveAngle / MaxAngleforMinThrottle;
-            percentThrottle *= percentThrottle * percentThrottle;
-            Throttle = (MaxThrottle - MinPositiveThrottle) * percentThrottle + MinPositiveThrottle;
-        }
-    }
-
-    public float DistanceFromTrack(float2 p1, float2 p2, float2 carPosition)
-    {
-        return math.abs((p2.x - p1.x) * (p1.y - carPosition.y) - (p2.y - p1.y) * (p1.x - carPosition.x)) / math.sqrt((p2.x - p1.x) * (p2.x - p1.x) + (p2.y - p1.y) * (p2.y - p1.y));
-    }
-    /*
-    public float CurveAngle()
-    {
-        int nextNode = (CurrentNode + 1) % NodesQuantity;
-
-        Vector3 direction = nodes[nextNode].transform.position - nodes[CurrentNode].transform.position;
-
-        return Vector3.Angle(nodes[nextNode].transform.position - nodes[CurrentNode].transform.position, TransformForward);
-    }*/
 }
