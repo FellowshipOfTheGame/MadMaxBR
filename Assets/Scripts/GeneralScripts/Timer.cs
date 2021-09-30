@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Timer : MonoBehaviour {
-    private int MinCount;
-    private int SecCount;
+    private float MinCount;
+    private float SecCount;
     private float MilliCount;
 
     // Start is called before the first frame update
@@ -38,11 +38,15 @@ public class Timer : MonoBehaviour {
         return MilliCount;
     }
 
-    public int GetSeconds() {
+    public float GetSeconds() {
         return SecCount;
     }
 
-    public int GetMinutes() {
+    public float GetMinutes() {
         return MinCount;
+    }
+
+    public float GetTimeInSeconds() {
+        return SecCount + MinCount * 60;
     }
 }

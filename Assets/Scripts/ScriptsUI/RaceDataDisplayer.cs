@@ -22,7 +22,7 @@ public class RaceDataDisplayer : MonoBehaviour {
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    void UpdateTimeDisplay(int SecCount, int MinCount, float MilliCount, GameObject SecondsDisplay, GameObject MinutesDisplay, GameObject MillisecondsDisplay) {
+    void UpdateTimeDisplay(float SecCount, float MinCount, float MilliCount, GameObject SecondsDisplay, GameObject MinutesDisplay, GameObject MillisecondsDisplay) {
         MillisecondsDisplay.GetComponent<Text>().text = "" + MilliCount.ToString("F0");
 
         if (SecCount <= 9) {
