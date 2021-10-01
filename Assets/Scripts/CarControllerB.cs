@@ -76,7 +76,7 @@ public class CarControllerB : MonoBehaviour
     public float minRPM;//minimo rpm para mudar de marcha cambio automatico
 
     
-    private float KPH;//velocidade que o carro está
+    public float KPH;//velocidade que o carro está
     [SerializeField]
     private float engineRPM;//rotação atual do motor
     private float whellsRPM;//velocidade rotação das rodas
