@@ -3100,6 +3100,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CountdownUI: {fileID: 696450352}
+  RaceInfoDisplayer: {fileID: 0}
   GetReadyAudio: {fileID: 1416246443}
   GoAudio: {fileID: 1403962692}
   Racers:
@@ -3275,21 +3276,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e428cb16ea4f48e4883c49d7ec227b21, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 732998047}
-  smooth: 0.4
-  distance: 10
-  height: 2.4
-  Angle: 4
-  cameraSwitchView: []
-  lineOfSightMask:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  CarUI:
-    tachometerNeedle: {fileID: 1899404119}
-    barShiftGUI: {fileID: 0}
-    speedText: {fileID: 405964126}
-    GearText: {fileID: 511950806}
-  Switch: 0
 --- !u!1 &982690337
 GameObject:
   m_ObjectHideFlags: 0
@@ -3342,6 +3328,10 @@ MonoBehaviour:
   NitroUI: {fileID: 749982197}
   PlayerHealthBar: {fileID: 881536483}
   PlayerShieldBar: {fileID: 1571634258}
+  PowerUpSlot1: {fileID: 0}
+  PowerUpSlot2: {fileID: 0}
+  PowerUpSlot3: {fileID: 0}
+  PowerUpSlot4: {fileID: 0}
 --- !u!1 &999315534
 GameObject:
   m_ObjectHideFlags: 0
@@ -4409,6 +4399,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4ace8b19eeeeef49b371a7c43fc51ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  NitroObject: {fileID: 0}
 --- !u!1 &1367404061
 GameObject:
   m_ObjectHideFlags: 0
@@ -6046,6 +6037,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Nitro: {fileID: 1365044782}
   Shield: {fileID: 160241694}
+  Fix: {fileID: 0}
+  Thorns: {fileID: 0}
 --- !u!114 &1779977076
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6610,7 +6603,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 53dda1653ed4cbc42a05f203a86fc365, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Player: {fileID: 3809012}
+  LapCompleteTrigger: {fileID: 0}
+  HalfLapTrigger: {fileID: 0}
   LapCounterDisplay: {fileID: 1393615858}
   MinutesDisplayTime: {fileID: 154849818}
   SecondsDisplayTime: {fileID: 1326119652}
