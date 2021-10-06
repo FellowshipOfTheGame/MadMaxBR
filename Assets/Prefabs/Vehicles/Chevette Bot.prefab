@@ -2918,25 +2918,70 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   controlMode: 1
-  wheels: []
+  wheels:
+  - model: {fileID: 66612954431940489}
+    collider: {fileID: 5475733864826651687}
+    axel: 0
+    side: 0
+  - model: {fileID: 6245717383519722709}
+    collider: {fileID: 5475733865644583874}
+    axel: 0
+    side: 1
+  - model: {fileID: 6267733441948844239}
+    collider: {fileID: 5475733864489717000}
+    axel: 1
+    side: 0
+  - model: {fileID: 7623247767177515802}
+    collider: {fileID: 5475733865165760453}
+    axel: 1
+    side: 1
   breaktorque: 0
-  centerofMass: {fileID: 0}
+  centerofMass: {fileID: 5475733864043194287}
   downForce: 0
   SteerRadius: 0
   speedTxt: {fileID: 0}
-  driverType: 0
+  driverType: 1
   totalPower: 0
   enginePower:
     serializedVersion: 2
-    m_Curve: []
+    m_Curve:
+    - serializedVersion: 3
+      time: 30.5065
+      value: 985.2025
+      inSlope: 2
+      outSlope: 2
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 913.9016
+      value: 2973.793
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
   gerarType: 0
-  gears: []
+  gears:
+  - 1.8
+  - 1.7
+  - 1.4
+  - 0.9
+  - 0.4
   gearInt: 0
-  maxRPM: []
-  minRPM: 0
+  maxRPM:
+  - 5600
+  - 5400
+  - 5300
+  - 3500
+  - 3500
+  minRPM: 2500
+  KPH: 0
   engineRPM: 0
 --- !u!114 &1038149655
 MonoBehaviour:
@@ -2962,7 +3007,7 @@ MonoBehaviour:
   frontSensorOuterAngle: 30
   ignoredLayerMasks:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 480
   path: {fileID: 0}
   currentNode: 0
   trackWidth: 15

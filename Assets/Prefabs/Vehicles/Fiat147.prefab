@@ -1301,25 +1301,70 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   controlMode: 0
-  wheels: []
+  wheels:
+  - model: {fileID: 2194699851217959680}
+    collider: {fileID: 2497020812603508832}
+    axel: 0
+    side: 0
+  - model: {fileID: 3444104329383626655}
+    collider: {fileID: 3087944052669090963}
+    axel: 0
+    side: 1
+  - model: {fileID: 162084179036890482}
+    collider: {fileID: 7762804667786320106}
+    axel: 1
+    side: 0
+  - model: {fileID: 2315789076154747459}
+    collider: {fileID: 177342443033977171}
+    axel: 1
+    side: 1
   breaktorque: 0
-  centerofMass: {fileID: 0}
+  centerofMass: {fileID: 4555268233824511564}
   downForce: 0
   SteerRadius: 0
   speedTxt: {fileID: 0}
-  driverType: 0
+  driverType: 1
   totalPower: 0
   enginePower:
     serializedVersion: 2
-    m_Curve: []
+    m_Curve:
+    - serializedVersion: 3
+      time: 1
+      value: 1040.5616
+      inSlope: 2
+      outSlope: 2
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1461.6908
+      value: 2980.0767
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
   gerarType: 0
-  gears: []
+  gears:
+  - 1.8
+  - 1.7
+  - 1.4
+  - 0.9
+  - 0.4
   gearInt: 0
-  maxRPM: []
-  minRPM: 0
+  maxRPM:
+  - 5600
+  - 5400
+  - 5300
+  - 3500
+  - 3500
+  minRPM: 2500
+  KPH: 0
   engineRPM: 0
 --- !u!1 &2643613371613889481
 GameObject:
