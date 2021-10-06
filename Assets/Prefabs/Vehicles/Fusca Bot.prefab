@@ -2510,7 +2510,7 @@ Transform:
   m_GameObject: {fileID: 9214946592439358461}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.3, y: 1.3, z: 1.3}
+  m_LocalScale: {x: 3, y: 3, z: 3}
   m_Children:
   - {fileID: 5671705130655383662}
   - {fileID: 5671705130114855047}
@@ -2562,25 +2562,70 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   controlMode: 1
-  wheels: []
+  wheels:
+  - model: {fileID: 6213571635570192202}
+    collider: {fileID: 5671705131726456458}
+    axel: 0
+    side: 0
+  - model: {fileID: 617091229889984969}
+    collider: {fileID: 5671705130756897465}
+    axel: 0
+    side: 1
+  - model: {fileID: 5714813383880705068}
+    collider: {fileID: 5671705131444250562}
+    axel: 1
+    side: 0
+  - model: {fileID: 8697516930183476944}
+    collider: {fileID: 5671705131465925373}
+    axel: 1
+    side: 1
   breaktorque: 0
-  centerofMass: {fileID: 0}
+  centerofMass: {fileID: 5671705130017105721}
   downForce: 0
   SteerRadius: 0
   speedTxt: {fileID: 0}
-  driverType: 0
+  driverType: 1
   totalPower: 0
   enginePower:
     serializedVersion: 2
-    m_Curve: []
+    m_Curve:
+    - serializedVersion: 3
+      time: -39.897377
+      value: 1024.1108
+      inSlope: 2
+      outSlope: 2
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1062.0872
+      value: 3010.3494
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
   gerarType: 0
-  gears: []
+  gears:
+  - 1.8
+  - 1.7
+  - 1.4
+  - 0.9
+  - 0.4
   gearInt: 0
-  maxRPM: []
-  minRPM: 0
+  maxRPM:
+  - 5600
+  - 5400
+  - 5300
+  - 3500
+  - 3500
+  minRPM: 2500
+  KPH: 0
   engineRPM: 0
 --- !u!114 &887227136
 MonoBehaviour:
@@ -2606,7 +2651,7 @@ MonoBehaviour:
   frontSensorOuterAngle: 30
   ignoredLayerMasks:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 480
   path: {fileID: 0}
   currentNode: 0
   trackWidth: 15
