@@ -38,7 +38,7 @@ public struct Wheel// estrutura para saber qual roda é
     public Side side;//lado da roda
 }
 
-public class CarControllerB : MonoBehaviour
+public class CarController : MonoBehaviour
 {
     public ControlMode controlMode;
     private CarMovementAI carMovementAI;
@@ -260,6 +260,7 @@ public class CarControllerB : MonoBehaviour
             Quaternion rot;//variavel rotação da roda
             Vector3 pos;//posição da roda
             w.collider.GetWorldPose(out pos, out rot);
+            //rot = new Quaternion(rot.x, -90f, rot.z, rot.w);
             w.model.transform.position = pos;//recebe a posição do modelo da roda
             w.model.transform.rotation = rot;//recebe a rotação do modelo da roda
         }
