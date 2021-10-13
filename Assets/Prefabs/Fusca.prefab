@@ -865,7 +865,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3015207780299887383}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -875,7 +875,7 @@ Transform:
   - {fileID: 8982472392829306084}
   m_Father: {fileID: 2636042426799856305}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!1 &3015207780440955448
 GameObject:
   m_ObjectHideFlags: 0
@@ -1127,7 +1127,7 @@ GameObject:
   - component: {fileID: 2636042426799856305}
   - component: {fileID: 3449416682671685652}
   - component: {fileID: 3449416682671685653}
-  - component: {fileID: 3449416682671685642}
+  - component: {fileID: 151852181}
   m_Layer: 0
   m_Name: Fusca
   m_TagString: Untagged
@@ -1184,7 +1184,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 3.16, y: 2.26, z: 5.62}
   m_Center: {x: 0, y: 0.44, z: 0}
---- !u!114 &3449416682671685642
+--- !u!114 &151852181
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1198,79 +1198,33 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   controlMode: 0
   wheels:
-  - model: {fileID: 6088918359067861648}
-    collider: {fileID: 3015207780440955451}
-    axel: 0
-    side: 1
   - model: {fileID: 8081003152685196383}
     collider: {fileID: 3015207779348581949}
     axel: 0
     side: 0
-  - model: {fileID: 5806240670385609813}
-    collider: {fileID: 3015207779896515119}
-    axel: 1
+  - model: {fileID: 6088918359067861648}
+    collider: {fileID: 3015207780440955451}
+    axel: 0
     side: 1
   - model: {fileID: 1434999222974998534}
     collider: {fileID: 3015207781192516824}
     axel: 1
     side: 0
-  breaktorque: 9000
-  centerofMass: {fileID: 3015207780818091948}
-  downForce: 50
-  SteerRadius: 5
-  speedTxt: {fileID: 0}
+  - model: {fileID: 5806240670385609813}
+    collider: {fileID: 3015207779896515119}
+    axel: 1
+    side: 1
   driverType: 1
-  totalPower: 100
-  enginePower:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 595.4198
-      value: 285.71387
-      inSlope: 0.293199
-      outSlope: 0.293199
-      tangentMode: 34
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 6264.7944
-      value: 1947.9689
-      inSlope: -0.081365846
-      outSlope: -0.081365846
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.18998536
-    - serializedVersion: 3
-      time: 9231.021
-      value: 298.25266
-      inSlope: -0.08834454
-      outSlope: -0.08834454
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.3941372
-      outWeight: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  gerarType: 0
-  gears:
-  - 5
-  - 1.8
-  - 1.7
-  - 0.9
-  - 0.4
-  gearInt: 0
-  maxRPM:
-  - 5600
-  - 5400
-  - 5300
-  - 3500
-  - 3500
-  minRPM: 2500
-  KPH: 0
-  engineRPM: 0
+  Maxtorque: 20000
+  breaktorque: 5000
+  maxSteelAngle: 30
+  TurnSensitivity: 1
+  centerofMass: {fileID: 3015207780818091948}
+  downForce: 0
+  maxSpeed: 200
+  speed: 0
+  SteerRadius: 0
+  speedTxt: {fileID: 0}
 --- !u!1 &3846717360510639788
 GameObject:
   m_ObjectHideFlags: 0

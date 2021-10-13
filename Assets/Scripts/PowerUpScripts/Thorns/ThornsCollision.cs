@@ -29,7 +29,7 @@ public class ThornsCollision : MonoBehaviour {
                 Debug.Log("otherCar = " + otherCar.gameObject.name);
             }
             float baseCollisionDamage = 0;
-            float collisionDamageModifier = Mathf.Abs(car.GetComponent<CarController>().KPH - otherCar.GetComponent<CarController>().KPH);
+            float collisionDamageModifier = Mathf.Abs(car.GetComponent<CarController>().speed - otherCar.GetComponent<CarController>().speed);
             otherCar.GetComponentInParent<VehicleData>().ReceiveDamage(baseCollisionDamage + collisionDamageModifier); // decreases health of the car
         }
         //Debug.Log(other.attachedRigidbody.mass);
