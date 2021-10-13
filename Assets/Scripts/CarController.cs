@@ -4,11 +4,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-
 public enum ControlMode
 {
     Player, AI
 }
+
 public enum Axel//saber qual eixo esta
 {
     Front, Rear// define qual roda é da frente qual é de tras
@@ -22,11 +22,6 @@ public enum Side//para saber qual lado esta a roda
 public enum DriverType//dizer qual vai ser a tração do carro, se é 4x4 etc
 {
     Front, Rear, full
-}
-
-public enum GearType//tipo de transmissão
-{
-    Automatic, Manual
 }
 
 [Serializable]//aparecer no inspector
@@ -43,11 +38,12 @@ public class CarController : MonoBehaviour
     public ControlMode controlMode;
     private CarMovementAI carMovementAI;
     public Wheel[] wheels;// rodas, o array[] vc define qts rodas são no inspector
-    
+    public DriverType driverType;//variavel controla a tração
     private float torque;//variavel controla torque
-    
+    public float Maxtorque;//força de aceleração
     public float breaktorque;//freios
-   
+    public float maxSteelAngle = 30f;//angulo que as rodas da frente giram
+    public float TurnSensitivity = 1f;// sensibilidade do volante
 
     private Rigidbody rbCar;
     private Vector2 input;
@@ -55,32 +51,12 @@ public class CarController : MonoBehaviour
 
     public Transform centerofMass;//variavel do centro da massa do carro
     public float downForce;//força que o vento exerce sobre o carro
-    
+    public float maxSpeed;//velocidade máxima do carro
+    public float speed;//velocidade que o carro está
 
     public float SteerRadius;//abertura da roda, quanto maior menos vai ser a abertura da curva
 
     public Text speedTxt;//texto velocidade
-
-
-    [Header("Engine")]// motor 
-    public DriverType driverType;//variavel controla a tração
-    [SerializeField]
-    private float totalPower;//força de total do carro 
-
-    
-    public AnimationCurve enginePower;//curva para identificar o torque
-    public GearType gerarType;
-    public float[] gears;//marchas do carro
-    public int gearInt;//marcha atual
-    public float[] maxRPM;//maximo rpm para cambio automatico
-    public float minRPM;//minimo rpm para mudar de marcha cambio automatico
-
-    
-    public float KPH;//velocidade que o carro está
-    [SerializeField]
-    private float engineRPM;//rotação atual do motor
-    private float whellsRPM;//velocidade rotação das rodas
-    private float smoothTime = 0.01f;
 
     // Start is called before the first frame update
     void Start()
@@ -95,7 +71,7 @@ public class CarController : MonoBehaviour
     {
         if (controlMode == ControlMode.Player)
         {
-            GetInput(); //chamar o metodo Input 
+            GetInput(); //chamar o metodo Input
         }
         else if (controlMode == ControlMode.AI)
         {
@@ -109,7 +85,6 @@ public class CarController : MonoBehaviour
         SetBreak();
         Turn();
         AnimateWheels();
-        CalculateEnginePower();
     }
 
     #region MEUS MÉTODOS
@@ -118,8 +93,6 @@ public class CarController : MonoBehaviour
     {
         input.x = Input.GetAxis("Horizontal");
         input.y = Input.GetAxis("Vertical");
-
-        Shifter();
 
         if (Input.GetKeyDown(KeyCode.Space))//ao apertar espaço freia
         {
@@ -138,25 +111,24 @@ public class CarController : MonoBehaviour
         {
             input.x = carMovementAI.steer;
             input.y = carMovementAI.throttle;
-
-            Shifter();
             isBreak = carMovementAI.brake;
         }
     }
 
+
     private void SetTorque()
     {
 
-        KPH = rbCar.velocity.magnitude * 3.6f;
+        speed = rbCar.velocity.magnitude * 3.6f;
 
-        speedTxt.text = KPH.ToString("N0") + "KMH";//marcar a velocidade no texto
+        speedTxt.text = speed.ToString("N0") + "KMH";//marcar a velocidade no texto
 
-        if(driverType == DriverType.full) { torque = totalPower / 4; } else { torque = totalPower / 2; }
-        
-        
-        rbCar.AddForce(Vector3.down * downForce * KPH);//adicionar a força do vento de baixo para cima para ganho de estabilidade em velocidades altas
+        if (driverType == DriverType.full) { torque = Maxtorque / 4; } else { torque = Maxtorque / 2; }
 
-        foreach(Wheel w in wheels)//para cada roda
+        if (speed >= maxSpeed) { torque = 0; }//se a velocidade estiver igual ou maior que a velocidade maxima,cancela o torque
+        rbCar.AddForce(Vector3.down * downForce * speed);//adicionar a força do vento de baixo para cima para ganho de estabilidade em velocidades altas
+
+        foreach (Wheel w in wheels)//para cada roda
         {
             switch (driverType)//verifica se é a roda da frente ou tras e aplica tração
             {
@@ -165,9 +137,9 @@ public class CarController : MonoBehaviour
                     break;
 
                 case DriverType.Front:
-                    if(w.axel == Axel.Front)// se a tração for na frente
+                    if (w.axel == Axel.Front)// se a tração for na frente
                     {
-                     w.collider.motorTorque = input.y * torque;//se a tração for na frente aplique tração nas rodas da frente
+                        w.collider.motorTorque = input.y * torque;//se a tração for na frente aplique tração nas rodas da frente
                     }
                     break;
 
@@ -203,16 +175,16 @@ public class CarController : MonoBehaviour
         float r = SteerRadius;
 
         //conforme a velocidade o steerRadius deve aumentar para que o controle de curva faça curvas mais suaves
-        if (KPH >= 100) { r = 10; }//se a velocidade estiver alta o steerRadius recebe mais assim faz curvas menos bruscas
-        else if (KPH >= 80) { r = 8; }
-        else if (KPH >= 60) { r = 6; }
-        else if (KPH >= 40) { r = 4; }
+        if (speed >= 100) { r = 10; }//se a velocidade estiver alta o steerRadius recebe mais assim faz curvas menos bruscas
+        else if (speed >= 80) { r = 8; }
+        else if (speed >= 60) { r = 6; }
+        else if (speed >= 40) { r = 4; }
         else { r = 2.5f; }// se for menor que 40 diminui o steerAngle
 
 
         foreach (Wheel w in wheels)
         {
-            if(w.axel == Axel.Front)//se for a roda da frente
+            if (w.axel == Axel.Front)//se for a roda da frente
             {
                 if (input.x > 0) //esta indo para direita?
                 {
@@ -227,7 +199,7 @@ public class CarController : MonoBehaviour
                             break;
                     }
                 }
-                else if(input.x < 0)//quando tiver colocando para esquerda
+                else if (input.x < 0)//quando tiver colocando para esquerda
                 {
                     switch (w.side)
                     {
@@ -245,10 +217,10 @@ public class CarController : MonoBehaviour
                     w.collider.steerAngle = 0;
                 }
 
-                
-                
+
+
                 //float steerAngle = input.x * TurnSensitivity * maxSteelAngle;
-               // w.collider.steerAngle = steerAngle;
+                // w.collider.steerAngle = steerAngle;
             }
         }
     }
@@ -260,70 +232,8 @@ public class CarController : MonoBehaviour
             Quaternion rot;//variavel rotação da roda
             Vector3 pos;//posição da roda
             w.collider.GetWorldPose(out pos, out rot);
-            //rot = new Quaternion(rot.x, -90f, rot.z, rot.w);
             w.model.transform.position = pos;//recebe a posição do modelo da roda
             w.model.transform.rotation = rot;//recebe a rotação do modelo da roda
-        }
-    }
-
-    private void WhellRpm()//metodo calcular a velocidade das rodas
-    {
-        float sum = 0;
-        int R = 0;
-
-        foreach (Wheel w in wheels)//para cada roda
-        {
-            sum += w.collider.rpm;
-            R++;
-        }
-
-        if(R !=0) { whellsRPM = sum / R; } else { whellsRPM = 0; }
-
-        //whellsRPM = (R != 0) ? sum / R : 0;
-
-    }
-
-    private void CalculateEnginePower()//calculo da potencia do motor
-    {
-        WhellRpm();
-
-        totalPower = enginePower.Evaluate(engineRPM) * gears[gearInt] * input.y;
-        float velocity = 0;
-        engineRPM = Mathf.SmoothDamp(engineRPM, 1000 + Mathf.Abs(whellsRPM) * 3.6f * gears[gearInt], ref velocity, smoothTime);
-
-
-    }
-
-    private void Shifter()//método para troca de marchas
-    {
-        switch (gerarType)
-        {
-            case GearType.Automatic://configuração cambio automatico
-
-                if(engineRPM > maxRPM[gearInt] && gearInt < gears.Length - 1)
-                {
-                    gearInt++;
-                }
-                else if(engineRPM < minRPM && gearInt > 0)
-                {
-                    gearInt--;
-                }
-
-                break;
-
-            case GearType.Manual:
-
-                if (Input.GetKeyDown(KeyCode.E) && gearInt < gears.Length - 1)//apertar E ´para subir a marcha
-                {
-                    gearInt++;
-                }
-
-                if (Input.GetKeyDown(KeyCode.Q) && gearInt > 0 )//apertar q para reduzir a marcha
-                {
-                    gearInt--;
-                }
-
-                break;
         }
     }
 
