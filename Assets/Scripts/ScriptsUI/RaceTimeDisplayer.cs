@@ -4,10 +4,14 @@ using UnityEngine.UI;
 /// <summary>
 /// This Script is responsible to show on the UI information about the player in the race, as time, position and laps completed.
 /// </summary>
-public class RaceDataDisplayer : MonoBehaviour {
+public class RaceTimeDisplayer : MonoBehaviour {
     public GameObject Player;
+    //public GameObject RaceManager;
 
-    public GameObject LapCounterDisplay;
+    //public GameObject LapCounterDisplay;
+    //public GameObject MaxNumberOfLaps;
+    //public GameObject RacePositionDisplay;
+    //public GameObject MaxRacePositionDisplay;
     public GameObject MinutesDisplayTime;
     public GameObject SecondsDisplayTime;
     public GameObject MillisDisplayTime;
@@ -38,13 +42,18 @@ public class RaceDataDisplayer : MonoBehaviour {
         }
     }
 
+    private void Awake() {
+        
+    }
     private void Start() {
-        PlayerRaceData = Player.transform.GetChild(0).GetComponent<VehicleRaceData>();
+        PlayerRaceData = Player.GetComponent<VehicleRaceData>();
     }
 
     // Update is called once per frame
     void Update() {
-        LapCounterDisplay.GetComponent<Text>().text = "" + PlayerRaceData.GetLapCount();
+        //LapCounterDisplay.GetComponent<Text>().text = "" + PlayerRaceData.GetLapCount();
+        //MaxRacePositionDisplay.GetComponent<Text>().text = "" + RaceManager.GetComponent<RaceManager>().Racers.Count;
+        //MaxNumberOfLaps.GetComponent<Text>().text = "" + RaceManager.GetComponent<RaceManager>().NumberOfLaps;
         UpdateTimeDisplay(PlayerRaceData.RaceTime.GetSeconds(), PlayerRaceData.RaceTime.GetMinutes(), PlayerRaceData.RaceTime.GetMilliseconds(), SecondsDisplayTime, MinutesDisplayTime, MillisDisplayTime);
         UpdateTimeDisplay(PlayerRaceData.LapTime.GetSeconds(), PlayerRaceData.LapTime.GetMinutes(), PlayerRaceData.LapTime.GetMilliseconds(), SecondsDisplayLap, MinutesDisplayLap, MillisDisplayLap);
         if (PlayerRaceData.GetMinCountBest() != 9999) {

@@ -43,16 +43,6 @@ public class VehicleData : MonoBehaviour {
 
     private GameObject playerPowerUps; // stores the object containing the powerUp objects of the car
 
-    // Start is called before the first frame update
-    void Start() {
-        CurCarHealth = MaxCarHealth;
-        CurCarShield = 0;
-        playerPowerUps = gameObject.transform.GetChild(8).gameObject;
-        powerUpSlot1 = -1;
-        powerUpSlot2 = -1;
-        powerUpSlot3 = -1;
-        powerUpSlot4 = -1;
-    }
     /// <summary>
     /// Returns the slot value of a given slotIndex.
     /// </summary>
@@ -117,8 +107,22 @@ public class VehicleData : MonoBehaviour {
             powerUpSlot1 = -1;
         }
     }
+    // Start is called before the first frame update
+    void Start() {
+        CurCarHealth = MaxCarHealth;
+        CurCarShield = 0;
+        //playerPowerUps = gameObject.transform.GetChild(8).gameObject;
+        powerUpSlot1 = -1;
+        powerUpSlot2 = -1;
+        powerUpSlot3 = -1;
+        powerUpSlot4 = -1;
+    }
     // Update is called once per frame
     void Update() {
+        SetCurrentHealth(MaxCarHealth);
+        if (CurCarHealth <= 0) {
+            Destroy(this.gameObject);
+        }
         //if (playerPowerUps.transform.GetChild(0).gameObject.activeSelf) { // if nitro power up is active
 
         //}

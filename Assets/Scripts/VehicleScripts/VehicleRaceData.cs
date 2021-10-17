@@ -8,54 +8,64 @@ public class VehicleRaceData : MonoBehaviour {
     [HideInInspector]
     public Timer LapTime;
 
-    private float LapCounter;
-    private float MinCountBest;
-    private float SecCountBest;
-    private float MilliCountBest;
+    private float lapCounter;
+    private float racePosition;
+
+    private float minCountBest;
+    private float secCountBest;
+    private float milliCountBest;
+
     private bool firstTrigger;
     public void LapCompleted() {
-        LapCounter++;
+        lapCounter++;
         
         bool NewBest = false;
 
-        if (LapTime.GetMinutes() < MinCountBest) {
+        if (LapTime.GetMinutes() < minCountBest) {
             NewBest = true;
-        } else if (LapTime.GetMinutes() == MinCountBest && LapTime.GetSeconds() < SecCountBest) {
+        } else if (LapTime.GetMinutes() == minCountBest && LapTime.GetSeconds() < secCountBest) {
             NewBest = true;
-        } else if (LapTime.GetMinutes() == MinCountBest && LapTime.GetSeconds() == SecCountBest && LapTime.GetMilliseconds() < MilliCountBest) {
+        } else if (LapTime.GetMinutes() == minCountBest && LapTime.GetSeconds() == secCountBest && LapTime.GetMilliseconds() < milliCountBest) {
             NewBest = true;
         }
 
         if (NewBest) {
-            MinCountBest = LapTime.GetMinutes();
-            SecCountBest = LapTime.GetSeconds();
-            MilliCountBest = LapTime.GetMilliseconds();
+            minCountBest = LapTime.GetMinutes();
+            secCountBest = LapTime.GetSeconds();
+            milliCountBest = LapTime.GetMilliseconds();
         }
 
         LapTime.ResetTimer();
     }
 
     public float GetLapCount() {
-        return LapCounter;
+        return lapCounter;
     }
     public float GetMinCountBest() {
-        return MinCountBest;
+        return minCountBest;
     }
     public float GetSecCountBest() {
-        return SecCountBest;
+        return secCountBest;
     }
     public float GetMilliCountBest() {
-        return MilliCountBest;
+        return milliCountBest;
+    }
+    public float GetPosition() {
+        return racePosition;
+    }
+
+    public void SetPosition(float pos) {
+        racePosition = pos;
     }
 
     // Start is called before the first frame update
     void Start() {
         RaceTime = gameObject.AddComponent<Timer>();
         LapTime = gameObject.AddComponent<Timer>();
-        MinCountBest = 9999;
-        SecCountBest = 9999;
-        MilliCountBest = 9999;
-        LapCounter = 0;
+        minCountBest = 9999;
+        secCountBest = 9999;
+        milliCountBest = 9999;
+        lapCounter = 0;
         firstTrigger = true;
     }
 
