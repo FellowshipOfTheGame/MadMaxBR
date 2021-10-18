@@ -8,6 +8,8 @@ public class VehicleRaceData : MonoBehaviour {
     [HideInInspector]
     public Timer LapTime;
 
+    public TrackerNode TrackerNode;
+
     private float lapCounter;
     private float racePosition;
 
@@ -50,11 +52,11 @@ public class VehicleRaceData : MonoBehaviour {
     public float GetMilliCountBest() {
         return milliCountBest;
     }
-    public float GetPosition() {
+    public float GetRacePosition() {
         return racePosition;
     }
 
-    public void SetPosition(float pos) {
+    public void SetRacePosition(float pos) {
         racePosition = pos;
     }
 
@@ -70,13 +72,15 @@ public class VehicleRaceData : MonoBehaviour {
     }
 
     private void OnTriggerEnter(Collider collider) {
-        Debug.Log("PASSOU");
         if (collider.gameObject.CompareTag("Finish")) {
             if (firstTrigger) {
                 firstTrigger = false;
             } else {
                 LapCompleted();
             }
+        }
+        if (collider.gameObject.CompareTag("TrackerNode")) {
+            Debug.Log(collider.gameObject.name);
         }
     }
 }

@@ -34,10 +34,10 @@ public class PlayerDataDisplayer : MonoBehaviour {
         //PlayerShieldBar = PlayerCarDataUI.transform.GetChild(3).transform.GetChild(0).gameObject;
     }
 
-    // Update is called once per frame
+    // Update is called once per frameGetPosition
     void Update() {
         LapCounterDisplay.GetComponent<Text>().text = "" + PlayerRaceData.GetLapCount();
-        RacePositionDisplay.GetComponent<Text>().text = "" + PlayerRaceData.GetPosition();
+        RacePositionDisplay.GetComponent<Text>().text = "" + PlayerRaceData.GetRacePosition();
         MaxRacePositionDisplay.GetComponent<Text>().text = "" + RaceManager.Racers.Count;
         MaxNumberOfLaps.GetComponent<Text>().text = "" + RaceManager.NumberOfLaps;
         // updates health and shield bar
