@@ -47,13 +47,13 @@ public class PlayerDataDisplayer : MonoBehaviour {
         PowerUpSlot2.GetComponent<Text>().text = "" + Player.GetComponent<VehicleData>().GetPowerUpSlotValue(2);
         PowerUpSlot3.GetComponent<Text>().text = "" + Player.GetComponent<VehicleData>().GetPowerUpSlotValue(3);
         PowerUpSlot4.GetComponent<Text>().text = "" + Player.GetComponent<VehicleData>().GetPowerUpSlotValue(4);
-
+        /*
         if (PlayerPowerUps.transform.GetChild(0).gameObject.activeSelf) { // if nitro power up is active
             if (!NitroUI.activeSelf) {
                 NitroUI.SetActive(true);
             }
             UpdateNitroBar(PlayerPowerUps.transform.GetChild(0).GetComponent<NitroPU>().GetNitroAmount());
-        }
+        }*/
     }
 
     public void UpdateNitroBar(float amount) {

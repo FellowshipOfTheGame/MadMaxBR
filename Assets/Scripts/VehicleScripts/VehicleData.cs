@@ -119,13 +119,15 @@ public class VehicleData : MonoBehaviour {
     }
     // Update is called once per frame
     void Update() {
-        SetCurrentHealth(MaxCarHealth);
+        //SetCurrentHealth(MaxCarHealth);
         if (CurCarHealth <= 0) {
             Destroy(this.gameObject);
         }
         //if (playerPowerUps.transform.GetChild(0).gameObject.activeSelf) { // if nitro power up is active
 
         //}
+        ReceiveDamage(1);
+        Debug.Log(GetCurrentHealth());
     }
 
     public void SetCurrentHealth(float val) {
