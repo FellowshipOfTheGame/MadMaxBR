@@ -43,7 +43,21 @@ public class RaceManager : MonoBehaviour {
             // kills
             RunnerRow.transform.GetChild(3).gameObject.GetComponent<Text>().text = VehicleInfo.GetKillsCount().ToString();
             // time
-            RunnerRow.transform.GetChild(4).gameObject.GetComponent<Text>().text = "" + VehicleRaceInfo.GetMinCountTotal().ToString() + ":" + VehicleRaceInfo.GetSecCountTotal().ToString() + "." + VehicleRaceInfo.GetMilliCountTotal().ToString();
+
+            string minCount;
+        if (VehicleRaceInfo.GetMinCountTotal() <= 9) {
+                secCount = VehicleRaceInfo.GetMinCountTotal().ToString();
+        } else {
+            SecondsDisplay.GetComponent<Text>().text = "" + SecCount + ".";
+        }
+
+        if (MinCount <= 9) {
+            MinutesDisplay.GetComponent<Text>().text = "0" + MinCount + ":";
+        } else {
+            MinutesDisplay.GetComponent<Text>().text = "" + MinCount + ":";
+        } 
+            
+            RunnerRow.transform.GetChild(4).gameObject.GetComponent<Text>().text = "" +  + ":" + VehicleRaceInfo.GetSecCountTotal().ToString() + "." + VehicleRaceInfo.GetMilliCountTotal().ToString("F0");
             RunnerRow.gameObject.SetActive(true);
         }
     }
