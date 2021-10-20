@@ -20,18 +20,17 @@ public class RaceManager : MonoBehaviour {
 
     public void FinishRace() {
         GameHUD.gameObject.SetActive(false);
-        SetupRaceResults();
         RaceResults.gameObject.SetActive(true);
     }
 
-    private void SetupRaceResults() {
+    private void UpdateRaceResultsTable() {
         GameObject RunnersList = RaceResults.transform.GetChild(0).gameObject;
         for (int i = 0; i < Racers.Count; i++) {
             int position = i + 1;
             VehicleData VehicleInfo = Racers[i].GetComponent<VehicleData>();
             VehicleRaceData VehicleRaceInfo = Racers[i].GetComponent<VehicleRaceData>();
             GameObject RunnerRow = RunnersList.transform.GetChild(position).gameObject;
-            // postion
+            // position
             if (position < 10) {
                 RunnerRow.transform.GetChild(0).gameObject.GetComponent<Text>().text = "0" + position.ToString();
             } else {
@@ -84,8 +83,10 @@ public class RaceManager : MonoBehaviour {
     void Update() {
         UpdateRacersPositions();
         for (int i = 0; i < Racers.Count; i++) {
-            if (Racers[i].GetComponent<VehicleRaceData>().GetLapCount() >= NumberOfLaps) {
-                Racers[i].GetComponent<VehicleRaceData>().RaceCompleted();
+            // if a car completes the last lap and hasnt completed the race yet
+            if (!Racers[i].GetComponent<VehicleRaceData>().HasCompletedRace() && Racers[i].GetComponent<VehicleRaceData>().GetLapCount() == NumberOfLaps) {
+                Racers[i].GetComponent<VehicleRaceData>().CompleteRace();
+                UpdateRaceResultsTable();
                 if (Racers[i].tag == "Player") {
                     FinishRace();
                 }
