@@ -35,15 +35,15 @@ public class Timer : MonoBehaviour {
     }
 
     public float GetMilliseconds() {
-        return MilliCount;
+        return (int)MilliCount;
     }
 
     public float GetSeconds() {
-        return SecCount;
+        return (int)SecCount;
     }
 
     public float GetMinutes() {
-        return MinCount;
+        return (int)MinCount;
     }
 
     public float GetTimeInSeconds() {

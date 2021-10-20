@@ -20,7 +20,7 @@ public class VehicleRaceData : MonoBehaviour {
     private float minCountTotal;
     private float secCountTotal;
     private float milliCountTotal;
-
+    // controls if the car has completed the race or not
     private bool completedRace;
     // variable to control when the car reach the finish line for the first time, when the race starts
     private bool firstTrigger;
@@ -49,9 +49,9 @@ public class VehicleRaceData : MonoBehaviour {
     // when the race is completed, the total time spent on the race is stored
     public void CompleteRace() {
         completedRace = true;
-        minCountTotal = LapTime.GetMinutes();
-        secCountTotal = LapTime.GetSeconds();
-        milliCountTotal = LapTime.GetMilliseconds();
+        minCountTotal = RaceTime.GetMinutes();
+        secCountTotal = RaceTime.GetSeconds();
+        milliCountTotal = RaceTime.GetMilliseconds();
     }
 
     public float GetLapCount() {
@@ -93,11 +93,11 @@ public class VehicleRaceData : MonoBehaviour {
         minCountBest = 9999;
         secCountBest = 9999;
         milliCountBest = 9999;
-        minCountBest = 0;
-        secCountBest = 0;
-        milliCountBest = 0;
+        minCountTotal = 0;
+        secCountTotal = 0;
+        milliCountTotal = 0;
         lapCounter = 0;
-        FinishedRace = false;
+        completedRace = false;
         firstTrigger = true;
     }
     // if the car reaches the finish line
