@@ -15,13 +15,11 @@ public class InitialPointTriggerManager : MonoBehaviour {
     }
 
     private void OnTriggerEnter(Collider col) {
-        Debug.Log(col.gameObject.name);
         if (firstActivation) {
             firstActivation = false;
             HalfLapTrigger.SetActive(true);
             InitialPointTrigger.SetActive(false);
         } else {
-            //col.GetComponent<VehicleRaceData>().LapCompleted();
             HalfLapTrigger.SetActive(true);
             InitialPointTrigger.SetActive(false);
         }
