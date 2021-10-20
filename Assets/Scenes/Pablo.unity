@@ -623,7 +623,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2627230987448473896, guid: 21aa7728147f1b9408839c216c180a7e, type: 3}
       propertyPath: RunnerName
-      value: Zezinho
+      value: "Jo\xE3ozin do Mato"
       objectReference: {fileID: 0}
     - target: {fileID: 2627230987448473898, guid: 21aa7728147f1b9408839c216c180a7e, type: 3}
       propertyPath: m_Name
@@ -3564,7 +3564,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1536838528232066444, guid: 05aef93d0a884804389ab16818cbbd38, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -974.5
+      value: -1082.6
       objectReference: {fileID: 0}
     - target: {fileID: 1536838528232066444, guid: 05aef93d0a884804389ab16818cbbd38, type: 3}
       propertyPath: m_LocalPosition.z
@@ -3974,7 +3974,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 21b66410723648246869f177ce64c12f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  RunnerName: Zezinho
+  RunnerName: "Jo\xE3ozin do Mato"
   MaxCarHealth: 1000
   MaxCarShield: 1000
 --- !u!114 &1285376908
@@ -4980,7 +4980,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2627230987448473896, guid: 21aa7728147f1b9408839c216c180a7e, type: 3}
       propertyPath: RunnerName
-      value: "Jo\xE3ozin do Mato"
+      value: Zezinho
       objectReference: {fileID: 0}
     - target: {fileID: 2627230987448473898, guid: 21aa7728147f1b9408839c216c180a7e, type: 3}
       propertyPath: m_Name
@@ -6187,7 +6187,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 21b66410723648246869f177ce64c12f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  RunnerName: "Jo\xE3ozin do Mato"
+  RunnerName: Zezinho
   MaxCarHealth: 1000
   MaxCarShield: 1000
 --- !u!114 &2102433606
@@ -6406,6 +6406,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4842001071405009033, guid: fbc2cf64ee99ecb489b39dab97c33751, type: 3}
+      propertyPath: m_FontData.m_Font
+      value: 
+      objectReference: {fileID: 12800000, guid: 748193d68a6a1474dbaeb5568b702bcf, type: 3}
     - target: {fileID: 4842001071488808523, guid: fbc2cf64ee99ecb489b39dab97c33751, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -6418,6 +6422,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4842001071604584294, guid: fbc2cf64ee99ecb489b39dab97c33751, type: 3}
+      propertyPath: m_FontData.m_Font
+      value: 
+      objectReference: {fileID: 12800000, guid: 748193d68a6a1474dbaeb5568b702bcf, type: 3}
     - target: {fileID: 4842001071875814987, guid: fbc2cf64ee99ecb489b39dab97c33751, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -6426,6 +6434,18 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4842001072230610811, guid: fbc2cf64ee99ecb489b39dab97c33751, type: 3}
+      propertyPath: m_FontData.m_Font
+      value: 
+      objectReference: {fileID: 12800000, guid: 748193d68a6a1474dbaeb5568b702bcf, type: 3}
+    - target: {fileID: 4842001072277677834, guid: fbc2cf64ee99ecb489b39dab97c33751, type: 3}
+      propertyPath: m_FontData.m_Font
+      value: 
+      objectReference: {fileID: 12800000, guid: 748193d68a6a1474dbaeb5568b702bcf, type: 3}
+    - target: {fileID: 4842001072303065631, guid: fbc2cf64ee99ecb489b39dab97c33751, type: 3}
+      propertyPath: m_FontData.m_Font
+      value: 
+      objectReference: {fileID: 12800000, guid: 748193d68a6a1474dbaeb5568b702bcf, type: 3}
     - target: {fileID: 4842001072692827508, guid: fbc2cf64ee99ecb489b39dab97c33751, type: 3}
       propertyPath: m_Name
       value: RaceResults

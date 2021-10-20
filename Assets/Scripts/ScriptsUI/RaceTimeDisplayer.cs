@@ -27,15 +27,21 @@ public class RaceTimeDisplayer : MonoBehaviour {
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     void UpdateTimeDisplay(float SecCount, float MinCount, float MilliCount, GameObject SecondsDisplay, GameObject MinutesDisplay, GameObject MillisecondsDisplay) {
-        MillisecondsDisplay.GetComponent<Text>().text = "" + MilliCount.ToString("F0");
+        if (MilliCount < 10) {
+            MillisecondsDisplay.GetComponent<Text>().text = "00" + MilliCount.ToString("F0");
+        } else if (MilliCount < 100 && MilliCount >= 10) {
+            MillisecondsDisplay.GetComponent<Text>().text = "0" + MilliCount.ToString("F0");
+        } else {
+            MillisecondsDisplay.GetComponent<Text>().text = "" + MilliCount.ToString("F0");
+        }
 
-        if (SecCount <= 9) {
+        if (SecCount < 10) {
             SecondsDisplay.GetComponent<Text>().text = "0" + SecCount + ".";
         } else {
             SecondsDisplay.GetComponent<Text>().text = "" + SecCount + ".";
         }
 
-        if (MinCount <= 9) {
+        if (MinCount < 10) {
             MinutesDisplay.GetComponent<Text>().text = "0" + MinCount + ":";
         } else {
             MinutesDisplay.GetComponent<Text>().text = "" + MinCount + ":";

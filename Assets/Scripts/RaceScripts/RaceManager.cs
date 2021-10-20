@@ -43,21 +43,34 @@ public class RaceManager : MonoBehaviour {
             // kills
             RunnerRow.transform.GetChild(3).gameObject.GetComponent<Text>().text = VehicleInfo.GetKillsCount().ToString();
             // time
+            if (!VehicleInfo.IsDead()) {
+                string MinCount;
+                if (VehicleRaceInfo.GetMinCountTotal() <= 9) {
+                    MinCount = "0" + VehicleRaceInfo.GetMinCountTotal().ToString();
+                } else {
+                    MinCount = VehicleRaceInfo.GetMinCountTotal().ToString();
+                }
+                string SecCount;
+                if (VehicleRaceInfo.GetSecCountTotal() <= 9) {
+                    SecCount = "0" + VehicleRaceInfo.GetSecCountTotal().ToString();
+                } else {
+                    SecCount = VehicleRaceInfo.GetSecCountTotal().ToString();
+                }
+                string MilliCount;
+                if (VehicleRaceInfo.GetMilliCountTotal() < 10) {
+                    MilliCount = "00" + VehicleRaceInfo.GetMilliCountTotal().ToString("F0");
+                } else if (VehicleRaceInfo.GetMilliCountTotal() < 100 && VehicleRaceInfo.GetMilliCountTotal() >= 10) {
+                    MilliCount = "0" + VehicleRaceInfo.GetMilliCountTotal().ToString("F0");
+                } else {
+                    MilliCount = "" + VehicleRaceInfo.GetMilliCountTotal().ToString("F0");
+                }
 
-            string minCount;
-        if (VehicleRaceInfo.GetMinCountTotal() <= 9) {
-                secCount = VehicleRaceInfo.GetMinCountTotal().ToString();
-        } else {
-            SecondsDisplay.GetComponent<Text>().text = "" + SecCount + ".";
-        }
-
-        if (MinCount <= 9) {
-            MinutesDisplay.GetComponent<Text>().text = "0" + MinCount + ":";
-        } else {
-            MinutesDisplay.GetComponent<Text>().text = "" + MinCount + ":";
-        } 
-            
-            RunnerRow.transform.GetChild(4).gameObject.GetComponent<Text>().text = "" +  + ":" + VehicleRaceInfo.GetSecCountTotal().ToString() + "." + VehicleRaceInfo.GetMilliCountTotal().ToString("F0");
+                RunnerRow.transform.GetChild(4).gameObject.GetComponent<Text>().text = "" + MinCount + ":" + SecCount + "." + MilliCount;
+            } else {
+                RunnerRow.GetComponent<Image>().color = new Color32(255,0,0,100);
+                RunnerRow.transform.GetChild(4).gameObject.GetComponent<Text>().text = "ELIMINADO";
+                //RunnerRow.transform.GetChild(4).gameObject.GetComponent<Text>().color = new Color32(255, 0, 0, 100);
+            }
             RunnerRow.gameObject.SetActive(true);
         }
     }

@@ -67,13 +67,13 @@ public class VehicleRaceData : MonoBehaviour {
         return milliCountBest;
     }
     public float GetMinCountTotal() {
-        return minCountBest;
+        return minCountTotal;
     }
     public float GetSecCountTotal() {
-        return secCountBest;
+        return secCountTotal;
     }
     public float GetMilliCountTotal() {
-        return milliCountBest;
+        return milliCountTotal;
     }
     public float GetRacePosition() {
         return racePosition;

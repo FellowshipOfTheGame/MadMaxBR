@@ -121,12 +121,17 @@ public class VehicleData : MonoBehaviour {
         return killsCount;
     }
 
+    public bool IsDead() {
+        return isDead;
+    }
+
     // Start is called before the first frame update
     public void Start() {
         curCarHealth = MaxCarHealth;
         curCarShield = 0;
         // setup number of kills
         killsCount = 0;
+        isDead = false;
         //playerPowerUps = gameObject.transform.GetChild(8).gameObject;
         powerUpSlot1 = -1;
         powerUpSlot2 = -1;
