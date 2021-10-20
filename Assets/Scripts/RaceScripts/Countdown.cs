@@ -35,8 +35,6 @@ public class Countdown : MonoBehaviour {
         CountdownUI.SetActive(false);
         PlayerRaceTimeDisplayer.SetActive(true);
         GoAudio.Play();
-        //Player.transform.GetChild(0).GetComponent<VehicleControl>().activeControl = true;
-        //PlayerControls.GetComponent<VehicleControl>().activeControl = true;
         RaceManager.StartRace();
     }
     
