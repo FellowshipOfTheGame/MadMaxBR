@@ -3,16 +3,16 @@ using UnityEngine.UI;
 
 public class LapTimeManager : MonoBehaviour {
 
-    private int LapCounter;
+    private int lapCounter;
     private int MinCountTotal;
     private int MinCountLap;
-    private int MinCountBest;
+    private int minCountBest;
     private int SecCountTotal;
     private int SecCountLap;
-    private int SecCountBest;
+    private int secCountBest;
     private float MilliCountTotal;
     private float MilliCountLap;
-    private float MilliCountBest;
+    private float milliCountBest;
     private bool NewBest;
 
     public GameObject LapCompleteTrigger;
@@ -35,10 +35,10 @@ public class LapTimeManager : MonoBehaviour {
         MinCountLap = 0;
         SecCountLap = 0;
         MilliCountLap = 0;
-        MinCountBest = 9999;
-        SecCountBest = 9999;
-        MilliCountBest = 9999;
-        LapCounter = 0;
+        minCountBest = 9999;
+        secCountBest = 9999;
+        milliCountBest = 9999;
+        lapCounter = 0;
     }
 
     void UpdateTimeDisplay(int SecCount, int MinCount, float MilliCount, GameObject SecondsDisplay, GameObject MinutesDisplay, GameObject MillisecondsDisplay) {
@@ -58,24 +58,24 @@ public class LapTimeManager : MonoBehaviour {
     }
 
     public void LapCompleted() {
-        LapCounter++;
-        LapCounterDisplay.GetComponent<Text>().text = "" + LapCounter;
+        lapCounter++;
+        LapCounterDisplay.GetComponent<Text>().text = "" + lapCounter;
 
         NewBest = false;
 
-        if (MinCountLap < MinCountBest) {
+        if (MinCountLap < minCountBest) {
             NewBest = true;
-        } else if (MinCountLap == MinCountBest && SecCountLap < SecCountBest) {
+        } else if (MinCountLap == minCountBest && SecCountLap < secCountBest) {
             NewBest = true;
-        } else if (MinCountLap == MinCountBest && SecCountLap == SecCountBest && MilliCountLap < MilliCountBest) {
+        } else if (MinCountLap == minCountBest && SecCountLap == secCountBest && MilliCountLap < milliCountBest) {
             NewBest = true;
         }
 
         if (NewBest) {
-            MinCountBest = MinCountLap;
-            SecCountBest = SecCountLap;
-            MilliCountBest = MilliCountLap;
-            UpdateTimeDisplay(SecCountBest, MinCountBest, MilliCountBest, SecondsDisplayBest, MinutesDisplayBest, MillisDisplayBest);
+            minCountBest = MinCountLap;
+            secCountBest = SecCountLap;
+            milliCountBest = MilliCountLap;
+            UpdateTimeDisplay(secCountBest, minCountBest, milliCountBest, SecondsDisplayBest, MinutesDisplayBest, MillisDisplayBest);
         }
 
         MinCountLap = 0;
