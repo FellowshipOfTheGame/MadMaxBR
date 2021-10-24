@@ -121,7 +121,10 @@ public class CarController : MonoBehaviour
 
         speed = rbCar.velocity.magnitude * 3.6f;
 
-        speedTxt.text = speed.ToString("N0");//marcar a velocidade no texto
+        if (speedTxt != null) {
+            speedTxt.text = speed.ToString("N0");//marcar a velocidade no texto
+        }
+        
 
         if (driverType == DriverType.full) { torque = Maxtorque / 4; } else { torque = Maxtorque / 2; }
 

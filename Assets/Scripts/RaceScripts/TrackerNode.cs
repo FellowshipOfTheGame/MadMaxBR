@@ -6,7 +6,7 @@ using UnityEngine;
 public class TrackerNode : MonoBehaviour {
     // Update is called once per frame
     private void OnTriggerEnter(Collider col) {
-        if (col.CompareTag("Car")) {
+        if (col.CompareTag("Player") || col.CompareTag("AI")) {
             col.GetComponent<VehicleRaceData>().TrackerNode = this;
         }
     }
