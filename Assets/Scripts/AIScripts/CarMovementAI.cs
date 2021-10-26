@@ -9,7 +9,11 @@ public enum AiState
 public class CarMovementAI : MonoBehaviour
 {
     [Header("Sensors")]
-    [SerializeField] private Transform[] sensorsTransforms;
+    [SerializeField] private Transform leftSensorTransform;
+    [SerializeField] private Transform leftInnerSensorTransform;
+    [SerializeField] private Transform rightSensorTransform;
+    [SerializeField] private Transform rightInnerSensorTransform;
+    [SerializeField] private Transform horizontalSensorTransform;
     [SerializeField] private float sensorLength = 5f;
     [SerializeField] private float horizontalSensorLength = 2f;
     [SerializeField] private float frontSensorInnerAngle = 15f;
@@ -94,16 +98,16 @@ public class CarMovementAI : MonoBehaviour
         RaycastHit[] hits = new RaycastHit[5];
 
         // first front left sensor
-        if (Physics.Raycast(sensorsTransforms[0].position, Quaternion.AngleAxis(-frontSensorOuterAngle, transform.up) * transform.forward, out hits[0], sensorLength, ~ignoredLayerMasks))
+        if (Physics.Raycast(leftSensorTransform.position, Quaternion.AngleAxis(-frontSensorOuterAngle, transform.up) * transform.forward, out hits[0], sensorLength, ~ignoredLayerMasks))
         {
-            Debug.DrawLine(sensorsTransforms[0].position, hits[0].point);
+            Debug.DrawLine(leftSensorTransform.position, hits[0].point);
             Debug.Log("Sensor 1 da esquerda");
 
             aiState = AiState.Avoiding;
             steer = 1f;
             throttle = minPositiveThrottle;
 
-            if (Vector3.Distance(hits[0].point, sensorsTransforms[0].position) <= minDistanceToReverse)
+            if (Vector3.Distance(hits[0].point, leftSensorTransform.position) <= minDistanceToReverse)
             {
                 throttle = -1f;
                 steer = -1f;
@@ -111,16 +115,16 @@ public class CarMovementAI : MonoBehaviour
         }
 
         // second front right angle
-        else if (Physics.Raycast(sensorsTransforms[3].position, Quaternion.AngleAxis(frontSensorOuterAngle, transform.up) * transform.forward, out hits[3], sensorLength, ~ignoredLayerMasks))
+        else if (Physics.Raycast(rightSensorTransform.position, Quaternion.AngleAxis(frontSensorOuterAngle, transform.up) * transform.forward, out hits[3], sensorLength, ~ignoredLayerMasks))
         {
-            Debug.DrawLine(sensorsTransforms[3].position, hits[3].point);
+            Debug.DrawLine(rightSensorTransform.position, hits[3].point);
             Debug.Log("Sensor 2 da direita");
 
             aiState = AiState.Avoiding;
             steer = -1f;
             throttle = minPositiveThrottle;
 
-            if (Vector3.Distance(hits[3].point, sensorsTransforms[3].position) <= minDistanceToReverse)
+            if (Vector3.Distance(hits[3].point, rightSensorTransform.position) <= minDistanceToReverse)
             {
                 throttle = -1f;
                 steer = 1f;
@@ -128,16 +132,16 @@ public class CarMovementAI : MonoBehaviour
         }
 
         // second front left sensor
-        else if (Physics.Raycast(sensorsTransforms[1].position, Quaternion.AngleAxis(-frontSensorInnerAngle, transform.up) * transform.forward, out hits[1], sensorLength, ~ignoredLayerMasks))
+        else if (Physics.Raycast(leftInnerSensorTransform.position, Quaternion.AngleAxis(-frontSensorInnerAngle, transform.up) * transform.forward, out hits[1], sensorLength, ~ignoredLayerMasks))
         {
-            Debug.DrawLine(sensorsTransforms[1].position, hits[1].point);
+            Debug.DrawLine(leftInnerSensorTransform.position, hits[1].point);
             Debug.Log("Sensor 2 da esquerda");
 
             aiState = AiState.Avoiding;
             steer = 0.5f;
             throttle = minPositiveThrottle;
 
-            if (Vector3.Distance(hits[1].point, sensorsTransforms[1].position) <= minDistanceToReverse)
+            if (Vector3.Distance(hits[1].point, leftInnerSensorTransform.position) <= minDistanceToReverse)
             {
                 throttle = -1f;
                 steer = -0.5f;
@@ -145,24 +149,24 @@ public class CarMovementAI : MonoBehaviour
         }
 
         // first front right sensor;
-        else if (Physics.Raycast(sensorsTransforms[2].position, Quaternion.AngleAxis(frontSensorInnerAngle, transform.up) * transform.forward, out hits[2], sensorLength, ~ignoredLayerMasks))
+        else if (Physics.Raycast(rightInnerSensorTransform.position, Quaternion.AngleAxis(frontSensorInnerAngle, transform.up) * transform.forward, out hits[2], sensorLength, ~ignoredLayerMasks))
         {
-            Debug.DrawLine(sensorsTransforms[2].position, hits[2].point);
+            Debug.DrawLine(rightInnerSensorTransform.position, hits[2].point);
             Debug.Log("Sensor 1 da direita");
 
             aiState = AiState.Avoiding;
             steer = -0.5f;
             throttle = minPositiveThrottle;
 
-            if (Vector3.Distance(hits[2].point, sensorsTransforms[2].position) <= minDistanceToReverse)
+            if (Vector3.Distance(hits[2].point, rightInnerSensorTransform.position) <= minDistanceToReverse)
             {
                 throttle = -1f;
                 steer = 0.5f;
             }
         }
-        else if (Physics.Raycast(sensorsTransforms[4].position, transform.right, out hits[4], horizontalSensorLength, ~ignoredLayerMasks))
+        else if (Physics.Raycast(horizontalSensorTransform.position, transform.right, out hits[4], horizontalSensorLength, ~ignoredLayerMasks))
         {
-            Debug.DrawLine(sensorsTransforms[4].position, hits[4].point, Color.blue);
+            Debug.DrawLine(horizontalSensorTransform.position, hits[4].point, Color.blue);
             Debug.Log("Sensor horizontal");
 
             aiState = AiState.Avoiding;

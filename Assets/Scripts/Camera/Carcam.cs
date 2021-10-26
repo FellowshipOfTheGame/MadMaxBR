@@ -3,29 +3,44 @@ using System.Collections;
 
 public class Carcam : MonoBehaviour
 {
-    public Transform target;
-    public float distance = 3.0f;
-    public float height = 3.0f;
-    public float damping = 5.0f;
-    public bool smoothRotation = true;
-    public bool followBehind = true;
-    public float rotationDamping = 10.0f;
+    private Transform rootNode;
+    private Transform cam;
+    private Transform car;
+    private Rigidbody rbCar;
 
-    void Update()
+    public float rotationThreshold = 1f;
+    public float cameraStickness = 10f;
+    public float cameraRotationSpeed = 5f;
+
+    private void Awake()
     {
-        Vector3 wantedPosition;
-        if (followBehind)
-            wantedPosition = target.TransformPoint(0, height, -distance);
-        else
-            wantedPosition = target.TransformPoint(0, height, distance);
+        rootNode = transform;
+        cam = GetComponentInChildren<Camera>().transform;
+        car = rootNode.parent.transform;
+        rbCar = rootNode.parent.GetComponent<Rigidbody>();
+    }
 
-        transform.position = Vector3.Lerp(transform.position, wantedPosition, Time.deltaTime * damping);
+    private void Start()
+    {
+        rootNode.parent = null;
+    }
 
-        if (smoothRotation)
+    private void FixedUpdate()
+    {
+        Quaternion lookAt;
+
+        rootNode.position = Vector3.Lerp(rootNode.position, car.position, cameraStickness * Time.fixedDeltaTime);
+
+        if (rbCar.velocity.magnitude < rotationThreshold)
         {
-            Quaternion wantedRotation = Quaternion.LookRotation(target.position - transform.position, target.up);
-            transform.rotation = Quaternion.Slerp(transform.rotation, wantedRotation, Time.deltaTime * rotationDamping);
+            lookAt = Quaternion.LookRotation(car.forward);
         }
-        else transform.LookAt(target, target.up);
+        else
+        {
+            lookAt = Quaternion.LookRotation(rbCar.velocity.normalized);
+        }
+
+        lookAt = Quaternion.Slerp(rootNode.rotation, lookAt, cameraRotationSpeed * Time.fixedDeltaTime);
+        rootNode.rotation = lookAt;
     }
 }
