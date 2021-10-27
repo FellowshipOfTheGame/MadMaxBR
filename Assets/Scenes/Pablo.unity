@@ -3977,6 +3977,7 @@ MonoBehaviour:
   RunnerName: "Jo\xE3ozin do Mato"
   MaxCarHealth: 1000
   MaxCarShield: 1000
+  isDead: 0
 --- !u!114 &1285376908
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4977,6 +4978,10 @@ PrefabInstance:
     - target: {fileID: 2627230987271492772, guid: 21aa7728147f1b9408839c216c180a7e, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2627230987448473896, guid: 21aa7728147f1b9408839c216c180a7e, type: 3}
+      propertyPath: isDead
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2627230987448473896, guid: 21aa7728147f1b9408839c216c180a7e, type: 3}
       propertyPath: RunnerName
@@ -6190,6 +6195,7 @@ MonoBehaviour:
   RunnerName: Zezinho
   MaxCarHealth: 1000
   MaxCarShield: 1000
+  isDead: 1
 --- !u!114 &2102433606
 MonoBehaviour:
   m_ObjectHideFlags: 0

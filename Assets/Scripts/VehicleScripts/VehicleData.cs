@@ -15,7 +15,7 @@ public class VehicleData : MonoBehaviour {
 
     private int killsCount;
 
-    private bool isDead;
+    public bool isDead;
 
     [HideInInspector]
     //public PowerUp[] powerUps;
