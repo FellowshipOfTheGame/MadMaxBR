@@ -15,6 +15,13 @@ public class WeaponAI : MonoBehaviour
     [SerializeField] private WeaponState weaponState = WeaponState.idle;
     [SerializeField] private Animator weaponAnimator;
 
+    private Collider[] hitColliders;
+    private int hitColliderLength;
+    private float[] distances;
+    private int smallestDistanceIndex;
+    private int i;
+    private Transform directionPoint;
+
     void Start()
     {
 
@@ -27,32 +34,34 @@ public class WeaponAI : MonoBehaviour
 
     private void ChooseTarget()
     {
-        Collider[] hitColliders = Physics.OverlapSphere(transform.position, shootRadius, carMask);
-        List<Collider> hitCollidersList = new List<Collider>(hitColliders);
-        int selfColliderRemoveindex = 0;
+        hitColliders = Physics.OverlapSphere(transform.position, shootRadius, carMask);
+        //List<Collider> hitCollidersList = new List<Collider>(hitColliders);
+        //int selfColliderRemoveindex = 0;
 
-        for (int i = 0; i < hitCollidersList.Count; i++)
+        /*
+        for (int i = 0; i < hitColliders.Length; i++)
         {
-            if (hitCollidersList[i].transform.root == transform.root)
+            if (hitColliders[i].transform.root == transform.root)
             {
                 selfColliderRemoveindex = i;
             }
         }
-        hitCollidersList.RemoveAt(selfColliderRemoveindex);
+        hitColliders.Remove(selfColliderRemoveindex);*/
 
-        if (hitCollidersList.Count > 0)
+        hitColliderLength = hitColliders.Length;
+
+        if (hitColliderLength > 1)
         {
             weaponState = WeaponState.target;
-            float[] distances = new float[hitCollidersList.Count];
-            int smallestDistanceIndex = 0;
+            distances = new float[hitColliderLength - 1];
+            smallestDistanceIndex = 0;
 
-            for (int i = 0; i < hitCollidersList.Count; i++)
+            for (i = 0; i < hitColliderLength - 1; i++)
             {
-                distances[i] = (weaponBarrelEnd.transform.position - hitCollidersList[i].transform.position).sqrMagnitude; // sqrMagnitude is more efficient than Vector3.Distance
+                distances[i] = (weaponBarrelEnd.transform.position - hitColliders[i + 1].transform.position).sqrMagnitude; // sqrMagnitude is more efficient than Vector3.Distance
             }
 
-
-            for (int i = 0; i < distances.Length; i++)
+            for (i = 0; i < hitColliderLength - 1; i++)
             {
                 if (distances[i] < distances[smallestDistanceIndex])
                 {
@@ -60,9 +69,9 @@ public class WeaponAI : MonoBehaviour
                 }
             }
 
-            if (hitCollidersList[smallestDistanceIndex])
+            if (hitColliders[smallestDistanceIndex])
             {
-                Transform directionPoint = hitCollidersList[smallestDistanceIndex].transform;
+                directionPoint = hitColliders[smallestDistanceIndex].transform;
                 weaponBarrel.transform.LookAt(directionPoint);
                 //weaponBarrel.transform.Rotate(10f, 0f, 0f);
                 weaponAnimator.SetBool("IsShooting", true);
