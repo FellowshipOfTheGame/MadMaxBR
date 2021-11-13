@@ -6,7 +6,7 @@ public class ThornsCollision : MonoBehaviour {
     private GameObject car; // the car this script is attached
 
     private void Start() {
-        car = this.transform.parent.gameObject.transform.parent.gameObject.transform.parent.gameObject.transform.parent.gameObject;
+        car = this.transform.parent.gameObject.transform.parent.gameObject.transform.parent.gameObject;
     }
     /// <summary>
     /// Causes damage based on the relative speed of cars when the thorns first touch a vehicle.
@@ -21,16 +21,16 @@ public class ThornsCollision : MonoBehaviour {
     }
 
     private void OnTriggerEnter(Collider other) {
-        if (other.gameObject.CompareTag("Car")) {
-            Debug.Log("Bateu no carro com espinho");
-            Debug.Log(other.gameObject.name);
+        Debug.Log("collision with " + other.gameObject.name);
+        if (other.gameObject.CompareTag("IA")) {
             GameObject otherCar = other.transform.parent.transform.parent.gameObject; // get object of the car that got hit
             if (otherCar != null) {
                 Debug.Log("otherCar = " + otherCar.gameObject.name);
             }
-            float baseCollisionDamage = 0;
+            float baseCollisionDamage = 100;
             float collisionDamageModifier = Mathf.Abs(car.GetComponent<CarController>().speed - otherCar.GetComponent<CarController>().speed);
-            otherCar.GetComponentInParent<VehicleData>().ReceiveDamage(baseCollisionDamage + collisionDamageModifier); // decreases health of the car
+            otherCar.GetComponentInParent<VehicleData>().ReceiveDamage(baseCollisionDamage/* + collisionDamageModifier*/); // decreases health of the car
+            Debug.Log(other.gameObject.name + " Received " + baseCollisionDamage + " damage");
         }
         //Debug.Log(other.attachedRigidbody.mass);
     }   

@@ -12,7 +12,10 @@ public class PowerUpPlatform : MonoBehaviour {
     /// </summary>
     public float CooldownTime;
 
+    public bool isRandom;
+    public int powerUpNum;
     public bool IsOnCooldown;
+
 
     private Timer platformTimer;
     private GameObject platformHitBox;
@@ -44,8 +47,12 @@ public class PowerUpPlatform : MonoBehaviour {
     }
 
     public void ActivatePowerUpPlatform() {
-        int powerUpNumber = Random.Range(0, MaterialList.Length);
-        Debug.Log(powerUpNumber);
+        int powerUpNumber;
+        if (isRandom) {
+            powerUpNumber = Random.Range(0, MaterialList.Length);
+        } else {
+            powerUpNumber = powerUpNum;
+        }
         platformHitBox.transform.tag = MaterialList[powerUpNumber].name;
         representation.GetComponent<MeshRenderer>().material = MaterialList[powerUpNumber];
         platformHitBox.SetActive(true);

@@ -171,6 +171,13 @@ public class VehicleData : MonoBehaviour {
         curCarShield = val;
     }
 
+    public void AddShield(float val) {
+        curCarShield += val;
+        if (curCarShield > MaxCarShield) {
+            curCarShield = MaxCarShield;
+        }
+    }
+
     public float GetCurrentShield() {
         return curCarShield;
     }
