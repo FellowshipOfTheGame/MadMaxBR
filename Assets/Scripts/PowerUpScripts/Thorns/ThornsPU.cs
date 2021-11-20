@@ -4,9 +4,12 @@ using UnityEngine;
 
 public class ThornsPU : MonoBehaviour {
     private Timer stopwatch;
-
-    public int DurationMin;
-    public int DurationSec;
+    // duration of power up in Minutes
+    public float DurationMin;
+    // durations of power up in Seconds
+    public float DurationSec;
+    // damage of thorns when it collides
+    public float ThornCollisionDamage;
 
     void Awake() {
         stopwatch = gameObject.AddComponent<Timer>();

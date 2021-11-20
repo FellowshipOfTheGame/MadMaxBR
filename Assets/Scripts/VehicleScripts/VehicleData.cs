@@ -85,6 +85,12 @@ public class VehicleData : MonoBehaviour {
             }
             return false;
         }
+        if (powerup == PowerUpName.ExplosiveMine) {
+            if (powerUpSlot3 == -1) {
+                return true;
+            }
+            return false;
+        }
         Debug.LogError("slotIndex of GetPowerUpSlotValue is wrong");
         return false; // error
     }
@@ -142,7 +148,7 @@ public class VehicleData : MonoBehaviour {
     public void Update() {
         //SetCurrentHealth(MaxCarHealth);
         if (curCarHealth <= 0) {
-            Destroy(this.gameObject);
+            Die();
         }
         //if (playerPowerUps.transform.GetChild(0).gameObject.activeSelf) { // if nitro power up is active
 
@@ -193,5 +199,10 @@ public class VehicleData : MonoBehaviour {
             }
         }
         curCarHealth -= damage;
+    }
+
+    public void Die() {
+        this.gameObject.SetActive(false);
+        isDead = true;
     }
 }

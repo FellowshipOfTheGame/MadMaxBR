@@ -1,8 +1,15 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System;
 using UnityEngine.UI;
+
+public enum PowerUpName {
+    Nitro,
+    Shield,
+    Thorns,
+    ExplosiveMine
+}
 
 public enum PowerUpType {
     Attack,
@@ -10,7 +17,7 @@ public enum PowerUpType {
     Trap,
     Utility
 }
-public enum ActivationType {
+public enum UseType {
     Manual,
     Automatic
 }
@@ -21,14 +28,15 @@ public enum DurationType {
 }
 
 [CreateAssetMenu(fileName = "New PowerUp", menuName = "PowerUp")]
-public class Power : ScriptableObject {
+public class PowerUpData : ScriptableObject {
     public String Name;
     public String Description;
     public String Tag;
     public Image Icon; // sprite that represents powerup
     public int Id; // identification number that starts on 0
+    public PowerUp PowerUpScript;
     public PowerUpType PowerUpType;
-    public ActivationType ActivationType;
+    public UseType UseType;
     public DurationType DurationType;
 
     public void Activate() {
