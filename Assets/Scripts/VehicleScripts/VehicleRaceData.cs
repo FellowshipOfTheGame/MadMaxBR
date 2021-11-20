@@ -8,65 +8,108 @@ public class VehicleRaceData : MonoBehaviour {
     [HideInInspector]
     public Timer LapTime;
 
-    private float LapCounter;
-    private float MinCountBest;
-    private float SecCountBest;
-    private float MilliCountBest;
+    public TrackerNode TrackerNode;
+    public TriggerPoint TriggerPoint;
+
+    private float lapCounter;
+    private float racePosition;
+
+    private float minCountBest;
+    private float secCountBest;
+    private float milliCountBest;
+
+    private float minCountTotal;
+    private float secCountTotal;
+    private float milliCountTotal;
+    // controls if the car has completed the race or not
+    private bool completedRace;
+    // variable to control when the car reach the finish line for the first time, when the race starts
     private bool firstTrigger;
+    // when a Lap is completed, the time of the best lap is stored
     public void LapCompleted() {
-        LapCounter++;
+        lapCounter++;
         
         bool NewBest = false;
 
-        if (LapTime.GetMinutes() < MinCountBest) {
+        if (LapTime.GetMinutes() < minCountBest) {
             NewBest = true;
-        } else if (LapTime.GetMinutes() == MinCountBest && LapTime.GetSeconds() < SecCountBest) {
+        } else if (LapTime.GetMinutes() == minCountBest && LapTime.GetSeconds() < secCountBest) {
             NewBest = true;
-        } else if (LapTime.GetMinutes() == MinCountBest && LapTime.GetSeconds() == SecCountBest && LapTime.GetMilliseconds() < MilliCountBest) {
+        } else if (LapTime.GetMinutes() == minCountBest && LapTime.GetSeconds() == secCountBest && LapTime.GetMilliseconds() < milliCountBest) {
             NewBest = true;
         }
 
         if (NewBest) {
-            MinCountBest = LapTime.GetMinutes();
-            SecCountBest = LapTime.GetSeconds();
-            MilliCountBest = LapTime.GetMilliseconds();
+            minCountBest = RaceTime.GetMinutes();
+            secCountBest = RaceTime.GetSeconds();
+            milliCountBest = RaceTime.GetMilliseconds();
         }
 
         LapTime.ResetTimer();
     }
+    // when the race is completed, the total time spent on the race is stored
+    public void CompleteRace() {
+        completedRace = true;
+        minCountTotal = RaceTime.GetMinutes();
+        secCountTotal = RaceTime.GetSeconds();
+        milliCountTotal = RaceTime.GetMilliseconds();
+    }
 
     public float GetLapCount() {
-        return LapCounter;
+        return lapCounter;
     }
     public float GetMinCountBest() {
-        return MinCountBest;
+        return minCountBest;
     }
     public float GetSecCountBest() {
-        return SecCountBest;
+        return secCountBest;
     }
     public float GetMilliCountBest() {
-        return MilliCountBest;
+        return milliCountBest;
+    }
+    public float GetMinCountTotal() {
+        return minCountTotal;
+    }
+    public float GetSecCountTotal() {
+        return secCountTotal;
+    }
+    public float GetMilliCountTotal() {
+        return milliCountTotal;
+    }
+    public float GetRacePosition() {
+        return racePosition;
+    }
+    public bool HasCompletedRace() {
+        return completedRace;
+    }
+
+    public void SetRacePosition(float pos) {
+        racePosition = pos;
     }
 
     // Start is called before the first frame update
     void Start() {
         RaceTime = gameObject.AddComponent<Timer>();
         LapTime = gameObject.AddComponent<Timer>();
-        MinCountBest = 9999;
-        SecCountBest = 9999;
-        MilliCountBest = 9999;
-        LapCounter = 0;
+        minCountBest = 9999;
+        secCountBest = 9999;
+        milliCountBest = 9999;
+        minCountTotal = 0;
+        secCountTotal = 0;
+        milliCountTotal = 0;
+        lapCounter = 0;
+        completedRace = false;
         firstTrigger = true;
     }
-
+    // if the car reaches the finish line
     private void OnTriggerEnter(Collider collider) {
-        Debug.Log("PASSOU");
-        if (collider.gameObject.CompareTag("Finish")) {
-            if (firstTrigger) {
-                firstTrigger = false;
-            } else {
+        if (collider.gameObject.CompareTag("InitialPointTrigger")) {
+            if (TriggerPoint.gameObject.CompareTag("HalfPointTrigger")) {
                 LapCompleted();
             }
+            TriggerPoint = collider.gameObject.GetComponent<TriggerPoint>();
+        } else if (collider.gameObject.CompareTag("HalfPointTrigger")) {
+            TriggerPoint = collider.gameObject.GetComponent<TriggerPoint>();
         }
     }
 }

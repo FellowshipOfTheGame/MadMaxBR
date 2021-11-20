@@ -9,7 +9,11 @@ public enum AiState
 public class CarMovementAI : MonoBehaviour
 {
     [Header("Sensors")]
-    [SerializeField] private Transform[] sensorsTransforms;
+    [SerializeField] private Transform leftSensorTransform;
+    [SerializeField] private Transform leftInnerSensorTransform;
+    [SerializeField] private Transform rightSensorTransform;
+    [SerializeField] private Transform rightInnerSensorTransform;
+    [SerializeField] private Transform horizontalSensorTransform;
     [SerializeField] private float sensorLength = 5f;
     [SerializeField] private float horizontalSensorLength = 2f;
     [SerializeField] private float frontSensorInnerAngle = 15f;
@@ -34,16 +38,38 @@ public class CarMovementAI : MonoBehaviour
     [SerializeField] private float distanceFromTrackToBreak = 30f;
 
     private Rigidbody rb;
+    private BoxCollider[] nodesBoxCollider;
+    private float curveAngle;
+    private float percentThrottle;
+    private RaycastHit[] raycastHitSensor = new RaycastHit[5];
+    private int i;
+    private int nextNode;
+    private Vector3 directionToNextNode;
+    private int previousNode;
+    private Vector3 position;
+    private Vector3 currentNodePosition;
+    private Vector3 previousNodePosition;
+    private Vector3 trackDirection;
+    private Vector3 nextTrackDirection;
+    private Vector3 carToWaypoint;
+    private Vector3 relativeVector;
+    private float percentDistance;
+    private Vector3 interpolatedDirection;
+    private Vector3 trackDirectionPosition;
+    private float newSteer;
+    private Vector2 currentNodePositionXZ;
+    private Vector2 previousNodePositionXZ;
+    private Vector2 carPositionXZ;
 
     public AiState aiState = AiState.FollowingTrack;
 
     void Start()
     {
         rb = GetComponent<Rigidbody>();
-        BoxCollider[] nodesBoxCollider = path.GetComponentsInChildren<BoxCollider>();
+        nodesBoxCollider = path.GetComponentsInChildren<BoxCollider>();
         nodes = new List<BoxCollider>();
 
-        for (int i = 0; i < nodesBoxCollider.Length; i++)
+        for (i = 0; i < nodesBoxCollider.Length; i++)
         {
             nodes.Add(nodesBoxCollider[i]);
         }
@@ -62,13 +88,13 @@ public class CarMovementAI : MonoBehaviour
 
     public void GetThrottle()
     {
-        float curveAngle = CurveAngle();
+        curveAngle = CurveAngle();
 
         if (curveAngle > maxAngleForMinThrottle)
         {
             throttle = minPositiveThrottle;
 
-            print(rb.velocity.magnitude + " velocity");
+            //print(rb.velocity.magnitude + " velocity");
             
             if (rb.velocity.magnitude > 10f && DistanceFromTrack() < distanceFromTrackToBreak)
             {
@@ -83,7 +109,7 @@ public class CarMovementAI : MonoBehaviour
         else
         {
             brake = false;
-            float percentThrottle = 1 - curveAngle / maxAngleForMinThrottle;
+            percentThrottle = 1 - curveAngle / maxAngleForMinThrottle;
             percentThrottle *= percentThrottle;
             throttle = (maxThrottle - minPositiveThrottle) * percentThrottle + minPositiveThrottle;
         }
@@ -91,19 +117,17 @@ public class CarMovementAI : MonoBehaviour
 
     public void Sensors()
     {
-        RaycastHit[] hits = new RaycastHit[5];
-
         // first front left sensor
-        if (Physics.Raycast(sensorsTransforms[0].position, Quaternion.AngleAxis(-frontSensorOuterAngle, transform.up) * transform.forward, out hits[0], sensorLength, ~ignoredLayerMasks))
+        if (Physics.Raycast(leftSensorTransform.position, Quaternion.AngleAxis(-frontSensorOuterAngle, transform.up) * transform.forward, out raycastHitSensor[0], sensorLength, ~ignoredLayerMasks))
         {
-            Debug.DrawLine(sensorsTransforms[0].position, hits[0].point);
+            Debug.DrawLine(leftSensorTransform.position, raycastHitSensor[0].point);
             Debug.Log("Sensor 1 da esquerda");
 
             aiState = AiState.Avoiding;
             steer = 1f;
             throttle = minPositiveThrottle;
 
-            if (Vector3.Distance(hits[0].point, sensorsTransforms[0].position) <= minDistanceToReverse)
+            if (Vector3.Distance(raycastHitSensor[0].point, leftSensorTransform.position) <= minDistanceToReverse)
             {
                 throttle = -1f;
                 steer = -1f;
@@ -111,16 +135,16 @@ public class CarMovementAI : MonoBehaviour
         }
 
         // second front right angle
-        else if (Physics.Raycast(sensorsTransforms[3].position, Quaternion.AngleAxis(frontSensorOuterAngle, transform.up) * transform.forward, out hits[3], sensorLength, ~ignoredLayerMasks))
+        else if (Physics.Raycast(rightSensorTransform.position, Quaternion.AngleAxis(frontSensorOuterAngle, transform.up) * transform.forward, out raycastHitSensor[3], sensorLength, ~ignoredLayerMasks))
         {
-            Debug.DrawLine(sensorsTransforms[3].position, hits[3].point);
+            Debug.DrawLine(rightSensorTransform.position, raycastHitSensor[3].point);
             Debug.Log("Sensor 2 da direita");
 
             aiState = AiState.Avoiding;
             steer = -1f;
             throttle = minPositiveThrottle;
 
-            if (Vector3.Distance(hits[3].point, sensorsTransforms[3].position) <= minDistanceToReverse)
+            if (Vector3.Distance(raycastHitSensor[3].point, rightSensorTransform.position) <= minDistanceToReverse)
             {
                 throttle = -1f;
                 steer = 1f;
@@ -128,16 +152,16 @@ public class CarMovementAI : MonoBehaviour
         }
 
         // second front left sensor
-        else if (Physics.Raycast(sensorsTransforms[1].position, Quaternion.AngleAxis(-frontSensorInnerAngle, transform.up) * transform.forward, out hits[1], sensorLength, ~ignoredLayerMasks))
+        else if (Physics.Raycast(leftInnerSensorTransform.position, Quaternion.AngleAxis(-frontSensorInnerAngle, transform.up) * transform.forward, out raycastHitSensor[1], sensorLength, ~ignoredLayerMasks))
         {
-            Debug.DrawLine(sensorsTransforms[1].position, hits[1].point);
+            Debug.DrawLine(leftInnerSensorTransform.position, raycastHitSensor[1].point);
             Debug.Log("Sensor 2 da esquerda");
 
             aiState = AiState.Avoiding;
             steer = 0.5f;
             throttle = minPositiveThrottle;
 
-            if (Vector3.Distance(hits[1].point, sensorsTransforms[1].position) <= minDistanceToReverse)
+            if (Vector3.Distance(raycastHitSensor[1].point, leftInnerSensorTransform.position) <= minDistanceToReverse)
             {
                 throttle = -1f;
                 steer = -0.5f;
@@ -145,24 +169,24 @@ public class CarMovementAI : MonoBehaviour
         }
 
         // first front right sensor;
-        else if (Physics.Raycast(sensorsTransforms[2].position, Quaternion.AngleAxis(frontSensorInnerAngle, transform.up) * transform.forward, out hits[2], sensorLength, ~ignoredLayerMasks))
+        else if (Physics.Raycast(rightInnerSensorTransform.position, Quaternion.AngleAxis(frontSensorInnerAngle, transform.up) * transform.forward, out raycastHitSensor[2], sensorLength, ~ignoredLayerMasks))
         {
-            Debug.DrawLine(sensorsTransforms[2].position, hits[2].point);
+            Debug.DrawLine(rightInnerSensorTransform.position, raycastHitSensor[2].point);
             Debug.Log("Sensor 1 da direita");
 
             aiState = AiState.Avoiding;
             steer = -0.5f;
             throttle = minPositiveThrottle;
 
-            if (Vector3.Distance(hits[2].point, sensorsTransforms[2].position) <= minDistanceToReverse)
+            if (Vector3.Distance(raycastHitSensor[2].point, rightInnerSensorTransform.position) <= minDistanceToReverse)
             {
                 throttle = -1f;
                 steer = 0.5f;
             }
         }
-        else if (Physics.Raycast(sensorsTransforms[4].position, transform.right, out hits[4], horizontalSensorLength, ~ignoredLayerMasks))
+        else if (Physics.Raycast(horizontalSensorTransform.position, transform.right, out raycastHitSensor[4], horizontalSensorLength, ~ignoredLayerMasks))
         {
-            Debug.DrawLine(sensorsTransforms[4].position, hits[4].point, Color.blue);
+            Debug.DrawLine(horizontalSensorTransform.position, raycastHitSensor[4].point, Color.blue);
             Debug.Log("Sensor horizontal");
 
             aiState = AiState.Avoiding;
@@ -186,27 +210,26 @@ public class CarMovementAI : MonoBehaviour
 
     private float CurveAngle()
     {
-        int nextNode = (currentNode + 1) % nodes.Count;
+        nextNode = (currentNode + 1) % nodes.Count;
 
-        Vector3 direction = nodes[nextNode].transform.position - nodes[currentNode].transform.position;
-        Debug.DrawRay(transform.position, direction);
+        directionToNextNode = nodes[nextNode].transform.position - nodes[currentNode].transform.position;
+        Debug.DrawRay(transform.position, directionToNextNode);
 
-        return Vector3.Angle(direction, transform.forward);
+        return Vector3.Angle(directionToNextNode, transform.forward);
     }
 
     public void FollowPath()
     {
-        int previousNode = (currentNode + nodes.Count - 1) % nodes.Count;
-        int nextNode = (currentNode + 1) % nodes.Count;
-        Vector3 position = transform.position;
-        Vector3 currentNodePosition = nodes[currentNode].transform.position;
-        Vector3 previousNodePosition = nodes[previousNode].transform.position;
-        Vector3 trackDirection = currentNodePosition - previousNodePosition;
-        Vector3 nextTrackDirection = nodes[nextNode].transform.position - currentNodePosition;
-        Vector3 carToWaypoint = currentNodePosition - position;
-        Vector3 relativeVector;
+        previousNode = (currentNode + nodes.Count - 1) % nodes.Count;
+        nextNode = (currentNode + 1) % nodes.Count;
+        position = transform.position;
+        currentNodePosition = nodes[currentNode].transform.position;
+        previousNodePosition = nodes[previousNode].transform.position;
+        trackDirection = currentNodePosition - previousNodePosition;
+        nextTrackDirection = nodes[nextNode].transform.position - currentNodePosition;
+        carToWaypoint = currentNodePosition - position;
 
-        float percentDistance = carToWaypoint.magnitude * Mathf.Cos(Vector3.Angle(trackDirection, carToWaypoint) * Mathf.Deg2Rad) / trackDirection.magnitude;
+        percentDistance = carToWaypoint.magnitude * Mathf.Cos(Vector3.Angle(trackDirection, carToWaypoint) * Mathf.Deg2Rad) / trackDirection.magnitude;
 
         if (DistanceFromTrack() > trackWidth || Vector3.Angle(trackDirection, carToWaypoint) > 90f) // Distancia maior que a largura da pista
         {
@@ -214,26 +237,22 @@ public class CarMovementAI : MonoBehaviour
         }
         else
         {
-            Vector3 interpolatedDirection = Vector3.Lerp(trackDirection, nextTrackDirection, Mathf.Clamp((1 - percentDistance) * (1 - percentDistance), 0, 1)); // ease function
-            Vector3 trackDirectionPosition = position + interpolatedDirection;
+            interpolatedDirection = Vector3.Lerp(trackDirection, nextTrackDirection, Mathf.Clamp((1 - percentDistance) * (1 - percentDistance), 0, 1)); // ease function
+            trackDirectionPosition = position + interpolatedDirection;
             relativeVector = transform.InverseTransformPoint(trackDirectionPosition);
         }
 
         Debug.DrawLine(position, transform.TransformPoint(relativeVector), Color.red);
 
-        float newSteer = relativeVector.x / relativeVector.magnitude;
+        newSteer = relativeVector.x / relativeVector.magnitude;
         steer = newSteer;
     }
 
     private float DistanceFromTrack()
     {
-        int previousNode = (currentNode + nodes.Count - 1) % nodes.Count;
-        Vector3 position = transform.position;
-        Vector3 currentNodePosition = nodes[currentNode].transform.position;
-        Vector3 previousNodePosition = nodes[previousNode].transform.position;
-        Vector2 currentNodePositionXZ = new Vector2(currentNodePosition.x, currentNodePosition.z);
-        Vector2 previousNodePositionXZ = new Vector2(previousNodePosition.x, previousNodePosition.z);
-        Vector2 carPositionXZ = new Vector2(position.x, position.z);
+        currentNodePositionXZ = new Vector2(currentNodePosition.x, currentNodePosition.z);
+        previousNodePositionXZ = new Vector2(previousNodePosition.x, previousNodePosition.z);
+        carPositionXZ = new Vector2(position.x, position.z);
 
         return Mathf.Abs((previousNodePositionXZ.x - currentNodePositionXZ.x) * (currentNodePositionXZ.y - carPositionXZ.y) - (previousNodePositionXZ.y - currentNodePositionXZ.y) * 
             (currentNodePositionXZ.x - carPositionXZ.x)) / Mathf.Sqrt((previousNodePositionXZ.x - currentNodePositionXZ.x) * (previousNodePositionXZ.x - currentNodePositionXZ.x) + 
@@ -242,9 +261,9 @@ public class CarMovementAI : MonoBehaviour
         //return Mathf.Abs((p2.x - p1.x) * (p1.y - carPosition.y) - (p2.y - p1.y) * (p1.x - carPosition.x)) / Mathf.Sqrt((p2.x - p1.x) * (p2.x - p1.x) + (p2.y - p1.y) * (p2.y - p1.y));
     }
 
-    int GetSiblingIndex(Transform child, Transform parent)
+    private int GetSiblingIndex(Transform child, Transform parent)
     {
-        for (int i = 0; i < parent.childCount; ++i)
+        for (i = 0; i < parent.childCount; ++i)
         {
             if (child == parent.GetChild(i))
                 return i;

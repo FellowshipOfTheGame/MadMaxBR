@@ -6,8 +6,16 @@ using UnityEngine;
 /// Script responsible to store information about the car such health, shield, powerUps, etc.
 /// </summary>
 public class VehicleData : MonoBehaviour {
+    public string RunnerName;
     public float MaxCarHealth;
     public float MaxCarShield;
+
+    private float curCarHealth;
+    private float curCarShield;
+
+    private int killsCount;
+
+    public bool isDead;
 
     [HideInInspector]
     //public PowerUp[] powerUps;
@@ -38,21 +46,8 @@ public class VehicleData : MonoBehaviour {
     /// </summary>
     private int powerUpSlot4;
 
-    private float CurCarHealth;
-    private float CurCarShield;
-
     private GameObject playerPowerUps; // stores the object containing the powerUp objects of the car
 
-    // Start is called before the first frame update
-    void Start() {
-        CurCarHealth = MaxCarHealth;
-        CurCarShield = 0;
-        playerPowerUps = gameObject.transform.GetChild(8).gameObject;
-        powerUpSlot1 = -1;
-        powerUpSlot2 = -1;
-        powerUpSlot3 = -1;
-        powerUpSlot4 = -1;
-    }
     /// <summary>
     /// Returns the slot value of a given slotIndex.
     /// </summary>
@@ -117,49 +112,86 @@ public class VehicleData : MonoBehaviour {
             powerUpSlot1 = -1;
         }
     }
+
+    public void SumKillsCount() {
+        killsCount++;
+    }
+
+    public int GetKillsCount() {
+        return killsCount;
+    }
+
+    public bool IsDead() {
+        return isDead;
+    }
+
+    // Start is called before the first frame update
+    public void Start() {
+        curCarHealth = MaxCarHealth;
+        curCarShield = 0;
+        // setup number of kills
+        killsCount = 0;
+        isDead = false;
+        //playerPowerUps = gameObject.transform.GetChild(8).gameObject;
+        powerUpSlot1 = -1;
+        powerUpSlot2 = -1;
+        powerUpSlot3 = -1;
+        powerUpSlot4 = -1;
+    }
     // Update is called once per frame
-    void Update() {
+    public void Update() {
+        //SetCurrentHealth(MaxCarHealth);
+        if (curCarHealth <= 0) {
+            Destroy(this.gameObject);
+        }
         //if (playerPowerUps.transform.GetChild(0).gameObject.activeSelf) { // if nitro power up is active
 
         //}
     }
 
     public void SetCurrentHealth(float val) {
-        CurCarHealth = val;
+        curCarHealth = val;
     }
 
     public void AddHealth(float val) {
-        CurCarHealth += val;
-        if (CurCarHealth > MaxCarHealth) {
-            CurCarHealth = MaxCarHealth;
+        curCarHealth += val;
+        if (curCarHealth > MaxCarHealth) {
+            curCarHealth = MaxCarHealth;
         }
     }
 
     public float GetCurrentHealth() {
-        if (CurCarHealth < 0) {
+        if (curCarHealth < 0) {
             return 0;
         }
-        return CurCarHealth;
+        return curCarHealth;
     }
 
     public void SetCurrentShield(float val) {
-        CurCarShield = val;
+        curCarShield = val;
+    }
+
+    public void AddShield(float val) {
+        curCarShield += val;
+        if (curCarShield > MaxCarShield) {
+            curCarShield = MaxCarShield;
+        }
     }
 
     public float GetCurrentShield() {
-        return CurCarShield;
+        return curCarShield;
     }
 
     public void ReceiveDamage(float damage) {
-        if (CurCarShield > 0) {
-            if (damage < CurCarShield) {
-                CurCarShield -= damage;
+        if (curCarShield > 0) {
+            if (damage < curCarShield) {
+                curCarShield -= damage;
                 damage = 0;
             } else {
-                damage -= CurCarShield;
-                CurCarShield = 0;
+                damage -= curCarShield;
+                curCarShield = 0;
             }
         }
-        CurCarHealth -= damage;
+        curCarHealth -= damage;
     }
 }
