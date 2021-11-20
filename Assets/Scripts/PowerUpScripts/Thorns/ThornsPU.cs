@@ -17,10 +17,11 @@ public class ThornsPU : MonoBehaviour {
 
     private void Update() {
         if (stopwatch.GetMinutes() >= DurationMin && stopwatch.GetSeconds() >= DurationSec) {
+            // unequip powerup
+            this.gameObject.transform.parent.GetComponentInParent<VehicleData>().EmptyPowerUpSlot(PowerUpName.Thorns);
+            // set powerup gameObject inactive
             this.gameObject.SetActive(false);
             Debug.Log("Deactivated Thorns after " + stopwatch.GetMinutes() + ":" + stopwatch.GetSeconds());
-            //NitroObject.SetActive(false);
-            this.gameObject.transform.parent.GetComponentInParent<VehicleData>().EmptyPowerUpSlot(PowerUpName.Thorns);
         }
     }
 

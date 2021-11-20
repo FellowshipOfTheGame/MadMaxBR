@@ -29,16 +29,4 @@ public class ThornsCollision : MonoBehaviour {
         }
         //Debug.Log(other.attachedRigidbody.mass);
     }   
-
-    /// <summary>
-    /// Causes damage over time when the thorns are touching 
-    /// </summary>
-    /// <param name="collision"></param>
-    private void OnCollisionStay(Collision collision) {
-        Debug.Log(collision.transform.gameObject.name);
-    }
-
-    private void OnTriggerStay(Collider other) {
-        Debug.Log(other.name);
-    }
 }

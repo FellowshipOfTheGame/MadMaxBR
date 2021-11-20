@@ -5,7 +5,7 @@ using UnityEngine;
 public class ExplosiveMinePU : MonoBehaviour {
     public int MinesQuantity; // quantity of mines to be used
     public GameObject MinePrefab;
-    public GameObject MineSpawner;
+    //public GameObject MineSpawner;
 
     private int RemainingMines;
     public void Activate() {
@@ -15,6 +15,8 @@ public class ExplosiveMinePU : MonoBehaviour {
     public void Update() {
         if (RemainingMines != 0) {
             if (Input.GetKeyDown(KeyCode.Z)) {
+                Debug.Log("USED A MINE.");
+                Instantiate(MinePrefab, this.gameObject.transform.position, this.gameObject.transform.rotation);
                 RemainingMines--;
             }
         } 
