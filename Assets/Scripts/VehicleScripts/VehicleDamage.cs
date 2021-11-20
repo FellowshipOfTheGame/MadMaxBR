@@ -30,28 +30,22 @@ public class VehicleDamage : MonoBehaviour {
         //  if (collision.gameObject.CompareTag("car")) return;
         Vector3 colRelativeVelocity = collision.relativeVelocity;
         //Debug.DrawRay(colRelativeVelocity, colRelativeVelocity, Color.green, 99999999, false);
-        colRelativeVelocity.y *= yForceDampening;
+        //colRelativeVelocity.y *= yForceDampening;
 
         //Debug.DrawRay(collision.contacts[0].point, collision.contacts[0].normal, Color.green, 2, false);
 
         if (collision.contacts.Length > 0) {
-            //colPointToMe = transform.position - collision.contacts[0].point;
-            //collisionStrength = colRelativeVelocity.magnitude * Vector3.Dot(collision.contacts[0].normal, colPointToMe.normalized);
-            //Debug.Log(collisionStrength);
+            collisionStrength = colRelativeVelocity.magnitude;
+            Debug.Log("collision strength: " + collisionStrength);
 
-            colPointToMe = transform.position - collision.GetContact(0).point;
-            //Debug.Log(transform.position);
-            collisionStrength = colRelativeVelocity.magnitude * Vector3.Dot(collision.GetContact(0).normal, colPointToMe.normalized);
-            //Debug.Log(collisionStrength);
-
-            if (colPointToMe.magnitude > 1.0f && !crashSound.isPlaying) { // if there is a collision that causes damage
+            if (collisionStrength > 1.0f && !crashSound.isPlaying) { // if there is a collision that causes damage
                 crashSound.Play();
                 crashSound.volume = collisionStrength / 200; // change the volume of the crash Sound according to the strenght of the collision
 
                 gameObject.GetComponent<VehicleData>().ReceiveDamage(CalculateHealthDamage(collisionStrength)); // decreases health of the car
 
                 // OnMeshForce(collision.contacts[0].point, Mathf.Clamp01(collisionStrength / maxCollisionStrength));
-                OnMeshForce(collision.GetContact(0).point, Mathf.Clamp01(collisionStrength / maxCollisionStrength));
+                //OnMeshForce(collision.GetContact(0).point, Mathf.Clamp01(collisionStrength / maxCollisionStrength));
             }
         }
     }
@@ -59,7 +53,7 @@ public class VehicleDamage : MonoBehaviour {
     private float CalculateHealthDamage(float force) {
         return force;
     }
-
+    /*
     // if called by SendMessage(), we only have 1 param
     public void OnMeshForce(Vector4 originPosAndForce) {
         OnMeshForce((Vector3)originPosAndForce, originPosAndForce.w);
@@ -96,4 +90,5 @@ public class VehicleDamage : MonoBehaviour {
             meshfilters[j].mesh.RecalculateBounds();
         }
     }
+    */
 }

@@ -9,6 +9,7 @@ public class VehicleRaceData : MonoBehaviour {
     public Timer LapTime;
 
     public TrackerNode TrackerNode;
+    public TriggerPoint TriggerPoint;
 
     private float lapCounter;
     private float racePosition;
@@ -102,12 +103,13 @@ public class VehicleRaceData : MonoBehaviour {
     }
     // if the car reaches the finish line
     private void OnTriggerEnter(Collider collider) {
-        if (collider.gameObject.CompareTag("Finish")) {
-            if (firstTrigger) {
-                firstTrigger = false;
-            } else {
+        if (collider.gameObject.CompareTag("InitialPointTrigger")) {
+            if (TriggerPoint.gameObject.CompareTag("HalfPointTrigger")) {
                 LapCompleted();
             }
+            TriggerPoint = collider.gameObject.GetComponent<TriggerPoint>();
+        } else if (collider.gameObject.CompareTag("HalfPointTrigger")) {
+            TriggerPoint = collider.gameObject.GetComponent<TriggerPoint>();
         }
     }
 }

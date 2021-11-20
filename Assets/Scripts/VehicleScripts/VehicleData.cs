@@ -15,7 +15,7 @@ public class VehicleData : MonoBehaviour {
 
     private int killsCount;
 
-    private bool isDead;
+    public bool isDead;
 
     [HideInInspector]
     //public PowerUp[] powerUps;
@@ -169,6 +169,13 @@ public class VehicleData : MonoBehaviour {
 
     public void SetCurrentShield(float val) {
         curCarShield = val;
+    }
+
+    public void AddShield(float val) {
+        curCarShield += val;
+        if (curCarShield > MaxCarShield) {
+            curCarShield = MaxCarShield;
+        }
     }
 
     public float GetCurrentShield() {
