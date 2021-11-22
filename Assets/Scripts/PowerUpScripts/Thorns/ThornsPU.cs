@@ -6,7 +6,7 @@ public class ThornsPU : MonoBehaviour {
     private Timer stopwatch;
     // duration of power up in Minutes
     public float DurationMin;
-    // durations of power up in Seconds
+    // duration of power up in Seconds
     public float DurationSec;
     // damage of thorns when it collides
     public float ThornCollisionDamage;

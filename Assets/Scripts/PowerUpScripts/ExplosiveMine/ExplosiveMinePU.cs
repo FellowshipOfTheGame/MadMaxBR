@@ -23,7 +23,7 @@ public class ExplosiveMinePU : MonoBehaviour {
         if (RemainingMines == 0) { // if used all mines availabe
             this.gameObject.SetActive(false);
             Debug.Log("USED ALL MINES.");
-            this.gameObject.transform.parent.GetComponentInParent<VehicleData>().EmptyPowerUpSlot(PowerUpName.Thorns);
+            this.gameObject.transform.parent.GetComponentInParent<VehicleData>().EmptyPowerUpSlot(PowerUpName.ExplosiveMine);
         }
     }
 }

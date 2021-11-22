@@ -36,10 +36,17 @@ public class PowerUpActivation : MonoBehaviour {
             }
         }
         if (collider.gameObject.CompareTag("FixPU")) { // Fix is not stored in a slot
-            Fix.SetActive(true);
-            Fix.GetComponent<FixPU>().Activate();
-            Fix.SetActive(false);
-            collider.GetComponentInParent<PowerUpPlatform>().DeactivatePowerUpPlatform();
+            if (gameObject.GetComponent<VehicleData>().PowerUpSlotFree(PowerUpName.Fix)) {
+                gameObject.GetComponent<VehicleData>().FillPowerUpSlot(PowerUpName.Fix);
+                Fix.SetActive(true);
+                Fix.GetComponent<FixPU>().Activate();
+                collider.GetComponentInParent<PowerUpPlatform>().DeactivatePowerUpPlatform();
+            } else { // if the power up slot that stores shield isnt free
+                if (gameObject.GetComponent<VehicleData>().GetPowerUpSlotValue(PowerUpName.Fix) == (int)PowerUpName.Fix) {
+                    Fix.GetComponent<FixPU>().Activate();
+                    collider.GetComponentInParent<PowerUpPlatform>().DeactivatePowerUpPlatform();
+                }
+            }
         }
         if (collider.gameObject.CompareTag("ExplosiveMinePU")) { // Explosive Mine is stored in a slot
             if (gameObject.GetComponent<VehicleData>().PowerUpSlotFree(PowerUpName.ExplosiveMine)) { // if the ExplosiveMine slot is free
