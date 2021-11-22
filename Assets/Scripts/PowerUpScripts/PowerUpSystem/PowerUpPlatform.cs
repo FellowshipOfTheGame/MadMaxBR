@@ -16,10 +16,10 @@ public class PowerUpPlatform : MonoBehaviour {
     public int powerUpNum;
     public bool IsOnCooldown;
 
-
     private Timer platformTimer;
     private GameObject platformHitBox;
     private GameObject representation;
+
     // Start is called before the first frame update
     void Start() {
         platformHitBox = this.gameObject.transform.GetChild(1).gameObject;
@@ -39,6 +39,9 @@ public class PowerUpPlatform : MonoBehaviour {
         }
     }
 
+    /// <summary>
+    /// Makes platform visible.
+    /// </summary>
     public void DeactivatePowerUpPlatform() {
         IsOnCooldown = true;
         platformTimer.ResetTimer();
@@ -46,6 +49,9 @@ public class PowerUpPlatform : MonoBehaviour {
         representation.SetActive(false);
     }
 
+    /// <summary>
+    /// Makes platform invisible.
+    /// </summary>
     public void ActivatePowerUpPlatform() {
         int powerUpNumber;
         if (isRandom) {
