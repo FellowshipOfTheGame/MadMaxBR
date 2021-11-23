@@ -62,9 +62,11 @@ public class Weapon : MonoBehaviour
         luzColisao.GetComponent<Light>().color = Color.red;
         LineRenderer lineRenderer = gameObject.AddComponent<LineRenderer>();
         lineRenderer.material = MaterialLasers;
-        lineRenderer.SetColors(Color.white, Color.white);
-        lineRenderer.SetWidth(0.015f, 0.05f);
-        lineRenderer.SetVertexCount(2);
+        lineRenderer.startColor = Color.white;
+        lineRenderer.endColor = Color.white;
+        lineRenderer.startWidth = 0.015f;
+        lineRenderer.endWidth = 0.05f;
+        lineRenderer.positionCount = 2;
         linhaDoLaser = GetComponent<LineRenderer>();
         //
         for (int x = 0; x < armas.Length; x++)
@@ -86,7 +88,7 @@ public class Weapon : MonoBehaviour
         recarregando = atirando = false;
     }
 
-    void Update()
+    void FixedUpdate()
     {
         //UI
         BalasArmaText.text = "Balas: " + armas[armaAtual].balasNaArma;
@@ -101,8 +103,7 @@ public class Weapon : MonoBehaviour
             GameObject balaTemp = Instantiate(armas[armaAtual].particulaFogo, armas[armaAtual].lugarParticula.transform.position, transform.rotation) as GameObject;
             Destroy(balaTemp, 0.5f);
 
-            RaycastHit pontoDeColisao;
-            if (Physics.Raycast(transform.position, transform.forward, out pontoDeColisao))
+            if (Physics.Raycast(transform.position, transform.forward, out RaycastHit pontoDeColisao))
             {
                 if (pontoDeColisao.transform.gameObject.tag == TagInimigo)
                 {
@@ -138,11 +139,11 @@ public class Weapon : MonoBehaviour
                 linhaDoLaser.material.SetColor("_TintColor", armas[armaAtual].Miras.corLaser);
                 luzColisao.SetActive(true);
                 Vector3 PontoFinalDoLaser = transform.position + (transform.forward * 500);
-                RaycastHit hitDoLaser;
-                if (Physics.Raycast(transform.position, transform.forward, out hitDoLaser, 500))
+                if (Physics.Raycast(transform.position, Quaternion.AngleAxis(0, transform.up) * transform.forward, out RaycastHit hitDoLaser, 500))
                 {
                     linhaDoLaser.SetPosition(0, armas[armaAtual].lugarParticula.transform.position);
                     linhaDoLaser.SetPosition(1, hitDoLaser.point);
+                    Debug.Log(hitDoLaser.point);
                     float distancia = Vector3.Distance(transform.position, hitDoLaser.point) - 0.03f;
                     luzColisao.transform.position = transform.position + transform.forward * distancia;
                 }
@@ -225,8 +226,10 @@ public class Weapon : MonoBehaviour
     {
         if (armas[armaAtual].Miras.AtivarMiraComum == true)
         {
-            GUIStyle stylez = new GUIStyle();
-            stylez.alignment = TextAnchor.MiddleCenter;
+            GUIStyle stylez = new GUIStyle
+            {
+                alignment = TextAnchor.MiddleCenter
+            };
             GUI.skin.label.fontSize = 20;
             GUI.Label(new Rect(Screen.width / 2 - 6, Screen.height / 2 - 12, 12, 22), "+");
         }
