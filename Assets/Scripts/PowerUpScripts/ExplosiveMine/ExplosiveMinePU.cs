@@ -14,7 +14,7 @@ public class ExplosiveMinePU : MonoBehaviour {
 
     public void Update() {
         if (RemainingMines != 0) {
-            if (Input.GetKeyDown(KeyCode.Z)) {
+            if (Input.GetKeyDown(KeyCode.C)) {
                 Debug.Log("USED A MINE.");
                 Instantiate(MinePrefab, this.gameObject.transform.position, this.gameObject.transform.rotation);
                 RemainingMines--;

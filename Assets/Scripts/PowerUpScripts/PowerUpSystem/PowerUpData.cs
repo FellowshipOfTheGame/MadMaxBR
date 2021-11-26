@@ -36,7 +36,7 @@ public class PowerUpData : ScriptableObject {
     public String Name;
     public String Description;
     public String Tag;
-    public Image Icon; // sprite that represents powerup
+    //public Image Icon; // sprite that represents powerup
     public int Id; // identification number that starts on 0
     public PowerUp PowerUpScript;
     public PowerUpType PowerUpType;

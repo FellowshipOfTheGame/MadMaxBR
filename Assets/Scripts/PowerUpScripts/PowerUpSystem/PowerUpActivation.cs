@@ -62,6 +62,11 @@ public class PowerUpActivation : MonoBehaviour {
                 Nitro.SetActive(true);
                 Nitro.GetComponent<NitroPU>().Activate();
                 collider.GetComponentInParent<PowerUpPlatform>().DeactivatePowerUpPlatform();
+            } else { // if the power up slot that stores nitro isnt free
+                if (gameObject.GetComponent<VehicleData>().GetPowerUpSlotValue(PowerUpName.Nitro) == (int)PowerUpName.Nitro) {
+                    Nitro.GetComponent<FixPU>().Activate();
+                    collider.GetComponentInParent<PowerUpPlatform>().DeactivatePowerUpPlatform();
+                }
             }
         }
     }
