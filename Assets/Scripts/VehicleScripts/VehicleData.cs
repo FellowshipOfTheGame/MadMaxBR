@@ -10,12 +10,15 @@ public class VehicleData : MonoBehaviour {
     public float MaxCarHealth;
     public float MaxCarShield;
 
-    private float curCarHealth;
-    private float curCarShield;
+    private float curCarHealth; // current car health
+    private float curCarShield; // current car shield
 
-    private int killsCount;
+    private bool isSmokeActive;
 
-    public bool isDead;
+    private int killsCount; // kills count of car
+
+    public bool isDead; // if car is dead
+
 
     [HideInInspector]
     //public PowerUp[] powerUps;
@@ -80,7 +83,7 @@ public class VehicleData : MonoBehaviour {
         if (powerup == PowerUpName.Thorns) {
             return powerUpSlot1;
         }
-        if (powerup == PowerUpName.Shield || powerup == PowerUpName.Fix) {
+        if (powerup == PowerUpName.Shield || powerup == PowerUpName.Fix || powerup == PowerUpName.Smoke) {
             return powerUpSlot2;
         }
         if (powerup == PowerUpName.ExplosiveMine) {
@@ -104,7 +107,7 @@ public class VehicleData : MonoBehaviour {
             }
             return false;
         }
-        if (powerup == PowerUpName.Shield || powerup == PowerUpName.Fix) {
+        if (powerup == PowerUpName.Shield || powerup == PowerUpName.Fix || powerup == PowerUpName.Smoke) {
             if (powerUpSlot2 == -1) {
                 return true;
             }
@@ -140,6 +143,9 @@ public class VehicleData : MonoBehaviour {
             case (int)PowerUpName.Fix:
                 powerUpSlot2 = (int)PowerUpName.Fix;
                 break;
+            case (int)PowerUpName.Smoke:
+                powerUpSlot2 = (int)PowerUpName.Smoke;
+                break;
             case (int)PowerUpName.ExplosiveMine:
                 powerUpSlot3 = (int)PowerUpName.ExplosiveMine;
                 break;
@@ -173,7 +179,7 @@ public class VehicleData : MonoBehaviour {
         if (powerup == PowerUpName.Thorns) {
             powerUpSlot1 = -1;
         }
-        if (powerup == PowerUpName.Shield || powerup == PowerUpName.Fix) {
+        if (powerup == PowerUpName.Shield || powerup == PowerUpName.Fix || powerup == PowerUpName.Smoke) {
             powerUpSlot2 = -1;
         }
         if (powerup == PowerUpName.ExplosiveMine) {
@@ -208,6 +214,8 @@ public class VehicleData : MonoBehaviour {
         powerUpSlot2 = -1;
         powerUpSlot3 = -1;
         powerUpSlot4 = -1;
+        // set variables related to powerups
+        isSmokeActive = false;
     }
     // Update is called once per frame
     public void Update() {
@@ -254,20 +262,30 @@ public class VehicleData : MonoBehaviour {
     }
 
     public void ReceiveDamage(float damage) {
-        if (curCarShield > 0) {
-            if (damage < curCarShield) {
-                curCarShield -= damage;
-                damage = 0;
-            } else {
-                damage -= curCarShield;
-                curCarShield = 0;
+        if (!isSmokeActive) {
+            if (curCarShield > 0) {
+                if (damage < curCarShield) {
+                    curCarShield -= damage;
+                    damage = 0;
+                } else {
+                    damage -= curCarShield;
+                    curCarShield = 0;
+                }
             }
+            curCarHealth -= damage;
         }
-        curCarHealth -= damage;
     }
 
     public void Die() {
         this.gameObject.SetActive(false);
         isDead = true;
+    }
+
+    public void setSmokeActive(bool active) {
+        if (active) {
+            isSmokeActive = true;
+        } else {
+            isSmokeActive = false;
+        }
     }
 }

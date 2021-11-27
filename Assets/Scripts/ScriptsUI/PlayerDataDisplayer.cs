@@ -12,9 +12,10 @@ public class PlayerDataDisplayer : MonoBehaviour {
     public GameObject RacePositionDisplay;
     public GameObject MaxRacePositionDisplay;
 
-    public GameObject NitroUI;
-    public GameObject PlayerHealthBar;
-    public GameObject PlayerShieldBar;
+    public GameObject NitroHUD;
+    public GameObject SmokeHUD;
+    public GameObject PlayerHealthHUD;
+    public GameObject PlayerShieldHUD;
 
     public GameObject PowerUpSlot1;
     public GameObject PowerUpSlot2;
@@ -32,8 +33,8 @@ public class PlayerDataDisplayer : MonoBehaviour {
             Debug.Log("NULL");
         //Player = Player.transform.GetChild(0).gameObject;
         //NitroUI = PlayerCarDataUI.transform.GetChild(1).gameObject;
-        //PlayerHealthBar = PlayerCarDataUI.transform.GetChild(2).transform.GetChild(0).gameObject;
-        //PlayerShieldBar = PlayerCarDataUI.transform.GetChild(3).transform.GetChild(0).gameObject;
+        //PlayerHealthHUD = PlayerCarDataUI.transform.GetChild(2).transform.GetChild(0).gameObject;
+        //PlayerShieldHUD = PlayerCarDataUI.transform.GetChild(3).transform.GetChild(0).gameObject;
     }
 
     // Update is called once per frameGetPosition
@@ -43,16 +44,20 @@ public class PlayerDataDisplayer : MonoBehaviour {
         MaxRacePositionDisplay.GetComponent<Text>().text = "" + RaceManager.Racers.Count;
         MaxNumberOfLaps.GetComponent<Text>().text = "" + RaceManager.NumberOfLaps;
         // updates health and shield bar
-        PlayerShieldBar.GetComponent<Image>().fillAmount = Player.GetComponent<VehicleData>().GetCurrentShield() / Player.GetComponent<VehicleData>().MaxCarShield;
-        PlayerHealthBar.GetComponent<Image>().fillAmount = Player.GetComponent<VehicleData>().GetCurrentHealth() / Player.GetComponent<VehicleData>().MaxCarHealth;
+        PlayerShieldHUD.GetComponent<Image>().fillAmount = Player.GetComponent<VehicleData>().GetCurrentShield() / Player.GetComponent<VehicleData>().MaxCarShield;
+        PlayerHealthHUD.GetComponent<Image>().fillAmount = Player.GetComponent<VehicleData>().GetCurrentHealth() / Player.GetComponent<VehicleData>().MaxCarHealth;
         // updates PowerUpSlot value
         PowerUpSlot1.GetComponent<Text>().text = "" + Player.GetComponent<VehicleData>().GetPowerUpSlotValue(1);
         PowerUpSlot2.GetComponent<Text>().text = "" + Player.GetComponent<VehicleData>().GetPowerUpSlotValue(2);
         PowerUpSlot3.GetComponent<Text>().text = "" + Player.GetComponent<VehicleData>().GetPowerUpSlotValue(3);
         PowerUpSlot4.GetComponent<Text>().text = "" + Player.GetComponent<VehicleData>().GetPowerUpSlotValue(4);
         // updates nitro
-        if (NitroUI.activeSelf) {
-            NitroUI.transform.GetChild(0).GetComponent<Image>().fillAmount = PlayerPowerUps.GetComponentInChildren<NitroPU>().GetNitroAmount() / PlayerPowerUps.GetComponentInChildren<NitroPU>().MaxNitroAmount;
+        if (NitroHUD.activeSelf) {
+            NitroHUD.transform.GetChild(0).GetComponent<Image>().fillAmount = PlayerPowerUps.GetComponentInChildren<NitroPU>().GetNitroAmount() / PlayerPowerUps.GetComponentInChildren<NitroPU>().MaxNitroAmount;
+        }
+
+        if (SmokeHUD.activeSelf) {
+            SmokeHUD.GetComponent<Image>().fillAmount = PlayerPowerUps.GetComponentInChildren<SmokePU>().GetSmokeAmount() / PlayerPowerUps.GetComponentInChildren<SmokePU>().MaxSmokeAmount;
         }
 
 
@@ -65,6 +70,7 @@ public class PlayerDataDisplayer : MonoBehaviour {
         }*/
     }
 
+    /*
     public void UpdateNitroBar(float amount) {
         Debug.Log(amount);
         if (amount < 1) {
@@ -74,4 +80,5 @@ public class PlayerDataDisplayer : MonoBehaviour {
             NitroBar.GetComponent<RectTransform>().SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, amount * 2);
         }
     }
+    */
 }

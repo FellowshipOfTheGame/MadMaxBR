@@ -6,14 +6,13 @@ using UnityEngine.PlayerLoop;
 public class NitroPU : MonoBehaviour {
     public float MaxNitroAmount; // maximum amount of nitro
     public float UsePerSecond; // use of nitro per second in percentage
-    public GameObject NitroUI; // nitro UI
+    public GameObject NitroHUD; // nitro HUD
 
     private float curNitroAmount; // amount of car nitro
     private GameObject targetCar; // the car this script is attached
 
     public void UpdateNitroAmount(float amount) {
         curNitroAmount = amount;
-        //NitroBar.GetComponent<RectTransform>().SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, amount * 2);
     }
 
     public float GetNitroAmount() {
@@ -22,19 +21,19 @@ public class NitroPU : MonoBehaviour {
 
     public void Activate() {
         curNitroAmount = MaxNitroAmount; // set maximum value of nitro amount
-        NitroUI.SetActive(true);
+        NitroHUD.SetActive(true);
         targetCar = this.transform.parent.gameObject.transform.parent.gameObject; // get the car this script is attached
     }
 
     private void Update() {
-        if (GetNitroAmount() == 0) {
+        if (curNitroAmount == 0) {
             this.gameObject.SetActive(false);
-            NitroUI.SetActive(false);
-            gameObject.transform.parent.GetComponentInParent<VehicleData>().EmptyPowerUpSlot(PowerUpName.Nitro);
+            NitroHUD.SetActive(false);
+            targetCar.GetComponent<VehicleData>().EmptyPowerUpSlot(PowerUpName.Nitro);
         } else {
             if (Input.GetKey(KeyCode.LeftShift)) {
                 // CarController.IsNitroActive = true;
-                UpdateNitroAmount(Mathf.MoveTowards(curNitroAmount, 0f, Time.deltaTime * MaxNitroAmount * UsePerSecond / 100));
+                curNitroAmount = Mathf.MoveTowards(curNitroAmount, 0f, Time.deltaTime * MaxNitroAmount * UsePerSecond / 100);
             }
         }
     }

@@ -59,7 +59,10 @@ public class PowerUpPlatform : MonoBehaviour {
         } else {
             powerUpNumber = powerUpNum;
         }
+        
         platformHitBox.transform.tag = MaterialList[powerUpNumber].name;
+        Debug.Log(MaterialList[powerUpNumber].name);
+        Debug.Log(platformHitBox.transform.tag);
         representation.GetComponent<MeshRenderer>().material = MaterialList[powerUpNumber];
         platformHitBox.SetActive(true);
         representation.SetActive(true);

@@ -12,6 +12,7 @@ public class PowerUpActivation : MonoBehaviour {
     public GameObject Fix;
     public GameObject Thorns;
     public GameObject ExplosiveMine;
+    public GameObject Smoke;
 
     private void OnTriggerEnter(Collider collider) {
         if (collider.gameObject.CompareTag("ThornsPU")) { // Thorns is stored in a slot
@@ -22,6 +23,7 @@ public class PowerUpActivation : MonoBehaviour {
                 collider.GetComponentInParent<PowerUpPlatform>().DeactivatePowerUpPlatform();
             }
         }
+
         if (collider.gameObject.CompareTag("ShieldPU")) { // Shield is stored in a slot
             if (gameObject.GetComponent<VehicleData>().PowerUpSlotFree(PowerUpName.Shield)) {
                 gameObject.GetComponent<VehicleData>().FillPowerUpSlot(PowerUpName.Shield);
@@ -35,6 +37,7 @@ public class PowerUpActivation : MonoBehaviour {
                 }
             }
         }
+
         if (collider.gameObject.CompareTag("FixPU")) { // Fix is not stored in a slot
             if (gameObject.GetComponent<VehicleData>().PowerUpSlotFree(PowerUpName.Fix)) {
                 gameObject.GetComponent<VehicleData>().FillPowerUpSlot(PowerUpName.Fix);
@@ -48,6 +51,7 @@ public class PowerUpActivation : MonoBehaviour {
                 }
             }
         }
+
         if (collider.gameObject.CompareTag("ExplosiveMinePU")) { // Explosive Mine is stored in a slot
             if (gameObject.GetComponent<VehicleData>().PowerUpSlotFree(PowerUpName.ExplosiveMine)) { // if the ExplosiveMine slot is free
                 gameObject.GetComponent<VehicleData>().FillPowerUpSlot(PowerUpName.ExplosiveMine);
@@ -56,6 +60,7 @@ public class PowerUpActivation : MonoBehaviour {
                 collider.GetComponentInParent<PowerUpPlatform>().DeactivatePowerUpPlatform(); // deactivate the PowerUp platform
             }
         }
+
         if (collider.gameObject.CompareTag("NitroPU")) { // Nitro is stored in a slot
             if (gameObject.GetComponent<VehicleData>().PowerUpSlotFree(PowerUpName.Nitro)) {
                 gameObject.GetComponent<VehicleData>().FillPowerUpSlot(PowerUpName.Nitro);
@@ -64,7 +69,21 @@ public class PowerUpActivation : MonoBehaviour {
                 collider.GetComponentInParent<PowerUpPlatform>().DeactivatePowerUpPlatform();
             } else { // if the power up slot that stores nitro isnt free
                 if (gameObject.GetComponent<VehicleData>().GetPowerUpSlotValue(PowerUpName.Nitro) == (int)PowerUpName.Nitro) {
-                    Nitro.GetComponent<FixPU>().Activate();
+                    Nitro.GetComponent<NitroPU>().Activate();
+                    collider.GetComponentInParent<PowerUpPlatform>().DeactivatePowerUpPlatform();
+                }
+            }
+        }
+
+        if (collider.gameObject.CompareTag("SmokePU")) { // Smoke is stored in a slot
+            if (gameObject.GetComponent<VehicleData>().PowerUpSlotFree(PowerUpName.Smoke)) {
+                gameObject.GetComponent<VehicleData>().FillPowerUpSlot(PowerUpName.Smoke);
+                Smoke.SetActive(true);
+                Smoke.GetComponent<SmokePU>().Activate();
+                collider.GetComponentInParent<PowerUpPlatform>().DeactivatePowerUpPlatform();
+            } else { // if the power up slot that stores smoke isnt free
+                if (gameObject.GetComponent<VehicleData>().GetPowerUpSlotValue(PowerUpName.Smoke) == (int)PowerUpName.Smoke) {
+                    Smoke.GetComponent<SmokePU>().Activate();
                     collider.GetComponentInParent<PowerUpPlatform>().DeactivatePowerUpPlatform();
                 }
             }
