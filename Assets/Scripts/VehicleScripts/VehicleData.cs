@@ -21,6 +21,7 @@ public class VehicleData : MonoBehaviour {
     //public PowerUp[] powerUps;
 
     /// <summary>
+    /// Attack Power Up Slot. 
     /// Can receive one of the following Attack Power Up codes:
     ///     0 -> machine gun,
     ///     1 -> rocket-launcher,
@@ -28,21 +29,24 @@ public class VehicleData : MonoBehaviour {
     /// </summary>
     private int powerUpSlot1;
     /// <summary>
+    /// Defense Power Up Slot. 
     /// Can receive one of the following Defense Power Up codes:
-    ///     3 -> smoke,
+    ///     3 -> shield,
+    ///     4 -> fixing,
+    ///     5 -> smoke,
     /// </summary>
     private int powerUpSlot2;
     /// <summary>
     /// Can receive one of the following Trap Power Up codes:
-    ///     4 -> explosive mine,
-    ///     5 -> deactivator mine,
+    ///     6 -> explosive mine,
+    ///     7 -> deactivator mine,
     /// </summary>
     private int powerUpSlot3;
     /// <summary>
     /// Can receive one of the following Utility Power Up codes:
-    ///     6 -> nitro,
-    ///     7 -> grease,
-    ///     8 -> glue,
+    ///     8 -> nitro,
+    ///     9 -> grease,
+    ///     10 -> glue,
     /// </summary>
     private int powerUpSlot4;
 
@@ -68,19 +72,52 @@ public class VehicleData : MonoBehaviour {
         }
     }
     /// <summary>
+    /// Returns the value of a a power up slot that stores the given powerup.
+    /// </summary>
+    /// <param name="powerup">PowerUp Name</param>
+    /// <returns></returns>
+    public int GetPowerUpSlotValue(PowerUpName powerup) {
+        if (powerup == PowerUpName.Thorns) {
+            return powerUpSlot1;
+        }
+        if (powerup == PowerUpName.Shield || powerup == PowerUpName.Fix) {
+            return powerUpSlot2;
+        }
+        if (powerup == PowerUpName.ExplosiveMine) {
+            return powerUpSlot3;
+        }
+        if (powerup == PowerUpName.Nitro) {
+            return powerUpSlot4;
+        }
+        Debug.LogError("slotIndex of GetPowerUpSlotValue is wrong");
+        return -1; // error 
+    }
+    /// <summary>
     /// Verify if the slot that allocates powerUp is free.
     /// </summary>
     /// <param name="powerUp">The powerUp that needs to be verified.</param>
     /// <returns></returns>
     public bool PowerUpSlotFree(PowerUpName powerup) {
-        if (powerup == PowerUpName.Nitro) {
-            if (powerUpSlot4 == -1) {
+        if (powerup == PowerUpName.Thorns) {
+            if (powerUpSlot1 == -1) {
                 return true;
             }
             return false;
         }
-        if (powerup == PowerUpName.Thorns) {
-            if (powerUpSlot1 == -1) {
+        if (powerup == PowerUpName.Shield || powerup == PowerUpName.Fix) {
+            if (powerUpSlot2 == -1) {
+                return true;
+            }
+            return false;
+        }
+        if (powerup == PowerUpName.ExplosiveMine) {
+            if (powerUpSlot3 == -1) {
+                return true;
+            }
+            return false;
+        }
+        if (powerup == PowerUpName.Nitro) {
+            if (powerUpSlot4 == -1) {
                 return true;
             }
             return false;
@@ -93,23 +130,57 @@ public class VehicleData : MonoBehaviour {
     /// </summary>
     /// <param name="powerUp">The PowerUp to be inserted.</param>
     public void FillPowerUpSlot(PowerUpName powerup) {
-        if (powerup == PowerUpName.Nitro) {
-            powerUpSlot4 = 6;
+        switch ((int)powerup) {
+            case (int)PowerUpName.Thorns:
+                powerUpSlot1 = (int)PowerUpName.Thorns;
+                break;
+            case (int)PowerUpName.Shield:
+                powerUpSlot2 = (int)PowerUpName.Shield;
+                break;
+            case (int)PowerUpName.Fix:
+                powerUpSlot2 = (int)PowerUpName.Fix;
+                break;
+            case (int)PowerUpName.ExplosiveMine:
+                powerUpSlot3 = (int)PowerUpName.ExplosiveMine;
+                break;
+            case (int)PowerUpName.Nitro:
+                powerUpSlot4 = (int)PowerUpName.Nitro;
+                break;
         }
+        /*
         if (powerup == PowerUpName.Thorns) {
-            powerUpSlot1 = 6;
+            powerUpSlot1 = (int)PowerUpName.Thorns;
         }
+        if (powerup == PowerUpName.Shield) {
+            powerUpSlot2 = (int)PowerUpName.Shield;
+        }
+        if (powerup == PowerUpName.Fix) {
+            powerUpSlot2 = (int)PowerUpName.Fix;
+        }
+        if (powerup == PowerUpName.ExplosiveMine) {
+            powerUpSlot3 = (int)PowerUpName.ExplosiveMine;
+        }
+        if (powerup == PowerUpName.Nitro) {
+            powerUpSlot4 = (int)PowerUpName.Nitro;
+        }
+        */
     }
     /// <summary>
     /// Logically removes a powerUp from its respective slot.
     /// </summary>
     /// <param name="powerUp">The PowerUp to be removed.</param>
     public void EmptyPowerUpSlot(PowerUpName powerup) {
-        if (powerup == PowerUpName.Nitro) {
-            powerUpSlot4 = -1;
-        }
         if (powerup == PowerUpName.Thorns) {
             powerUpSlot1 = -1;
+        }
+        if (powerup == PowerUpName.Shield || powerup == PowerUpName.Fix) {
+            powerUpSlot2 = -1;
+        }
+        if (powerup == PowerUpName.ExplosiveMine) {
+            powerUpSlot3 = -1;
+        }
+        if (powerup == PowerUpName.Nitro) {
+            powerUpSlot4 = -1;
         }
     }
 
@@ -127,7 +198,7 @@ public class VehicleData : MonoBehaviour {
 
     // Start is called before the first frame update
     public void Start() {
-        curCarHealth = MaxCarHealth;
+        curCarHealth = MaxCarHealth*10/100;
         curCarShield = 0;
         // setup number of kills
         killsCount = 0;
@@ -142,7 +213,7 @@ public class VehicleData : MonoBehaviour {
     public void Update() {
         //SetCurrentHealth(MaxCarHealth);
         if (curCarHealth <= 0) {
-            Destroy(this.gameObject);
+            Die();
         }
         //if (playerPowerUps.transform.GetChild(0).gameObject.activeSelf) { // if nitro power up is active
 
@@ -193,5 +264,10 @@ public class VehicleData : MonoBehaviour {
             }
         }
         curCarHealth -= damage;
+    }
+
+    public void Die() {
+        this.gameObject.SetActive(false);
+        isDead = true;
     }
 }
