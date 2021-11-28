@@ -31,25 +31,32 @@ public class Arma919
     [Space(10)]
     public GameObject objetoArma;
     public GameObject lugarParticula;
-    public GameObject particulaFogo;
+    public GameObject particulaFumaca;
+    [Range(0.01f, 2.0f)]
+    public float tempoVidaParticula = 0.5f;
     public AudioClip somTiro, somRecarga;
+    public WeaponState weaponState = WeaponState.idle;
+    public Animator weaponAnimator;
 }
 [RequireComponent(typeof(AudioSource))]
 public class Weapon : MonoBehaviour
 {
 
-    public KeyCode botaoRecarregar = KeyCode.R;
+    [SerializeField] private WeaponState weaponState = WeaponState.idle;
+    [SerializeField] private Animator weaponAnimator;
+
+    [SerializeField] private KeyCode botaoRecarregar = KeyCode.R;
     public int armaInicial = 0;
-    public string TagInimigo = "inimigo";
-    public Text BalasPente, BalasArmaText;
-    public Material MaterialLasers;
-    public Arma919[] armas;
+    [SerializeField] private string TagInimigo = "inimigo";
+    [SerializeField] private Text BalasPente, BalasArmaText;
+    [SerializeField] private Material MaterialLasers;
+    [SerializeField] private Arma919[] armas;
     //
     int armaAtual;
-    AudioSource emissorSom;
-    bool recarregando, atirando;
-    LineRenderer linhaDoLaser;
-    GameObject luzColisao;
+    [SerializeField] private AudioSource emissorSom;
+    [SerializeField] private bool recarregando, atirando;
+    [SerializeField] private LineRenderer linhaDoLaser;
+    [SerializeField] private GameObject luzColisao;
 
     void Start()
     {
@@ -100,8 +107,8 @@ public class Weapon : MonoBehaviour
             emissorSom.clip = armas[armaAtual].somTiro;
             emissorSom.PlayOneShot(emissorSom.clip);
             armas[armaAtual].balasNoPente--;
-            GameObject balaTemp = Instantiate(armas[armaAtual].particulaFogo, armas[armaAtual].lugarParticula.transform.position, transform.rotation) as GameObject;
-            Destroy(balaTemp, 0.5f);
+            armas[armaAtual].weaponAnimator.SetBool("IsShooting", true);
+            Destroy(Instantiate(armas[armaAtual].particulaFumaca, armas[armaAtual].lugarParticula.transform.position, transform.rotation) as GameObject, armas[armaAtual].tempoVidaParticula);
 
             if (Physics.Raycast(transform.position, transform.forward, out RaycastHit pontoDeColisao))
             {
