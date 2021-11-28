@@ -27,6 +27,8 @@ public class SmokePU : MonoBehaviour {
                 curSmokeAmount = Mathf.MoveTowards(curSmokeAmount, 0f, Time.deltaTime * MaxSmokeAmount * UsePerSecond / 100);
             } else {
                 this.gameObject.transform.GetChild(0).gameObject.SetActive(false);
+                targetCar.GetComponent<VehicleData>().setSmokeActive(false);
+
             }
         }
     }
