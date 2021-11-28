@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
 public class ThornsCollision : MonoBehaviour {
     private GameObject car; // the car this script is attached
 
@@ -28,7 +27,7 @@ public class ThornsCollision : MonoBehaviour {
                 Debug.Log("otherCar = " + otherCar.gameObject.name);
             }
             float baseCollisionDamage = 100;
-            float collisionDamageModifier = Mathf.Abs(car.GetComponent<CarController>().speed - otherCar.GetComponent<CarController>().speed);
+            float collisionDamageModifier = Mathf.Abs(car.GetComponent<CarController>().CurrentSpeed - otherCar.GetComponent<CarController>().CurrentSpeed);
             otherCar.GetComponentInParent<VehicleData>().ReceiveDamage(baseCollisionDamage/* + collisionDamageModifier*/); // decreases health of the car
             Debug.Log(other.gameObject.name + " Received " + baseCollisionDamage + " damage");
         }

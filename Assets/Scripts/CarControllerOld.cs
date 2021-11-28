@@ -33,7 +33,7 @@ public struct Wheel// estrutura para saber qual roda é
     public Side side;//lado da roda
 }
 
-public class CarController : MonoBehaviour
+public class CarControllerOld : MonoBehaviour
 {
     public ControlMode controlMode;
     private CarMovementAI carMovementAI;
