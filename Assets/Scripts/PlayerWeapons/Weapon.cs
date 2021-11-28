@@ -41,10 +41,6 @@ public class Arma919
 [RequireComponent(typeof(AudioSource))]
 public class Weapon : MonoBehaviour
 {
-
-    [SerializeField] private WeaponState weaponState = WeaponState.idle;
-    [SerializeField] private Animator weaponAnimator;
-
     [SerializeField] private KeyCode botaoRecarregar = KeyCode.R;
     public int armaInicial = 0;
     [SerializeField] private string TagInimigo = "inimigo";
@@ -52,11 +48,11 @@ public class Weapon : MonoBehaviour
     [SerializeField] private Material MaterialLasers;
     [SerializeField] private Arma919[] armas;
     //
-    int armaAtual;
-    [SerializeField] private AudioSource emissorSom;
-    [SerializeField] private bool recarregando, atirando;
-    [SerializeField] private LineRenderer linhaDoLaser;
-    [SerializeField] private GameObject luzColisao;
+    private int armaAtual;
+    private AudioSource emissorSom;
+    private bool recarregando, atirando;
+    private LineRenderer linhaDoLaser;
+    private GameObject luzColisao;
 
     void Start()
     {
@@ -100,15 +96,15 @@ public class Weapon : MonoBehaviour
         //UI
         BalasArmaText.text = "Balas: " + armas[armaAtual].balasNaArma;
         BalasPente.text = "Pente: " + armas[armaAtual].balasNoPente;
-        if (Input.GetMouseButton(0) && armas[armaAtual].balasNoPente > 0 && recarregando == false && atirando == false)
+        if (Input.GetMouseButton(0) && armas[armaAtual].balasNoPente > 0 && !recarregando && !atirando)
         {
-            atirando = true;
             StartCoroutine(TempoTiro(armas[armaAtual].tempoPorTiro));
             emissorSom.clip = armas[armaAtual].somTiro;
             emissorSom.PlayOneShot(emissorSom.clip);
             armas[armaAtual].balasNoPente--;
             armas[armaAtual].weaponAnimator.SetBool("IsShooting", true);
-            Destroy(Instantiate(armas[armaAtual].particulaFumaca, armas[armaAtual].lugarParticula.transform.position, transform.rotation) as GameObject, armas[armaAtual].tempoVidaParticula);
+            GameObject balaTemp = Instantiate(armas[armaAtual].particulaFumaca, armas[armaAtual].lugarParticula.transform.position, transform.rotation) as GameObject;
+            Destroy(balaTemp, armas[armaAtual].tempoVidaParticula);
 
             if (Physics.Raycast(transform.position, transform.forward, out RaycastHit pontoDeColisao))
             {
@@ -118,8 +114,17 @@ public class Weapon : MonoBehaviour
                 }
             }
         }
+        if (!Input.GetMouseButton(0) && atirando || recarregando || armas[armaAtual].balasNoPente == 0)
+        {
+            armas[armaAtual].weaponAnimator.SetBool("IsShooting", false);
+            armas[armaAtual].weaponAnimator.SetBool("IsLoop", false);
+        }
+        if (Input.GetMouseButton(0) && atirando)
+        {
+            armas[armaAtual].weaponAnimator.SetBool("IsLoop", true);
+        }
         //recarregar
-        if (Input.GetKeyDown(botaoRecarregar) && recarregando == false && atirando == false && (armas[armaAtual].balasNoPente < armas[armaAtual].balasPorPente) && (armas[armaAtual].balasNaArma > 0))
+        if (Input.GetKeyDown(botaoRecarregar) && !recarregando && !atirando && (armas[armaAtual].balasNoPente < armas[armaAtual].balasPorPente) && (armas[armaAtual].balasNaArma > 0))
         {
             emissorSom.clip = armas[armaAtual].somRecarga;
             emissorSom.PlayOneShot(emissorSom.clip);
@@ -138,9 +143,9 @@ public class Weapon : MonoBehaviour
             StartCoroutine(TempoRecarga(armas[armaAtual].tempoDaRecarga));
         }
         //laser da arma
-        if (recarregando == false)
+        if (!recarregando)
         {
-            if (armas[armaAtual].Miras.ativarLaser == true)
+            if (armas[armaAtual].Miras.ativarLaser)
             {
                 linhaDoLaser.enabled = true;
                 linhaDoLaser.material.SetColor("_TintColor", armas[armaAtual].Miras.corLaser);
@@ -189,6 +194,7 @@ public class Weapon : MonoBehaviour
 
     IEnumerator TempoTiro(float tempoDoTiro)
     {
+        atirando = true;
         yield return new WaitForSeconds(tempoDoTiro);
         atirando = false;
     }

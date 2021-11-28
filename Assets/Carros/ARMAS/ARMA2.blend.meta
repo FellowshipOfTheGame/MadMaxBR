@@ -8,7 +8,25 @@ ModelImporter:
     second: Parada
   - first:
       74: 3330459683747981235
-    second: Atirando
+    second: AtirandoStart
+  - first:
+      74: 5834259319507412652
+    second: Loop
+  - first:
+      74: 5349594211973003374
+    second: AtirandoStop
+  - first:
+      74: -619547186965265060
+    second: Parado
+  - first:
+      74: 6254970008045277072
+    second: StartFire
+  - first:
+      74: -4579541417933013020
+    second: Fire
+  - first:
+      74: -8232207394317140357
+    second: StopFire
   externalObjects: {}
   materials:
     materialImportMode: 2
@@ -38,11 +56,40 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: Parada
+      name: Parado
       takeName: Scene
       internalID: 0
       firstFrame: 0
       lastFrame: 10
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: StartFire
+      takeName: Scene
+      internalID: 0
+      firstFrame: 11
+      lastFrame: 30
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -67,10 +114,39 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: Atirando
+      name: Fire
       takeName: Scene
       internalID: 0
-      firstFrame: 11
+      firstFrame: 25
+      lastFrame: 75
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: StopFire
+      takeName: Scene
+      internalID: 0
+      firstFrame: 76
       lastFrame: 100
       wrapMode: 0
       orientationOffsetY: 0
