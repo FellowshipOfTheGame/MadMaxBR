@@ -14,6 +14,7 @@ public class PlayerDataDisplayer : MonoBehaviour {
 
     public GameObject MachineGunCountText;
     public GameObject RifleCountText;
+    public GameObject ThornsTimerUI;
     public GameObject NitroHUD;
     public GameObject SmokeHUD;
     public GameObject GlueHUD;
@@ -63,6 +64,9 @@ public class PlayerDataDisplayer : MonoBehaviour {
         // updates bullet count text with quantity of Rifle
         if (RifleCountText.activeSelf) {
             RifleCountText.GetComponent<Text>().text = PlayerPowerUps.GetComponentInChildren<RiflePU>().GetBulletAmount().ToString();
+        }
+        if (ThornsTimerUI.activeSelf) {
+            ThornsTimerUI.GetComponent<Image>().fillAmount = 1 - PlayerPowerUps.GetComponentInChildren<ThornsPU>().GetRunningTime() / PlayerPowerUps.GetComponentInChildren<ThornsPU>().GetMaxTime();
         }
         // updates smoke
         if (SmokeHUD.activeSelf) {
