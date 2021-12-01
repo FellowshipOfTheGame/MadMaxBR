@@ -1807,8 +1807,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 3.16, y: 2.26, z: 5.62}
-  m_Center: {x: 0, y: 0.44, z: 0}
+  m_Size: {x: 3.16, y: 1.996945, z: 5.289858}
+  m_Center: {x: 0, y: 0.1076392, z: -0.05641317}
 --- !u!114 &8177789557294999800
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1865,6 +1865,7 @@ MonoBehaviour:
   RaceTime: {fileID: 0}
   LapTime: {fileID: 0}
   TrackerNode: {fileID: 0}
+  TriggerPoint: {fileID: 0}
 --- !u!114 &8177789557294999807
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1880,6 +1881,7 @@ MonoBehaviour:
   RunnerName: Bot 0
   MaxCarHealth: 1000
   MaxCarShield: 1000
+  isDead: 0
 --- !u!114 &1938813747329656623
 MonoBehaviour:
   m_ObjectHideFlags: 0

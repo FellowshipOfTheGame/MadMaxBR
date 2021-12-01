@@ -18,6 +18,7 @@ public class VehicleData : MonoBehaviour {
     private int killsCount; // kills count of car
 
     public bool isDead; // if car is dead
+    public GameObject DeadCarPrefab;
 
     /// <summary>
     /// Attack Power Up Slot. 

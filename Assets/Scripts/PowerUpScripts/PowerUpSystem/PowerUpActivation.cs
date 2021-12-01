@@ -54,6 +54,20 @@ public class PowerUpActivation : MonoBehaviour {
             }
         }
 
+        if (collider.gameObject.CompareTag("SmokePU")) { // Smoke is stored in a slot
+            if (gameObject.GetComponent<VehicleData>().PowerUpSlotFree(PowerUpName.Smoke)) {
+                gameObject.GetComponent<VehicleData>().FillPowerUpSlot(PowerUpName.Smoke);
+                Smoke.SetActive(true);
+                Smoke.GetComponent<SmokePU>().Activate();
+                collider.GetComponentInParent<PowerUpPlatform>().DeactivatePowerUpPlatform();
+            } else { // if the power up slot that stores smoke isnt free
+                if (gameObject.GetComponent<VehicleData>().GetPowerUpSlotValue(PowerUpName.Smoke) == (int)PowerUpName.Smoke) {
+                    Smoke.GetComponent<SmokePU>().Activate();
+                    collider.GetComponentInParent<PowerUpPlatform>().DeactivatePowerUpPlatform();
+                }
+            }
+        }
+
         if (collider.gameObject.CompareTag("ExplosiveMinePU")) { // Explosive Mine is stored in a slot
             if (gameObject.GetComponent<VehicleData>().PowerUpSlotFree(PowerUpName.ExplosiveMine)) { // if the ExplosiveMine slot is free
                 gameObject.GetComponent<VehicleData>().FillPowerUpSlot(PowerUpName.ExplosiveMine);
@@ -72,20 +86,6 @@ public class PowerUpActivation : MonoBehaviour {
             } else { // if the power up slot that stores nitro isnt free
                 if (gameObject.GetComponent<VehicleData>().GetPowerUpSlotValue(PowerUpName.Nitro) == (int)PowerUpName.Nitro) {
                     Nitro.GetComponent<NitroPU>().Activate();
-                    collider.GetComponentInParent<PowerUpPlatform>().DeactivatePowerUpPlatform();
-                }
-            }
-        }
-
-        if (collider.gameObject.CompareTag("SmokePU")) { // Smoke is stored in a slot
-            if (gameObject.GetComponent<VehicleData>().PowerUpSlotFree(PowerUpName.Smoke)) {
-                gameObject.GetComponent<VehicleData>().FillPowerUpSlot(PowerUpName.Smoke);
-                Smoke.SetActive(true);
-                Smoke.GetComponent<SmokePU>().Activate();
-                collider.GetComponentInParent<PowerUpPlatform>().DeactivatePowerUpPlatform();
-            } else { // if the power up slot that stores smoke isnt free
-                if (gameObject.GetComponent<VehicleData>().GetPowerUpSlotValue(PowerUpName.Smoke) == (int)PowerUpName.Smoke) {
-                    Smoke.GetComponent<SmokePU>().Activate();
                     collider.GetComponentInParent<PowerUpPlatform>().DeactivatePowerUpPlatform();
                 }
             }
