@@ -12,6 +12,8 @@ public class PlayerDataDisplayer : MonoBehaviour {
     public GameObject RacePositionDisplay;
     public GameObject MaxRacePositionDisplay;
 
+    public GameObject MachineGunCountText;
+    public GameObject RifleCountText;
     public GameObject NitroHUD;
     public GameObject SmokeHUD;
     public GameObject GlueHUD;
@@ -53,13 +55,22 @@ public class PlayerDataDisplayer : MonoBehaviour {
         PowerUpSlot2.GetComponent<Text>().text = "" + Player.GetComponent<VehicleData>().GetPowerUpSlotValue(2);
         PowerUpSlot3.GetComponent<Text>().text = "" + Player.GetComponent<VehicleData>().GetPowerUpSlotValue(3);
         PowerUpSlot4.GetComponent<Text>().text = "" + Player.GetComponent<VehicleData>().GetPowerUpSlotValue(4);
-        // updates nitro
-        if (NitroHUD.activeSelf) {
-            NitroHUD.transform.GetChild(0).GetComponent<Image>().fillAmount = PlayerPowerUps.GetComponentInChildren<NitroPU>().GetNitroAmount() / PlayerPowerUps.GetComponentInChildren<NitroPU>().MaxNitroAmount;
+        
+        // updates bullet count text with quantity of MachineGun
+        if (MachineGunCountText.activeSelf) {
+            MachineGunCountText.GetComponent<Text>().text = PlayerPowerUps.GetComponentInChildren<MachineGunPU>().GetBulletAmount().ToString();
+        }
+        // updates bullet count text with quantity of Rifle
+        if (RifleCountText.activeSelf) {
+            RifleCountText.GetComponent<Text>().text = PlayerPowerUps.GetComponentInChildren<RiflePU>().GetBulletAmount().ToString();
         }
         // updates smoke
         if (SmokeHUD.activeSelf) {
             SmokeHUD.transform.GetChild(0).GetComponent<Image>().fillAmount = PlayerPowerUps.GetComponentInChildren<SmokePU>().GetSmokeAmount() / PlayerPowerUps.GetComponentInChildren<SmokePU>().MaxSmokeAmount;
+        }
+        // updates nitro
+        if (NitroHUD.activeSelf) {
+            NitroHUD.transform.GetChild(0).GetComponent<Image>().fillAmount = PlayerPowerUps.GetComponentInChildren<NitroPU>().GetNitroAmount() / PlayerPowerUps.GetComponentInChildren<NitroPU>().MaxNitroAmount;
         }
         // updates grease
         if (GreaseHUD.activeSelf) {

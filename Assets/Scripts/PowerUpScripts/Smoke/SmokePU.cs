@@ -16,7 +16,11 @@ public class SmokePU : MonoBehaviour {
     public float GetSmokeAmount() {
         return curSmokeAmount;
     }
-
+    public void Activate() {
+        targetCar = this.transform.parent.gameObject.transform.parent.gameObject; // get the car this script is attached to
+        curSmokeAmount = MaxSmokeAmount;
+        SmokeHUD.SetActive(true);
+    }
     private void Update() {
         if (curSmokeAmount == 0) {
             this.gameObject.SetActive(false);
@@ -34,11 +38,5 @@ public class SmokePU : MonoBehaviour {
 
             }
         }
-    }
-
-    public void Activate() {
-        targetCar = this.transform.parent.gameObject.transform.parent.gameObject; // get the car this script is attached to
-        curSmokeAmount = MaxSmokeAmount;
-        SmokeHUD.SetActive(true);
     }
 }

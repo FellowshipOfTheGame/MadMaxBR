@@ -6,15 +6,15 @@ using UnityEngine.UI;
 
 public enum PowerUpName {
     MachineGun,
-    RocketLauncher,
+    Rifle,
     Thorns,
     Shield,
     Fix,
     Smoke,
     ExplosiveMine,
-    Glue,
+    Nitro,
     Grease,
-    Nitro
+    Glue
 }
 
 public enum PowerUpType {

@@ -77,7 +77,7 @@ public class VehicleData : MonoBehaviour {
     /// <param name="powerup">PowerUp Name</param>
     /// <returns></returns>
     public int GetPowerUpSlotValue(PowerUpName powerup) {
-        if (powerup == PowerUpName.Thorns) {
+        if (powerup == PowerUpName.MachineGun || powerup == PowerUpName.Rifle || powerup == PowerUpName.Thorns) {
             return powerUpSlot1;
         }
         if (powerup == PowerUpName.Shield || powerup == PowerUpName.Fix || powerup == PowerUpName.Smoke) {
@@ -98,7 +98,7 @@ public class VehicleData : MonoBehaviour {
     /// <param name="powerUp">The powerUp that needs to be verified.</param>
     /// <returns></returns>
     public bool PowerUpSlotFree(PowerUpName powerup) {
-        if (powerup == PowerUpName.Thorns) {
+        if (powerup == PowerUpName.MachineGun || powerup == PowerUpName.Rifle || powerup == PowerUpName.Thorns) {
             if (powerUpSlot1 == -1) {
                 return true;
             }
@@ -131,6 +131,12 @@ public class VehicleData : MonoBehaviour {
     /// <param name="powerUp">The PowerUp to be inserted.</param>
     public void FillPowerUpSlot(PowerUpName powerup) {
         switch ((int)powerup) {
+            case (int)PowerUpName.MachineGun:
+                powerUpSlot1 = (int)PowerUpName.MachineGun;
+                break;
+            case (int)PowerUpName.Rifle:
+                powerUpSlot1 = (int)PowerUpName.Rifle;
+                break;
             case (int)PowerUpName.Thorns:
                 powerUpSlot1 = (int)PowerUpName.Thorns;
                 break;
@@ -162,7 +168,7 @@ public class VehicleData : MonoBehaviour {
     /// </summary>
     /// <param name="powerUp">The PowerUp to be removed.</param>
     public void EmptyPowerUpSlot(PowerUpName powerup) {
-        if (powerup == PowerUpName.Thorns) {
+        if (powerup == PowerUpName.MachineGun || powerup == PowerUpName.Rifle || powerup == PowerUpName.Thorns) {
             powerUpSlot1 = -1;
         }
         if (powerup == PowerUpName.Shield || powerup == PowerUpName.Fix || powerup == PowerUpName.Smoke) {
