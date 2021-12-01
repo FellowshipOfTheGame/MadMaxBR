@@ -2,21 +2,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ExplosiveMinePU : MonoBehaviour {
+public class DeactivatorMinePU : MonoBehaviour {
     public int MinesQuantity; // quantity of mines to be used
     public GameObject MinePrefab;
-    public GameObject ExplosiveMineHUD;
+    public GameObject DeactivatorMineHUD;
 
     private int RemainingMines;
     public void Activate() {
         RemainingMines = MinesQuantity;
-        ExplosiveMineHUD.SetActive(true);
+        DeactivatorMineHUD.SetActive(true);
     }
 
     public void Deactivate() {
         this.gameObject.SetActive(false);
-        ExplosiveMineHUD.SetActive(false);
-        this.gameObject.transform.parent.GetComponentInParent<VehicleData>().EmptyPowerUpSlot(PowerUpName.ExplosiveMine);
+        DeactivatorMineHUD.SetActive(false);
+        this.gameObject.transform.parent.GetComponentInParent<VehicleData>().EmptyPowerUpSlot(PowerUpName.DeactivatorMine);
     }
 
     public int GetRemainingMines() {

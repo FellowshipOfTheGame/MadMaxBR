@@ -17,6 +17,8 @@ public class PlayerDataDisplayer : MonoBehaviour {
     public GameObject ThornsTimerUI;
     public GameObject NitroHUD;
     public GameObject SmokeHUD;
+    public GameObject ExplosiveMineCount;
+    public GameObject DeactivatorMineCount;
     public GameObject GlueHUD;
     public GameObject GreaseHUD;
     public GameObject PlayerHealthHUD;
@@ -65,8 +67,17 @@ public class PlayerDataDisplayer : MonoBehaviour {
         if (RifleCountText.activeSelf) {
             RifleCountText.GetComponent<Text>().text = PlayerPowerUps.GetComponentInChildren<RiflePU>().GetBulletAmount().ToString();
         }
+        // update thorns timer ui
         if (ThornsTimerUI.activeSelf) {
             ThornsTimerUI.GetComponent<Image>().fillAmount = 1 - PlayerPowerUps.GetComponentInChildren<ThornsPU>().GetRunningTime() / PlayerPowerUps.GetComponentInChildren<ThornsPU>().GetMaxTime();
+        }
+        // update explosive mine count ui
+        if (ExplosiveMineCount.activeSelf) {
+            ExplosiveMineCount.GetComponent<Text>().text = PlayerPowerUps.GetComponentInChildren<ExplosiveMinePU>().GetRemainingMines().ToString();
+        }
+        // update deactivator mine count ui
+        if (DeactivatorMineCount.activeSelf) {
+            DeactivatorMineCount.GetComponent<Text>().text = PlayerPowerUps.GetComponentInChildren<DeactivatorMinePU>().GetRemainingMines().ToString();
         }
         // updates smoke
         if (SmokeHUD.activeSelf) {

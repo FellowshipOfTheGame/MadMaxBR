@@ -14,6 +14,7 @@ public class PowerUpActivation : MonoBehaviour {
     public GameObject Fix;
     public GameObject Smoke;
     public GameObject ExplosiveMine;
+    public GameObject DeactivatorMine;
     public GameObject Nitro;
     public GameObject Grease;
     public GameObject Glue;
@@ -112,6 +113,20 @@ public class PowerUpActivation : MonoBehaviour {
             } else { // if the power up slot that stores Explosive Mine isnt free
                 if (gameObject.GetComponent<VehicleData>().GetPowerUpSlotValue(PowerUpName.ExplosiveMine) == (int)PowerUpName.ExplosiveMine) {
                     ExplosiveMine.GetComponent<ExplosiveMinePU>().Activate();
+                    collider.GetComponentInParent<PowerUpPlatform>().DeactivatePowerUpPlatform();
+                }
+            }
+        }
+
+        if (collider.gameObject.CompareTag("DeactivatorMinePU")) { // Explosive Mine is stored in a slot
+            if (gameObject.GetComponent<VehicleData>().PowerUpSlotFree(PowerUpName.DeactivatorMine)) { // if the ExplosiveMine slot is free
+                gameObject.GetComponent<VehicleData>().FillPowerUpSlot(PowerUpName.DeactivatorMine);
+                DeactivatorMine.SetActive(true);
+                DeactivatorMine.GetComponent<DeactivatorMinePU>().Activate();
+                collider.GetComponentInParent<PowerUpPlatform>().DeactivatePowerUpPlatform(); // deactivate the PowerUp platform
+            } else { // if the power up slot that stores Explosive Mine isnt free
+                if (gameObject.GetComponent<VehicleData>().GetPowerUpSlotValue(PowerUpName.DeactivatorMine) == (int)PowerUpName.DeactivatorMine) {
+                    DeactivatorMine.GetComponent<DeactivatorMinePU>().Activate();
                     collider.GetComponentInParent<PowerUpPlatform>().DeactivatePowerUpPlatform();
                 }
             }

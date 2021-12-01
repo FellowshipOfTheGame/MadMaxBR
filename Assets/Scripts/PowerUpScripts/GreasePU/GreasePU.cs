@@ -6,11 +6,23 @@ public class GreasePU : MonoBehaviour {
     public float MaxGreaseAmount; // maximum amount of grease
     public float UsePerSecond; // use of grease per second in percentage
     public GameObject GreaseHUD; // grease hud
+    public GameObject LiquidSpiller;
 
     private float curGreaseAmount; // amount of Grease
     private GameObject targetCar; // the car this script is attached
 
-    public GameObject LiquidSpiller;
+    public void Activate() {
+        targetCar = this.transform.parent.gameObject.transform.parent.gameObject; // get the car this script is attached to
+        curGreaseAmount = MaxGreaseAmount;
+        GreaseHUD.SetActive(true);
+    }
+
+    public void Deactivate() {
+        this.gameObject.SetActive(false);
+        GreaseHUD.SetActive(false);
+        LiquidSpiller.GetComponent<ParticleSystem>().Stop();
+        targetCar.GetComponent<VehicleData>().EmptyPowerUpSlot(PowerUpName.Grease);
+    }
 
     public float GetGreaseAmount() {
         return curGreaseAmount;
@@ -19,10 +31,7 @@ public class GreasePU : MonoBehaviour {
     // Update is called once per frame
     private void Update() {
         if (curGreaseAmount == 0) {
-            this.gameObject.SetActive(false);
-            GreaseHUD.SetActive(false);
-            LiquidSpiller.GetComponent<ParticleSystem>().Stop();
-            targetCar.GetComponent<VehicleData>().EmptyPowerUpSlot(PowerUpName.Grease);
+            Deactivate();
         } else {
             if (Input.GetKey(KeyCode.LeftShift)) {
                 LiquidSpiller.GetComponent<ParticleSystem>().Play();
@@ -31,11 +40,5 @@ public class GreasePU : MonoBehaviour {
                 LiquidSpiller.GetComponent<ParticleSystem>().Stop();
             }
         }
-    }
-
-    public void Activate() {
-        targetCar = this.transform.parent.gameObject.transform.parent.gameObject; // get the car this script is attached to
-        curGreaseAmount = MaxGreaseAmount;
-        GreaseHUD.SetActive(true);
     }
 }

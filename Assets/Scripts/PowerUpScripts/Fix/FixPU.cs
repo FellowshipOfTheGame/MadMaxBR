@@ -22,6 +22,13 @@ public class FixPU : MonoBehaviour {
         timesHealed = 0;
     }
 
+    public void Deactivate() {
+        // unequip powerup
+        this.gameObject.transform.parent.GetComponentInParent<VehicleData>().EmptyPowerUpSlot(PowerUpName.Fix);
+        // set powerup gameObject inactive
+        this.gameObject.SetActive(false);
+    }
+
     private void Update() {
         if (timesHealed < DurationSec) {
             if (stopwatch.GetSeconds() >= 1) {
@@ -30,10 +37,7 @@ public class FixPU : MonoBehaviour {
                 stopwatch.ResetTimer();
             }
         } else {
-            // unequip powerup
-            this.gameObject.transform.parent.GetComponentInParent<VehicleData>().EmptyPowerUpSlot(PowerUpName.Fix);
-            // set powerup gameObject inactive
-            this.gameObject.SetActive(false);
+            Deactivate();
         }
     }
 }

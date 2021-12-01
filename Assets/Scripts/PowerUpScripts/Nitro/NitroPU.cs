@@ -10,22 +10,25 @@ public class NitroPU : MonoBehaviour {
 
     private float curNitroAmount; // amount of car nitro
     private GameObject targetCar; // the car this script is attached
-
-    public float GetNitroAmount() {
-        return curNitroAmount;
-    }
-
     public void Activate() {
         curNitroAmount = MaxNitroAmount; // set maximum value of nitro amount
         NitroHUD.SetActive(true);
         targetCar = this.transform.parent.gameObject.transform.parent.gameObject; // get the car this script is attached
     }
 
+    public void Deactivate() {
+        this.gameObject.SetActive(false);
+        NitroHUD.SetActive(false);
+        targetCar.GetComponent<VehicleData>().EmptyPowerUpSlot(PowerUpName.Nitro);
+    }
+
+    public float GetNitroAmount() {
+        return curNitroAmount;
+    }
+
     private void Update() {
         if (curNitroAmount == 0) {
-            this.gameObject.SetActive(false);
-            NitroHUD.SetActive(false);
-            targetCar.GetComponent<VehicleData>().EmptyPowerUpSlot(PowerUpName.Nitro);
+            Deactivate();
         } else {
             if (Input.GetKey(KeyCode.LeftShift)) {
                 // CarController.IsNitroActive = true;

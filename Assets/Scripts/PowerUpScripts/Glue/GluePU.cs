@@ -12,6 +12,20 @@ public class GluePU : MonoBehaviour {
 
     public GameObject LiquidSpiller;
 
+    public void Activate() {
+        targetCar = this.transform.parent.gameObject.transform.parent.gameObject; // get the car this script is attached to
+        curGlueAmount = MaxGlueAmount;
+        GlueHUD.SetActive(true);
+        Instantiate(LiquidSpiller, this.transform.position, this.transform.rotation, this.transform.parent.transform);
+
+    }
+
+    public void Deactivate() {
+        this.gameObject.SetActive(false);
+        GlueHUD.SetActive(false);
+        LiquidSpiller.GetComponent<ParticleSystem>().Stop();
+        targetCar.GetComponent<VehicleData>().EmptyPowerUpSlot(PowerUpName.Glue);
+    }
     public float GetGlueAmount() {
         return curGlueAmount;
     }
@@ -19,10 +33,7 @@ public class GluePU : MonoBehaviour {
     // Update is called once per frame
     private void Update() {
         if (curGlueAmount == 0) {
-            this.gameObject.SetActive(false);
-            GlueHUD.SetActive(false);
-            LiquidSpiller.GetComponent<ParticleSystem>().Stop();
-            targetCar.GetComponent<VehicleData>().EmptyPowerUpSlot(PowerUpName.Glue);
+            Deactivate();
         } else {
             if (Input.GetKey(KeyCode.LeftShift)) {
                 LiquidSpiller.GetComponent<ParticleSystem>().Play();
@@ -31,13 +42,5 @@ public class GluePU : MonoBehaviour {
                 LiquidSpiller.GetComponent<ParticleSystem>().Stop();
             }
         }
-    }
-
-    public void Activate() {
-        targetCar = this.transform.parent.gameObject.transform.parent.gameObject; // get the car this script is attached to
-        curGlueAmount = MaxGlueAmount;
-        GlueHUD.SetActive(true);
-        Instantiate(LiquidSpiller, this.transform.position, this.transform.rotation, this.transform.parent.transform);
-
     }
 }

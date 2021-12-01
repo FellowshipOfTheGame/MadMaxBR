@@ -13,20 +13,25 @@ public class SmokePU : MonoBehaviour {
     private float curSmokeAmount; // amount of car smoke
     private GameObject targetCar; // the car this script is attached
 
-    public float GetSmokeAmount() {
-        return curSmokeAmount;
-    }
     public void Activate() {
         targetCar = this.transform.parent.gameObject.transform.parent.gameObject; // get the car this script is attached to
         curSmokeAmount = MaxSmokeAmount;
         SmokeHUD.SetActive(true);
     }
+
+    public void Deactivate() {
+        this.gameObject.SetActive(false);
+        SmokeHUD.SetActive(false);
+        targetCar.GetComponent<VehicleData>().EmptyPowerUpSlot(PowerUpName.Smoke);
+    }
+
+    public float GetSmokeAmount() {
+        return curSmokeAmount;
+    }
+
     private void Update() {
         if (curSmokeAmount == 0) {
-            this.gameObject.SetActive(false);
-            SmokeHUD.SetActive(false);
-            //gameObject.transform.parent.GetComponentInParent<VehicleData>().EmptyPowerUpSlot(PowerUpName.Nitro);
-            targetCar.GetComponent<VehicleData>().EmptyPowerUpSlot(PowerUpName.Smoke);
+            Deactivate();
         } else {
             if (Input.GetKey(KeyCode.X)) {
                 targetCar.GetComponent<VehicleData>().setSmokeActive(true);

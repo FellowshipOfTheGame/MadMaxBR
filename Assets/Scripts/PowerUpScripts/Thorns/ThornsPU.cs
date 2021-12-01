@@ -16,6 +16,20 @@ public class ThornsPU : MonoBehaviour {
     void Awake() {
         stopwatch = gameObject.AddComponent<Timer>();
     }
+
+    public void Activate() {
+        stopwatch.ResetTimer();
+        ThornsHUD.SetActive(true);
+    }
+
+    public void Deactivate() {
+        // unequip powerup
+        this.gameObject.transform.parent.GetComponentInParent<VehicleData>().EmptyPowerUpSlot(PowerUpName.Thorns);
+        // set powerup gameObject inactive
+        this.gameObject.SetActive(false);
+        // set thorns hud
+        ThornsHUD.SetActive(false);
+    }
     /// <summary>
     /// Returns time in seconds that this powerup has been active.
     /// </summary>
@@ -23,7 +37,6 @@ public class ThornsPU : MonoBehaviour {
     public float GetRunningTime() {
         return stopwatch.GetMinutes() * 60 + stopwatch.GetSeconds() + stopwatch.GetMilliseconds() / 1000;
     }
-
     /// <summary>
     /// Returns max time this powerup can be active.
     /// </summary>
@@ -34,18 +47,7 @@ public class ThornsPU : MonoBehaviour {
 
     private void Update() {
         if (stopwatch.GetMinutes() >= DurationMin && stopwatch.GetSeconds() >= DurationSec) {
-            // unequip powerup
-            this.gameObject.transform.parent.GetComponentInParent<VehicleData>().EmptyPowerUpSlot(PowerUpName.Thorns);
-            // set powerup gameObject inactive
-            this.gameObject.SetActive(false);
-            // set thorns hud
-            ThornsHUD.SetActive(false);
-            //Debug.Log("Deactivated Thorns after " + stopwatch.GetMinutes() + ":" + stopwatch.GetSeconds());
+            Deactivate();
         }
-    }
-
-    public void Activate() {
-        stopwatch.ResetTimer();
-        ThornsHUD.SetActive(true);
     }
 }
