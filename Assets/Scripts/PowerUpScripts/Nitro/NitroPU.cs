@@ -11,10 +11,6 @@ public class NitroPU : MonoBehaviour {
     private float curNitroAmount; // amount of car nitro
     private GameObject targetCar; // the car this script is attached
 
-    public void UpdateNitroAmount(float amount) {
-        curNitroAmount = amount;
-    }
-
     public float GetNitroAmount() {
         return curNitroAmount;
     }

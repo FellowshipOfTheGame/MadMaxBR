@@ -2,12 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Class responsible to implement the Smoke PowerUp logic.
+/// </summary>
 public class SmokePU : MonoBehaviour {
     public float MaxSmokeAmount; // maximum amount of smoke
     public float UsePerSecond; // use of smoke per second in percentage
     public GameObject SmokeHUD; // smoke hud
 
-    private float curSmokeAmount; // amount of car nitro
+    private float curSmokeAmount; // amount of car smoke
     private GameObject targetCar; // the car this script is attached
 
     public float GetSmokeAmount() {

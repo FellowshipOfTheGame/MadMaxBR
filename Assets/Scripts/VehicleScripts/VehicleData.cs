@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// Script responsible to store information about the car such health, shield, powerUps, etc.
+/// This class is responsible to store information about the car such health, shield, powerUps, etc.
 /// </summary>
 public class VehicleData : MonoBehaviour {
     public string RunnerName;
@@ -18,10 +18,6 @@ public class VehicleData : MonoBehaviour {
     private int killsCount; // kills count of car
 
     public bool isDead; // if car is dead
-
-
-    [HideInInspector]
-    //public PowerUp[] powerUps;
 
     /// <summary>
     /// Attack Power Up Slot. 
@@ -89,7 +85,7 @@ public class VehicleData : MonoBehaviour {
         if (powerup == PowerUpName.ExplosiveMine) {
             return powerUpSlot3;
         }
-        if (powerup == PowerUpName.Nitro) {
+        if (powerup == PowerUpName.Nitro || powerup == PowerUpName.Glue || powerup == PowerUpName.Grease) {
             return powerUpSlot4;
         }
         Debug.LogError("slotIndex of GetPowerUpSlotValue is wrong");
@@ -119,7 +115,7 @@ public class VehicleData : MonoBehaviour {
             }
             return false;
         }
-        if (powerup == PowerUpName.Nitro) {
+        if (powerup == PowerUpName.Nitro || powerup == PowerUpName.Glue || powerup == PowerUpName.Grease) {
             if (powerUpSlot4 == -1) {
                 return true;
             }
@@ -152,24 +148,13 @@ public class VehicleData : MonoBehaviour {
             case (int)PowerUpName.Nitro:
                 powerUpSlot4 = (int)PowerUpName.Nitro;
                 break;
+            case (int)PowerUpName.Glue:
+                powerUpSlot4 = (int)PowerUpName.Glue;
+                break;
+            case (int)PowerUpName.Grease:
+                powerUpSlot4 = (int)PowerUpName.Grease;
+                break;
         }
-        /*
-        if (powerup == PowerUpName.Thorns) {
-            powerUpSlot1 = (int)PowerUpName.Thorns;
-        }
-        if (powerup == PowerUpName.Shield) {
-            powerUpSlot2 = (int)PowerUpName.Shield;
-        }
-        if (powerup == PowerUpName.Fix) {
-            powerUpSlot2 = (int)PowerUpName.Fix;
-        }
-        if (powerup == PowerUpName.ExplosiveMine) {
-            powerUpSlot3 = (int)PowerUpName.ExplosiveMine;
-        }
-        if (powerup == PowerUpName.Nitro) {
-            powerUpSlot4 = (int)PowerUpName.Nitro;
-        }
-        */
     }
     /// <summary>
     /// Logically removes a powerUp from its respective slot.
@@ -185,7 +170,7 @@ public class VehicleData : MonoBehaviour {
         if (powerup == PowerUpName.ExplosiveMine) {
             powerUpSlot3 = -1;
         }
-        if (powerup == PowerUpName.Nitro) {
+        if (powerup == PowerUpName.Nitro || powerup == PowerUpName.Glue || powerup == PowerUpName.Grease) {
             powerUpSlot4 = -1;
         }
     }

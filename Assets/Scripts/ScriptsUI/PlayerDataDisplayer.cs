@@ -14,6 +14,8 @@ public class PlayerDataDisplayer : MonoBehaviour {
 
     public GameObject NitroHUD;
     public GameObject SmokeHUD;
+    public GameObject GlueHUD;
+    public GameObject GreaseHUD;
     public GameObject PlayerHealthHUD;
     public GameObject PlayerShieldHUD;
 
@@ -55,30 +57,18 @@ public class PlayerDataDisplayer : MonoBehaviour {
         if (NitroHUD.activeSelf) {
             NitroHUD.transform.GetChild(0).GetComponent<Image>().fillAmount = PlayerPowerUps.GetComponentInChildren<NitroPU>().GetNitroAmount() / PlayerPowerUps.GetComponentInChildren<NitroPU>().MaxNitroAmount;
         }
-
+        // updates smoke
         if (SmokeHUD.activeSelf) {
-            SmokeHUD.GetComponent<Image>().fillAmount = PlayerPowerUps.GetComponentInChildren<SmokePU>().GetSmokeAmount() / PlayerPowerUps.GetComponentInChildren<SmokePU>().MaxSmokeAmount;
+            SmokeHUD.transform.GetChild(0).GetComponent<Image>().fillAmount = PlayerPowerUps.GetComponentInChildren<SmokePU>().GetSmokeAmount() / PlayerPowerUps.GetComponentInChildren<SmokePU>().MaxSmokeAmount;
         }
-
-
-        /*
-        if (PlayerPowerUps.transform.GetChild(0).gameObject.activeSelf) { // if nitro power up is active
-            if (!NitroUI.activeSelf) {
-                NitroUI.SetActive(true);
-            }
-            UpdateNitroBar(PlayerPowerUps.transform.GetChild(0).GetComponent<NitroPU>().GetNitroAmount());
-        }*/
-    }
-
-    /*
-    public void UpdateNitroBar(float amount) {
-        Debug.Log(amount);
-        if (amount < 1) {
-            NitroUI.SetActive(false);
-        } else {
-            GameObject NitroBar = NitroUI.transform.GetChild(0).gameObject; // gets the nitro bar of UI that represents the amount of nitro available
-            NitroBar.GetComponent<RectTransform>().SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, amount * 2);
+        // updates grease
+        if (GreaseHUD.activeSelf) {
+            GreaseHUD.transform.GetChild(0).GetComponent<Image>().fillAmount = PlayerPowerUps.GetComponentInChildren<GreasePU>().GetGreaseAmount() / PlayerPowerUps.GetComponentInChildren<GreasePU>().MaxGreaseAmount;
+        }
+        // updates glue
+        if (GlueHUD.activeSelf) {
+            Debug.Log(GlueHUD.transform.GetChild(0).name);
+            GlueHUD.transform.GetChild(0).GetComponent<Image>().fillAmount = PlayerPowerUps.GetComponentInChildren<GluePU>().GetGlueAmount() / PlayerPowerUps.GetComponentInChildren<GluePU>().MaxGlueAmount;
         }
     }
-    */
 }

@@ -13,6 +13,8 @@ public class PowerUpActivation : MonoBehaviour {
     public GameObject Thorns;
     public GameObject ExplosiveMine;
     public GameObject Smoke;
+    public GameObject Glue;
+    public GameObject Grease;
 
     private void OnTriggerEnter(Collider collider) {
         if (collider.gameObject.CompareTag("ThornsPU")) { // Thorns is stored in a slot
@@ -88,5 +90,34 @@ public class PowerUpActivation : MonoBehaviour {
                 }
             }
         }
+
+        if (collider.gameObject.CompareTag("GluePU")) { // Glue is stored in a slot
+            if (gameObject.GetComponent<VehicleData>().PowerUpSlotFree(PowerUpName.Glue)) {
+                gameObject.GetComponent<VehicleData>().FillPowerUpSlot(PowerUpName.Glue);
+                Glue.SetActive(true);
+                Glue.GetComponent<GluePU>().Activate();
+                collider.GetComponentInParent<PowerUpPlatform>().DeactivatePowerUpPlatform();
+            } else { // if the power up slot that stores smoke isnt free
+                if (gameObject.GetComponent<VehicleData>().GetPowerUpSlotValue(PowerUpName.Glue) == (int)PowerUpName.Glue) {
+                    Glue.GetComponent<GluePU>().Activate();
+                    collider.GetComponentInParent<PowerUpPlatform>().DeactivatePowerUpPlatform();
+                }
+            }
+        }
+
+        if (collider.gameObject.CompareTag("GreasePU")) { // Grease is stored in a slot
+            if (gameObject.GetComponent<VehicleData>().PowerUpSlotFree(PowerUpName.Grease)) {
+                gameObject.GetComponent<VehicleData>().FillPowerUpSlot(PowerUpName.Grease);
+                Grease.SetActive(true);
+                Grease.GetComponent<GreasePU>().Activate();
+                collider.GetComponentInParent<PowerUpPlatform>().DeactivatePowerUpPlatform();
+            } else { // if the power up slot that stores smoke isnt free
+                if (gameObject.GetComponent<VehicleData>().GetPowerUpSlotValue(PowerUpName.Grease) == (int)PowerUpName.Grease) {
+                    Grease.GetComponent<GreasePU>().Activate();
+                    collider.GetComponentInParent<PowerUpPlatform>().DeactivatePowerUpPlatform();
+                }
+            }
+        }
+
     }
 }
