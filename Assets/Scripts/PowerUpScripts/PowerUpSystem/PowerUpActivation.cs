@@ -137,7 +137,7 @@ public class PowerUpActivation : MonoBehaviour {
             if (gameObject.GetComponent<VehicleData>().PowerUpSlotFree(PowerUpName.Pillar)) { // if the ExplosiveMine slot is free
                 gameObject.GetComponent<VehicleData>().FillPowerUpSlot(PowerUpName.Pillar);
                 Pillar.SetActive(true);
-                DeactivatorMine.GetComponent<PillarPU>().Activate();
+                Pillar.GetComponent<PillarPU>().Activate();
                 collider.GetComponentInParent<PowerUpPlatform>().DeactivatePowerUpPlatform(); // deactivate the PowerUp platform
             } else { // if the power up slot that stores Explosive Mine isnt free
                 if (gameObject.GetComponent<VehicleData>().GetPowerUpSlotValue(PowerUpName.Pillar) == (int)PowerUpName.Pillar) {

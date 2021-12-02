@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class PillarPU : MonoBehaviour {
-    public int PillarsQuantity; // quantity of mines to be used
+    public int PillarsQuantity; // quantity of pillars to be used
     public GameObject PillarPrefab;
     public GameObject PillarHUD;
 
@@ -16,7 +16,7 @@ public class PillarPU : MonoBehaviour {
     public void Deactivate() {
         this.gameObject.SetActive(false);
         PillarHUD.SetActive(false);
-        this.gameObject.transform.parent.GetComponentInParent<VehicleData>().EmptyPowerUpSlot(PowerUpName.ExplosiveMine);
+        this.gameObject.transform.parent.GetComponentInParent<VehicleData>().EmptyPowerUpSlot(PowerUpName.Pillar);
     }
 
     public int GetRemainingPillars() {

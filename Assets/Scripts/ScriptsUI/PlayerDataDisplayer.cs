@@ -19,6 +19,7 @@ public class PlayerDataDisplayer : MonoBehaviour {
     public GameObject SmokeHUD;
     public GameObject ExplosiveMineCount;
     public GameObject DeactivatorMineCount;
+    public GameObject PillarCount;
     public GameObject GlueHUD;
     public GameObject GreaseHUD;
     public GameObject PlayerHealthHUD;
@@ -78,6 +79,10 @@ public class PlayerDataDisplayer : MonoBehaviour {
         // update deactivator mine count ui
         if (DeactivatorMineCount.activeSelf) {
             DeactivatorMineCount.GetComponent<Text>().text = PlayerPowerUps.GetComponentInChildren<DeactivatorMinePU>().GetRemainingMines().ToString();
+        }
+        // update deactivator pillar count ui
+        if (PillarCount.activeSelf) {
+            PillarCount.GetComponent<Text>().text = PlayerPowerUps.GetComponentInChildren<PillarPU>().GetRemainingPillars().ToString();
         }
         // updates smoke
         if (SmokeHUD.activeSelf) {
