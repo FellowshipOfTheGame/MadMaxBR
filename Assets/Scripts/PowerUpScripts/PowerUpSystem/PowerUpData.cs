@@ -13,7 +13,7 @@ public enum PowerUpName {
     Smoke,
     ExplosiveMine,
     DeactivatorMine,
-    Wall,
+    Pillar,
     Nitro,
     Grease,
     Glue

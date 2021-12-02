@@ -83,7 +83,7 @@ public class VehicleData : MonoBehaviour {
         if (powerup == PowerUpName.Shield || powerup == PowerUpName.Fix || powerup == PowerUpName.Smoke) {
             return powerUpSlot2;
         }
-        if (powerup == PowerUpName.ExplosiveMine || powerup == PowerUpName.DeactivatorMine) {
+        if (powerup == PowerUpName.ExplosiveMine || powerup == PowerUpName.DeactivatorMine || powerup == PowerUpName.Pillar) {
             return powerUpSlot3;
         }
         if (powerup == PowerUpName.Nitro || powerup == PowerUpName.Glue || powerup == PowerUpName.Grease) {
@@ -110,7 +110,7 @@ public class VehicleData : MonoBehaviour {
             }
             return false;
         }
-        if (powerup == PowerUpName.ExplosiveMine || powerup == PowerUpName.DeactivatorMine) {
+        if (powerup == PowerUpName.ExplosiveMine || powerup == PowerUpName.DeactivatorMine || powerup == PowerUpName.Pillar) {
             if (powerUpSlot3 == -1) {
                 return true;
             }
@@ -155,6 +155,9 @@ public class VehicleData : MonoBehaviour {
             case (int)PowerUpName.DeactivatorMine:
                 powerUpSlot3 = (int)PowerUpName.DeactivatorMine;
                 break;
+            case (int)PowerUpName.Pillar:
+                powerUpSlot3 = (int)PowerUpName.Pillar;
+                break;
             case (int)PowerUpName.Nitro:
                 powerUpSlot4 = (int)PowerUpName.Nitro;
                 break;
@@ -177,7 +180,7 @@ public class VehicleData : MonoBehaviour {
         if (powerup == PowerUpName.Shield || powerup == PowerUpName.Fix || powerup == PowerUpName.Smoke) {
             powerUpSlot2 = -1;
         }
-        if (powerup == PowerUpName.ExplosiveMine || powerup == PowerUpName.DeactivatorMine) {
+        if (powerup == PowerUpName.ExplosiveMine || powerup == PowerUpName.DeactivatorMine || powerup == PowerUpName.Pillar) {
             powerUpSlot3 = -1;
         }
         if (powerup == PowerUpName.Nitro || powerup == PowerUpName.Glue || powerup == PowerUpName.Grease) {
@@ -219,8 +222,8 @@ public class VehicleData : MonoBehaviour {
                         playerPowerUps.GetComponentInChildren<ExplosiveMinePU>().Deactivate();
                     } else if (powerUpSlot3 == (int)PowerUpName.DeactivatorMine) {
                         playerPowerUps.GetComponentInChildren<DeactivatorMinePU>().Deactivate();
-                    } else if (powerUpSlot3 == (int)PowerUpName.Wall) {
-                        //playerPowerUps.GetComponentInChildren<WallPU>().Deactivate();
+                    } else if (powerUpSlot3 == (int)PowerUpName.Pillar) {
+                        playerPowerUps.GetComponentInChildren<PillarPU>().Deactivate();
                     }
                 }
                 break;
