@@ -19,6 +19,7 @@ public class VehicleData : MonoBehaviour {
 
     public bool isDead; // if car is dead
     public GameObject DeadCarPrefab;
+    public GameObject DeathEffect;
 
     /// <summary>
     /// Attack Power Up Slot. 
@@ -258,7 +259,7 @@ public class VehicleData : MonoBehaviour {
     public void Start() {
         playerPowerUps = this.transform.GetComponentInChildren<PowerUp>().gameObject;
         // set life and shield
-        curCarHealth = MaxCarHealth*10/100;
+        curCarHealth = 1;
         curCarShield = 0;
         // setup number of kills
         killsCount = 0;
@@ -273,8 +274,9 @@ public class VehicleData : MonoBehaviour {
     }
     // Update is called once per frame
     public void Update() {
+        //curCarHealth--;
         //SetCurrentHealth(MaxCarHealth);
-        if (curCarHealth <= 0) {
+        if (isDead) {
             Die();
         }
         //if (playerPowerUps.transform.GetChild(0).gameObject.activeSelf) { // if nitro power up is active
@@ -314,7 +316,10 @@ public class VehicleData : MonoBehaviour {
     public float GetCurrentShield() {
         return curCarShield;
     }
-
+    /// <summary>
+    /// Reduces health points of car and set it as Dead if health points is equal or less than 0;
+    /// </summary>
+    /// <param name="damage"></param>
     public void ReceiveDamage(float damage) {
         if (!isSmokeActive) {
             if (curCarShield > 0) {
@@ -328,9 +333,28 @@ public class VehicleData : MonoBehaviour {
             }
             curCarHealth -= damage;
         }
+        if (curCarHealth <= 0) {
+            isDead = true;
+        }
     }
-
+    /// <summary>
+    /// Activates death visual effects of car.
+    /// </summary>
     public void Die() {
+        Quaternion DestroyedCarRotation = new Quaternion(this.gameObject.transform.rotation.x, this.gameObject.transform.rotation.y, this.gameObject.transform.rotation.eulerAngles.z, this.gameObject.transform.rotation.w);
+        Debug.Log("Rotação do Carro " + this.gameObject.name + " " + this.gameObject.transform.rotation.eulerAngles);
+        Debug.Log("Rotação do Carro Destruido" + DestroyedCarRotation.eulerAngles);
+        Instantiate(DeathEffect, this.gameObject.transform.position, DeathEffect.gameObject.transform.rotation);
+        Instantiate(DeadCarPrefab, this.gameObject.transform.position, this.gameObject.transform.rotation/*DestroyedCarRotation*/);
+        Rigidbody CarRigidBody = this.gameObject.GetComponent<Rigidbody>();
+        Rigidbody DeadCarRigidBody = DeadCarPrefab.GetComponent<Rigidbody>();
+
+        DeadCarRigidBody.velocity = CarRigidBody.velocity;
+        DeadCarRigidBody.angularVelocity = CarRigidBody.velocity;
+        DeadCarRigidBody.inertiaTensor = CarRigidBody.inertiaTensor;
+        DeadCarRigidBody.inertiaTensorRotation = CarRigidBody.inertiaTensorRotation;
+        DeadCarRigidBody.centerOfMass = CarRigidBody.centerOfMass;
+
         this.gameObject.SetActive(false);
         isDead = true;
     }
