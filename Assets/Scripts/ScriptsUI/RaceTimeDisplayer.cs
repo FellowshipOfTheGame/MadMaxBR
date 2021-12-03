@@ -24,8 +24,6 @@ public class RaceTimeDisplayer : MonoBehaviour {
 
     private VehicleRaceData PlayerRaceData;
 
-    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
     void UpdateTimeDisplay(float SecCount, float MinCount, float MilliCount, GameObject SecondsDisplay, GameObject MinutesDisplay, GameObject MillisecondsDisplay) {
         if (MilliCount < 10) {
             MillisecondsDisplay.GetComponent<Text>().text = "00" + MilliCount.ToString("F0");

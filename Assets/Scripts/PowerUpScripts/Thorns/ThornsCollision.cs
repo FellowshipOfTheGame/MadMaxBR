@@ -19,7 +19,7 @@ public class ThornsCollision : MonoBehaviour {
         //Debug.Log("collision with " + other.gameObject.name);
         if (other.gameObject.CompareTag("AI") || other.gameObject.CompareTag("Player")) { // if car collides with other car, be it an AI or Player
             GameObject otherCar = other.gameObject; // get object of the car that got hit
-            float collisionDamageModifier = Mathf.Abs(car.GetComponent<CarController>().speed - otherCar.GetComponent<CarController>().speed);
+            float collisionDamageModifier = Mathf.Abs(car.GetComponent<CarController>().CurrentSpeed - otherCar.GetComponent<CarController>().CurrentSpeed);
             otherCar.GetComponentInParent<VehicleData>().ReceiveDamage(ThornsDamage + collisionDamageModifier); // decreases health of the car
             Debug.Log(other.gameObject.name + " Received " + ThornsDamage + " damage");
         }

@@ -7,6 +7,7 @@ public class PlayerDataDisplayer : MonoBehaviour {
     public GameObject Player; // stores the object that represents the player
     public RaceManager RaceManager;
 
+    public GameObject VelocityDisplay;
     public GameObject LapCounterDisplay;
     public GameObject MaxNumberOfLaps;
     public GameObject RacePositionDisplay;
@@ -47,6 +48,7 @@ public class PlayerDataDisplayer : MonoBehaviour {
 
     // Update is called once per frameGetPosition
     void Update() {
+        VelocityDisplay.GetComponent<Text>().text = "" + (int)Player.GetComponent<CarController>().CurrentSpeed;
         LapCounterDisplay.GetComponent<Text>().text = "" + PlayerRaceData.GetLapCount();
         RacePositionDisplay.GetComponent<Text>().text = "" + PlayerRaceData.GetRacePosition();
         MaxRacePositionDisplay.GetComponent<Text>().text = "" + RaceManager.Racers.Count;
@@ -59,7 +61,6 @@ public class PlayerDataDisplayer : MonoBehaviour {
         PowerUpSlot2.GetComponent<Text>().text = "" + Player.GetComponent<VehicleData>().GetPowerUpSlotValue(2);
         PowerUpSlot3.GetComponent<Text>().text = "" + Player.GetComponent<VehicleData>().GetPowerUpSlotValue(3);
         PowerUpSlot4.GetComponent<Text>().text = "" + Player.GetComponent<VehicleData>().GetPowerUpSlotValue(4);
-        
         // updates bullet count text with quantity of MachineGun
         if (MachineGunCountText.activeSelf) {
             MachineGunCountText.GetComponent<Text>().text = PlayerPowerUps.GetComponentInChildren<MachineGunPU>().GetBulletAmount().ToString();
