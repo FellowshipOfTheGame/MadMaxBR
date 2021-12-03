@@ -259,7 +259,7 @@ public class VehicleData : MonoBehaviour {
     public void Start() {
         playerPowerUps = this.transform.GetComponentInChildren<PowerUp>().gameObject;
         // set life and shield
-        curCarHealth = 1;
+        curCarHealth = MaxCarHealth;
         curCarShield = 0;
         // setup number of kills
         killsCount = 0;
@@ -342,10 +342,8 @@ public class VehicleData : MonoBehaviour {
     /// </summary>
     public void Die() {
         Quaternion DestroyedCarRotation = new Quaternion(this.gameObject.transform.rotation.x, this.gameObject.transform.rotation.y, this.gameObject.transform.rotation.eulerAngles.z, this.gameObject.transform.rotation.w);
-        Debug.Log("Rotação do Carro " + this.gameObject.name + " " + this.gameObject.transform.rotation.eulerAngles);
-        Debug.Log("Rotação do Carro Destruido" + DestroyedCarRotation.eulerAngles);
         Instantiate(DeathEffect, this.gameObject.transform.position, DeathEffect.gameObject.transform.rotation);
-        Instantiate(DeadCarPrefab, this.gameObject.transform.position, this.gameObject.transform.rotation/*DestroyedCarRotation*/);
+        Instantiate(DeadCarPrefab, this.gameObject.transform.position, this.gameObject.transform.rotation);
         Rigidbody CarRigidBody = this.gameObject.GetComponent<Rigidbody>();
         Rigidbody DeadCarRigidBody = DeadCarPrefab.GetComponent<Rigidbody>();
 

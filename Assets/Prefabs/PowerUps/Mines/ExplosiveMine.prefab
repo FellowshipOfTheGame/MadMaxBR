@@ -58,7 +58,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MineDamage: 500
-  ActivationTime: 0.5
+  MillisecondsToActivate: 500
+  MillisecondsToExplode: 100
+  ExplosionEffect: {fileID: 8680753241220175503, guid: 4428c98d17ef7814497b1506e7552c63, type: 3}
 --- !u!1 &7752708865425503834
 GameObject:
   m_ObjectHideFlags: 0
