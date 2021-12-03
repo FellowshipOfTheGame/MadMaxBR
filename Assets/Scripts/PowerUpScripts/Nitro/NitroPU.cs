@@ -1,31 +1,39 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.PlayerLoop;
 
 public class NitroPU : MonoBehaviour {
-    public GameObject NitroObject;
+    public float MaxNitroAmount; // maximum amount of nitro
+    public float UsePerSecond; // use of nitro per second in percentage
+    public GameObject NitroHUD; // nitro HUD
 
-    private float NitroAmount; // amount of car nitro [0-100]
-    private GameObject NitroBar;
+    private float curNitroAmount; // amount of car nitro
+    private GameObject targetCar; // the car this script is attached
+    public void Activate() {
+        curNitroAmount = MaxNitroAmount; // set maximum value of nitro amount
+        NitroHUD.SetActive(true);
+        targetCar = this.transform.parent.gameObject.transform.parent.gameObject; // get the car this script is attached
+    }
 
-    public void UpdateNitroAmount(float amount) {
-        NitroAmount = amount;
-        //NitroBar.GetComponent<RectTransform>().SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, amount * 2);
+    public void Deactivate() {
+        this.gameObject.SetActive(false);
+        NitroHUD.SetActive(false);
+        targetCar.GetComponent<VehicleData>().EmptyPowerUpSlot(PowerUpName.Nitro);
     }
 
     public float GetNitroAmount() {
-        return NitroAmount;
-    }
-
-    public void Activate() {
-        NitroAmount = 100;
-        GameObject targetCar = this.transform.parent.gameObject.transform.parent.gameObject; // get the car this script is attached
+        return curNitroAmount;
     }
 
     private void Update() {
-        if (GetNitroAmount() == 0) {
-            NitroObject.SetActive(false);
-            gameObject.transform.parent.GetComponentInParent<VehicleData>().EmptyPowerUpSlot(PowerUpName.Nitro);
+        if (curNitroAmount == 0) {
+            Deactivate();
+        } else {
+            if (Input.GetKey(KeyCode.LeftShift)) {
+                // CarController.IsNitroActive = true;
+                curNitroAmount = Mathf.MoveTowards(curNitroAmount, 0f, Time.deltaTime * MaxNitroAmount * UsePerSecond / 100);
+            }
         }
     }
 }

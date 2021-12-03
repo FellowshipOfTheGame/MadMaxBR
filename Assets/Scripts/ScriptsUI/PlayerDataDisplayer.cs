@@ -12,9 +12,18 @@ public class PlayerDataDisplayer : MonoBehaviour {
     public GameObject RacePositionDisplay;
     public GameObject MaxRacePositionDisplay;
 
-    public GameObject NitroUI;
-    public GameObject PlayerHealthBar;
-    public GameObject PlayerShieldBar;
+    public GameObject MachineGunCountText;
+    public GameObject RifleCountText;
+    public GameObject ThornsTimerUI;
+    public GameObject NitroHUD;
+    public GameObject SmokeHUD;
+    public GameObject ExplosiveMineCount;
+    public GameObject DeactivatorMineCount;
+    public GameObject PillarCount;
+    public GameObject GlueHUD;
+    public GameObject GreaseHUD;
+    public GameObject PlayerHealthHUD;
+    public GameObject PlayerShieldHUD;
 
     public GameObject PowerUpSlot1;
     public GameObject PowerUpSlot2;
@@ -27,11 +36,13 @@ public class PlayerDataDisplayer : MonoBehaviour {
     // Start is called before the first frame update
     void Start() {
         PlayerRaceData = Player.GetComponent<VehicleRaceData>();
+        PlayerPowerUps = Player.transform.GetComponentInChildren<PowerUp>().gameObject;
+        if (PlayerPowerUps == null)
+            Debug.Log("NULL");
         //Player = Player.transform.GetChild(0).gameObject;
-        //PlayerPowerUps = Player.transform.GetChild(7).gameObject;
         //NitroUI = PlayerCarDataUI.transform.GetChild(1).gameObject;
-        //PlayerHealthBar = PlayerCarDataUI.transform.GetChild(2).transform.GetChild(0).gameObject;
-        //PlayerShieldBar = PlayerCarDataUI.transform.GetChild(3).transform.GetChild(0).gameObject;
+        //PlayerHealthHUD = PlayerCarDataUI.transform.GetChild(2).transform.GetChild(0).gameObject;
+        //PlayerShieldHUD = PlayerCarDataUI.transform.GetChild(3).transform.GetChild(0).gameObject;
     }
 
     // Update is called once per frameGetPosition
@@ -41,28 +52,54 @@ public class PlayerDataDisplayer : MonoBehaviour {
         MaxRacePositionDisplay.GetComponent<Text>().text = "" + RaceManager.Racers.Count;
         MaxNumberOfLaps.GetComponent<Text>().text = "" + RaceManager.NumberOfLaps;
         // updates health and shield bar
-        PlayerShieldBar.GetComponent<Image>().fillAmount = Player.GetComponent<VehicleData>().GetCurrentShield() / Player.GetComponent<VehicleData>().MaxCarShield;
-        PlayerHealthBar.GetComponent<Image>().fillAmount = Player.GetComponent<VehicleData>().GetCurrentHealth() / Player.GetComponent<VehicleData>().MaxCarHealth;
+        PlayerShieldHUD.GetComponent<Image>().fillAmount = Player.GetComponent<VehicleData>().GetCurrentShield() / Player.GetComponent<VehicleData>().MaxCarShield;
+        PlayerHealthHUD.GetComponent<Image>().fillAmount = Player.GetComponent<VehicleData>().GetCurrentHealth() / Player.GetComponent<VehicleData>().MaxCarHealth;
+        // updates PowerUpSlot value
         PowerUpSlot1.GetComponent<Text>().text = "" + Player.GetComponent<VehicleData>().GetPowerUpSlotValue(1);
         PowerUpSlot2.GetComponent<Text>().text = "" + Player.GetComponent<VehicleData>().GetPowerUpSlotValue(2);
         PowerUpSlot3.GetComponent<Text>().text = "" + Player.GetComponent<VehicleData>().GetPowerUpSlotValue(3);
         PowerUpSlot4.GetComponent<Text>().text = "" + Player.GetComponent<VehicleData>().GetPowerUpSlotValue(4);
-        /*
-        if (PlayerPowerUps.transform.GetChild(0).gameObject.activeSelf) { // if nitro power up is active
-            if (!NitroUI.activeSelf) {
-                NitroUI.SetActive(true);
-            }
-            UpdateNitroBar(PlayerPowerUps.transform.GetChild(0).GetComponent<NitroPU>().GetNitroAmount());
-        }*/
-    }
-
-    public void UpdateNitroBar(float amount) {
-        Debug.Log(amount);
-        if (amount < 1) {
-            NitroUI.SetActive(false);
-        } else {
-            GameObject NitroBar = NitroUI.transform.GetChild(0).gameObject; // gets the nitro bar of UI that represents the amount of nitro available
-            NitroBar.GetComponent<RectTransform>().SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, amount * 2);
+        
+        // updates bullet count text with quantity of MachineGun
+        if (MachineGunCountText.activeSelf) {
+            MachineGunCountText.GetComponent<Text>().text = PlayerPowerUps.GetComponentInChildren<MachineGunPU>().GetBulletAmount().ToString();
+        }
+        // updates bullet count text with quantity of Rifle
+        if (RifleCountText.activeSelf) {
+            RifleCountText.GetComponent<Text>().text = PlayerPowerUps.GetComponentInChildren<RiflePU>().GetBulletAmount().ToString();
+        }
+        // update thorns timer ui
+        if (ThornsTimerUI.activeSelf) {
+            ThornsTimerUI.GetComponent<Image>().fillAmount = 1 - PlayerPowerUps.GetComponentInChildren<ThornsPU>().GetRunningTime() / PlayerPowerUps.GetComponentInChildren<ThornsPU>().GetMaxTime();
+        }
+        // update explosive mine count ui
+        if (ExplosiveMineCount.activeSelf) {
+            ExplosiveMineCount.GetComponent<Text>().text = PlayerPowerUps.GetComponentInChildren<ExplosiveMinePU>().GetRemainingMines().ToString();
+        }
+        // update deactivator mine count ui
+        if (DeactivatorMineCount.activeSelf) {
+            DeactivatorMineCount.GetComponent<Text>().text = PlayerPowerUps.GetComponentInChildren<DeactivatorMinePU>().GetRemainingMines().ToString();
+        }
+        // update deactivator pillar count ui
+        if (PillarCount.activeSelf) {
+            PillarCount.GetComponent<Text>().text = PlayerPowerUps.GetComponentInChildren<PillarPU>().GetRemainingPillars().ToString();
+        }
+        // updates smoke
+        if (SmokeHUD.activeSelf) {
+            SmokeHUD.transform.GetChild(0).GetComponent<Image>().fillAmount = PlayerPowerUps.GetComponentInChildren<SmokePU>().GetSmokeAmount() / PlayerPowerUps.GetComponentInChildren<SmokePU>().MaxSmokeAmount;
+        }
+        // updates nitro
+        if (NitroHUD.activeSelf) {
+            NitroHUD.transform.GetChild(0).GetComponent<Image>().fillAmount = PlayerPowerUps.GetComponentInChildren<NitroPU>().GetNitroAmount() / PlayerPowerUps.GetComponentInChildren<NitroPU>().MaxNitroAmount;
+        }
+        // updates grease
+        if (GreaseHUD.activeSelf) {
+            GreaseHUD.transform.GetChild(0).GetComponent<Image>().fillAmount = PlayerPowerUps.GetComponentInChildren<GreasePU>().GetGreaseAmount() / PlayerPowerUps.GetComponentInChildren<GreasePU>().MaxGreaseAmount;
+        }
+        // updates glue
+        if (GlueHUD.activeSelf) {
+            Debug.Log(GlueHUD.transform.GetChild(0).name);
+            GlueHUD.transform.GetChild(0).GetComponent<Image>().fillAmount = PlayerPowerUps.GetComponentInChildren<GluePU>().GetGlueAmount() / PlayerPowerUps.GetComponentInChildren<GluePU>().MaxGlueAmount;
         }
     }
 }

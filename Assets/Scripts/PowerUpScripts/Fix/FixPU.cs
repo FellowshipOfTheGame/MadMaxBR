@@ -5,7 +5,7 @@ using UnityEngine;
 public class FixPU : MonoBehaviour {
     private Timer stopwatch;
     // percentage of life healed per second
-    public float percentagePerSecond;
+    public float HealPerSecond;
     // duration of power up in Seconds
     public float DurationSec;
     // car with the powerUp
@@ -22,18 +22,22 @@ public class FixPU : MonoBehaviour {
         timesHealed = 0;
     }
 
+    public void Deactivate() {
+        // unequip powerup
+        this.gameObject.transform.parent.GetComponentInParent<VehicleData>().EmptyPowerUpSlot(PowerUpName.Fix);
+        // set powerup gameObject inactive
+        this.gameObject.SetActive(false);
+    }
+
     private void Update() {
         if (timesHealed < DurationSec) {
             if (stopwatch.GetSeconds() >= 1) {
-                targetCar.GetComponent<VehicleData>().AddHealth(targetCar.GetComponent<VehicleData>().MaxCarHealth * percentagePerSecond / 100);
+                targetCar.GetComponent<VehicleData>().AddHealth(targetCar.GetComponent<VehicleData>().MaxCarHealth * HealPerSecond / 100);
                 timesHealed++;
                 stopwatch.ResetTimer();
             }
         } else {
-            // unequip powerup
-            this.gameObject.transform.parent.GetComponentInParent<VehicleData>().EmptyPowerUpSlot(PowerUpName.Fix);
-            // set powerup gameObject inactive
-            this.gameObject.SetActive(false);
+            Deactivate();
         }
     }
 }

@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Class responsible to implement the logic of Power Up Plataforms.
+/// </summary>
 public class PowerUpPlatform : MonoBehaviour {
     /// <summary>
     /// List of materials to graphically represent powerups.
@@ -59,6 +62,7 @@ public class PowerUpPlatform : MonoBehaviour {
         } else {
             powerUpNumber = powerUpNum;
         }
+        
         platformHitBox.transform.tag = MaterialList[powerUpNumber].name;
         representation.GetComponent<MeshRenderer>().material = MaterialList[powerUpNumber];
         platformHitBox.SetActive(true);

@@ -3,22 +3,23 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// Script responsible to store information about the car such health, shield, powerUps, etc.
+/// This class is responsible to store information about the car such health, shield, powerUps, etc.
 /// </summary>
 public class VehicleData : MonoBehaviour {
     public string RunnerName;
     public float MaxCarHealth;
     public float MaxCarShield;
 
-    private float curCarHealth;
-    private float curCarShield;
+    private float curCarHealth; // current car health
+    private float curCarShield; // current car shield
 
-    private int killsCount;
+    private bool isSmokeActive;
 
-    public bool isDead;
+    private int killsCount; // kills count of car
 
-    [HideInInspector]
-    //public PowerUp[] powerUps;
+    public bool isDead; // if car is dead
+    public GameObject DeadCarPrefab;
+    public GameObject DeathEffect;
 
     /// <summary>
     /// Attack Power Up Slot. 
@@ -77,16 +78,16 @@ public class VehicleData : MonoBehaviour {
     /// <param name="powerup">PowerUp Name</param>
     /// <returns></returns>
     public int GetPowerUpSlotValue(PowerUpName powerup) {
-        if (powerup == PowerUpName.Thorns) {
+        if (powerup == PowerUpName.MachineGun || powerup == PowerUpName.Rifle || powerup == PowerUpName.Thorns) {
             return powerUpSlot1;
         }
-        if (powerup == PowerUpName.Shield || powerup == PowerUpName.Fix) {
+        if (powerup == PowerUpName.Shield || powerup == PowerUpName.Fix || powerup == PowerUpName.Smoke) {
             return powerUpSlot2;
         }
-        if (powerup == PowerUpName.ExplosiveMine) {
+        if (powerup == PowerUpName.ExplosiveMine || powerup == PowerUpName.DeactivatorMine || powerup == PowerUpName.Pillar) {
             return powerUpSlot3;
         }
-        if (powerup == PowerUpName.Nitro) {
+        if (powerup == PowerUpName.Nitro || powerup == PowerUpName.Glue || powerup == PowerUpName.Grease) {
             return powerUpSlot4;
         }
         Debug.LogError("slotIndex of GetPowerUpSlotValue is wrong");
@@ -98,25 +99,25 @@ public class VehicleData : MonoBehaviour {
     /// <param name="powerUp">The powerUp that needs to be verified.</param>
     /// <returns></returns>
     public bool PowerUpSlotFree(PowerUpName powerup) {
-        if (powerup == PowerUpName.Thorns) {
+        if (powerup == PowerUpName.MachineGun || powerup == PowerUpName.Rifle || powerup == PowerUpName.Thorns) {
             if (powerUpSlot1 == -1) {
                 return true;
             }
             return false;
         }
-        if (powerup == PowerUpName.Shield || powerup == PowerUpName.Fix) {
+        if (powerup == PowerUpName.Shield || powerup == PowerUpName.Fix || powerup == PowerUpName.Smoke) {
             if (powerUpSlot2 == -1) {
                 return true;
             }
             return false;
         }
-        if (powerup == PowerUpName.ExplosiveMine) {
+        if (powerup == PowerUpName.ExplosiveMine || powerup == PowerUpName.DeactivatorMine || powerup == PowerUpName.Pillar) {
             if (powerUpSlot3 == -1) {
                 return true;
             }
             return false;
         }
-        if (powerup == PowerUpName.Nitro) {
+        if (powerup == PowerUpName.Nitro || powerup == PowerUpName.Glue || powerup == PowerUpName.Grease) {
             if (powerUpSlot4 == -1) {
                 return true;
             }
@@ -131,6 +132,12 @@ public class VehicleData : MonoBehaviour {
     /// <param name="powerUp">The PowerUp to be inserted.</param>
     public void FillPowerUpSlot(PowerUpName powerup) {
         switch ((int)powerup) {
+            case (int)PowerUpName.MachineGun:
+                powerUpSlot1 = (int)PowerUpName.MachineGun;
+                break;
+            case (int)PowerUpName.Rifle:
+                powerUpSlot1 = (int)PowerUpName.Rifle;
+                break;
             case (int)PowerUpName.Thorns:
                 powerUpSlot1 = (int)PowerUpName.Thorns;
                 break;
@@ -140,48 +147,100 @@ public class VehicleData : MonoBehaviour {
             case (int)PowerUpName.Fix:
                 powerUpSlot2 = (int)PowerUpName.Fix;
                 break;
+            case (int)PowerUpName.Smoke:
+                powerUpSlot2 = (int)PowerUpName.Smoke;
+                break;
             case (int)PowerUpName.ExplosiveMine:
                 powerUpSlot3 = (int)PowerUpName.ExplosiveMine;
+                break;
+            case (int)PowerUpName.DeactivatorMine:
+                powerUpSlot3 = (int)PowerUpName.DeactivatorMine;
+                break;
+            case (int)PowerUpName.Pillar:
+                powerUpSlot3 = (int)PowerUpName.Pillar;
                 break;
             case (int)PowerUpName.Nitro:
                 powerUpSlot4 = (int)PowerUpName.Nitro;
                 break;
+            case (int)PowerUpName.Glue:
+                powerUpSlot4 = (int)PowerUpName.Glue;
+                break;
+            case (int)PowerUpName.Grease:
+                powerUpSlot4 = (int)PowerUpName.Grease;
+                break;
         }
-        /*
-        if (powerup == PowerUpName.Thorns) {
-            powerUpSlot1 = (int)PowerUpName.Thorns;
-        }
-        if (powerup == PowerUpName.Shield) {
-            powerUpSlot2 = (int)PowerUpName.Shield;
-        }
-        if (powerup == PowerUpName.Fix) {
-            powerUpSlot2 = (int)PowerUpName.Fix;
-        }
-        if (powerup == PowerUpName.ExplosiveMine) {
-            powerUpSlot3 = (int)PowerUpName.ExplosiveMine;
-        }
-        if (powerup == PowerUpName.Nitro) {
-            powerUpSlot4 = (int)PowerUpName.Nitro;
-        }
-        */
     }
     /// <summary>
     /// Logically removes a powerUp from its respective slot.
     /// </summary>
     /// <param name="powerUp">The PowerUp to be removed.</param>
     public void EmptyPowerUpSlot(PowerUpName powerup) {
-        if (powerup == PowerUpName.Thorns) {
+        if (powerup == PowerUpName.MachineGun || powerup == PowerUpName.Rifle || powerup == PowerUpName.Thorns) {
             powerUpSlot1 = -1;
         }
-        if (powerup == PowerUpName.Shield || powerup == PowerUpName.Fix) {
+        if (powerup == PowerUpName.Shield || powerup == PowerUpName.Fix || powerup == PowerUpName.Smoke) {
             powerUpSlot2 = -1;
         }
-        if (powerup == PowerUpName.ExplosiveMine) {
+        if (powerup == PowerUpName.ExplosiveMine || powerup == PowerUpName.DeactivatorMine || powerup == PowerUpName.Pillar) {
             powerUpSlot3 = -1;
         }
-        if (powerup == PowerUpName.Nitro) {
+        if (powerup == PowerUpName.Nitro || powerup == PowerUpName.Glue || powerup == PowerUpName.Grease) {
             powerUpSlot4 = -1;
         }
+    }
+
+    /// <summary>
+    /// Logically removes a powerup from a slot with index given by slotIndex and deactivate it.
+    /// </summary>
+    /// <param name="slotIndex">Index of slot.</param>
+    public void EmptyPowerUpSlot(int slotIndex) {
+        switch (slotIndex) {
+            case 1:
+                if (powerUpSlot1 != -1) {
+                    if (powerUpSlot1 == (int)PowerUpName.MachineGun) {
+                        playerPowerUps.GetComponentInChildren<MachineGunPU>().Deactivate();
+                    } else if (powerUpSlot1 == (int)PowerUpName.Rifle) {
+                        playerPowerUps.GetComponentInChildren<RiflePU>().Deactivate();
+                    } else if (powerUpSlot1 == (int)PowerUpName.Thorns) {
+                        playerPowerUps.GetComponentInChildren<ThornsPU>().Deactivate();
+                    }
+                }
+                break;
+            case 2:
+                if (powerUpSlot2 != -1) {
+                    if (powerUpSlot2 == (int)PowerUpName.Fix) {
+                        playerPowerUps.GetComponentInChildren<FixPU>().Deactivate();
+                    } else if (powerUpSlot2 == (int)PowerUpName.Shield) {
+                        playerPowerUps.GetComponentInChildren<ShieldPU>().Deactivate();
+                    } else if (powerUpSlot2 == (int)PowerUpName.Smoke) {
+                        playerPowerUps.GetComponentInChildren<SmokePU>().Deactivate();
+                    }
+                }
+                break;
+            case 3:
+                if (powerUpSlot3 != -1) {
+                    if (powerUpSlot3 == (int)PowerUpName.ExplosiveMine) {
+                        playerPowerUps.GetComponentInChildren<ExplosiveMinePU>().Deactivate();
+                    } else if (powerUpSlot3 == (int)PowerUpName.DeactivatorMine) {
+                        playerPowerUps.GetComponentInChildren<DeactivatorMinePU>().Deactivate();
+                    } else if (powerUpSlot3 == (int)PowerUpName.Pillar) {
+                        playerPowerUps.GetComponentInChildren<PillarPU>().Deactivate();
+                    }
+                }
+                break;
+            case 4:
+                if (powerUpSlot4 != -1) {
+                    if (powerUpSlot4 == (int)PowerUpName.Grease) {
+                        playerPowerUps.GetComponentInChildren<GreasePU>().Deactivate();
+                    } else if (powerUpSlot4 == (int)PowerUpName.Glue) {
+                        playerPowerUps.GetComponentInChildren<GluePU>().Deactivate();
+                    } else if (powerUpSlot4 == (int)PowerUpName.Nitro) {
+                        playerPowerUps.GetComponentInChildren<NitroPU>().Deactivate();
+                    }
+                }
+                break;
+        }
+                     
     }
 
     public void SumKillsCount() {
@@ -198,7 +257,9 @@ public class VehicleData : MonoBehaviour {
 
     // Start is called before the first frame update
     public void Start() {
-        curCarHealth = MaxCarHealth*10/100;
+        playerPowerUps = this.transform.GetComponentInChildren<PowerUp>().gameObject;
+        // set life and shield
+        curCarHealth = MaxCarHealth;
         curCarShield = 0;
         // setup number of kills
         killsCount = 0;
@@ -208,11 +269,14 @@ public class VehicleData : MonoBehaviour {
         powerUpSlot2 = -1;
         powerUpSlot3 = -1;
         powerUpSlot4 = -1;
+        // set variables related to powerups
+        isSmokeActive = false;
     }
     // Update is called once per frame
     public void Update() {
+        //curCarHealth--;
         //SetCurrentHealth(MaxCarHealth);
-        if (curCarHealth <= 0) {
+        if (isDead) {
             Die();
         }
         //if (playerPowerUps.transform.GetChild(0).gameObject.activeSelf) { // if nitro power up is active
@@ -252,22 +316,52 @@ public class VehicleData : MonoBehaviour {
     public float GetCurrentShield() {
         return curCarShield;
     }
-
+    /// <summary>
+    /// Reduces health points of car and set it as Dead if health points is equal or less than 0;
+    /// </summary>
+    /// <param name="damage"></param>
     public void ReceiveDamage(float damage) {
-        if (curCarShield > 0) {
-            if (damage < curCarShield) {
-                curCarShield -= damage;
-                damage = 0;
-            } else {
-                damage -= curCarShield;
-                curCarShield = 0;
+        if (!isSmokeActive) {
+            if (curCarShield > 0) {
+                if (damage < curCarShield) {
+                    curCarShield -= damage;
+                    damage = 0;
+                } else {
+                    damage -= curCarShield;
+                    curCarShield = 0;
+                }
             }
+            curCarHealth -= damage;
         }
-        curCarHealth -= damage;
+        if (curCarHealth <= 0) {
+            isDead = true;
+        }
     }
-
+    /// <summary>
+    /// Activates death visual effects of car.
+    /// </summary>
     public void Die() {
+        Quaternion DestroyedCarRotation = new Quaternion(this.gameObject.transform.rotation.x, this.gameObject.transform.rotation.y, this.gameObject.transform.rotation.eulerAngles.z, this.gameObject.transform.rotation.w);
+        Instantiate(DeathEffect, this.gameObject.transform.position, DeathEffect.gameObject.transform.rotation);
+        Instantiate(DeadCarPrefab, this.gameObject.transform.position, this.gameObject.transform.rotation);
+        Rigidbody CarRigidBody = this.gameObject.GetComponent<Rigidbody>();
+        Rigidbody DeadCarRigidBody = DeadCarPrefab.GetComponent<Rigidbody>();
+
+        DeadCarRigidBody.velocity = CarRigidBody.velocity;
+        DeadCarRigidBody.angularVelocity = CarRigidBody.velocity;
+        DeadCarRigidBody.inertiaTensor = CarRigidBody.inertiaTensor;
+        DeadCarRigidBody.inertiaTensorRotation = CarRigidBody.inertiaTensorRotation;
+        DeadCarRigidBody.centerOfMass = CarRigidBody.centerOfMass;
+
         this.gameObject.SetActive(false);
         isDead = true;
+    }
+
+    public void setSmokeActive(bool active) {
+        if (active) {
+            isSmokeActive = true;
+        } else {
+            isSmokeActive = false;
+        }
     }
 }
