@@ -9,7 +9,6 @@ public class AutoTarget : MonoBehaviour
     [SerializeField] private GameObject weaponBarrelEnd;
     [SerializeField] private List<Collider> hitCollidersList;
     [SerializeField] private float shootRadius = 10f;
-
     [SerializeField] private int targetIndex;
     private float elapsed = 0f;
     [Range(0.05f, 0.3f)]

@@ -31,25 +31,28 @@ public class Arma919
     [Space(10)]
     public GameObject objetoArma;
     public GameObject lugarParticula;
-    public GameObject particulaFogo;
+    public GameObject particulaFumaca;
+    [Range(0.01f, 2.0f)]
+    public float tempoVidaParticula = 0.5f;
     public AudioClip somTiro, somRecarga;
+    public WeaponState weaponState = WeaponState.idle;
+    public Animator weaponAnimator;
 }
 [RequireComponent(typeof(AudioSource))]
 public class Weapon : MonoBehaviour
 {
-
-    public KeyCode botaoRecarregar = KeyCode.R;
+    [SerializeField] private KeyCode botaoRecarregar = KeyCode.R;
     public int armaInicial = 0;
-    public string TagInimigo = "inimigo";
-    public Text BalasPente, BalasArmaText;
-    public Material MaterialLasers;
-    public Arma919[] armas;
+    [SerializeField] private string TagInimigo = "inimigo";
+    [SerializeField] private Text BalasPente, BalasArmaText;
+    [SerializeField] private Material MaterialLasers;
+    [SerializeField] private Arma919[] armas;
     //
-    int armaAtual;
-    AudioSource emissorSom;
-    bool recarregando, atirando;
-    LineRenderer linhaDoLaser;
-    GameObject luzColisao;
+    private int armaAtual;
+    private AudioSource emissorSom;
+    private bool recarregando, atirando;
+    private LineRenderer linhaDoLaser;
+    private GameObject luzColisao;
 
     void Start()
     {
@@ -62,9 +65,11 @@ public class Weapon : MonoBehaviour
         luzColisao.GetComponent<Light>().color = Color.red;
         LineRenderer lineRenderer = gameObject.AddComponent<LineRenderer>();
         lineRenderer.material = MaterialLasers;
-        lineRenderer.SetColors(Color.white, Color.white);
-        lineRenderer.SetWidth(0.015f, 0.05f);
-        lineRenderer.SetVertexCount(2);
+        lineRenderer.startColor = Color.white;
+        lineRenderer.endColor = Color.white;
+        lineRenderer.startWidth = 0.015f;
+        lineRenderer.endWidth = 0.05f;
+        lineRenderer.positionCount = 2;
         linhaDoLaser = GetComponent<LineRenderer>();
         //
         for (int x = 0; x < armas.Length; x++)
@@ -86,23 +91,22 @@ public class Weapon : MonoBehaviour
         recarregando = atirando = false;
     }
 
-    void Update()
+    void FixedUpdate()
     {
         //UI
         BalasArmaText.text = "Balas: " + armas[armaAtual].balasNaArma;
         BalasPente.text = "Pente: " + armas[armaAtual].balasNoPente;
-        if (Input.GetMouseButton(0) && armas[armaAtual].balasNoPente > 0 && recarregando == false && atirando == false)
+        if (Input.GetMouseButton(0) && armas[armaAtual].balasNoPente > 0 && !recarregando && !atirando)
         {
-            atirando = true;
             StartCoroutine(TempoTiro(armas[armaAtual].tempoPorTiro));
             emissorSom.clip = armas[armaAtual].somTiro;
             emissorSom.PlayOneShot(emissorSom.clip);
             armas[armaAtual].balasNoPente--;
-            GameObject balaTemp = Instantiate(armas[armaAtual].particulaFogo, armas[armaAtual].lugarParticula.transform.position, transform.rotation) as GameObject;
-            Destroy(balaTemp, 0.5f);
+            armas[armaAtual].weaponAnimator.SetBool("IsShooting", true);
+            GameObject balaTemp = Instantiate(armas[armaAtual].particulaFumaca, armas[armaAtual].lugarParticula.transform.position, transform.rotation) as GameObject;
+            Destroy(balaTemp, armas[armaAtual].tempoVidaParticula);
 
-            RaycastHit pontoDeColisao;
-            if (Physics.Raycast(transform.position, transform.forward, out pontoDeColisao))
+            if (Physics.Raycast(transform.position, transform.forward, out RaycastHit pontoDeColisao))
             {
                 if (pontoDeColisao.transform.gameObject.tag == TagInimigo)
                 {
@@ -110,8 +114,17 @@ public class Weapon : MonoBehaviour
                 }
             }
         }
+        if (!Input.GetMouseButton(0) && atirando || recarregando || armas[armaAtual].balasNoPente == 0)
+        {
+            armas[armaAtual].weaponAnimator.SetBool("IsShooting", false);
+            armas[armaAtual].weaponAnimator.SetBool("IsLoop", false);
+        }
+        if (Input.GetMouseButton(0) && atirando)
+        {
+            armas[armaAtual].weaponAnimator.SetBool("IsLoop", true);
+        }
         //recarregar
-        if (Input.GetKeyDown(botaoRecarregar) && recarregando == false && atirando == false && (armas[armaAtual].balasNoPente < armas[armaAtual].balasPorPente) && (armas[armaAtual].balasNaArma > 0))
+        if (Input.GetKeyDown(botaoRecarregar) && !recarregando && !atirando && (armas[armaAtual].balasNoPente < armas[armaAtual].balasPorPente) && (armas[armaAtual].balasNaArma > 0))
         {
             emissorSom.clip = armas[armaAtual].somRecarga;
             emissorSom.PlayOneShot(emissorSom.clip);
@@ -130,19 +143,19 @@ public class Weapon : MonoBehaviour
             StartCoroutine(TempoRecarga(armas[armaAtual].tempoDaRecarga));
         }
         //laser da arma
-        if (recarregando == false)
+        if (!recarregando)
         {
-            if (armas[armaAtual].Miras.ativarLaser == true)
+            if (armas[armaAtual].Miras.ativarLaser)
             {
                 linhaDoLaser.enabled = true;
                 linhaDoLaser.material.SetColor("_TintColor", armas[armaAtual].Miras.corLaser);
                 luzColisao.SetActive(true);
                 Vector3 PontoFinalDoLaser = transform.position + (transform.forward * 500);
-                RaycastHit hitDoLaser;
-                if (Physics.Raycast(transform.position, transform.forward, out hitDoLaser, 500))
+                if (Physics.Raycast(transform.position, Quaternion.AngleAxis(0, transform.up) * transform.forward, out RaycastHit hitDoLaser, 500))
                 {
                     linhaDoLaser.SetPosition(0, armas[armaAtual].lugarParticula.transform.position);
                     linhaDoLaser.SetPosition(1, hitDoLaser.point);
+                    Debug.Log(hitDoLaser.point);
                     float distancia = Vector3.Distance(transform.position, hitDoLaser.point) - 0.03f;
                     luzColisao.transform.position = transform.position + transform.forward * distancia;
                 }
@@ -181,6 +194,7 @@ public class Weapon : MonoBehaviour
 
     IEnumerator TempoTiro(float tempoDoTiro)
     {
+        atirando = true;
         yield return new WaitForSeconds(tempoDoTiro);
         atirando = false;
     }
@@ -225,8 +239,10 @@ public class Weapon : MonoBehaviour
     {
         if (armas[armaAtual].Miras.AtivarMiraComum == true)
         {
-            GUIStyle stylez = new GUIStyle();
-            stylez.alignment = TextAnchor.MiddleCenter;
+            GUIStyle stylez = new GUIStyle
+            {
+                alignment = TextAnchor.MiddleCenter
+            };
             GUI.skin.label.fontSize = 20;
             GUI.Label(new Rect(Screen.width / 2 - 6, Screen.height / 2 - 12, 12, 22), "+");
         }
