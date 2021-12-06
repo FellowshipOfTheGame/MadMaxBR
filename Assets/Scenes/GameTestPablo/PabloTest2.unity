@@ -895,7 +895,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6586303490144878872, guid: 45bce25a1dbd2f247b078ff881b2109b, type: 3}
       propertyPath: powerUpNum
-      value: 6
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 6586303490144878872, guid: 45bce25a1dbd2f247b078ff881b2109b, type: 3}
       propertyPath: powerUpNumber
@@ -2893,9 +2893,17 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4304091780748330400, guid: 8636d6fce26f5ce42a3dd650141b9c80, type: 3}
+      propertyPath: m_Downforce
+      value: 500
+      objectReference: {fileID: 0}
     - target: {fileID: 4304091780748330425, guid: 8636d6fce26f5ce42a3dd650141b9c80, type: 3}
       propertyPath: m_Name
       value: Fusca Atualizado
+      objectReference: {fileID: 0}
+    - target: {fileID: 4304091780748330425, guid: 8636d6fce26f5ce42a3dd650141b9c80, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4304091780748330427, guid: 8636d6fce26f5ce42a3dd650141b9c80, type: 3}
       propertyPath: m_Enabled
@@ -2944,6 +2952,18 @@ PrefabInstance:
     - target: {fileID: 4304091780748330431, guid: 8636d6fce26f5ce42a3dd650141b9c80, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4304091781540975796, guid: 8636d6fce26f5ce42a3dd650141b9c80, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4304091781930488281, guid: 8636d6fce26f5ce42a3dd650141b9c80, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4304091781987755691, guid: 8636d6fce26f5ce42a3dd650141b9c80, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4782828294809341592, guid: 8636d6fce26f5ce42a3dd650141b9c80, type: 3}
       propertyPath: m_LocalPosition.x
@@ -6691,6 +6711,10 @@ PrefabInstance:
       propertyPath: RaceManager
       value: 
       objectReference: {fileID: 433415854}
+    - target: {fileID: 289467710625325928, guid: 7d5c55b72f1e0f74d9b39f919f89fa76, type: 3}
+      propertyPath: m_Text
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7767463272337310608, guid: 7d5c55b72f1e0f74d9b39f919f89fa76, type: 3}
       propertyPath: Player
       value: 
