@@ -6,7 +6,7 @@ public class Carcam : MonoBehaviour
     private Transform rootNode;
     private Transform cam;
     private Transform car;
-    private Rigidbody rbCar;
+    public Rigidbody rbCar;
 
     public float rotationThreshold = 1f;
     public float cameraStickness = 10f;
@@ -17,7 +17,6 @@ public class Carcam : MonoBehaviour
         rootNode = transform;
         cam = GetComponentInChildren<Camera>().transform;
         car = rootNode.parent.transform;
-        rbCar = rootNode.parent.GetComponent<Rigidbody>();
     }
 
     private void Start()
