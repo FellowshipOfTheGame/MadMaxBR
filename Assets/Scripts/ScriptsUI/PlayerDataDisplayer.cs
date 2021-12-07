@@ -99,7 +99,6 @@ public class PlayerDataDisplayer : MonoBehaviour {
         }
         // updates glue
         if (GlueHUD.activeSelf) {
-            Debug.Log(GlueHUD.transform.GetChild(0).name);
             GlueHUD.transform.GetChild(0).GetComponent<Image>().fillAmount = PlayerPowerUps.GetComponentInChildren<GluePU>().GetGlueAmount() / PlayerPowerUps.GetComponentInChildren<GluePU>().MaxGlueAmount;
         }
     }
