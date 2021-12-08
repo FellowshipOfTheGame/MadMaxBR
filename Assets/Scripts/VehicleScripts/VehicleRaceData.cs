@@ -11,6 +11,8 @@ public class VehicleRaceData : MonoBehaviour {
     public TrackerNode TrackerNode;
     public TriggerPoint TriggerPoint;
 
+    private bool isTimerStarted;
+
     private float lapCounter;
     private float racePosition;
 
@@ -25,6 +27,11 @@ public class VehicleRaceData : MonoBehaviour {
     private bool completedRace;
     // variable to control when the car reach the finish line for the first time, when the race starts
     private bool firstTrigger;
+
+    public void ActiveTimer(bool val) {
+        isTimerStarted = val;
+    }
+
     // when a Lap is completed, the time of the best lap is stored
     public void LapCompleted() {
         lapCounter++;
@@ -98,9 +105,18 @@ public class VehicleRaceData : MonoBehaviour {
         secCountTotal = 0;
         milliCountTotal = 0;
         lapCounter = 0;
+        isTimerStarted = false;
         completedRace = false;
         firstTrigger = true;
     }
+
+    private void Update() {
+        if (!isTimerStarted) {
+            RaceTime.ResetTimer();
+            LapTime.ResetTimer();
+        }
+    }
+
     // if the car reaches the finish line
     private void OnTriggerEnter(Collider collider) {
         if (collider.gameObject.CompareTag("InitialPointTrigger")) {

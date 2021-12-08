@@ -34,8 +34,12 @@ public class CarController : MonoBehaviour
     [SerializeField] private float m_RevRangeBoundary = 1f;
     [SerializeField] private float m_SlipLimit;
     [SerializeField] private float m_BrakeTorque;
+    /// <summary>
+    /// Value that will multiply current torque when nitro is enabled.
+    /// </summary>
+    [SerializeField] private float m_NitroMultFactor;
 
-    public bool nitroEnabled = false;
+    public bool NitroEnabled = false;
 
     private float m_OriginalTopspeed;
     private Quaternion[] m_WheelMeshLocalRotations;
@@ -168,8 +172,6 @@ public class CarController : MonoBehaviour
         var revsRangeMin = ULerp(0f, m_RevRangeBoundary, CurveFactor(gearNumFactor));
         var revsRangeMax = ULerp(m_RevRangeBoundary, 1f, gearNumFactor);
         Revs = ULerp(revsRangeMin, revsRangeMax, m_GearFactor);
-        //Debug.Log("RevsRangeMax: " + revsRangeMax);
-        //Debug.Log("RevsRangeMin: " + revsRangeMin);
     }
 
 
@@ -193,22 +195,34 @@ public class CarController : MonoBehaviour
         m_SteerAngle = steering * m_MaximumSteerAngle;
         m_WheelColliders[0].steerAngle = m_SteerAngle;
         m_WheelColliders[1].steerAngle = m_SteerAngle;
+        SteerHelper();
 
-        if (nitroEnabled) {
-            if (m_Topspeed == m_OriginalTopspeed) {
-                m_Topspeed *= 1.5f;
+        if (NitroEnabled) {
+            if (m_Topspeed >= m_OriginalTopspeed || m_Topspeed <= m_OriginalTopspeed * 1.5f) {
+                m_Topspeed = m_OriginalTopspeed * 1.5f;
             }
-            //accel *= 10f;
+            m_CurrentTorque *= m_NitroMultFactor;
+            m_TractionControl = 0;
+        } else {
+            m_TractionControl = 1;
+            if (m_Topspeed > m_OriginalTopspeed) { // if car just deactivated nitro
+                if (CurrentSpeed <= m_OriginalTopspeed) {
+                    m_Topspeed = m_OriginalTopspeed;
+                } else if (CurrentSpeed <= m_Topspeed) {
+                    m_Topspeed = CurrentSpeed;
+                }
+            }
         }
 
-        SteerHelper();
         ApplyDrive(accel, footbrake);
+
         CapSpeed();
 
         //Set the handbrake.
         //Assuming that wheels 2 and 3 are the rear wheels.
         if (handbrake) {
             var hbTorque = handbrake == true ? 1f : 0f * m_MaxHandbrakeTorque;
+            Debug.Log(hbTorque);
             m_WheelColliders[2].brakeTorque = hbTorque;
             m_WheelColliders[3].brakeTorque = hbTorque;
         }
@@ -218,15 +232,14 @@ public class CarController : MonoBehaviour
 
         AddDownForce();
         CheckForWheelSpin();
-        TractionControl();
 
-        if (m_Topspeed != m_OriginalTopspeed) {
-            if (!nitroEnabled) {
-                if ((m_Rigidbody.velocity.magnitude * 2.23693629f <= m_OriginalTopspeed) || (m_Rigidbody.velocity.magnitude * 3.6f <= m_OriginalTopspeed)) {
-                    m_Topspeed = m_OriginalTopspeed;
-                }
-            }
+        Debug.Log(m_CurrentTorque);
+
+        if (NitroEnabled) {
+            m_CurrentTorque /= m_NitroMultFactor;
         }
+
+        TractionControl();
     }
 
 

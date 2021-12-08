@@ -21,7 +21,7 @@ public class NitroPU : MonoBehaviour {
     public void Deactivate() {
         this.gameObject.SetActive(false);
         NitroHUD.SetActive(false);
-        targetCar.GetComponent<CarController>().nitroEnabled = false;
+        targetCar.GetComponent<CarController>().NitroEnabled = false;
         NitroEffect1.GetComponent<ParticleSystem>().Stop();
         NitroEffect2.GetComponent<ParticleSystem>().Stop();
         targetCar.GetComponent<VehicleData>().EmptyPowerUpSlot(PowerUpName.Nitro);
@@ -36,14 +36,14 @@ public class NitroPU : MonoBehaviour {
             Deactivate();
         } else {
             if (Input.GetKey(KeyCode.LeftShift)) {
-                targetCar.GetComponent<CarController>().nitroEnabled = true;
+                targetCar.GetComponent<CarController>().NitroEnabled = true;
                 if (!NitroEffect1.GetComponent<ParticleSystem>().isPlaying) {
                     NitroEffect1.GetComponent<ParticleSystem>().Play();
                     NitroEffect2.GetComponent<ParticleSystem>().Play();
                 }
                 curNitroAmount = Mathf.MoveTowards(curNitroAmount, 0f, Time.deltaTime * MaxNitroAmount * UsePerSecond / 100);
             } else {
-                targetCar.GetComponent<CarController>().nitroEnabled = false;
+                targetCar.GetComponent<CarController>().NitroEnabled = false;
                 if (!NitroEffect1.GetComponent<ParticleSystem>().isStopped) {
                     NitroEffect1.GetComponent<ParticleSystem>().Stop();
                     NitroEffect2.GetComponent<ParticleSystem>().Stop();

@@ -28,9 +28,6 @@ public class TachometerDataDisplayer : MonoBehaviour {
             GearDisplay.GetComponent<Text>().color = new Color(0, 255, 0);
             GearDisplay.GetComponent<Text>().text = "" + (Player.GetComponent<CarController>().CurrentGear + 1);
         }
-        
-        thisAngle = (Player.GetComponent<CarController>().Revs / 20) - 175;
-        thisAngle = Mathf.Clamp(thisAngle, -180, 90);
 
         TachometerNeedle.GetComponent<Image>().rectTransform.rotation = Quaternion.Euler(0, 0, 180 - (225 * Player.GetComponent<CarController>().Revs));
     }
