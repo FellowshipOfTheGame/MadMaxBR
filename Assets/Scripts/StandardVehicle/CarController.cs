@@ -42,6 +42,10 @@ public class CarController : MonoBehaviour
     private Vector3 m_Prevpos, m_Pos;
     private float m_SteerAngle;
     private int m_GearNum;
+    /// <summary>
+    /// 0 if the car is moving, 1 if neutral, 2 if rear
+    /// </summary>
+    private int m_GearNumMod;
     private float m_GearFactor;
     private float m_OldRotation;
     private float m_CurrentTorque;
@@ -60,7 +64,13 @@ public class CarController : MonoBehaviour
             } 
         }
     }
-    public int CurrentGear { get { return m_GearNum; } }
+    /// <summary>
+    /// Return current gear of car:
+    /// 0 to 4 means the car is moving, 
+    /// -1 if the car is stopped (neutral), 
+    /// -2 if the car is rearing
+    /// </summary>
+    public int CurrentGear { get { return m_GearNumMod; }}
     public float MaxSpeed{ get { return m_Topspeed; }}
     public float Revs { get; private set; }
     public float AccelInput { get; private set; }
@@ -79,6 +89,8 @@ public class CarController : MonoBehaviour
         m_CurrentTorque = m_FullTorqueOverAllWheels - (m_TractionControl * m_FullTorqueOverAllWheels);
 
         m_OriginalTopspeed = m_Topspeed;
+
+        m_GearNumMod = -1;
     }
 
 
@@ -93,6 +105,36 @@ public class CarController : MonoBehaviour
 
         if (f > upgearlimit && (m_GearNum < (NoOfGears - 1))) {
             m_GearNum++;
+        }
+
+        if (m_GearNumMod >= 0) {
+            m_GearNumMod = m_GearNum;
+        }
+
+        if (m_GearNumMod <= 0) {
+            if (AccelInput == 0) { // if player is pressing or not the arrow down key
+                if ((int)CurrentSpeed == 0) {
+                    Debug.Log("parado sem apertar seta pra baixo -> " + m_GearNumMod);
+                    if (m_GearNumMod == 0) {
+                        m_GearNumMod--;
+                    }
+                } else {
+                    Debug.Log("dando ré -> " + m_GearNumMod);
+                    if (m_GearNumMod == -1) {
+                        m_GearNumMod--;
+                    }
+                }
+            } else if (AccelInput > 0) {
+                if ((int)CurrentSpeed == 0) {
+                    if (m_GearNumMod == -2) {
+                        m_GearNumMod++;
+                    }  
+                } else {
+                    if (m_GearNumMod == -1) {
+                        m_GearNumMod++;
+                    }
+                }
+            }
         }
     }
 
@@ -143,7 +185,6 @@ public class CarController : MonoBehaviour
         //clamp input values
         steering = Mathf.Clamp(steering, -1, 1);
         AccelInput = accel = Mathf.Clamp(accel, 0, 1);
-
         BrakeInput = footbrake = -1 * Mathf.Clamp(footbrake, -1, 0);
         //handbrake = Mathf.Clamp(handbrake, 0, 1);
 
@@ -157,7 +198,7 @@ public class CarController : MonoBehaviour
             if (m_Topspeed == m_OriginalTopspeed) {
                 m_Topspeed *= 1.5f;
             }
-            accel *= 10f;
+            //accel *= 10f;
         }
 
         SteerHelper();
