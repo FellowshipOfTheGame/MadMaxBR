@@ -38,8 +38,6 @@ public class PlayerDataDisplayer : MonoBehaviour {
     void Start() {
         PlayerRaceData = Player.GetComponent<VehicleRaceData>();
         PlayerPowerUps = Player.transform.GetComponentInChildren<PowerUp>().gameObject;
-        if (PlayerPowerUps == null)
-            Debug.Log("NULL");
         //Player = Player.transform.GetChild(0).gameObject;
         //NitroUI = PlayerCarDataUI.transform.GetChild(1).gameObject;
         //PlayerHealthHUD = PlayerCarDataUI.transform.GetChild(2).transform.GetChild(0).gameObject;
@@ -48,7 +46,6 @@ public class PlayerDataDisplayer : MonoBehaviour {
 
     // Update is called once per frameGetPosition
     void Update() {
-        VelocityDisplay.GetComponent<Text>().text = "" + (int)Player.GetComponent<CarController>().CurrentSpeed;
         LapCounterDisplay.GetComponent<Text>().text = "" + PlayerRaceData.GetLapCount();
         RacePositionDisplay.GetComponent<Text>().text = "" + PlayerRaceData.GetRacePosition();
         MaxRacePositionDisplay.GetComponent<Text>().text = "" + RaceManager.Racers.Count;

@@ -13,7 +13,7 @@ public class RaceManager : MonoBehaviour {
     public GameObject RaceResults;
     public void StartRace() {
         for (int i = 0; i < Racers.Count; i++) {
-            Racers[i].GetComponent<CarController>().enabled = true; // active control for the racer 'i'
+            Racers[i].GetComponent<CarUserControl>().enabled = true; // active control for the racer 'i'
             Racers[i].GetComponent<VehicleRaceData>().enabled = true; // active the racer 'i' data script
         }
     }
