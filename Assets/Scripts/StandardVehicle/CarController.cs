@@ -206,6 +206,8 @@ public class CarController : MonoBehaviour
         } else {
             m_TractionControl = 1;
             if (m_Topspeed > m_OriginalTopspeed) { // if car just deactivated nitro
+                m_Topspeed = Mathf.MoveTowards(m_Topspeed, m_OriginalTopspeed, Time.deltaTime * (1.5f - 1) * m_OriginalTopspeed * 20 / 100);
+                
                 if (CurrentSpeed <= m_OriginalTopspeed) {
                     m_Topspeed = m_OriginalTopspeed;
                 } else if (CurrentSpeed <= m_Topspeed) {
