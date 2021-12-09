@@ -235,8 +235,6 @@ public class CarController : MonoBehaviour
         AddDownForce();
         CheckForWheelSpin();
 
-        Debug.Log(m_CurrentTorque);
-
         if (NitroEnabled) {
             m_CurrentTorque /= m_NitroMultFactor;
         }
