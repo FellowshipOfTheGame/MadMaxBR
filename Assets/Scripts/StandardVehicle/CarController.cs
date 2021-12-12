@@ -14,8 +14,7 @@ internal enum SpeedType
     KPH
 }
 
-public class CarController : MonoBehaviour
-{
+public class CarController : MonoBehaviour {
     [SerializeField] private CarDriveType m_CarDriveType = CarDriveType.FourWheelDrive;
     [SerializeField] private WheelCollider[] m_WheelColliders = new WheelCollider[4];
     [SerializeField] private GameObject[] m_WheelMeshes = new GameObject[4];
@@ -41,7 +40,17 @@ public class CarController : MonoBehaviour
 
     public bool NitroEnabled = false;
 
-    private float m_OriginalTopspeed;
+    private bool isGlued = false;
+    private Timer glueTimer;
+    private float timeGlued = 1f;
+    private WheelFrictionCurve defaultForwardFrictionCurve;
+    private WheelFrictionCurve gluedForwardFrictionCurve;
+    private bool isGreased = false;
+    private Timer greaseTimer;
+    private float timeGreased = 1f;
+    private WheelFrictionCurve defaultSidewaysFrictionCurve;
+
+    private float m_DefaultTopspeed;
     private Quaternion[] m_WheelMeshLocalRotations;
     private Vector3 m_Prevpos, m_Pos;
     private float m_SteerAngle;
@@ -92,11 +101,32 @@ public class CarController : MonoBehaviour
         m_Rigidbody = GetComponent<Rigidbody>();
         m_CurrentTorque = m_FullTorqueOverAllWheels - (m_TractionControl * m_FullTorqueOverAllWheels);
 
-        m_OriginalTopspeed = m_Topspeed;
-
         m_GearNumMod = -1;
+
+        StoreDefaultValues();
+
+        glueTimer = gameObject.AddComponent<Timer>();
+        SetIsGlued(false);
+
+        greaseTimer = gameObject.AddComponent<Timer>();
+        SetIsGreased(false);
     }
 
+    private WheelFrictionCurve CreateFrictionCurve(float extremumSlip, float extremumValue, float asymptoteSlip, float asymptoteValue, float stiffness) {
+        WheelFrictionCurve newFrictionCurve = new WheelFrictionCurve();
+
+        newFrictionCurve.extremumSlip = extremumSlip;
+        newFrictionCurve.extremumValue = extremumValue;
+        newFrictionCurve.asymptoteSlip = asymptoteSlip;
+        newFrictionCurve.asymptoteValue = asymptoteValue;
+        newFrictionCurve.stiffness = stiffness;
+
+        return newFrictionCurve;
+    }
+
+    private void StoreDefaultValues() {
+        m_DefaultTopspeed = m_Topspeed;
+    }
 
     private void GearChanging() {
         float f = Mathf.Abs(CurrentSpeed/MaxSpeed);
@@ -176,6 +206,46 @@ public class CarController : MonoBehaviour
 
 
     public void Move(float steering, float accel, float footbrake, bool handbrake) {
+        if (isGlued) {
+            if (glueTimer.GetSeconds() >= timeGlued) {
+                SetIsGlued(false);
+                Debug.Log("not glued");
+            } else {
+                Debug.Log("glued");
+                // modify wheel colliders values
+
+            }
+        }
+
+        if (isGreased) {
+            if (greaseTimer.GetSeconds() >= timeGreased) {
+                SetIsGreased(false);
+                Debug.Log("not greased");
+            } else {
+                Debug.Log("greased");
+                // modify wheel colliders values
+                for (int i = 0; i < 4; i++) {
+                    WheelFrictionCurve newForwardFrictionCurve = new WheelFrictionCurve();
+                    newForwardFrictionCurve.extremumSlip = m_WheelColliders[i].GetComponent<WheelCollider>().forwardFriction.extremumSlip;
+                    newForwardFrictionCurve.extremumValue = m_WheelColliders[i].GetComponent<WheelCollider>().forwardFriction.extremumValue;
+                    newForwardFrictionCurve.asymptoteSlip = m_WheelColliders[i].GetComponent<WheelCollider>().forwardFriction.asymptoteSlip;
+                    newForwardFrictionCurve.asymptoteValue = m_WheelColliders[i].GetComponent<WheelCollider>().forwardFriction.asymptoteValue;
+                    newForwardFrictionCurve.stiffness = 10 * 0;
+
+                    m_WheelColliders[i].GetComponent<WheelCollider>().forwardFriction = newForwardFrictionCurve;
+
+                    WheelFrictionCurve newSidewaysFrictionCurve = new WheelFrictionCurve();
+                    newSidewaysFrictionCurve.extremumSlip = m_WheelColliders[i].GetComponent<WheelCollider>().sidewaysFriction.extremumSlip;
+                    newSidewaysFrictionCurve.extremumValue = m_WheelColliders[i].GetComponent<WheelCollider>().sidewaysFriction.extremumValue;
+                    newSidewaysFrictionCurve.asymptoteSlip = m_WheelColliders[i].GetComponent<WheelCollider>().sidewaysFriction.asymptoteSlip;
+                    newSidewaysFrictionCurve.asymptoteValue = m_WheelColliders[i].GetComponent<WheelCollider>().sidewaysFriction.asymptoteValue;
+                    newSidewaysFrictionCurve.stiffness = m_WheelColliders[i].GetComponent<WheelCollider>().sidewaysFriction.stiffness * 0;
+
+                    m_WheelColliders[i].GetComponent<WheelCollider>().sidewaysFriction = newSidewaysFrictionCurve;
+                }
+            }
+        }
+
         for (int i = 0; i < 4; i++) {
             Quaternion quat;
             Vector3 position;
@@ -198,18 +268,18 @@ public class CarController : MonoBehaviour
         SteerHelper();
 
         if (NitroEnabled) {
-            if (m_Topspeed >= m_OriginalTopspeed || m_Topspeed <= m_OriginalTopspeed * 1.5f) {
-                m_Topspeed = m_OriginalTopspeed * 1.5f;
+            if (m_Topspeed >= m_DefaultTopspeed || m_Topspeed <= m_DefaultTopspeed * 1.5f) {
+                m_Topspeed = m_DefaultTopspeed * 1.5f;
             }
             m_CurrentTorque *= m_NitroMultFactor;
             m_TractionControl = 0;
         } else {
             m_TractionControl = 1;
-            if (m_Topspeed > m_OriginalTopspeed) { // if car just deactivated nitro
-                m_Topspeed = Mathf.MoveTowards(m_Topspeed, m_OriginalTopspeed, Time.deltaTime * (1.5f - 1) * m_OriginalTopspeed * 20 / 100);
+            if (m_Topspeed > m_DefaultTopspeed) { // if car just deactivated nitro
+                m_Topspeed = Mathf.MoveTowards(m_Topspeed, m_DefaultTopspeed, Time.deltaTime * (1.5f - 1) * m_DefaultTopspeed * 20 / 100);
                 
-                if (CurrentSpeed <= m_OriginalTopspeed) {
-                    m_Topspeed = m_OriginalTopspeed;
+                if (CurrentSpeed <= m_DefaultTopspeed) {
+                    m_Topspeed = m_DefaultTopspeed;
                 } else if (CurrentSpeed <= m_Topspeed) {
                     m_Topspeed = CurrentSpeed;
                 }
@@ -383,8 +453,7 @@ public class CarController : MonoBehaviour
         }
         else {
             m_CurrentTorque += 10 * m_TractionControl;
-            if (m_CurrentTorque > m_FullTorqueOverAllWheels)
-            {
+            if (m_CurrentTorque > m_FullTorqueOverAllWheels) {
                 m_CurrentTorque = m_FullTorqueOverAllWheels;
             }
         }
@@ -398,5 +467,37 @@ public class CarController : MonoBehaviour
             }
         }
         return false;
+    }
+
+    /// <summary>
+    /// Set car as Glued, resets and resumes the glue timer if value is true.
+    /// Otherwise, set car as not glued and pauses timer.
+    /// </summary>
+    /// <param name="value">Defines if car is set to be glued or not</param>
+    public void SetIsGlued(bool value) {
+        if (value) {
+            isGlued = true;
+            glueTimer.ResetTimer();
+            glueTimer.ResumeTimer();
+        } else {
+            isGlued = false;
+            glueTimer.PauseTimer();
+        }
+    }
+
+    /// <summary>
+    /// Set car as Greased, resets and resumes the Grease timer if value is true.
+    /// Otherwise, set car as not Greased and pauses timer.
+    /// </summary>
+    /// <param name="value">Defines if car is set to be Greased or not</param>
+    public void SetIsGreased(bool value) {
+        if (value) {
+            isGreased = true;
+            greaseTimer.ResetTimer();
+            greaseTimer.ResumeTimer();
+        } else {
+            isGreased = false;
+            greaseTimer.PauseTimer();
+        }
     }
 }

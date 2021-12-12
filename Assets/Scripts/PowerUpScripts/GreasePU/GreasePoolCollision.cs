@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GluePoolCollision : MonoBehaviour {
+public class GreasePoolCollision : MonoBehaviour {
     /// <summary>
     /// Get Race Manager to access the cars colliders.
     /// </summary>
@@ -34,7 +34,7 @@ public class GluePoolCollision : MonoBehaviour {
             for (int j = 0; j < colliderDataEnter.GetColliderCount(i); j++) {
                 var car = colliderDataEnter.GetCollider(i, j);
                 if (car.CompareTag("Player") || car.CompareTag("AI")) {
-                    car.GetComponent<CarController>().SetIsGlued(true);
+                    car.GetComponent<CarController>().SetIsGreased(true);
                 }
             }
         }
