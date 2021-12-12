@@ -41,11 +41,10 @@ public class Arma919
 [RequireComponent(typeof(AudioSource))]
 public class Weapon : MonoBehaviour
 {
-    [SerializeField] private KeyCode botaoRecarregar = KeyCode.R;
+    [SerializeField] private readonly KeyCode botaoRecarregar = KeyCode.R;
     public int armaInicial = 0;
-    [SerializeField] private string TagInimigo = "inimigo";
     [SerializeField] private Text BalasPente, BalasArmaText;
-    [SerializeField] private Material MaterialLasers;
+    [SerializeField] private readonly Material MaterialLasers;
     [SerializeField] private Arma919[] armas;
     //
     private int armaAtual;
@@ -108,9 +107,9 @@ public class Weapon : MonoBehaviour
 
             if (Physics.Raycast(transform.position, transform.forward, out RaycastHit pontoDeColisao))
             {
-                if (pontoDeColisao.transform.gameObject.tag == TagInimigo)
+                if (pontoDeColisao.transform.gameObject.GetComponent<VehicleData>() != null)
                 {
-                    pontoDeColisao.transform.gameObject.GetComponent<Inimigo>().vida -= armas[armaAtual].danoPorTiro;
+                    pontoDeColisao.transform.gameObject.GetComponent<VehicleData>().ReceiveDamage(armas[armaAtual].danoPorTiro);
                 }
             }
         }

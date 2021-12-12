@@ -384,54 +384,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 1325764380780707598}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 447fe016b6f9e6c4790614becd1ddcc5, type: 3}
+  m_Script: {fileID: 11500000, guid: ad957178bf8fdc64185be9c9245af210, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  botaoRecarregar: 114
-  armaInicial: 1
-  TagInimigo: inimigo
-  BalasPente: {fileID: 0}
-  BalasArmaText: {fileID: 0}
-  MaterialLasers: {fileID: 2100000, guid: f92397a4de4b3b24cbf6cac3936209b1, type: 2}
-  armas:
-  - balasNaArma: 0
-    balasNoPente: 0
-    danoPorTiro: 2
-    numeroDeBalas: 50
-    balasPorPente: 25
-    tempoPorTiro: 1
-    tempoDaRecarga: 0
-    Miras:
-      ativarLaser: 1
-      corLaser: {r: 0.21975517, g: 1, b: 0, a: 1}
-      AtivarMiraComum: 0
-    objetoArma: {fileID: 2208846841404740743}
-    lugarParticula: {fileID: 1325764381375445221}
-    particulaFumaca: {fileID: 2142667012493496771, guid: 90d71d8df5ba4094b928b79b0132cd1a, type: 3}
-    tempoVidaParticula: 0.5
-    somTiro: {fileID: 8300000, guid: b390f25e1fbe7c949b2a3077c33c2be0, type: 3}
-    somRecarga: {fileID: 8300000, guid: 74eade2ff240832459d1bc5d8c47f90f, type: 3}
-    weaponState: 1
-    weaponAnimator: {fileID: 1325764381811790393}
-  - balasNaArma: 0
-    balasNoPente: 0
-    danoPorTiro: 2
-    numeroDeBalas: 50
-    balasPorPente: 25
-    tempoPorTiro: 0.3
-    tempoDaRecarga: 0
-    Miras:
-      ativarLaser: 1
-      corLaser: {r: 0.21975517, g: 1, b: 0, a: 1}
-      AtivarMiraComum: 0
-    objetoArma: {fileID: 2208846840081729683}
-    lugarParticula: {fileID: 1325764380370480857}
-    particulaFumaca: {fileID: 9010772358347829355, guid: a4f898e026605d243896f68073caf86f, type: 3}
-    tempoVidaParticula: 0.5
-    somTiro: {fileID: 8300000, guid: b390f25e1fbe7c949b2a3077c33c2be0, type: 3}
-    somRecarga: {fileID: 8300000, guid: 74eade2ff240832459d1bc5d8c47f90f, type: 3}
-    weaponState: 1
-    weaponAnimator: {fileID: 1325764381436536372}
+  carMask:
+    serializedVersion: 2
+    m_Bits: 0
+  weaponBarrel: {fileID: 0}
+  weaponBarrelEnd: {fileID: 0}
+  hitCollidersList: []
+  shootRadius: 10
+  targetIndex: 0
+  updateTarget: 0.33
 --- !u!114 &1325764380780707592
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -441,18 +405,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 1325764380780707598}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5fa11344381e91744ba9b901c20cdab7, type: 3}
+  m_Script: {fileID: 11500000, guid: 62eeae6e540d2b34b80fd7bd884c53bc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  carMask:
-    serializedVersion: 2
-    m_Bits: 4096
-  weaponBarrel: {fileID: 1325764380780707598}
-  weaponBarrelEnd: {fileID: 2208846841404740743}
-  hitCollidersList: []
-  shootRadius: 100
-  targetIndex: 0
-  updateTarget: 0.33
+  botaoRecarregar: 114
+  armaInicial: 0
+  TagInimigo: inimigo
+  BalasPente: {fileID: 0}
+  BalasArmaText: {fileID: 0}
+  MaterialLasers: {fileID: 0}
+  armas: []
 --- !u!1 &1325764381375445221
 GameObject:
   m_ObjectHideFlags: 0
