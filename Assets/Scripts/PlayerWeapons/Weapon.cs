@@ -193,15 +193,6 @@ public class Weapon : MonoBehaviour
         {
             PegarArma(IdArmaVazia);
         }
-        //DEBUG REmOVER
-        if (Input.GetKeyDown(KeyCode.Y))
-        {
-            PegarArma(1);
-        }
-        if (Input.GetKeyDown(KeyCode.U))
-        {
-            PegarArma(2);
-        }
     }
 
     IEnumerator TempoTiro(float tempoDoTiro)
