@@ -381,6 +381,75 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 106225616}
   m_Mesh: {fileID: -8465275738784337650, guid: cc9dffaf64b062840b0490bf660ac114, type: 3}
+--- !u!1001 &123561147
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 2636042426124012813}
+    m_Modifications:
+    - target: {fileID: 1325764380780707592, guid: fbd2662eb7be13d4b98f2d7b80aada2b, type: 3}
+      propertyPath: municaoTexto
+      value: 
+      objectReference: {fileID: 980651740}
+    - target: {fileID: 1325764380780707592, guid: fbd2662eb7be13d4b98f2d7b80aada2b, type: 3}
+      propertyPath: armas.Array.data[1].municaoMaxima
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1325764380780707592, guid: fbd2662eb7be13d4b98f2d7b80aada2b, type: 3}
+      propertyPath: armas.Array.data[2].municaoMaxima
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 1325764380780707593, guid: fbd2662eb7be13d4b98f2d7b80aada2b, type: 3}
+      propertyPath: m_RootOrder
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1325764380780707593, guid: fbd2662eb7be13d4b98f2d7b80aada2b, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1325764380780707593, guid: fbd2662eb7be13d4b98f2d7b80aada2b, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.053
+      objectReference: {fileID: 0}
+    - target: {fileID: 1325764380780707593, guid: fbd2662eb7be13d4b98f2d7b80aada2b, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.298
+      objectReference: {fileID: 0}
+    - target: {fileID: 1325764380780707593, guid: fbd2662eb7be13d4b98f2d7b80aada2b, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1325764380780707593, guid: fbd2662eb7be13d4b98f2d7b80aada2b, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1325764380780707593, guid: fbd2662eb7be13d4b98f2d7b80aada2b, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1325764380780707593, guid: fbd2662eb7be13d4b98f2d7b80aada2b, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1325764380780707593, guid: fbd2662eb7be13d4b98f2d7b80aada2b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1325764380780707593, guid: fbd2662eb7be13d4b98f2d7b80aada2b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1325764380780707593, guid: fbd2662eb7be13d4b98f2d7b80aada2b, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1325764380780707598, guid: fbd2662eb7be13d4b98f2d7b80aada2b, type: 3}
+      propertyPath: m_Name
+      value: Armas
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: fbd2662eb7be13d4b98f2d7b80aada2b, type: 3}
 --- !u!4 &134180762 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: c37b1ccfbc7ed274eb99f9d40e72c4e6, type: 3}
@@ -661,7 +730,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 315734733}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0, y: 1.95, z: -1.51}
+  m_LocalPosition: {x: 0, y: 1.95, z: -4.9}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 720583275}
@@ -872,6 +941,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2df72ec125264584faa40cb1beef0481, type: 3}
+--- !u!4 &441141668 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1325764380780707593, guid: fbd2662eb7be13d4b98f2d7b80aada2b, type: 3}
+  m_PrefabInstance: {fileID: 123561147}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &441986924
 GameObject:
   m_ObjectHideFlags: 0
@@ -1033,7 +1107,7 @@ GameObject:
   - component: {fileID: 463753210}
   - component: {fileID: 463753212}
   - component: {fileID: 463753211}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: CHASSIS
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1911,6 +1985,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a403967e8232ae64c8ab6da9d7c6d893, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rbCar: {fileID: 3449416682308327336}
   rotationThreshold: 1
   cameraStickness: 10
   cameraRotationSpeed: 5
@@ -2389,7 +2464,7 @@ GameObject:
   - component: {fileID: 980651741}
   - component: {fileID: 980651740}
   m_Layer: 5
-  m_Name: VELOCIDADE (1)
+  m_Name: AMMO
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2455,85 +2530,6 @@ CanvasRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 980651738}
-  m_CullTransparentMesh: 1
---- !u!1 &1007745090
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1007745091}
-  - component: {fileID: 1007745093}
-  - component: {fileID: 1007745092}
-  m_Layer: 5
-  m_Name: VELOCIDADE (2)
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &1007745091
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1007745090}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 356843433}
-  m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 306, y: 59}
-  m_SizeDelta: {x: 300, y: 100}
-  m_Pivot: {x: 1, y: 0}
---- !u!114 &1007745092
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1007745090}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 1}
-  m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 35
-    m_FontStyle: 0
-    m_BestFit: 0
-    m_MinSize: 3
-    m_MaxSize: 40
-    m_Alignment: 3
-    m_AlignByGeometry: 0
-    m_RichText: 1
-    m_HorizontalOverflow: 0
-    m_VerticalOverflow: 0
-    m_LineSpacing: 1
-  m_Text: New Text
---- !u!222 &1007745093
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1007745090}
   m_CullTransparentMesh: 1
 --- !u!1 &1016775533
 GameObject:
@@ -3901,7 +3897,7 @@ GameObject:
   - component: {fileID: 1683376275}
   - component: {fileID: 1683376274}
   - component: {fileID: 1683376273}
-  m_Layer: 12
+  m_Layer: 8
   m_Name: Fusca Bot (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3915,11 +3911,18 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1683376272}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7cfc384dfd69fd94a88fd802d56bd2aa, type: 3}
+  m_Script: {fileID: 11500000, guid: 21b66410723648246869f177ce64c12f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  RunnerName: Bot 2
+  MaxCarHealth: 1000
+  MaxCarShield: 1000
+  curCarHealth: 1000
+  isDead: 0
+  DeadCarPrefab: {fileID: 530147679560931411, guid: 787e40aec850b5446a2bdfe113851dcb, type: 3}
+  DeathEffect: {fileID: 4735445525407823977, guid: bfe6e24b84512bf4a9759b06b61af3d2, type: 3}
 --- !u!114 &1683376274
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4369,7 +4372,7 @@ GameObject:
   - component: {fileID: 1829863555}
   - component: {fileID: 1829863557}
   - component: {fileID: 1829863556}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: CHASSIS
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4440,18 +4443,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1829863554}
   m_Mesh: {fileID: 8205782316000696473, guid: cc9dffaf64b062840b0490bf660ac114, type: 3}
---- !u!114 &1832601276
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3449416682308327351}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7cfc384dfd69fd94a88fd802d56bd2aa, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1837148984
 GameObject:
   m_ObjectHideFlags: 0
@@ -5198,11 +5189,6 @@ Transform:
   m_Father: {fileID: 1683376278}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!4 &2017504300 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 1325764380780707593, guid: 88f81434d595e4d418e2dc666478ae41, type: 3}
-  m_PrefabInstance: {fileID: 1325764381984428837}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2032106614
 GameObject:
   m_ObjectHideFlags: 0
@@ -5217,7 +5203,7 @@ GameObject:
   - component: {fileID: 2032106617}
   - component: {fileID: 2032106616}
   - component: {fileID: 2032106615}
-  m_Layer: 12
+  m_Layer: 8
   m_Name: Fusca Bot (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5231,11 +5217,18 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2032106614}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7cfc384dfd69fd94a88fd802d56bd2aa, type: 3}
+  m_Script: {fileID: 11500000, guid: 21b66410723648246869f177ce64c12f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  RunnerName: Bot 1
+  MaxCarHealth: 1000
+  MaxCarShield: 1000
+  curCarHealth: 1000
+  isDead: 0
+  DeadCarPrefab: {fileID: 530147679560931411, guid: 787e40aec850b5446a2bdfe113851dcb, type: 3}
+  DeathEffect: {fileID: 4735445525407823977, guid: bfe6e24b84512bf4a9759b06b61af3d2, type: 3}
 --- !u!114 &2032106616
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6588,71 +6581,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1951922369802046910}
   m_Mesh: {fileID: 7807538432633192378, guid: 5faec470b967a024d89ee3fbb10070a8, type: 3}
---- !u!1001 &1325764381984428837
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 2636042426124012813}
-    m_Modifications:
-    - target: {fileID: 1325764380780707593, guid: 88f81434d595e4d418e2dc666478ae41, type: 3}
-      propertyPath: m_RootOrder
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 1325764380780707593, guid: 88f81434d595e4d418e2dc666478ae41, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1325764380780707593, guid: 88f81434d595e4d418e2dc666478ae41, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 1.053
-      objectReference: {fileID: 0}
-    - target: {fileID: 1325764380780707593, guid: 88f81434d595e4d418e2dc666478ae41, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -0.298
-      objectReference: {fileID: 0}
-    - target: {fileID: 1325764380780707593, guid: 88f81434d595e4d418e2dc666478ae41, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1325764380780707593, guid: 88f81434d595e4d418e2dc666478ae41, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1325764380780707593, guid: 88f81434d595e4d418e2dc666478ae41, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1325764380780707593, guid: 88f81434d595e4d418e2dc666478ae41, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1325764380780707593, guid: 88f81434d595e4d418e2dc666478ae41, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1325764380780707593, guid: 88f81434d595e4d418e2dc666478ae41, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1325764380780707593, guid: 88f81434d595e4d418e2dc666478ae41, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1325764380780707595, guid: 88f81434d595e4d418e2dc666478ae41, type: 3}
-      propertyPath: BalasPente
-      value: 
-      objectReference: {fileID: 980651740}
-    - target: {fileID: 1325764380780707595, guid: 88f81434d595e4d418e2dc666478ae41, type: 3}
-      propertyPath: BalasArmaText
-      value: 
-      objectReference: {fileID: 1007745092}
-    - target: {fileID: 1325764380780707598, guid: 88f81434d595e4d418e2dc666478ae41, type: 3}
-      propertyPath: m_Name
-      value: Armas
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 88f81434d595e4d418e2dc666478ae41, type: 3}
 --- !u!4 &1341056752715209032
 Transform:
   m_ObjectHideFlags: 0
@@ -7676,7 +7604,7 @@ Transform:
   - {fileID: 3015207781161461776}
   - {fileID: 720583275}
   - {fileID: 941219557}
-  - {fileID: 2017504300}
+  - {fileID: 441141668}
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
@@ -8511,8 +8439,8 @@ GameObject:
   - component: {fileID: 3449416682308327337}
   - component: {fileID: 582320937}
   - component: {fileID: 3449416682308327352}
-  - component: {fileID: 1832601276}
-  m_Layer: 12
+  - component: {fileID: 3449416682308327353}
+  m_Layer: 8
   m_Name: Fusca Bot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -8556,6 +8484,25 @@ MonoBehaviour:
   minDistanceToReverse: 3
   distanceFromTrackToBreak: 30
   aiState: 1
+--- !u!114 &3449416682308327353
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3449416682308327351}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 21b66410723648246869f177ce64c12f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  RunnerName: Bot 0
+  MaxCarHealth: 1000
+  MaxCarShield: 1000
+  curCarHealth: 0
+  isDead: 0
+  DeadCarPrefab: {fileID: 530147679560931411, guid: 787e40aec850b5446a2bdfe113851dcb, type: 3}
+  DeathEffect: {fileID: 4735445525407823977, guid: bfe6e24b84512bf4a9759b06b61af3d2, type: 3}
 --- !u!1 &3455292422674320233
 GameObject:
   m_ObjectHideFlags: 0
@@ -12182,7 +12129,7 @@ GameObject:
   - component: {fileID: 2168897855933062986}
   - component: {fileID: 98436487646410506}
   - component: {fileID: 7788893846961962496}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: CHASSIS
   m_TagString: Untagged
   m_Icon: {fileID: 0}
