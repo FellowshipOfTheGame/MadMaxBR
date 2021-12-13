@@ -27,6 +27,7 @@ public class CarController : MonoBehaviour {
     [SerializeField] private float m_ReverseTorque;
     [SerializeField] private float m_MaxHandbrakeTorque;
     [SerializeField] private float m_Downforce = 100f;
+    private float m_DefaultDownforce = 100f;
     [SerializeField] private SpeedType m_SpeedType;
     [SerializeField] private float m_Topspeed = 200;
     [SerializeField] private static int NoOfGears = 5;
@@ -43,6 +44,7 @@ public class CarController : MonoBehaviour {
     private bool isGlued = false;
     private Timer glueTimer;
     private float timeGlued = 1f;
+    private bool justEnteredGlue = false;
     private WheelFrictionCurve defaultForwardFrictionCurve;
     private WheelFrictionCurve gluedForwardFrictionCurve;
     private bool isGreased = false;
@@ -112,6 +114,18 @@ public class CarController : MonoBehaviour {
         SetIsGreased(false);
     }
 
+    private void StoreDefaultValues() {
+        m_DefaultTopspeed = m_Topspeed;
+
+        m_DefaultDownforce = m_Downforce;
+
+        WheelFrictionCurve fF = m_WheelColliders[0].GetComponent<WheelCollider>().forwardFriction;
+        defaultForwardFrictionCurve = CreateFrictionCurve(fF.extremumSlip, fF.extremumValue, fF.asymptoteSlip, fF.asymptoteValue, fF.stiffness);
+
+        WheelFrictionCurve sF = m_WheelColliders[0].GetComponent<WheelCollider>().sidewaysFriction;
+        defaultSidewaysFrictionCurve = CreateFrictionCurve(sF.extremumSlip, sF.extremumValue, sF.asymptoteSlip, sF.asymptoteValue, sF.stiffness);
+    }
+
     private WheelFrictionCurve CreateFrictionCurve(float extremumSlip, float extremumValue, float asymptoteSlip, float asymptoteValue, float stiffness) {
         WheelFrictionCurve newFrictionCurve = new WheelFrictionCurve();
 
@@ -122,10 +136,6 @@ public class CarController : MonoBehaviour {
         newFrictionCurve.stiffness = stiffness;
 
         return newFrictionCurve;
-    }
-
-    private void StoreDefaultValues() {
-        m_DefaultTopspeed = m_Topspeed;
     }
 
     private void GearChanging() {
@@ -209,39 +219,69 @@ public class CarController : MonoBehaviour {
         if (isGlued) {
             if (glueTimer.GetSeconds() >= timeGlued) {
                 SetIsGlued(false);
-                Debug.Log("not glued");
+                for (int i = 0; i < 4; i++) {
+                    m_WheelColliders[i].GetComponent<WheelCollider>().forwardFriction = defaultForwardFrictionCurve;
+
+                    m_WheelColliders[i].GetComponent<WheelCollider>().sidewaysFriction = defaultSidewaysFrictionCurve;
+
+                    m_Downforce = m_DefaultDownforce;
+
+                    justEnteredGlue = false;
+                }
             } else {
                 Debug.Log("glued");
                 // modify wheel colliders values
+                for (int i = 0; i < 4; i++) {
+                    var forwardFriction = m_WheelColliders[i].GetComponent<WheelCollider>().forwardFriction;
+                    m_WheelColliders[i].GetComponent<WheelCollider>().forwardFriction = CreateFrictionCurve(forwardFriction.extremumSlip, forwardFriction.extremumValue, forwardFriction.asymptoteSlip, forwardFriction.asymptoteValue, 0.2f);
 
+                    var sidewaysFriction = m_WheelColliders[i].GetComponent<WheelCollider>().sidewaysFriction;
+                    m_WheelColliders[i].GetComponent<WheelCollider>().sidewaysFriction = CreateFrictionCurve(sidewaysFriction.extremumSlip, sidewaysFriction.extremumValue, sidewaysFriction.asymptoteSlip, sidewaysFriction.asymptoteValue, 0.2f);
+
+                    m_Downforce = m_DefaultDownforce * 2;
+
+                    m_CurrentTorque = 100;
+
+                    if (!justEnteredGlue) {
+                        justEnteredGlue = true;
+
+                        float VelocityRelativeToMax;
+
+                        if (m_SpeedType == SpeedType.MPH) {
+                            VelocityRelativeToMax = m_Rigidbody.velocity.magnitude * 2.23693629f / m_Topspeed;
+                        } else {
+                            VelocityRelativeToMax = m_Rigidbody.velocity.magnitude * 3.6f / m_Topspeed;
+                        }
+
+                        Debug.Log("Velocity relative: " + VelocityRelativeToMax);
+
+                        float decreaseRate = 0.75f - 0.45f * VelocityRelativeToMax;
+
+                        Debug.Log(decreaseRate);
+
+                        m_Rigidbody.velocity = new Vector3(m_Rigidbody.velocity.x * (1 - decreaseRate), m_Rigidbody.velocity.y * (1 - decreaseRate), m_Rigidbody.velocity.z) * (1 - decreaseRate);
+                    }
+                }
             }
         }
 
         if (isGreased) {
             if (greaseTimer.GetSeconds() >= timeGreased) {
                 SetIsGreased(false);
-                Debug.Log("not greased");
+                for (int i = 0; i < 4; i++) {
+                    m_WheelColliders[i].GetComponent<WheelCollider>().forwardFriction = defaultForwardFrictionCurve;
+
+                    m_WheelColliders[i].GetComponent<WheelCollider>().sidewaysFriction = defaultSidewaysFrictionCurve;
+                }
             } else {
                 Debug.Log("greased");
                 // modify wheel colliders values
                 for (int i = 0; i < 4; i++) {
-                    WheelFrictionCurve newForwardFrictionCurve = new WheelFrictionCurve();
-                    newForwardFrictionCurve.extremumSlip = m_WheelColliders[i].GetComponent<WheelCollider>().forwardFriction.extremumSlip;
-                    newForwardFrictionCurve.extremumValue = m_WheelColliders[i].GetComponent<WheelCollider>().forwardFriction.extremumValue;
-                    newForwardFrictionCurve.asymptoteSlip = m_WheelColliders[i].GetComponent<WheelCollider>().forwardFriction.asymptoteSlip;
-                    newForwardFrictionCurve.asymptoteValue = m_WheelColliders[i].GetComponent<WheelCollider>().forwardFriction.asymptoteValue;
-                    newForwardFrictionCurve.stiffness = 10 * 0;
+                    var forwardFriction = m_WheelColliders[i].GetComponent<WheelCollider>().forwardFriction;
+                    m_WheelColliders[i].GetComponent<WheelCollider>().forwardFriction = CreateFrictionCurve(forwardFriction.extremumSlip, forwardFriction.extremumValue, forwardFriction.asymptoteSlip, forwardFriction.asymptoteValue, 0.05f);
 
-                    m_WheelColliders[i].GetComponent<WheelCollider>().forwardFriction = newForwardFrictionCurve;
-
-                    WheelFrictionCurve newSidewaysFrictionCurve = new WheelFrictionCurve();
-                    newSidewaysFrictionCurve.extremumSlip = m_WheelColliders[i].GetComponent<WheelCollider>().sidewaysFriction.extremumSlip;
-                    newSidewaysFrictionCurve.extremumValue = m_WheelColliders[i].GetComponent<WheelCollider>().sidewaysFriction.extremumValue;
-                    newSidewaysFrictionCurve.asymptoteSlip = m_WheelColliders[i].GetComponent<WheelCollider>().sidewaysFriction.asymptoteSlip;
-                    newSidewaysFrictionCurve.asymptoteValue = m_WheelColliders[i].GetComponent<WheelCollider>().sidewaysFriction.asymptoteValue;
-                    newSidewaysFrictionCurve.stiffness = m_WheelColliders[i].GetComponent<WheelCollider>().sidewaysFriction.stiffness * 0;
-
-                    m_WheelColliders[i].GetComponent<WheelCollider>().sidewaysFriction = newSidewaysFrictionCurve;
+                    var sidewaysFriction = m_WheelColliders[i].GetComponent<WheelCollider>().sidewaysFriction;
+                    m_WheelColliders[i].GetComponent<WheelCollider>().sidewaysFriction = CreateFrictionCurve(sidewaysFriction.extremumSlip, sidewaysFriction.extremumValue, sidewaysFriction.asymptoteSlip, sidewaysFriction.asymptoteValue, 0.05f);
                 }
             }
         }
