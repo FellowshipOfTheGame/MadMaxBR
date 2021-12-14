@@ -44,7 +44,6 @@ public class Weapon : MonoBehaviour
     [SerializeField] private KeyCode botaoRecarregar = KeyCode.R;
     [SerializeField] private int armaInicial = 0;
     [SerializeField] private int IdArmaVazia = 0;
-    [SerializeField] private Text municaoTexto;
     [SerializeField] private Material MaterialLasers;
     [SerializeField] private Arma[] armas;
     //
