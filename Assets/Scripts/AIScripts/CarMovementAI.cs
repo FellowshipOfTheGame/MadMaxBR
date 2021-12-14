@@ -30,7 +30,7 @@ public class CarMovementAI : MonoBehaviour
     public float steer = 0f;
     public float throttle = 0f;
     public bool brake = false;
-    public bool nitroEnabled = false;
+    public bool NitroEnabled = false;
     [SerializeField] private float minPositiveThrottle = 0.03f;
     [SerializeField] private float maxThrottle = 1f;
     [SerializeField] private float maxAngleForMinThrottle = 35f;

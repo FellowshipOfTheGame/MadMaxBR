@@ -341,7 +341,6 @@ public class VehicleData : MonoBehaviour {
     /// Activates death visual effects of car.
     /// </summary>
     public void Die() {
-        Quaternion DestroyedCarRotation = new Quaternion(this.gameObject.transform.rotation.x, this.gameObject.transform.rotation.y, this.gameObject.transform.rotation.eulerAngles.z, this.gameObject.transform.rotation.w);
         Instantiate(DeathEffect, this.gameObject.transform.position, DeathEffect.gameObject.transform.rotation);
         Instantiate(DeadCarPrefab, this.gameObject.transform.position, this.gameObject.transform.rotation);
         Rigidbody CarRigidBody = this.gameObject.GetComponent<Rigidbody>();

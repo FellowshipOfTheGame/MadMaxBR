@@ -16,8 +16,6 @@ public class GluePU : MonoBehaviour {
         targetCar = this.transform.parent.gameObject.transform.parent.gameObject; // get the car this script is attached to
         curGlueAmount = MaxGlueAmount;
         GlueHUD.SetActive(true);
-        Instantiate(LiquidSpiller, this.transform.position, this.transform.rotation, this.transform.parent.transform);
-
     }
 
     public void Deactivate() {
@@ -36,10 +34,14 @@ public class GluePU : MonoBehaviour {
             Deactivate();
         } else {
             if (Input.GetKey(KeyCode.LeftShift)) {
-                LiquidSpiller.GetComponent<ParticleSystem>().Play();
+                if (!LiquidSpiller.GetComponent<ParticleSystem>().isPlaying) {
+                    LiquidSpiller.GetComponent<ParticleSystem>().Play();
+                }
                 curGlueAmount = Mathf.MoveTowards(curGlueAmount, 0f, Time.deltaTime * MaxGlueAmount * UsePerSecond / 100);
             } else {
-                LiquidSpiller.GetComponent<ParticleSystem>().Stop();
+                if (!LiquidSpiller.GetComponent<ParticleSystem>().isStopped) {
+                    LiquidSpiller.GetComponent<ParticleSystem>().Stop();
+                }
             }
         }
     }

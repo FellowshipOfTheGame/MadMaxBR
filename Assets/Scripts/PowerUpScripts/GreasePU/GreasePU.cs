@@ -34,10 +34,14 @@ public class GreasePU : MonoBehaviour {
             Deactivate();
         } else {
             if (Input.GetKey(KeyCode.LeftShift)) {
-                LiquidSpiller.GetComponent<ParticleSystem>().Play();
+                if (!LiquidSpiller.GetComponent<ParticleSystem>().isPlaying) {
+                    LiquidSpiller.GetComponent<ParticleSystem>().Play();
+                }
                 curGreaseAmount = Mathf.MoveTowards(curGreaseAmount, 0f, Time.deltaTime * MaxGreaseAmount * UsePerSecond / 100);
             } else {
-                LiquidSpiller.GetComponent<ParticleSystem>().Stop();
+                if (!LiquidSpiller.GetComponent<ParticleSystem>().isStopped) {
+                    LiquidSpiller.GetComponent<ParticleSystem>().Stop();
+                }
             }
         }
     }
