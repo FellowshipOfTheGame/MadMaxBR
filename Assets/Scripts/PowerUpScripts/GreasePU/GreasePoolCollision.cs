@@ -14,7 +14,7 @@ public class GreasePoolCollision : MonoBehaviour {
     // these lists are used to contain the particles which match
     // the trigger conditions each frame.
     List<ParticleSystem.Particle> enter = new List<ParticleSystem.Particle>();
-    List<ParticleSystem.Particle> exit = new List<ParticleSystem.Particle>();
+    List<ParticleSystem.Particle> inside = new List<ParticleSystem.Particle>();
 
     void OnEnable() {
         ps = GetComponent<ParticleSystem>();
@@ -28,6 +28,17 @@ public class GreasePoolCollision : MonoBehaviour {
     void OnParticleTrigger() {
         // get the particles which matched the trigger conditions this frame
         int numEnter = ps.GetTriggerParticles(ParticleSystemTriggerEventType.Enter, enter, out var colliderDataEnter);
+        int numInside = ps.GetTriggerParticles(ParticleSystemTriggerEventType.Inside, inside, out var colliderDataInside);
+
+        // iterate through the particles which entered the trigger
+        for (int i = 0; i < numEnter; i++) {
+            for (int j = 0; j < colliderDataEnter.GetColliderCount(i); j++) {
+                var car = colliderDataEnter.GetCollider(i, j);
+                if (car.CompareTag("Player") || car.CompareTag("AI")) {
+                    car.GetComponent<CarController>().SetIsGreased(true);
+                }
+            }
+        }
 
         // iterate through the particles which entered the trigger and make them red
         for (int i = 0; i < numEnter; i++) {

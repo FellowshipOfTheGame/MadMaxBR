@@ -253,11 +253,7 @@ public class CarController : MonoBehaviour {
                             VelocityRelativeToMax = m_Rigidbody.velocity.magnitude * 3.6f / m_Topspeed;
                         }
 
-                        Debug.Log("Velocity relative: " + VelocityRelativeToMax);
-
                         float decreaseRate = 0.75f - 0.45f * VelocityRelativeToMax;
-
-                        Debug.Log(decreaseRate);
 
                         m_Rigidbody.velocity = new Vector3(m_Rigidbody.velocity.x * (1 - decreaseRate), m_Rigidbody.velocity.y * (1 - decreaseRate), m_Rigidbody.velocity.z) * (1 - decreaseRate);
                     }
@@ -531,6 +527,12 @@ public class CarController : MonoBehaviour {
     /// </summary>
     /// <param name="value">Defines if car is set to be Greased or not</param>
     public void SetIsGreased(bool value) {
+        if (greaseTimer.GetSeconds() >= timeGreased) {
+
+        } else {
+
+        }
+
         if (value) {
             isGreased = true;
             greaseTimer.ResetTimer();
