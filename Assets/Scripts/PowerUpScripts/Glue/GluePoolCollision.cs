@@ -15,7 +15,6 @@ public class GluePoolCollision : MonoBehaviour {
     // the trigger conditions each frame.
     List<ParticleSystem.Particle> enter = new List<ParticleSystem.Particle>();
     List<ParticleSystem.Particle> inside = new List<ParticleSystem.Particle>();
-    List<ParticleSystem.Particle> exit = new List<ParticleSystem.Particle>();
 
     void OnEnable() {
         ps = GetComponent<ParticleSystem>();
@@ -28,19 +27,8 @@ public class GluePoolCollision : MonoBehaviour {
 
     void OnParticleTrigger() {
         // get the particles which matched the trigger conditions this frame
-        int numExit = ps.GetTriggerParticles(ParticleSystemTriggerEventType.Exit, enter, out var colliderDataExit);
         int numEnter = ps.GetTriggerParticles(ParticleSystemTriggerEventType.Enter, enter, out var colliderDataEnter);
         int numInside = ps.GetTriggerParticles(ParticleSystemTriggerEventType.Inside, inside, out var colliderDataInside);
-        /*
-        // iterate through the particles which entered the trigger
-        for (int i = 0; i < numExit; i++) {
-            for (int j = 0; j < colliderDataExit.GetColliderCount(i); j++) {
-                var car = colliderDataExit.GetCollider(i, j);
-                if (car.CompareTag("Player") || car.CompareTag("AI")) {
-                    car.GetComponent<CarController>().SetIsGlued(false);
-                }
-            }
-        }*/
 
         // iterate through the particles which entered the trigger
         for (int i = 0; i < numEnter; i++) {

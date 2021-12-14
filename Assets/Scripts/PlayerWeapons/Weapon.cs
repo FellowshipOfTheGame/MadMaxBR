@@ -20,7 +20,7 @@ public class Arma
     public int danoPorTiro = 40;
     [Range(0, 500)]
     public int municaoExtraMaxima = 240;
-    [Range(0, 50)]
+    [Range(0, 500)]
     public int municaoMaxima = 30;
     [Range(0.01f, 5.0f)]
     public float TiroPorSegundo = 0.3f;
@@ -44,7 +44,6 @@ public class Weapon : MonoBehaviour
     [SerializeField] private KeyCode botaoRecarregar = KeyCode.R;
     [SerializeField] private int armaInicial = 0;
     [SerializeField] private int IdArmaVazia = 0;
-    [SerializeField] private Text municaoTexto;
     [SerializeField] private Material MaterialLasers;
     [SerializeField] private Arma[] armas;
     //
@@ -94,7 +93,7 @@ public class Weapon : MonoBehaviour
     void FixedUpdate()
     {
         //UI
-        municaoTexto.text = "AMMO: " + armas[armaAtual].municao;
+        //municaoTexto.text = "AMMO: " + armas[armaAtual].municao;
         if (Input.GetMouseButton(0) && armas[armaAtual].municao > 0 && !recarregando && !atirando)
         {
             StartCoroutine(TempoTiro(armas[armaAtual].TiroPorSegundo));
@@ -191,7 +190,7 @@ public class Weapon : MonoBehaviour
         }
         if (Input.GetMouseButton(0) && armas[armaAtual].MunicaoExtraNaArma <= 0 && armas[armaAtual].municao <= 0)
         {
-            PegarArma(IdArmaVazia);
+            PegarPoweUpArma(IdArmaVazia);
         }
     }
 
@@ -209,7 +208,7 @@ public class Weapon : MonoBehaviour
     }
 
     /// <summary>
-    /// Seleciona a arma de acordo com o ID e faz a recarrega das munições
+    /// Seleciona a arma de acordo com o ID e faz a recarga das munições
     /// </summary>
     /// <param name="armaId"></param>
     public void PegarPoweUpArma(int armaId)
@@ -224,6 +223,11 @@ public class Weapon : MonoBehaviour
             AtivarArmaAtual();
             armas[armaAtual].municao = armas[armaAtual].municaoMaxima;
         }
+    }
+
+
+    public int GetMunicao() {
+        return armas[armaAtual].municao;
     }
 
     /// <summary>

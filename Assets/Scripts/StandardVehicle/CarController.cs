@@ -41,15 +41,28 @@ public class CarController : MonoBehaviour {
 
     public bool NitroEnabled = false;
 
+    /// <summary>
+    /// Controls if car is on glued ground.
+    /// </summary>
     private bool isGlued = false;
     private Timer glueTimer;
-    private float timeGlued = 1f;
+    /// <summary>
+    /// Time the car keeps glued after leaving glued ground.
+    /// </summary>
+    private float timeGlued = 0.3f;
     private bool justEnteredGlue = false;
-    private WheelFrictionCurve defaultForwardFrictionCurve;
-    private WheelFrictionCurve gluedForwardFrictionCurve;
+    
+    /// <summary>
+    /// Controls if car is on greased ground.
+    /// </summary>
     private bool isGreased = false;
     private Timer greaseTimer;
-    private float timeGreased = 1f;
+    /// <summary>
+    /// Time the car keeps glued after leaving greased ground.
+    /// </summary>
+    private float timeGreased = 0.1f;
+
+    private WheelFrictionCurve defaultForwardFrictionCurve;
     private WheelFrictionCurve defaultSidewaysFrictionCurve;
 
     private float m_DefaultTopspeed;
@@ -217,7 +230,7 @@ public class CarController : MonoBehaviour {
 
     public void Move(float steering, float accel, float footbrake, bool handbrake) {
         if (isGlued) {
-            if (glueTimer.GetSeconds() >= timeGlued) {
+            if (glueTimer.GetSeconds() * 1000 + glueTimer.GetMilliseconds() >= timeGlued * 1000) {
                 SetIsGlued(false);
                 for (int i = 0; i < 4; i++) {
                     m_WheelColliders[i].GetComponent<WheelCollider>().forwardFriction = defaultForwardFrictionCurve;
@@ -253,11 +266,7 @@ public class CarController : MonoBehaviour {
                             VelocityRelativeToMax = m_Rigidbody.velocity.magnitude * 3.6f / m_Topspeed;
                         }
 
-                        Debug.Log("Velocity relative: " + VelocityRelativeToMax);
-
                         float decreaseRate = 0.75f - 0.45f * VelocityRelativeToMax;
-
-                        Debug.Log(decreaseRate);
 
                         m_Rigidbody.velocity = new Vector3(m_Rigidbody.velocity.x * (1 - decreaseRate), m_Rigidbody.velocity.y * (1 - decreaseRate), m_Rigidbody.velocity.z) * (1 - decreaseRate);
                     }
@@ -266,7 +275,7 @@ public class CarController : MonoBehaviour {
         }
 
         if (isGreased) {
-            if (greaseTimer.GetSeconds() >= timeGreased) {
+            if (greaseTimer.GetSeconds() * 1000 + greaseTimer.GetMilliseconds() >= timeGreased * 1000) {
                 SetIsGreased(false);
                 for (int i = 0; i < 4; i++) {
                     m_WheelColliders[i].GetComponent<WheelCollider>().forwardFriction = defaultForwardFrictionCurve;
@@ -278,10 +287,10 @@ public class CarController : MonoBehaviour {
                 // modify wheel colliders values
                 for (int i = 0; i < 4; i++) {
                     var forwardFriction = m_WheelColliders[i].GetComponent<WheelCollider>().forwardFriction;
-                    m_WheelColliders[i].GetComponent<WheelCollider>().forwardFriction = CreateFrictionCurve(forwardFriction.extremumSlip, forwardFriction.extremumValue, forwardFriction.asymptoteSlip, forwardFriction.asymptoteValue, 0.05f);
+                    m_WheelColliders[i].GetComponent<WheelCollider>().forwardFriction = CreateFrictionCurve(forwardFriction.extremumSlip, forwardFriction.extremumValue, forwardFriction.asymptoteSlip, forwardFriction.asymptoteValue, 0.01f);
 
                     var sidewaysFriction = m_WheelColliders[i].GetComponent<WheelCollider>().sidewaysFriction;
-                    m_WheelColliders[i].GetComponent<WheelCollider>().sidewaysFriction = CreateFrictionCurve(sidewaysFriction.extremumSlip, sidewaysFriction.extremumValue, sidewaysFriction.asymptoteSlip, sidewaysFriction.asymptoteValue, 0.05f);
+                    m_WheelColliders[i].GetComponent<WheelCollider>().sidewaysFriction = CreateFrictionCurve(sidewaysFriction.extremumSlip, sidewaysFriction.extremumValue, sidewaysFriction.asymptoteSlip, sidewaysFriction.asymptoteValue, 0.01f);
                 }
             }
         }
