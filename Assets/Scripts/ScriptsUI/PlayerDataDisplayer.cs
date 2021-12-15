@@ -31,8 +31,14 @@ public class PlayerDataDisplayer : MonoBehaviour {
     public GameObject PowerUpSlot3;
     public GameObject PowerUpSlot4;
 
+    public GameObject PowerUpTutorialText;
+
     private GameObject PlayerPowerUps;
     private VehicleRaceData PlayerRaceData;
+
+    private Queue<string> queueTutorialText;
+    [SerializeField] private float TutorialTextStayTime;
+    private float queueTimeWaited;
 
     // Start is called before the first frame update
     void Start() {
@@ -46,18 +52,82 @@ public class PlayerDataDisplayer : MonoBehaviour {
 
     // Update is called once per frameGetPosition
     void Update() {
+        // update race data
+        UpdateRaceData();
+        // update health and shield bars
+        UpdateUIBars();
+        // updates PowerUpSlot value
+        UpdatePowerupSlot();
+        // updates tutorial text
+        UpdateTutorialText();
+        // update powerUp information
+        UpdatePowerUpUI();
+    }
+
+    private void UpdateRaceData() {
         LapCounterDisplay.GetComponent<Text>().text = "" + PlayerRaceData.GetLapCount();
         RacePositionDisplay.GetComponent<Text>().text = "" + PlayerRaceData.GetRacePosition();
         MaxRacePositionDisplay.GetComponent<Text>().text = "" + RaceManager.Racers.Count;
         MaxNumberOfLaps.GetComponent<Text>().text = "" + RaceManager.NumberOfLaps;
+    }
+
+    private void UpdateUIBars() {
         // updates health and shield bar
         PlayerShieldHUD.GetComponent<Image>().fillAmount = Player.GetComponent<VehicleData>().GetCurrentShield() / Player.GetComponent<VehicleData>().MaxCarShield;
         PlayerHealthHUD.GetComponent<Image>().fillAmount = Player.GetComponent<VehicleData>().GetCurrentHealth() / Player.GetComponent<VehicleData>().MaxCarHealth;
-        // updates PowerUpSlot value
+    }
+
+    private void UpdatePowerupSlot() {
         PowerUpSlot1.GetComponent<Text>().text = "" + Player.GetComponent<VehicleData>().GetPowerUpSlotValue(1);
         PowerUpSlot2.GetComponent<Text>().text = "" + Player.GetComponent<VehicleData>().GetPowerUpSlotValue(2);
         PowerUpSlot3.GetComponent<Text>().text = "" + Player.GetComponent<VehicleData>().GetPowerUpSlotValue(3);
         PowerUpSlot4.GetComponent<Text>().text = "" + Player.GetComponent<VehicleData>().GetPowerUpSlotValue(4);
+    }
+
+    private void UpdateTutorialText() {
+        for (int i = 1; i < 5; i++) {
+            switch (Player.GetComponent<VehicleData>().GetPowerUpSlotValue(i)) {
+                case (int)PowerUpName.MachineGun:
+
+                    break;
+                case (int)PowerUpName.Rifle:
+
+                    break;
+                case (int)PowerUpName.Thorns:
+
+                    break;
+                case (int)PowerUpName.Shield:
+
+                    break;
+                case (int)PowerUpName.Fix:
+
+                    break;
+                case (int)PowerUpName.Smoke:
+
+                    break;
+                case (int)PowerUpName.ExplosiveMine:
+
+                    break;
+                case (int)PowerUpName.DeactivatorMine:
+
+                    break;
+                case (int)PowerUpName.Pillar:
+
+                    break;
+                case (int)PowerUpName.Nitro:
+
+                    break;
+                case (int)PowerUpName.Glue:
+
+                    break;
+                case (int)PowerUpName.Grease:
+
+                    break;
+            }
+        }
+    }
+
+    private void UpdatePowerUpUI() {
         // updates bullet count text with quantity of MachineGun
         if (MachineGunCountText.activeSelf) {
             MachineGunCountText.GetComponent<Text>().text = PlayerPowerUps.GetComponentInChildren<MachineGunPU>().GetBulletAmount().ToString();
@@ -68,7 +138,7 @@ public class PlayerDataDisplayer : MonoBehaviour {
         }
         // update thorns timer ui
         if (ThornsTimerUI.activeSelf) {
-            ThornsTimerUI.GetComponent<Image>().fillAmount = 1 - PlayerPowerUps.GetComponentInChildren<ThornsPU>().GetRunningTime() / PlayerPowerUps.GetComponentInChildren<ThornsPU>().GetMaxTime();
+            ThornsTimerUI.GetComponent<Image>().fillAmount = 1 - PlayerPowerUps.GetComponentInChildren<ThornsPU>().GetRunningTime() / PlayerPowerUps.GetComponentInChildren<ThornsPU>().MaxTime;
         }
         // update explosive mine count ui
         if (ExplosiveMineCount.activeSelf) {

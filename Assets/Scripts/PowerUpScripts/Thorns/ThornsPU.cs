@@ -4,13 +4,19 @@ using UnityEngine;
 
 public class ThornsPU : MonoBehaviour {
     private Timer stopwatch;
-    // duration of power up in Minutes
-    public float DurationMin;
-    // duration of power up in Seconds
-    public float DurationSec;
-    // damage of thorns when it collides
-    public float ThornCollisionDamage;
+    [SerializeField] private float DurationSec;
+    [SerializeField] private float ThornCollisionDamage;
 
+    public string TutorialText;
+    /// <summary>
+    /// Base damage of thorns on collision.
+    /// </summary>
+    public float ThornsDamage { get { return ThornCollisionDamage; } }
+    /// <summary>
+    /// Maximum time in seconds this powerup can be active.
+    /// </summary>
+    public float MaxTime { get { return DurationSec; } }
+    
     public GameObject ThornsHUD;
 
     void Awake() {
@@ -33,20 +39,12 @@ public class ThornsPU : MonoBehaviour {
     /// <summary>
     /// Returns time in seconds that this powerup has been active.
     /// </summary>
-    /// <returns></returns>
     public float GetRunningTime() {
-        return stopwatch.GetMinutes() * 60 + stopwatch.GetSeconds() + stopwatch.GetMilliseconds() / 1000;
-    }
-    /// <summary>
-    /// Returns max time this powerup can be active.
-    /// </summary>
-    /// <returns></returns>
-    public float GetMaxTime() {
-        return DurationMin * 60 + DurationSec;
+        return stopwatch.GetTimeInSeconds();
     }
 
     private void Update() {
-        if (stopwatch.GetMinutes() >= DurationMin && stopwatch.GetSeconds() >= DurationSec) {
+        if (stopwatch.GetTimeInSeconds() >= DurationSec) {
             Deactivate();
         }
     }

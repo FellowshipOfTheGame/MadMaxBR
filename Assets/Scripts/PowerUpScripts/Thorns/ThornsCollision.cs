@@ -8,7 +8,7 @@ public class ThornsCollision : MonoBehaviour {
 
     public void Start() {
         car = this.transform.parent.gameObject.transform.parent.gameObject.transform.parent.gameObject;
-        ThornsDamage = this.gameObject.GetComponentInParent<ThornsPU>().ThornCollisionDamage;
+        ThornsDamage = this.gameObject.GetComponentInParent<ThornsPU>().ThornsDamage;
     }
 
     /// <summary>
