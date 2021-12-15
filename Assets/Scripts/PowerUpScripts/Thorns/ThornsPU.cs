@@ -7,7 +7,7 @@ public class ThornsPU : MonoBehaviour {
     [SerializeField] private float DurationSec;
     [SerializeField] private float ThornCollisionDamage;
 
-    public string TutorialText;
+    public PowerUpData PowerUpInfo;
     /// <summary>
     /// Base damage of thorns on collision.
     /// </summary>

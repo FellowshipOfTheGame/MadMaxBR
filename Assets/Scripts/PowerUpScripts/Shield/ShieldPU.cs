@@ -6,10 +6,11 @@ using System;
 public class ShieldPU : MonoBehaviour {
     private GameObject targetCar;
     // shield amount in percentage
-    public float ShieldAmountPercentage;
+    [SerializeField] private float ShieldAmountPercentage;
     // the hud shield bar
-    public GameObject ShieldHUD;
+    [SerializeField] private GameObject ShieldHUD;
 
+    public PowerUpData PowerUpInfo;
     public void Activate() {
         targetCar = this.transform.parent.gameObject.transform.parent.gameObject; // get the car this script is attached to
         ShieldHUD.SetActive(true);

@@ -3,15 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class FixPU : MonoBehaviour {
-    private Timer stopwatch;
     // percentage of life healed per second
-    public float HealPerSecond;
+    [SerializeField] private float HealPerSecond;
     // duration of power up in Seconds
-    public float DurationSec;
+    [SerializeField] private float DurationSec;
+
+    private Timer stopwatch;
     // car with the powerUp
     private GameObject targetCar;
     // number of times the car was healed while the powerUp is active
     private int timesHealed;
+
+    public PowerUpData PowerUpInfo;
     void Awake() {
         stopwatch = gameObject.AddComponent<Timer>();
     }
