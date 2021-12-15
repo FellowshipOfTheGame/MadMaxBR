@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class MachineGunPU : MonoBehaviour {
-    public GameObject MachineGunHUD; // MachineGun HUD text
-    public Weapon WeaponManager;
+    [SerializeField] private GameObject MachineGunHUD; // MachineGun HUD text
+    [SerializeField] private Weapon WeaponManager;
 
     private GameObject targetCar; // the car this script is attached
+
+    public PowerUpData PowerUpInfo;
 
     public void Activate() {
         MachineGunHUD.SetActive(true);

@@ -3,13 +3,19 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class PillarPU : MonoBehaviour {
-    public int PillarsQuantity; // quantity of pillars to be used
-    public GameObject PillarPrefab;
-    public GameObject PillarHUD;
+    [SerializeField] private KeyCode useButton = KeyCode.X;
+    [SerializeField] private int PillarsQuantity; // quantity of pillars to be used
+    [SerializeField] private GameObject PillarPrefab;
+    [SerializeField] private GameObject PillarHUD;
 
-    private int RemainingPillars;
+    private int remainingPillars;
+
+    public PowerUpData PowerUpInfo;
+
+    public int RemainingPillars { get { return remainingPillars; } }
+
     public void Activate() {
-        RemainingPillars = PillarsQuantity;
+        remainingPillars = PillarsQuantity;
         PillarHUD.SetActive(true);
     }
 
@@ -19,18 +25,14 @@ public class PillarPU : MonoBehaviour {
         this.gameObject.transform.parent.GetComponentInParent<VehicleData>().EmptyPowerUpSlot(PowerUpName.Pillar);
     }
 
-    public int GetRemainingPillars() {
-        return RemainingPillars;
-    }
-
     public void Update() {
-        if (RemainingPillars != 0) {
-            if (Input.GetKeyDown(KeyCode.C)) {
+        if (remainingPillars != 0) {
+            if (Input.GetKeyDown(useButton)) {
                 Instantiate(PillarPrefab, this.gameObject.transform.position, this.gameObject.transform.rotation);
-                RemainingPillars--;
+                remainingPillars--;
             }
         }
-        if (RemainingPillars == 0) { // if used all mines availabe
+        if (remainingPillars == 0) { // if used all mines availabe
             Deactivate();
         }
     }

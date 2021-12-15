@@ -171,12 +171,10 @@ public class CarController : MonoBehaviour {
         if (m_GearNumMod <= 0) {
             if (AccelInput == 0) { // if player is pressing or not the arrow down key
                 if ((int)CurrentSpeed == 0) {
-                    Debug.Log("parado sem apertar seta pra baixo -> " + m_GearNumMod);
                     if (m_GearNumMod == 0) {
                         m_GearNumMod--;
                     }
                 } else {
-                    Debug.Log("dando ré -> " + m_GearNumMod);
                     if (m_GearNumMod == -1) {
                         m_GearNumMod--;
                     }

@@ -3,13 +3,19 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class ExplosiveMinePU : MonoBehaviour {
-    public int MinesQuantity; // quantity of mines to be used
-    public GameObject MinePrefab;
-    public GameObject ExplosiveMineHUD;
+    [SerializeField] private KeyCode useButton = KeyCode.X;
+    [SerializeField] private int MinesQuantity; // quantity of mines to be used
+    [SerializeField] private GameObject MinePrefab;
+    [SerializeField] private GameObject ExplosiveMineHUD;
 
-    private int RemainingMines;
+    private int remainingMines;
+
+    public PowerUpData PowerUpInfo;
+
+    public int RemainingMines { get { return remainingMines; } }
+
     public void Activate() {
-        RemainingMines = MinesQuantity;
+        remainingMines = MinesQuantity;
         ExplosiveMineHUD.SetActive(true);
     }
 
@@ -19,18 +25,14 @@ public class ExplosiveMinePU : MonoBehaviour {
         this.gameObject.transform.parent.GetComponentInParent<VehicleData>().EmptyPowerUpSlot(PowerUpName.ExplosiveMine);
     }
 
-    public int GetRemainingMines() {
-        return RemainingMines;
-    }
-
     public void Update() {
-        if (RemainingMines != 0) {
-            if (Input.GetKeyDown(KeyCode.C)) {
+        if (remainingMines != 0) {
+            if (Input.GetKeyDown(useButton)) {
                 Instantiate(MinePrefab, this.gameObject.transform.position, this.gameObject.transform.rotation);
-                RemainingMines--;
+                remainingMines--;
             }
         } 
-        if (RemainingMines == 0) { // if used all mines availabe
+        if (remainingMines == 0) { // if used all mines availabe
             Deactivate();
         }
     }
