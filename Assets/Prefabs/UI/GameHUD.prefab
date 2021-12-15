@@ -106,7 +106,7 @@ RectTransform:
   m_Children:
   - {fileID: 850693203287237191}
   m_Father: {fileID: 850693204477604592}
-  m_RootOrder: 4
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -379,7 +379,7 @@ RectTransform:
   m_Children:
   - {fileID: 850693203026376461}
   m_Father: {fileID: 850693204477604592}
-  m_RootOrder: 7
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -770,7 +770,7 @@ RectTransform:
   m_Children:
   - {fileID: 850693203039517426}
   m_Father: {fileID: 850693204477604592}
-  m_RootOrder: 5
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -2137,7 +2137,7 @@ RectTransform:
   m_Children:
   - {fileID: 850693204141454151}
   m_Father: {fileID: 850693204477604592}
-  m_RootOrder: 2
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
@@ -2400,13 +2400,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Player: {fileID: 0}
   RaceManager: {fileID: 0}
+  VelocityDisplay: {fileID: 0}
   LapCounterDisplay: {fileID: 850693203545521489}
   MaxNumberOfLaps: {fileID: 850693203919910074}
   RacePositionDisplay: {fileID: 7206237821955232555}
   MaxRacePositionDisplay: {fileID: 7206237820575331320}
-  NitroUI: {fileID: 850693204541460310}
-  PlayerHealthBar: {fileID: 850693204141454144}
-  PlayerShieldBar: {fileID: 850693203720315633}
+  MachineGunCountText: {fileID: 0}
+  RifleCountText: {fileID: 0}
+  ThornsTimerUI: {fileID: 0}
+  NitroHUD: {fileID: 0}
+  SmokeHUD: {fileID: 0}
+  ExplosiveMineCount: {fileID: 0}
+  DeactivatorMineCount: {fileID: 0}
+  PillarCount: {fileID: 0}
+  GlueHUD: {fileID: 0}
+  GreaseHUD: {fileID: 0}
+  PlayerHealthHUD: {fileID: 0}
+  PlayerShieldHUD: {fileID: 0}
   PowerUpSlot1: {fileID: 850693203287237184}
   PowerUpSlot2: {fileID: 850693203039517427}
   PowerUpSlot3: {fileID: 850693204904629935}
@@ -2825,7 +2835,7 @@ RectTransform:
   m_Children:
   - {fileID: 850693203720315632}
   m_Father: {fileID: 850693204477604592}
-  m_RootOrder: 3
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -2997,13 +3007,13 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 850693204241626241}
-  - {fileID: 850693204541460309}
-  - {fileID: 850693204099281724}
-  - {fileID: 850693204422828669}
   - {fileID: 850693202986623578}
   - {fileID: 850693203492096345}
   - {fileID: 850693204810185042}
   - {fileID: 850693203164360133}
+  - {fileID: 850693204099281724}
+  - {fileID: 850693204422828669}
+  - {fileID: 850693204541460309}
   m_Father: {fileID: 850693203202851950}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -3218,7 +3228,7 @@ RectTransform:
   m_Children:
   - {fileID: 850693204302936313}
   m_Father: {fileID: 850693204477604592}
-  m_RootOrder: 1
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
@@ -3631,7 +3641,7 @@ RectTransform:
   m_Children:
   - {fileID: 850693204904629934}
   m_Father: {fileID: 850693204477604592}
-  m_RootOrder: 6
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}

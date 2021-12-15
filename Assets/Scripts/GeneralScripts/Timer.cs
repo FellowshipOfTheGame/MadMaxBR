@@ -59,7 +59,11 @@ public class Timer : MonoBehaviour {
         return MinCount;
     }
 
+    /// <summary>
+    /// Return time in seconds with the format XX.XXXX
+    /// </summary>
+    /// <returns></returns>
     public float GetTimeInSeconds() {
-        return SecCount + MinCount * 60;
+        return SecCount + (MinCount * 60) + (MilliCount / 1000);
     }
 }
