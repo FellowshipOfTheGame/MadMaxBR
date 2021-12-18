@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics.SymbolStore;
 using UnityEngine;
 
 internal enum DriverMode
@@ -8,8 +9,7 @@ internal enum DriverMode
 }
 
 [RequireComponent(typeof (CarController))]
-public class CarUserControl : MonoBehaviour
-{
+public class CarUserControl : MonoBehaviour {
     [SerializeField] DriverMode driverMode = DriverMode.Player;
     private CarController m_Car; // the car controller we want to use
     private float horizontalInput = 0f;
@@ -17,35 +17,32 @@ public class CarUserControl : MonoBehaviour
     private bool handbrake = false;
     private CarMovementAI carMovementAI;
 
-    private void Awake()
-    {
+    public bool ControlActive;
+
+    private void Awake() {
         // get the car controller
         m_Car = GetComponent<CarController>();
         carMovementAI = GetComponent<CarMovementAI>();
     }
 
-    private void Update()
-    {
-        if (driverMode == DriverMode.Player)
-        {
+    private void Update() {
+        if (driverMode == DriverMode.Player) {
             horizontalInput = Input.GetAxis("Horizontal");
             verticalInput = Input.GetAxis("Vertical");
             handbrake = Input.GetKeyDown(KeyCode.Space);
-        }
-        else if (driverMode == DriverMode.AI)
-        {
+        } else if (driverMode == DriverMode.AI) {
             horizontalInput = carMovementAI.steer;
             verticalInput = carMovementAI.throttle;
             handbrake = carMovementAI.brake;
         }
     }
 
-    private void FixedUpdate()
-    {
+    private void FixedUpdate() {
         // pass the input to the car!
-
-        m_Car.Move(horizontalInput, verticalInput, verticalInput, handbrake);
-
+        if (ControlActive) {
+            m_Car.Move(horizontalInput, verticalInput, verticalInput, handbrake);
+        }
+        
         //m_Car.Move(h, v, v, 0f);
 
     }

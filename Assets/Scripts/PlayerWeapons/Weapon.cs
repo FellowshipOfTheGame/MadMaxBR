@@ -13,17 +13,17 @@ public class LaserOuMira
 }
 
 [Serializable]
-public class Arma919
+public class Arma
 {
     [HideInInspector]
-    public int balasNaArma, balasNoPente;
+    public int MunicaoExtraNaArma, municao;
     public int danoPorTiro = 40;
     [Range(0, 500)]
-    public int numeroDeBalas = 240;
-    [Range(0, 50)]
-    public int balasPorPente = 30;
+    public int municaoExtraMaxima = 240;
+    [Range(0, 500)]
+    public int municaoMaxima = 30;
     [Range(0.01f, 5.0f)]
-    public float tempoPorTiro = 0.3f;
+    public float TiroPorSegundo = 0.3f;
     [Range(0.01f, 5.0f)]
     public float tempoDaRecarga = 0.5f;
     [Space(10)]
@@ -42,11 +42,10 @@ public class Arma919
 public class Weapon : MonoBehaviour
 {
     [SerializeField] private KeyCode botaoRecarregar = KeyCode.R;
-    public int armaInicial = 0;
-    [SerializeField] private string TagInimigo = "inimigo";
-    [SerializeField] private Text BalasPente, BalasArmaText;
+    [SerializeField] private int armaInicial = 0;
+    [SerializeField] private int IdArmaVazia = 0;
     [SerializeField] private Material MaterialLasers;
-    [SerializeField] private Arma919[] armas;
+    [SerializeField] private Arma[] armas;
     //
     private int armaAtual;
     private AudioSource emissorSom;
@@ -71,13 +70,13 @@ public class Weapon : MonoBehaviour
         lineRenderer.endWidth = 0.05f;
         lineRenderer.positionCount = 2;
         linhaDoLaser = GetComponent<LineRenderer>();
-        //
+
         for (int x = 0; x < armas.Length; x++)
         {
             armas[x].objetoArma.SetActive(false);
             armas[x].lugarParticula.SetActive(false);
-            armas[x].balasNaArma = armas[x].numeroDeBalas - armas[x].balasPorPente;
-            armas[x].balasNoPente = armas[x].balasPorPente;
+            armas[x].MunicaoExtraNaArma = armas[x].municaoExtraMaxima - armas[x].municaoMaxima;
+            armas[x].municao = armas[x].municaoMaxima;
             armas[x].Miras.corLaser.a = 1;
         }
         if (armaInicial > armas.Length - 1)
@@ -94,27 +93,26 @@ public class Weapon : MonoBehaviour
     void FixedUpdate()
     {
         //UI
-        BalasArmaText.text = "Balas: " + armas[armaAtual].balasNaArma;
-        BalasPente.text = "Pente: " + armas[armaAtual].balasNoPente;
-        if (Input.GetMouseButton(0) && armas[armaAtual].balasNoPente > 0 && !recarregando && !atirando)
+        //municaoTexto.text = "AMMO: " + armas[armaAtual].municao;
+        if (Input.GetMouseButton(0) && armas[armaAtual].municao > 0 && !recarregando && !atirando)
         {
-            StartCoroutine(TempoTiro(armas[armaAtual].tempoPorTiro));
+            StartCoroutine(TempoTiro(armas[armaAtual].TiroPorSegundo));
             emissorSom.clip = armas[armaAtual].somTiro;
             emissorSom.PlayOneShot(emissorSom.clip);
-            armas[armaAtual].balasNoPente--;
+            armas[armaAtual].municao--;
             armas[armaAtual].weaponAnimator.SetBool("IsShooting", true);
             GameObject balaTemp = Instantiate(armas[armaAtual].particulaFumaca, armas[armaAtual].lugarParticula.transform.position, transform.rotation) as GameObject;
             Destroy(balaTemp, armas[armaAtual].tempoVidaParticula);
 
             if (Physics.Raycast(transform.position, transform.forward, out RaycastHit pontoDeColisao))
             {
-                if (pontoDeColisao.transform.gameObject.tag == TagInimigo)
+                if (pontoDeColisao.transform.gameObject.GetComponent<VehicleData>() != null)
                 {
-                    pontoDeColisao.transform.gameObject.GetComponent<Inimigo>().vida -= armas[armaAtual].danoPorTiro;
+                    pontoDeColisao.transform.gameObject.GetComponent<VehicleData>().ReceiveDamage(armas[armaAtual].danoPorTiro);
                 }
             }
         }
-        if (!Input.GetMouseButton(0) && atirando || recarregando || armas[armaAtual].balasNoPente == 0)
+        if (!Input.GetMouseButton(0) && atirando || recarregando || armas[armaAtual].municao == 0)
         {
             armas[armaAtual].weaponAnimator.SetBool("IsShooting", false);
             armas[armaAtual].weaponAnimator.SetBool("IsLoop", false);
@@ -124,20 +122,20 @@ public class Weapon : MonoBehaviour
             armas[armaAtual].weaponAnimator.SetBool("IsLoop", true);
         }
         //recarregar
-        if (Input.GetKeyDown(botaoRecarregar) && !recarregando && !atirando && (armas[armaAtual].balasNoPente < armas[armaAtual].balasPorPente) && (armas[armaAtual].balasNaArma > 0))
+        if (Input.GetKeyDown(botaoRecarregar) && !recarregando && !atirando && (armas[armaAtual].municao < armas[armaAtual].municaoMaxima) && (armas[armaAtual].MunicaoExtraNaArma > 0))
         {
             emissorSom.clip = armas[armaAtual].somRecarga;
             emissorSom.PlayOneShot(emissorSom.clip);
-            int todasAsBalas = armas[armaAtual].balasNoPente + armas[armaAtual].balasNaArma;
-            if (todasAsBalas >= armas[armaAtual].balasPorPente)
+            int todasAsBalas = armas[armaAtual].municao + armas[armaAtual].MunicaoExtraNaArma;
+            if (todasAsBalas >= armas[armaAtual].municaoMaxima)
             {
-                armas[armaAtual].balasNoPente = armas[armaAtual].balasPorPente;
-                armas[armaAtual].balasNaArma = todasAsBalas - armas[armaAtual].balasPorPente;
+                armas[armaAtual].municao = armas[armaAtual].municaoMaxima;
+                armas[armaAtual].MunicaoExtraNaArma = todasAsBalas - armas[armaAtual].municaoMaxima;
             }
             else
             {
-                armas[armaAtual].balasNoPente = todasAsBalas;
-                armas[armaAtual].balasNaArma = 0;
+                armas[armaAtual].municao = todasAsBalas;
+                armas[armaAtual].MunicaoExtraNaArma = 0;
             }
             recarregando = true;
             StartCoroutine(TempoRecarga(armas[armaAtual].tempoDaRecarga));
@@ -173,22 +171,26 @@ public class Weapon : MonoBehaviour
             luzColisao.SetActive(false);
         }
         //checar limites da municao
-        if (armas[armaAtual].balasNoPente > armas[armaAtual].balasPorPente)
+        if (armas[armaAtual].municao > armas[armaAtual].municaoMaxima)
         {
-            armas[armaAtual].balasNoPente = armas[armaAtual].balasPorPente;
+            armas[armaAtual].municao = armas[armaAtual].municaoMaxima;
         }
-        else if (armas[armaAtual].balasNoPente < 0)
+        else if (armas[armaAtual].municao < 0)
         {
-            armas[armaAtual].balasNoPente = 0;
+            armas[armaAtual].municao = 0;
         }
-        int numBalasArma = armas[armaAtual].numeroDeBalas - armas[armaAtual].balasPorPente;
-        if (armas[armaAtual].balasNaArma > numBalasArma)
+        int numBalasArma = armas[armaAtual].municaoExtraMaxima - armas[armaAtual].MunicaoExtraNaArma;
+        if (armas[armaAtual].MunicaoExtraNaArma > numBalasArma)
         {
-            armas[armaAtual].balasNaArma = numBalasArma;
+            armas[armaAtual].MunicaoExtraNaArma = numBalasArma;
         }
-        else if (armas[armaAtual].balasNaArma < 0)
+        else if (armas[armaAtual].MunicaoExtraNaArma < 0)
         {
-            armas[armaAtual].balasNaArma = 0;
+            armas[armaAtual].MunicaoExtraNaArma = 0;
+        }
+        if (Input.GetMouseButton(0) && armas[armaAtual].MunicaoExtraNaArma <= 0 && armas[armaAtual].municao <= 0)
+        {
+            PegarPoweUpArma(IdArmaVazia);
         }
     }
 
@@ -205,12 +207,32 @@ public class Weapon : MonoBehaviour
         recarregando = false;
     }
 
-    public void TrocarArma(int arma)
+    /// <summary>
+    /// Seleciona a arma de acordo com o ID e faz a recarga das munições
+    /// </summary>
+    /// <param name="armaId"></param>
+    public void PegarPoweUpArma(int armaId)
     {
-        armaAtual = arma;
-        AtivarArmaAtual();
+        if (armaAtual == armaId)
+        {
+            armas[armaAtual].municao = armas[armaAtual].municaoMaxima;
+        }
+        else if (armaAtual == IdArmaVazia || armas[armaAtual].municao <= 0)
+        {
+            armaAtual = armaId;
+            AtivarArmaAtual();
+            armas[armaAtual].municao = armas[armaAtual].municaoMaxima;
+        }
     }
 
+
+    public int GetMunicao() {
+        return armas[armaAtual].municao;
+    }
+
+    /// <summary>
+    /// Remove a arma antiga e mostra a nova no local
+    /// </summary>
     void AtivarArmaAtual()
     {
         for (int x = 0; x < armas.Length; x++)

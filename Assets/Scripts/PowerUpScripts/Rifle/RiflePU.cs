@@ -3,36 +3,33 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class RiflePU : MonoBehaviour {
-    public float MaxBulletAmount; // maximum amount of bullets
-    public float UsePerSecondRaw; // use of nitro per second
-    public GameObject MachineGunHUD; // MachineGun HUD
+    [SerializeField] private GameObject MachineGunHUD; // MachineGun HUD
+    [SerializeField] private Weapon WeaponManager;
 
-    private float bulletAmount; // amount of car nitro
     private GameObject targetCar; // the car this script is attached
 
+    public PowerUpData PowerUpInfo;
+
     public void Activate() {
-        bulletAmount = MaxBulletAmount; // set maximum bullet amount
         MachineGunHUD.SetActive(true);
+        WeaponManager.PegarPoweUpArma(1);
         targetCar = this.transform.parent.gameObject.transform.parent.gameObject; // get the car this script is attached
     }
 
     public void Deactivate() {
         this.gameObject.SetActive(false);
         MachineGunHUD.SetActive(false);
+        WeaponManager.PegarPoweUpArma(0);
         targetCar.GetComponent<VehicleData>().EmptyPowerUpSlot(PowerUpName.Rifle);
     }
 
     public float GetBulletAmount() {
-        return (int)bulletAmount;
+        return WeaponManager.GetMunicao();
     }
 
     private void Update() {
-        if (bulletAmount == 0) {
+        if (WeaponManager.GetMunicao() == 0) {
             Deactivate();
-        } else {
-            if (Input.GetKey(KeyCode.Mouse0)) {
-                bulletAmount = Mathf.MoveTowards(bulletAmount, 0f, Time.deltaTime * UsePerSecondRaw);
-            }
         }
     }
 }

@@ -11,13 +11,13 @@ public class PowerUpPlatform : MonoBehaviour {
     /// </summary>
     public Material[] MaterialList; // 
     /// <summary>
-    /// Time (in seconds) necessary to create another powerUp.
+    /// Time (in seconds) necessary to generate another powerUp.
     /// </summary>
-    public float CooldownTime;
+    [SerializeField] private float CooldownTime;
 
-    public bool isRandom;
-    public int powerUpNum;
-    public bool IsOnCooldown;
+    [SerializeField] private bool isRandom;
+    [SerializeField] private int powerUpNum;
+    [SerializeField] private bool IsOnCooldown = true;
 
     private Timer platformTimer;
     private GameObject platformHitBox;
@@ -27,7 +27,6 @@ public class PowerUpPlatform : MonoBehaviour {
     void Start() {
         platformHitBox = this.gameObject.transform.GetChild(1).gameObject;
         representation = this.gameObject.transform.GetChild(0).gameObject;
-        IsOnCooldown = false;
         platformTimer = this.gameObject.AddComponent<Timer>();
         ActivatePowerUpPlatform();
     }
@@ -43,7 +42,7 @@ public class PowerUpPlatform : MonoBehaviour {
     }
 
     /// <summary>
-    /// Makes platform visible.
+    /// Makes platform invisible and unreachable.
     /// </summary>
     public void DeactivatePowerUpPlatform() {
         IsOnCooldown = true;
@@ -53,7 +52,7 @@ public class PowerUpPlatform : MonoBehaviour {
     }
 
     /// <summary>
-    /// Makes platform invisible.
+    /// Makes platform visible and activable with a random powerUp.
     /// </summary>
     public void ActivatePowerUpPlatform() {
         int powerUpNumber;

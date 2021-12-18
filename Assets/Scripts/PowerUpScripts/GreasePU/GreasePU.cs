@@ -3,17 +3,24 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class GreasePU : MonoBehaviour {
-    public float MaxGreaseAmount; // maximum amount of grease
-    public float UsePerSecond; // use of grease per second in percentage
-    public GameObject GreaseHUD; // grease hud
-    public GameObject LiquidSpiller;
+    [SerializeField] private KeyCode useButton = KeyCode.LeftShift;
+    [SerializeField] private float maxGreaseAmount; // maximum amount of grease
+    [SerializeField] private float UsePerSecond; // use of grease per second in percentage
+    [SerializeField] private GameObject GreaseHUD; // grease hud
+    [SerializeField] private GameObject LiquidSpiller;
 
     private float curGreaseAmount; // amount of Grease
     private GameObject targetCar; // the car this script is attached
 
+    public PowerUpData PowerUpInfo;
+
+    public float MaxGreaseAmount { get { return maxGreaseAmount; } }
+
+    public float CurGreaseAmount { get { return curGreaseAmount; } }
+
     public void Activate() {
         targetCar = this.transform.parent.gameObject.transform.parent.gameObject; // get the car this script is attached to
-        curGreaseAmount = MaxGreaseAmount;
+        curGreaseAmount = maxGreaseAmount;
         GreaseHUD.SetActive(true);
     }
 
@@ -24,20 +31,20 @@ public class GreasePU : MonoBehaviour {
         targetCar.GetComponent<VehicleData>().EmptyPowerUpSlot(PowerUpName.Grease);
     }
 
-    public float GetGreaseAmount() {
-        return curGreaseAmount;
-    }
-
     // Update is called once per frame
     private void Update() {
         if (curGreaseAmount == 0) {
             Deactivate();
         } else {
-            if (Input.GetKey(KeyCode.LeftShift)) {
-                LiquidSpiller.GetComponent<ParticleSystem>().Play();
-                curGreaseAmount = Mathf.MoveTowards(curGreaseAmount, 0f, Time.deltaTime * MaxGreaseAmount * UsePerSecond / 100);
+            if (Input.GetKey(useButton)) {
+                if (!LiquidSpiller.GetComponent<ParticleSystem>().isPlaying) {
+                    LiquidSpiller.GetComponent<ParticleSystem>().Play();
+                }
+                curGreaseAmount = Mathf.MoveTowards(curGreaseAmount, 0f, Time.deltaTime * maxGreaseAmount * UsePerSecond / 100);
             } else {
-                LiquidSpiller.GetComponent<ParticleSystem>().Stop();
+                if (!LiquidSpiller.GetComponent<ParticleSystem>().isStopped) {
+                    LiquidSpiller.GetComponent<ParticleSystem>().Stop();
+                }
             }
         }
     }
