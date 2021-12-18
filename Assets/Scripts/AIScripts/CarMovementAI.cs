@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -19,6 +20,8 @@ public class CarMovementAI : MonoBehaviour
     [SerializeField] private float frontSensorInnerAngle = 15f;
     [SerializeField] private float frontSensorOuterAngle = 30f;
     [SerializeField] private LayerMask ignoredLayerMasks;
+    [SerializeField] private LayerMask roadLayerMask;
+    [SerializeField] private LayerMask carLayerMask;
 
     [Header("Path to follow")]
     public Transform path;
@@ -31,7 +34,7 @@ public class CarMovementAI : MonoBehaviour
     public float throttle = 0f;
     public bool brake = false;
     public bool nitroEnabled = false;
-    [SerializeField] private float minPositiveThrottle = 0.03f;
+    [SerializeField] private float minPositiveThrottle = 0.1f;
     [SerializeField] private float maxThrottle = 1f;
     [SerializeField] private float maxAngleForMinThrottle = 35f;
     [SerializeField] private float minDistanceToReverse = 3f;
@@ -60,12 +63,16 @@ public class CarMovementAI : MonoBehaviour
     private Vector2 currentNodePositionXZ;
     private Vector2 previousNodePositionXZ;
     private Vector2 carPositionXZ;
+    private CarController carController;
+    private BoxCollider carCollider;
 
     public AiState aiState = AiState.FollowingTrack;
 
     void Start()
     {
+        carController = GetComponent<CarController>();
         rb = GetComponent<Rigidbody>();
+        carCollider = GetComponent<BoxCollider>();
         nodesBoxCollider = path.GetComponentsInChildren<BoxCollider>();
         nodes = new List<BoxCollider>();
 
@@ -84,6 +91,37 @@ public class CarMovementAI : MonoBehaviour
             FollowPath();
             GetThrottle();
         }
+    }
+
+    private void Update()
+    {
+        if (DistanceFromTrack() > trackWidth || isCapotado())
+        {
+            Teleport();
+        }
+    }
+
+    private bool isCapotado()
+    {
+        RaycastHit hit;
+
+        if (Physics.Raycast(transform.position, -transform.up, out hit, roadLayerMask))
+        {
+            Debug.DrawLine(transform.position, hit.point, Color.cyan);
+            return false;
+        }
+
+        return true;
+    }
+
+    private void Teleport()
+    {
+        //if (!Physics.Raycast(nodes[previousNode].transform.position, Vector3.down, carLayerMask))
+        //{
+        //carCollider.isTrigger = true;
+            print("teleportado");
+            transform.position = nodes[previousNode].transform.position + new Vector3(0f, 20f, 0f);
+        //}
     }
 
     public void GetThrottle()
@@ -110,7 +148,7 @@ public class CarMovementAI : MonoBehaviour
         {
             brake = false;
             percentThrottle = 1 - curveAngle / maxAngleForMinThrottle;
-            percentThrottle *= percentThrottle;
+            percentThrottle *= percentThrottle * percentThrottle;
             throttle = (maxThrottle - minPositiveThrottle) * percentThrottle + minPositiveThrottle;
         }
     }
@@ -205,13 +243,13 @@ public class CarMovementAI : MonoBehaviour
         if (other.CompareTag("Node") && currentNode == GetSiblingIndex(other.transform, other.transform.parent))
         {
             currentNode = (currentNode + 1) % nodes.Count;
+            nextNode = (currentNode + 1) % nodes.Count;
+            previousNode = (currentNode + nodes.Count - 1) % nodes.Count;
         }
     }
 
     private float CurveAngle()
     {
-        nextNode = (currentNode + 1) % nodes.Count;
-
         directionToNextNode = nodes[nextNode].transform.position - nodes[currentNode].transform.position;
         Debug.DrawRay(transform.position, directionToNextNode);
 
@@ -220,8 +258,6 @@ public class CarMovementAI : MonoBehaviour
 
     public void FollowPath()
     {
-        previousNode = (currentNode + nodes.Count - 1) % nodes.Count;
-        nextNode = (currentNode + 1) % nodes.Count;
         position = transform.position;
         currentNodePosition = nodes[currentNode].transform.position;
         previousNodePosition = nodes[previousNode].transform.position;

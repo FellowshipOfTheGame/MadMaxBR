@@ -27,6 +27,11 @@ public class WeaponAI : MonoBehaviour
 
     }
 
+    private void OnEnable()
+    {
+
+    }
+
     void FixedUpdate()
     {
         ChooseTarget();
@@ -74,19 +79,20 @@ public class WeaponAI : MonoBehaviour
                 directionPoint = hitColliders[smallestDistanceIndex].transform;
                 weaponBarrel.transform.LookAt(directionPoint);
                 //weaponBarrel.transform.Rotate(10f, 0f, 0f);
-                weaponAnimator.SetBool("IsShooting", true);
-                //StartCoroutine(Shoot(shootRate));
+                weaponAnimator.Play("Shoot");
+                StartCoroutine(Shoot(shootRate));
             }
         }
         else
         {
-            weaponAnimator.SetBool("IsShooting", false);
+            weaponAnimator.Play("Idle");
             weaponState = WeaponState.idle;
         }
     }
 
     IEnumerator Shoot(float firingRate)
     {
+        //Dar dano
 
         yield return new WaitForSeconds(firingRate);
     }
