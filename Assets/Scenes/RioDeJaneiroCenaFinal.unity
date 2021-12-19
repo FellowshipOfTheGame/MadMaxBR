@@ -1382,7 +1382,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6586303490144878872, guid: 45bce25a1dbd2f247b078ff881b2109b, type: 3}
       propertyPath: powerUpNum
-      value: 2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6586303490144878872, guid: 45bce25a1dbd2f247b078ff881b2109b, type: 3}
       propertyPath: CooldownTime
@@ -3163,6 +3163,39 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 3385490179049759900, guid: 5a24f8808ad6000459f7ba9b8d7a8d06, type: 3}
   m_PrefabInstance: {fileID: 3385490177586784798}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1506202528 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5128176260471683223, guid: 5dd3535553760534593de8b355f1e4df, type: 3}
+  m_PrefabInstance: {fileID: 6146567473933881250}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1506202533
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1506202528}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 57b89d23297a3bc4bb11ea5cf0a82f3d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MovementTimeInSeconds: 2
+--- !u!111 &1506202534
+Animation:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1506202528}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Animation: {fileID: 0}
+  m_Animations: []
+  m_WrapMode: 0
+  m_PlayAutomatically: 1
+  m_AnimatePhysics: 0
+  m_CullingType: 0
 --- !u!1001 &1514189182
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6445,10 +6478,18 @@ PrefabInstance:
       propertyPath: MachineGunHUD
       value: 
       objectReference: {fileID: 1877757315}
+    - target: {fileID: 2587582585312104754, guid: 5dd3535553760534593de8b355f1e4df, type: 3}
+      propertyPath: WeaponManager
+      value: 
+      objectReference: {fileID: 1506202528}
     - target: {fileID: 2587582585629875133, guid: 5dd3535553760534593de8b355f1e4df, type: 3}
       propertyPath: MachineGunHUD
       value: 
       objectReference: {fileID: 68509044}
+    - target: {fileID: 2587582585629875133, guid: 5dd3535553760534593de8b355f1e4df, type: 3}
+      propertyPath: WeaponManager
+      value: 
+      objectReference: {fileID: 1506202528}
     - target: {fileID: 2587582585663105328, guid: 5dd3535553760534593de8b355f1e4df, type: 3}
       propertyPath: ExplosiveMineHUD
       value: 
@@ -6459,7 +6500,11 @@ PrefabInstance:
       objectReference: {fileID: 494456599}
     - target: {fileID: 5128176260471683216, guid: 5dd3535553760534593de8b355f1e4df, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2.764
+      value: 1.827
+      objectReference: {fileID: 0}
+    - target: {fileID: 5128176260471683217, guid: 5dd3535553760534593de8b355f1e4df, type: 3}
+      propertyPath: armas.Array.data[1].municaoMaxima
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 6146567473696664027, guid: 5dd3535553760534593de8b355f1e4df, type: 3}
       propertyPath: RaceManager

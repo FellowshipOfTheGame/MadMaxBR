@@ -327,6 +327,7 @@ public class VehicleData : MonoBehaviour {
         Debug.Log("invulneravel? " + isInvulnerable);
         if (!isInvulnerable) {
             
+            // diminishes
             if (playerPowerUps.GetComponentInChildren<ThornsPU>() != null) {
                 damage *= 1 - (playerPowerUps.GetComponentInChildren<ThornsPU>().CollisionDamageReduction / 100);
             }
