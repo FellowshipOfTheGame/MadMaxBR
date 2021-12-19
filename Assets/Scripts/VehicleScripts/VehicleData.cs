@@ -13,13 +13,16 @@ public class VehicleData : MonoBehaviour {
     private float curCarHealth; // current car health
     private float curCarShield; // current car shield
 
-    private bool isSmokeActive;
+    private bool isInvulnerable;
+    private bool ThornsArmorActive;
 
     private int killsCount; // kills count of car
 
     public bool isDead; // if car is dead
     public GameObject DeadCarPrefab;
     public GameObject DeathEffect;
+
+    public bool UsingThornsArmor { get { return ThornsArmorActive; } }
 
     /// <summary>
     /// Attack Power Up Slot. 
@@ -270,7 +273,7 @@ public class VehicleData : MonoBehaviour {
         powerUpSlot3 = -1;
         powerUpSlot4 = -1;
         // set variables related to powerups
-        isSmokeActive = false;
+        isInvulnerable = false;
     }
     // Update is called once per frame
     public void Update() {
@@ -321,7 +324,16 @@ public class VehicleData : MonoBehaviour {
     /// </summary>
     /// <param name="damage"></param>
     public void ReceiveDamage(float damage) {
-        if (!isSmokeActive) {
+        Debug.Log("invulneravel? " + isInvulnerable);
+        if (!isInvulnerable) {
+            
+            // diminishes
+            if (playerPowerUps.GetComponentInChildren<ThornsPU>() != null) {
+                damage *= 1 - (playerPowerUps.GetComponentInChildren<ThornsPU>().CollisionDamageReduction / 100);
+            }
+            
+            Debug.Log("dano recebido: " + damage);
+
             if (curCarShield > 0) {
                 if (damage < curCarShield) {
                     curCarShield -= damage;
@@ -356,11 +368,19 @@ public class VehicleData : MonoBehaviour {
         isDead = true;
     }
 
-    public void setSmokeActive(bool active) {
+    public void SetInvulnerability(bool active) {
         if (active) {
-            isSmokeActive = true;
+            isInvulnerable = true;
         } else {
-            isSmokeActive = false;
+            isInvulnerable = false;
+        }
+    }
+
+    public void SetThornsArmor(bool active) {
+        if (active) {
+            ThornsArmorActive = true;
+        } else {
+            ThornsArmorActive = false;
         }
     }
 }

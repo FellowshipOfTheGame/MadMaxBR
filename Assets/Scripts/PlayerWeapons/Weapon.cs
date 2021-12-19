@@ -5,16 +5,14 @@ using UnityEngine.UI;
 using System;
 
 [Serializable]
-public class LaserOuMira
-{
+public class LaserOuMira {
     public bool ativarLaser = false;
     public Color corLaser = Color.red;
     public bool AtivarMiraComum = true;
 }
 
 [Serializable]
-public class Arma
-{
+public class Arma {
     [HideInInspector]
     public int MunicaoExtraNaArma, municao;
     public int danoPorTiro = 40;
@@ -39,8 +37,7 @@ public class Arma
     public Animator weaponAnimator;
 }
 [RequireComponent(typeof(AudioSource))]
-public class Weapon : MonoBehaviour
-{
+public class Weapon : MonoBehaviour {
     [SerializeField] private KeyCode botaoRecarregar = KeyCode.R;
     [SerializeField] private int armaInicial = 0;
     [SerializeField] private int IdArmaVazia = 0;
@@ -52,9 +49,18 @@ public class Weapon : MonoBehaviour
     private bool recarregando, atirando;
     private LineRenderer linhaDoLaser;
     private GameObject luzColisao;
+    private bool canShoot = false;
 
-    void Start()
-    {
+    public bool CanShoot { 
+        get { 
+            return canShoot; 
+        } 
+        set {
+            canShoot = value;
+        }
+    }
+
+    void Start() {
         //laser das armas
         luzColisao = new GameObject();
         luzColisao.AddComponent<Light>();
@@ -71,16 +77,14 @@ public class Weapon : MonoBehaviour
         lineRenderer.positionCount = 2;
         linhaDoLaser = GetComponent<LineRenderer>();
 
-        for (int x = 0; x < armas.Length; x++)
-        {
+        for (int x = 0; x < armas.Length; x++) {
             armas[x].objetoArma.SetActive(false);
             armas[x].lugarParticula.SetActive(false);
             armas[x].MunicaoExtraNaArma = armas[x].municaoExtraMaxima - armas[x].municaoMaxima;
             armas[x].municao = armas[x].municaoMaxima;
             armas[x].Miras.corLaser.a = 1;
         }
-        if (armaInicial > armas.Length - 1)
-        {
+        if (armaInicial > armas.Length - 1) {
             armaInicial = armas.Length - 1;
         }
         armas[armaInicial].objetoArma.SetActive(true);
@@ -90,119 +94,94 @@ public class Weapon : MonoBehaviour
         recarregando = atirando = false;
     }
 
-    void FixedUpdate()
-    {
-        //UI
-        //municaoTexto.text = "AMMO: " + armas[armaAtual].municao;
-        if (Input.GetMouseButton(0) && armas[armaAtual].municao > 0 && !recarregando && !atirando)
-        {
-            StartCoroutine(TempoTiro(armas[armaAtual].TiroPorSegundo));
-            emissorSom.clip = armas[armaAtual].somTiro;
-            emissorSom.PlayOneShot(emissorSom.clip);
-            armas[armaAtual].municao--;
-            armas[armaAtual].weaponAnimator.SetBool("IsShooting", true);
-            GameObject balaTemp = Instantiate(armas[armaAtual].particulaFumaca, armas[armaAtual].lugarParticula.transform.position, transform.rotation) as GameObject;
-            Destroy(balaTemp, armas[armaAtual].tempoVidaParticula);
+    void FixedUpdate() {
+        if (canShoot) {
+            //municaoTexto.text = "AMMO: " + armas[armaAtual].municao;
+            if (Input.GetMouseButton(0) && armas[armaAtual].municao > 0 && !recarregando && !atirando) {
+                StartCoroutine(TempoTiro(armas[armaAtual].TiroPorSegundo));
+                emissorSom.clip = armas[armaAtual].somTiro;
+                emissorSom.PlayOneShot(emissorSom.clip);
+                armas[armaAtual].municao--;
+                armas[armaAtual].weaponAnimator.SetBool("IsShooting", true);
+                GameObject balaTemp = Instantiate(armas[armaAtual].particulaFumaca, armas[armaAtual].lugarParticula.transform.position, transform.rotation) as GameObject;
+                Destroy(balaTemp, armas[armaAtual].tempoVidaParticula);
 
-            if (Physics.Raycast(transform.position, transform.forward, out RaycastHit pontoDeColisao))
-            {
-                if (pontoDeColisao.transform.gameObject.GetComponent<VehicleData>() != null)
-                {
-                    pontoDeColisao.transform.gameObject.GetComponent<VehicleData>().ReceiveDamage(armas[armaAtual].danoPorTiro);
+                if (Physics.Raycast(transform.position, transform.forward, out RaycastHit pontoDeColisao)) {
+                    if (pontoDeColisao.transform.gameObject.GetComponent<VehicleData>() != null) {
+                        pontoDeColisao.transform.gameObject.GetComponent<VehicleData>().ReceiveDamage(armas[armaAtual].danoPorTiro);
+                    }
                 }
             }
-        }
-        if (!Input.GetMouseButton(0) && atirando || recarregando || armas[armaAtual].municao == 0)
-        {
-            armas[armaAtual].weaponAnimator.SetBool("IsShooting", false);
-            armas[armaAtual].weaponAnimator.SetBool("IsLoop", false);
-        }
-        if (Input.GetMouseButton(0) && atirando)
-        {
-            armas[armaAtual].weaponAnimator.SetBool("IsLoop", true);
-        }
-        //recarregar
-        if (Input.GetKeyDown(botaoRecarregar) && !recarregando && !atirando && (armas[armaAtual].municao < armas[armaAtual].municaoMaxima) && (armas[armaAtual].MunicaoExtraNaArma > 0))
-        {
-            emissorSom.clip = armas[armaAtual].somRecarga;
-            emissorSom.PlayOneShot(emissorSom.clip);
-            int todasAsBalas = armas[armaAtual].municao + armas[armaAtual].MunicaoExtraNaArma;
-            if (todasAsBalas >= armas[armaAtual].municaoMaxima)
-            {
-                armas[armaAtual].municao = armas[armaAtual].municaoMaxima;
-                armas[armaAtual].MunicaoExtraNaArma = todasAsBalas - armas[armaAtual].municaoMaxima;
+            if (!Input.GetMouseButton(0) && atirando || recarregando || armas[armaAtual].municao == 0) {
+                armas[armaAtual].weaponAnimator.SetBool("IsShooting", false);
+                armas[armaAtual].weaponAnimator.SetBool("IsLoop", false);
             }
-            else
-            {
-                armas[armaAtual].municao = todasAsBalas;
+            if (Input.GetMouseButton(0) && atirando) {
+                armas[armaAtual].weaponAnimator.SetBool("IsLoop", true);
+            }
+            //recarregar
+            if (Input.GetKeyDown(botaoRecarregar) && !recarregando && !atirando && (armas[armaAtual].municao < armas[armaAtual].municaoMaxima) && (armas[armaAtual].MunicaoExtraNaArma > 0)) {
+                emissorSom.clip = armas[armaAtual].somRecarga;
+                emissorSom.PlayOneShot(emissorSom.clip);
+                int todasAsBalas = armas[armaAtual].municao + armas[armaAtual].MunicaoExtraNaArma;
+                if (todasAsBalas >= armas[armaAtual].municaoMaxima) {
+                    armas[armaAtual].municao = armas[armaAtual].municaoMaxima;
+                    armas[armaAtual].MunicaoExtraNaArma = todasAsBalas - armas[armaAtual].municaoMaxima;
+                } else {
+                    armas[armaAtual].municao = todasAsBalas;
+                    armas[armaAtual].MunicaoExtraNaArma = 0;
+                }
+                recarregando = true;
+                StartCoroutine(TempoRecarga(armas[armaAtual].tempoDaRecarga));
+            }
+            //laser da arma
+            if (!recarregando) {
+                if (armas[armaAtual].Miras.ativarLaser) {
+                    linhaDoLaser.enabled = true;
+                    linhaDoLaser.material.SetColor("_TintColor", armas[armaAtual].Miras.corLaser);
+                    luzColisao.SetActive(true);
+                    Vector3 PontoFinalDoLaser = transform.position + (transform.forward * 500);
+                    if (Physics.Raycast(transform.position, Quaternion.AngleAxis(0, transform.up) * transform.forward, out RaycastHit hitDoLaser, 500)) {
+                        linhaDoLaser.SetPosition(0, armas[armaAtual].lugarParticula.transform.position);
+                        linhaDoLaser.SetPosition(1, hitDoLaser.point);
+                        Debug.Log(hitDoLaser.point);
+                        float distancia = Vector3.Distance(transform.position, hitDoLaser.point) - 0.03f;
+                        luzColisao.transform.position = transform.position + transform.forward * distancia;
+                    } else {
+                        linhaDoLaser.SetPosition(0, armas[armaAtual].lugarParticula.transform.position);
+                        linhaDoLaser.SetPosition(1, PontoFinalDoLaser);
+                        luzColisao.transform.position = PontoFinalDoLaser;
+                    }
+                }
+            } else {
+                linhaDoLaser.enabled = false;
+                luzColisao.SetActive(false);
+            }
+            //checar limites da municao
+            if (armas[armaAtual].municao > armas[armaAtual].municaoMaxima) {
+                armas[armaAtual].municao = armas[armaAtual].municaoMaxima;
+            } else if (armas[armaAtual].municao < 0) {
+                armas[armaAtual].municao = 0;
+            }
+            int numBalasArma = armas[armaAtual].municaoExtraMaxima - armas[armaAtual].MunicaoExtraNaArma;
+            if (armas[armaAtual].MunicaoExtraNaArma > numBalasArma) {
+                armas[armaAtual].MunicaoExtraNaArma = numBalasArma;
+            } else if (armas[armaAtual].MunicaoExtraNaArma < 0) {
                 armas[armaAtual].MunicaoExtraNaArma = 0;
             }
-            recarregando = true;
-            StartCoroutine(TempoRecarga(armas[armaAtual].tempoDaRecarga));
-        }
-        //laser da arma
-        if (!recarregando)
-        {
-            if (armas[armaAtual].Miras.ativarLaser)
-            {
-                linhaDoLaser.enabled = true;
-                linhaDoLaser.material.SetColor("_TintColor", armas[armaAtual].Miras.corLaser);
-                luzColisao.SetActive(true);
-                Vector3 PontoFinalDoLaser = transform.position + (transform.forward * 500);
-                if (Physics.Raycast(transform.position, Quaternion.AngleAxis(0, transform.up) * transform.forward, out RaycastHit hitDoLaser, 500))
-                {
-                    linhaDoLaser.SetPosition(0, armas[armaAtual].lugarParticula.transform.position);
-                    linhaDoLaser.SetPosition(1, hitDoLaser.point);
-                    Debug.Log(hitDoLaser.point);
-                    float distancia = Vector3.Distance(transform.position, hitDoLaser.point) - 0.03f;
-                    luzColisao.transform.position = transform.position + transform.forward * distancia;
-                }
-                else
-                {
-                    linhaDoLaser.SetPosition(0, armas[armaAtual].lugarParticula.transform.position);
-                    linhaDoLaser.SetPosition(1, PontoFinalDoLaser);
-                    luzColisao.transform.position = PontoFinalDoLaser;
-                }
+            if (Input.GetMouseButton(0) && armas[armaAtual].MunicaoExtraNaArma <= 0 && armas[armaAtual].municao <= 0) {
+                PegarPoweUpArma(IdArmaVazia);
             }
-        }
-        else
-        {
-            linhaDoLaser.enabled = false;
-            luzColisao.SetActive(false);
-        }
-        //checar limites da municao
-        if (armas[armaAtual].municao > armas[armaAtual].municaoMaxima)
-        {
-            armas[armaAtual].municao = armas[armaAtual].municaoMaxima;
-        }
-        else if (armas[armaAtual].municao < 0)
-        {
-            armas[armaAtual].municao = 0;
-        }
-        int numBalasArma = armas[armaAtual].municaoExtraMaxima - armas[armaAtual].MunicaoExtraNaArma;
-        if (armas[armaAtual].MunicaoExtraNaArma > numBalasArma)
-        {
-            armas[armaAtual].MunicaoExtraNaArma = numBalasArma;
-        }
-        else if (armas[armaAtual].MunicaoExtraNaArma < 0)
-        {
-            armas[armaAtual].MunicaoExtraNaArma = 0;
-        }
-        if (Input.GetMouseButton(0) && armas[armaAtual].MunicaoExtraNaArma <= 0 && armas[armaAtual].municao <= 0)
-        {
-            PegarPoweUpArma(IdArmaVazia);
         }
     }
 
-    IEnumerator TempoTiro(float tempoDoTiro)
-    {
+    IEnumerator TempoTiro(float tempoDoTiro) {
         atirando = true;
         yield return new WaitForSeconds(tempoDoTiro);
         atirando = false;
     }
 
-    IEnumerator TempoRecarga(float tempoAEsperar)
-    {
+    IEnumerator TempoRecarga(float tempoAEsperar) {
         yield return new WaitForSeconds(tempoAEsperar);
         recarregando = false;
     }
@@ -211,14 +190,10 @@ public class Weapon : MonoBehaviour
     /// Seleciona a arma de acordo com o ID e faz a recarga das munições
     /// </summary>
     /// <param name="armaId"></param>
-    public void PegarPoweUpArma(int armaId)
-    {
-        if (armaAtual == armaId)
-        {
+    public void PegarPoweUpArma(int armaId) {
+        if (armaAtual == armaId) {
             armas[armaAtual].municao = armas[armaAtual].municaoMaxima;
-        }
-        else if (armaAtual == IdArmaVazia || armas[armaAtual].municao <= 0)
-        {
+        } else if (armaAtual == IdArmaVazia || armas[armaAtual].municao <= 0) {
             armaAtual = armaId;
             AtivarArmaAtual();
             armas[armaAtual].municao = armas[armaAtual].municaoMaxima;
@@ -233,36 +208,28 @@ public class Weapon : MonoBehaviour
     /// <summary>
     /// Remove a arma antiga e mostra a nova no local
     /// </summary>
-    void AtivarArmaAtual()
-    {
-        for (int x = 0; x < armas.Length; x++)
-        {
+    void AtivarArmaAtual() {
+        for (int x = 0; x < armas.Length; x++) {
             armas[x].objetoArma.SetActive(false);
             armas[x].lugarParticula.SetActive(false);
 
         }
         armas[armaAtual].objetoArma.SetActive(true);
         armas[armaAtual].lugarParticula.SetActive(true);
-        if (armas[armaAtual].Miras.ativarLaser == true)
-        {
+        if (armas[armaAtual].Miras.ativarLaser == true) {
             linhaDoLaser.material.color = armas[armaAtual].Miras.corLaser;
             linhaDoLaser.enabled = true;
             luzColisao.SetActive(true);
             luzColisao.GetComponent<Light>().color = armas[armaAtual].Miras.corLaser;
-        }
-        else
-        {
+        } else {
             linhaDoLaser.enabled = false;
             luzColisao.SetActive(false);
         }
     }
 
-    void OnGUI()
-    {
-        if (armas[armaAtual].Miras.AtivarMiraComum == true)
-        {
-            GUIStyle stylez = new GUIStyle
-            {
+    void OnGUI() {
+        if (armas[armaAtual].Miras.AtivarMiraComum == true) {
+            GUIStyle stylez = new GUIStyle {
                 alignment = TextAnchor.MiddleCenter
             };
             GUI.skin.label.fontSize = 20;

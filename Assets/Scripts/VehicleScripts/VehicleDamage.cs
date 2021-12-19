@@ -36,7 +36,6 @@ public class VehicleDamage : MonoBehaviour {
 
         if (collision.contacts.Length > 0) {
             collisionStrength = colRelativeVelocity.magnitude;
-            Debug.Log("collision strength: " + collisionStrength);
 
             if (collisionStrength > 1.0f && !crashSound.isPlaying) { // if there is a collision that causes damage
                 crashSound.Play();
