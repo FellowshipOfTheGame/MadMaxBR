@@ -37,12 +37,12 @@ public class SmokePU : MonoBehaviour {
             Deactivate();
         } else {
             if (Input.GetKey(useButton)) {
-                targetCar.GetComponent<VehicleData>().setSmokeActive(true);
+                targetCar.GetComponent<VehicleData>().SetInvulnerability(true);
                 this.gameObject.transform.GetChild(0).gameObject.SetActive(true);
                 curSmokeAmount = Mathf.MoveTowards(curSmokeAmount, 0f, Time.deltaTime * maxSmokeAmount * usePerSecond / 100);
             } else {
                 this.gameObject.transform.GetChild(0).gameObject.SetActive(false);
-                targetCar.GetComponent<VehicleData>().setSmokeActive(false);
+                targetCar.GetComponent<VehicleData>().SetInvulnerability(false);
 
             }
         }

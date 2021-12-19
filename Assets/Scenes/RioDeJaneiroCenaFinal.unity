@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.717766, g: 0.47363466, b: 0.42387995, a: 1}
+  m_IndirectSpecularColor: {r: 0.71776605, g: 0.47363466, b: 0.42387995, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1382,7 +1382,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6586303490144878872, guid: 45bce25a1dbd2f247b078ff881b2109b, type: 3}
       propertyPath: powerUpNum
-      value: 8
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 6586303490144878872, guid: 45bce25a1dbd2f247b078ff881b2109b, type: 3}
       propertyPath: CooldownTime
@@ -5379,6 +5379,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: RUASUNITY (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 2585583999107282811, guid: 5faec470b967a024d89ee3fbb10070a8, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5faec470b967a024d89ee3fbb10070a8, type: 3}
 --- !u!1001 &2113352320
@@ -6409,6 +6413,18 @@ PrefabInstance:
       propertyPath: ThornsHUD
       value: 
       objectReference: {fileID: 2086100411}
+    - target: {fileID: 2587582584308157604, guid: 5dd3535553760534593de8b355f1e4df, type: 3}
+      propertyPath: durationSec
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 2587582584308157604, guid: 5dd3535553760534593de8b355f1e4df, type: 3}
+      propertyPath: thornCollisionDamage
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 2587582584308157604, guid: 5dd3535553760534593de8b355f1e4df, type: 3}
+      propertyPath: collisionDamageReduction
+      value: 80
+      objectReference: {fileID: 0}
     - target: {fileID: 2587582584530832489, guid: 5dd3535553760534593de8b355f1e4df, type: 3}
       propertyPath: GlueHUD
       value: 
@@ -6441,6 +6457,10 @@ PrefabInstance:
       propertyPath: GreaseHUD
       value: 
       objectReference: {fileID: 494456599}
+    - target: {fileID: 5128176260471683216, guid: 5dd3535553760534593de8b355f1e4df, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 2.764
+      objectReference: {fileID: 0}
     - target: {fileID: 6146567473696664027, guid: 5dd3535553760534593de8b355f1e4df, type: 3}
       propertyPath: RaceManager
       value: 
