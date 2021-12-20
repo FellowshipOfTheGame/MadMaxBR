@@ -34,17 +34,19 @@ public class VehicleDamage : MonoBehaviour {
 
         //Debug.DrawRay(collision.contacts[0].point, collision.contacts[0].normal, Color.green, 2, false);
 
-        if (collision.contacts.Length > 0) {
-            collisionStrength = colRelativeVelocity.magnitude;
+        if (!collision.gameObject.CompareTag("NoCollisionDamage")) {
+            if (collision.contacts.Length > 0) {
+                collisionStrength = colRelativeVelocity.magnitude;
 
-            if (collisionStrength > 1.0f && !crashSound.isPlaying) { // if there is a collision that causes damage
-                crashSound.Play();
-                crashSound.volume = collisionStrength / 200; // change the volume of the crash Sound according to the strenght of the collision
+                if (collisionStrength > 1.0f && !crashSound.isPlaying) { // if there is a collision that causes damage
+                    crashSound.Play();
+                    crashSound.volume = collisionStrength / 200; // change the volume of the crash Sound according to the strenght of the collision
 
-                gameObject.GetComponent<VehicleData>().ReceiveDamage(CalculateHealthDamage(collisionStrength)); // decreases health of the car
+                    gameObject.GetComponent<VehicleData>().ReceiveDamage(CalculateHealthDamage(collisionStrength)); // decreases health of the car
 
-                // OnMeshForce(collision.contacts[0].point, Mathf.Clamp01(collisionStrength / maxCollisionStrength));
-                //OnMeshForce(collision.GetContact(0).point, Mathf.Clamp01(collisionStrength / maxCollisionStrength));
+                    // OnMeshForce(collision.contacts[0].point, Mathf.Clamp01(collisionStrength / maxCollisionStrength));
+                    //OnMeshForce(collision.GetContact(0).point, Mathf.Clamp01(collisionStrength / maxCollisionStrength));
+                }
             }
         }
     }
