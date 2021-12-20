@@ -1,39 +1,46 @@
 using System;
 using UnityEngine;
 
-internal enum CarDriveType
-{
+internal enum CarDriveType {
     FrontWheelDrive,
     RearWheelDrive,
     FourWheelDrive
 }
 
-internal enum SpeedType
-{
+internal enum SpeedType {
     MPH,
     KPH
 }
 
+
+
 public class CarController : MonoBehaviour {
     [SerializeField] private CarDriveType m_CarDriveType = CarDriveType.FourWheelDrive;
+    [SerializeField] private SpeedType m_SpeedType;
     [SerializeField] private WheelCollider[] m_WheelColliders = new WheelCollider[4];
     [SerializeField] private GameObject[] m_WheelMeshes = new GameObject[4];
     [SerializeField] private WheelEffects[] m_WheelEffects = new WheelEffects[4];
-    [SerializeField] private Vector3 m_CentreOfMassOffset;
-    [SerializeField] private float m_MaximumSteerAngle;
-    [Range(0, 1)] [SerializeField] private float m_SteerHelper; // 0 is raw physics , 1 the car will grip in the direction it is facing
-    [Range(0, 1)] [SerializeField] private float m_TractionControl; // 0 is no traction control, 1 is full interference
-    [SerializeField] private float m_FullTorqueOverAllWheels;
-    [SerializeField] private float m_ReverseTorque;
-    [SerializeField] private float m_MaxHandbrakeTorque;
-    [SerializeField] private float m_Downforce = 100f;
-    private float m_DefaultDownforce = 100f;
-    [SerializeField] private SpeedType m_SpeedType;
-    [SerializeField] private float m_Topspeed = 200;
     [SerializeField] private static int NoOfGears = 5;
-    [SerializeField] private float m_RevRangeBoundary = 1f;
-    [SerializeField] private float m_SlipLimit;
-    [SerializeField] private float m_BrakeTorque;
+
+    public CarSetting CarSettings;
+
+    [System.Serializable]
+    public class CarSetting {
+        public Vector3 m_CentreOfMassOffset;
+        public float m_MaximumSteerAngle = 25f;
+        [Range(0, 1)] public float m_SteerHelper; // 0 is raw physics , 1 the car will grip in the direction it is facing
+        [Range(0, 1)] public float m_TractionControl; // 0 is no traction control, 1 is full interference
+        public float m_FullTorqueOverAllWheels = 2500f;
+        public float m_ReverseTorque = 500f;
+        public float m_MaxHandbrakeTorque = 500f;
+        public float m_Downforce = 500f;
+        [HideInInspector] public float m_DefaultDownforce = 500f;
+        public float m_Topspeed = 220f;
+        public float m_RevRangeBoundary = 1f;
+        public float m_SlipLimit = 0.3f;
+        public float m_BrakeTorque = 20000f;
+    }
+
     /// <summary>
     /// Value that will multiply current torque when nitro is enabled.
     /// </summary>
@@ -80,6 +87,16 @@ public class CarController : MonoBehaviour {
     private Rigidbody m_Rigidbody;
     private const float k_ReversingThreshold = 0.01f;
 
+    public CarSounds carSounds;
+
+    [System.Serializable]
+    public class CarSounds {
+        public AudioSource IdleEngine, LowEngine, HighEngine;
+
+        public AudioSource nitro;
+        public AudioSource switchGear;
+    }
+
     public bool Skidding { get; private set; }
     public float BrakeInput { get; private set; }
     public float CurrentSteerAngle{ get { return m_SteerAngle; }}
@@ -99,7 +116,7 @@ public class CarController : MonoBehaviour {
     /// -2 if the car is rearing
     /// </summary>
     public int CurrentGear { get { return m_GearNumMod; }}
-    public float MaxSpeed{ get { return m_Topspeed; }}
+    public float MaxSpeed{ get { return CarSettings.m_Topspeed; }}
     public float Revs { get; private set; }
     public float AccelInput { get; private set; }
 
@@ -109,12 +126,12 @@ public class CarController : MonoBehaviour {
         for (int i = 0; i < 4; i++) {
             m_WheelMeshLocalRotations[i] = m_WheelMeshes[i].transform.localRotation;
         }
-        m_WheelColliders[0].attachedRigidbody.centerOfMass = m_CentreOfMassOffset;
+        m_WheelColliders[0].attachedRigidbody.centerOfMass = CarSettings.m_CentreOfMassOffset;
 
-        m_MaxHandbrakeTorque = float.MaxValue;
+        CarSettings.m_MaxHandbrakeTorque = float.MaxValue;
 
         m_Rigidbody = GetComponent<Rigidbody>();
-        m_CurrentTorque = m_FullTorqueOverAllWheels - (m_TractionControl * m_FullTorqueOverAllWheels);
+        m_CurrentTorque = CarSettings.m_FullTorqueOverAllWheels - (CarSettings.m_TractionControl * CarSettings.m_FullTorqueOverAllWheels);
 
         m_GearNumMod = -1;
 
@@ -128,9 +145,9 @@ public class CarController : MonoBehaviour {
     }
 
     private void StoreDefaultValues() {
-        m_DefaultTopspeed = m_Topspeed;
+        m_DefaultTopspeed = CarSettings.m_Topspeed;
 
-        m_DefaultDownforce = m_Downforce;
+        CarSettings.m_DefaultDownforce = CarSettings.m_Downforce;
 
         WheelFrictionCurve fF = m_WheelColliders[0].GetComponent<WheelCollider>().forwardFriction;
         defaultForwardFrictionCurve = CreateFrictionCurve(fF.extremumSlip, fF.extremumValue, fF.asymptoteSlip, fF.asymptoteValue, fF.stiffness);
@@ -210,8 +227,8 @@ public class CarController : MonoBehaviour {
         float f = (1/(float) NoOfGears);
         // gear factor is a normalised representation of the current speed within the current gear's range of speeds.
         // We smooth towards the 'target' gear factor, so that revs don't instantly snap up or down when changing gear.
-        var targetGearFactor = Mathf.InverseLerp(f*m_GearNum, f*(m_GearNum + 1), Mathf.Abs(CurrentSpeed/MaxSpeed));
-        m_GearFactor = Mathf.Lerp(m_GearFactor, targetGearFactor, Time.deltaTime*5f);
+        var targetGearFactor = Mathf.InverseLerp(f * m_GearNum, f * (m_GearNum + 1), Mathf.Abs(CurrentSpeed/MaxSpeed));
+        m_GearFactor = Mathf.Lerp(m_GearFactor, targetGearFactor, Time.deltaTime * 5f);
     }
 
 
@@ -220,9 +237,11 @@ public class CarController : MonoBehaviour {
         // (this is done in retrospect - revs are not used in force/power calculations)
         CalculateGearFactor();
         var gearNumFactor = m_GearNum/(float) NoOfGears;
-        var revsRangeMin = ULerp(0f, m_RevRangeBoundary, CurveFactor(gearNumFactor));
-        var revsRangeMax = ULerp(m_RevRangeBoundary, 1f, gearNumFactor);
+        var revsRangeMin = ULerp(0f, CarSettings.m_RevRangeBoundary, CurveFactor(gearNumFactor));
+        var revsRangeMax = ULerp(CarSettings.m_RevRangeBoundary, 1f, gearNumFactor);
         Revs = ULerp(revsRangeMin, revsRangeMax, m_GearFactor);
+
+
     }
 
 
@@ -235,12 +254,11 @@ public class CarController : MonoBehaviour {
 
                     m_WheelColliders[i].GetComponent<WheelCollider>().sidewaysFriction = defaultSidewaysFrictionCurve;
 
-                    m_Downforce = m_DefaultDownforce;
+                    CarSettings.m_Downforce = CarSettings.m_DefaultDownforce;
 
                     justEnteredGlue = false;
                 }
             } else {
-                Debug.Log("glued");
                 // modify wheel colliders values
                 for (int i = 0; i < 4; i++) {
                     var forwardFriction = m_WheelColliders[i].GetComponent<WheelCollider>().forwardFriction;
@@ -249,7 +267,7 @@ public class CarController : MonoBehaviour {
                     var sidewaysFriction = m_WheelColliders[i].GetComponent<WheelCollider>().sidewaysFriction;
                     m_WheelColliders[i].GetComponent<WheelCollider>().sidewaysFriction = CreateFrictionCurve(sidewaysFriction.extremumSlip, sidewaysFriction.extremumValue, sidewaysFriction.asymptoteSlip, sidewaysFriction.asymptoteValue, 0.2f);
 
-                    m_Downforce = m_DefaultDownforce * 2;
+                    CarSettings.m_Downforce = CarSettings.m_DefaultDownforce * 2;
 
                     m_CurrentTorque = 100;
 
@@ -259,9 +277,9 @@ public class CarController : MonoBehaviour {
                         float VelocityRelativeToMax;
 
                         if (m_SpeedType == SpeedType.MPH) {
-                            VelocityRelativeToMax = m_Rigidbody.velocity.magnitude * 2.23693629f / m_Topspeed;
+                            VelocityRelativeToMax = m_Rigidbody.velocity.magnitude * 2.23693629f / CarSettings.m_Topspeed;
                         } else {
-                            VelocityRelativeToMax = m_Rigidbody.velocity.magnitude * 3.6f / m_Topspeed;
+                            VelocityRelativeToMax = m_Rigidbody.velocity.magnitude * 3.6f / CarSettings.m_Topspeed;
                         }
 
                         float decreaseRate = 0.75f - 0.45f * VelocityRelativeToMax;
@@ -281,7 +299,6 @@ public class CarController : MonoBehaviour {
                     m_WheelColliders[i].GetComponent<WheelCollider>().sidewaysFriction = defaultSidewaysFrictionCurve;
                 }
             } else {
-                Debug.Log("greased");
                 // modify wheel colliders values
                 for (int i = 0; i < 4; i++) {
                     var forwardFriction = m_WheelColliders[i].GetComponent<WheelCollider>().forwardFriction;
@@ -309,26 +326,26 @@ public class CarController : MonoBehaviour {
 
         //Set the steer on the front wheels.
         //Assuming that wheels 0 and 1 are the front wheels.
-        m_SteerAngle = steering * m_MaximumSteerAngle;
+        m_SteerAngle = steering * CarSettings.m_MaximumSteerAngle;
         m_WheelColliders[0].steerAngle = m_SteerAngle;
         m_WheelColliders[1].steerAngle = m_SteerAngle;
         SteerHelper();
 
         if (NitroEnabled) {
-            if (m_Topspeed >= m_DefaultTopspeed || m_Topspeed <= m_DefaultTopspeed * 1.5f) {
-                m_Topspeed = m_DefaultTopspeed * 1.5f;
+            if (CarSettings.m_Topspeed >= m_DefaultTopspeed || CarSettings.m_Topspeed <= m_DefaultTopspeed * 1.5f) {
+                CarSettings.m_Topspeed = m_DefaultTopspeed * 1.5f;
             }
             m_CurrentTorque *= m_NitroMultFactor;
-            m_TractionControl = 0;
+            CarSettings.m_TractionControl = 0;
         } else {
-            m_TractionControl = 1;
-            if (m_Topspeed > m_DefaultTopspeed) { // if car just deactivated nitro
-                m_Topspeed = Mathf.MoveTowards(m_Topspeed, m_DefaultTopspeed, Time.deltaTime * (1.5f - 1) * m_DefaultTopspeed * 20 / 100);
+            CarSettings.m_TractionControl = 1;
+            if (CarSettings.m_Topspeed > m_DefaultTopspeed) { // if car just deactivated nitro
+                CarSettings.m_Topspeed = Mathf.MoveTowards(CarSettings.m_Topspeed, m_DefaultTopspeed, Time.deltaTime * (1.5f - 1) * m_DefaultTopspeed * 20 / 100);
                 
                 if (CurrentSpeed <= m_DefaultTopspeed) {
-                    m_Topspeed = m_DefaultTopspeed;
-                } else if (CurrentSpeed <= m_Topspeed) {
-                    m_Topspeed = CurrentSpeed;
+                    CarSettings.m_Topspeed = m_DefaultTopspeed;
+                } else if (CurrentSpeed <= CarSettings.m_Topspeed) {
+                    CarSettings.m_Topspeed = CurrentSpeed;
                 }
             }
         }
@@ -340,7 +357,7 @@ public class CarController : MonoBehaviour {
         //Set the handbrake.
         //Assuming that wheels 2 and 3 are the rear wheels.
         if (handbrake) {
-            var hbTorque = handbrake == true ? 1f : 0f * m_MaxHandbrakeTorque;
+            var hbTorque = handbrake == true ? 1f : 0f * CarSettings.m_MaxHandbrakeTorque;
             Debug.Log(hbTorque);
             m_WheelColliders[2].brakeTorque = hbTorque;
             m_WheelColliders[3].brakeTorque = hbTorque;
@@ -365,13 +382,13 @@ public class CarController : MonoBehaviour {
         switch (m_SpeedType) {
             case SpeedType.MPH:
                 speed *= 2.23693629f;
-                if (speed > m_Topspeed)
-                    m_Rigidbody.velocity = (m_Topspeed/2.23693629f) * m_Rigidbody.velocity.normalized;
+                if (speed > CarSettings.m_Topspeed)
+                    m_Rigidbody.velocity = (CarSettings.m_Topspeed /2.23693629f) * m_Rigidbody.velocity.normalized;
                 break;
             case SpeedType.KPH:
                 speed *= 3.6f;
-                if (speed > m_Topspeed)
-                    m_Rigidbody.velocity = (m_Topspeed/3.6f) * m_Rigidbody.velocity.normalized;
+                if (speed > CarSettings.m_Topspeed)
+                    m_Rigidbody.velocity = (CarSettings.m_Topspeed /3.6f) * m_Rigidbody.velocity.normalized;
                 break;
         }
     }
@@ -398,10 +415,10 @@ public class CarController : MonoBehaviour {
 
         for (int i = 0; i < 4; i++) {
             if (CurrentSpeed > 5 && Vector3.Angle(transform.forward, m_Rigidbody.velocity) < 50f) {
-                m_WheelColliders[i].brakeTorque = m_BrakeTorque * footbrake;
+                m_WheelColliders[i].brakeTorque = CarSettings.m_BrakeTorque * footbrake;
             } else if (footbrake > 0) {
                 m_WheelColliders[i].brakeTorque = 0f;
-                m_WheelColliders[i].motorTorque = -m_ReverseTorque * footbrake;
+                m_WheelColliders[i].motorTorque = -CarSettings.m_ReverseTorque * footbrake;
             }
         }
     }
@@ -417,7 +434,7 @@ public class CarController : MonoBehaviour {
 
         // this if is needed to avoid gimbal lock problems that will make the car suddenly shift direction
         if (Mathf.Abs(m_OldRotation - transform.eulerAngles.y) < 10f) {
-            var turnadjust = (transform.eulerAngles.y - m_OldRotation) * m_SteerHelper;
+            var turnadjust = (transform.eulerAngles.y - m_OldRotation) * CarSettings.m_SteerHelper;
             Quaternion velRotation = Quaternion.AngleAxis(turnadjust, Vector3.up);
             m_Rigidbody.velocity = velRotation * m_Rigidbody.velocity;
         }
@@ -427,7 +444,7 @@ public class CarController : MonoBehaviour {
 
     // this is used to add more grip in relation to speed
     private void AddDownForce() {
-        m_WheelColliders[0].attachedRigidbody.AddForce(-transform.up*m_Downforce * m_WheelColliders[0].attachedRigidbody.velocity.magnitude);
+        m_WheelColliders[0].attachedRigidbody.AddForce(-transform.up * CarSettings.m_Downforce * m_WheelColliders[0].attachedRigidbody.velocity.magnitude);
     }
 
 
@@ -444,7 +461,7 @@ public class CarController : MonoBehaviour {
                 m_WheelColliders[i].GetGroundHit(out wheelHit);
 
                 // is the tire slipping above the given threshhold
-                if (Mathf.Abs(wheelHit.forwardSlip) >= m_SlipLimit || Mathf.Abs(wheelHit.sidewaysSlip) >= m_SlipLimit) {
+                if (Mathf.Abs(wheelHit.forwardSlip) >= CarSettings.m_SlipLimit || Mathf.Abs(wheelHit.sidewaysSlip) >= CarSettings.m_SlipLimit) {
                     m_WheelEffects[i].EmitTyreSmoke();
                     // avoiding all four tires screeching at the same time
                     // if they do it can lead to some strange audio artefacts
@@ -495,13 +512,13 @@ public class CarController : MonoBehaviour {
 
 
     private void AdjustTorque(float forwardSlip) {
-        if (forwardSlip >= m_SlipLimit && m_CurrentTorque >= 0) {
-            m_CurrentTorque -= 10 * m_TractionControl;
+        if (forwardSlip >= CarSettings.m_SlipLimit && m_CurrentTorque >= 0) {
+            m_CurrentTorque -= 10 * CarSettings.m_TractionControl;
         }
         else {
-            m_CurrentTorque += 10 * m_TractionControl;
-            if (m_CurrentTorque > m_FullTorqueOverAllWheels) {
-                m_CurrentTorque = m_FullTorqueOverAllWheels;
+            m_CurrentTorque += 10 * CarSettings.m_TractionControl;
+            if (m_CurrentTorque > CarSettings.m_FullTorqueOverAllWheels) {
+                m_CurrentTorque = CarSettings.m_FullTorqueOverAllWheels;
             }
         }
     }
