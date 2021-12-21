@@ -16,12 +16,16 @@ public class ExplosiveMinePU : MonoBehaviour {
 
     public void Activate() {
         remainingMines = MinesQuantity;
-        ExplosiveMineHUD.SetActive(true);
+        if (ExplosiveMineHUD != null) {
+            ExplosiveMineHUD.SetActive(true);
+        }
     }
 
     public void Deactivate() {
         this.gameObject.SetActive(false);
-        ExplosiveMineHUD.SetActive(false);
+        if (ExplosiveMineHUD != null) {
+            ExplosiveMineHUD.SetActive(false);
+        }
         this.gameObject.transform.parent.GetComponentInParent<VehicleData>().EmptyPowerUpSlot(PowerUpName.ExplosiveMine);
     }
 

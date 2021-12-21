@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.717766, g: 0.47363466, b: 0.42387995, a: 1}
+  m_IndirectSpecularColor: {r: 0.71776605, g: 0.47363466, b: 0.42387995, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -441,119 +441,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d2a8a3ecef325a04492e6bdc892f7bcb, type: 3}
---- !u!1001 &101734335
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 1302530417575205692, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
-      propertyPath: MachineGunHUD
-      value: 
-      objectReference: {fileID: 2105094878}
-    - target: {fileID: 1302530418006549644, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
-      propertyPath: DeactivatorMineHUD
-      value: 
-      objectReference: {fileID: 25891290}
-    - target: {fileID: 1302530418088730635, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
-      propertyPath: NitroHUD
-      value: 
-      objectReference: {fileID: 1705941743}
-    - target: {fileID: 1302530418134460468, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
-      propertyPath: GreaseHUD
-      value: 
-      objectReference: {fileID: 1606487117}
-    - target: {fileID: 1302530418423189939, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
-      propertyPath: MachineGunHUD
-      value: 
-      objectReference: {fileID: 152563003}
-    - target: {fileID: 1302530418458387262, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
-      propertyPath: ExplosiveMineHUD
-      value: 
-      objectReference: {fileID: 2144396329}
-    - target: {fileID: 1302530418714150570, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
-      propertyPath: ThornsHUD
-      value: 
-      objectReference: {fileID: 85781610}
-    - target: {fileID: 1302530418867645677, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
-      propertyPath: PillarHUD
-      value: 
-      objectReference: {fileID: 1420025481}
-    - target: {fileID: 1302530418983673844, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
-      propertyPath: SmokeHUD
-      value: 
-      objectReference: {fileID: 793618173}
-    - target: {fileID: 1302530419472156263, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
-      propertyPath: GlueHUD
-      value: 
-      objectReference: {fileID: 1818680770}
-    - target: {fileID: 1302530419526128984, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
-      propertyPath: ShieldHUD
-      value: 
-      objectReference: {fileID: 51999716}
-    - target: {fileID: 6098463842463320219, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
-      propertyPath: m_RootOrder
-      value: 16
-      objectReference: {fileID: 0}
-    - target: {fileID: 6098463842463320219, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -58.2
-      objectReference: {fileID: 0}
-    - target: {fileID: 6098463842463320219, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 1.84
-      objectReference: {fileID: 0}
-    - target: {fileID: 6098463842463320219, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -9.3
-      objectReference: {fileID: 0}
-    - target: {fileID: 6098463842463320219, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0.7071068
-      objectReference: {fileID: 0}
-    - target: {fileID: 6098463842463320219, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6098463842463320219, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0.7071068
-      objectReference: {fileID: 0}
-    - target: {fileID: 6098463842463320219, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6098463842463320219, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6098463842463320219, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 90
-      objectReference: {fileID: 0}
-    - target: {fileID: 6098463842463320219, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6098463842463320221, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
-      propertyPath: m_Name
-      value: Fusca Atualizado Bot (4)
-      objectReference: {fileID: 0}
-    - target: {fileID: 6098463842463320223, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
-      propertyPath: path
-      value: 
-      objectReference: {fileID: 1522799644}
-    - target: {fileID: 7257421780403904422, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
-      propertyPath: RaceManager
-      value: 
-      objectReference: {fileID: 303523045}
-    - target: {fileID: 7257421780596106197, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
-      propertyPath: RaceManager
-      value: 
-      objectReference: {fileID: 303523045}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
 --- !u!1 &114015390
 GameObject:
   m_ObjectHideFlags: 0
@@ -585,7 +472,7 @@ Transform:
   - {fileID: 333414939}
   - {fileID: 1366292359}
   - {fileID: 535759430}
-  - {fileID: 642659395}
+  - {fileID: 182682318}
   m_Father: {fileID: 726233843}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -885,6 +772,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d2a8a3ecef325a04492e6bdc892f7bcb, type: 3}
+--- !u!4 &182682318 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: ef6553f6b1609bc4d8ffee28899cefc3, type: 3}
+  m_PrefabInstance: {fileID: 1742800512}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &189767373 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 614faaea6911b2b468e88925f98b57ec, type: 3}
@@ -1209,7 +1101,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6586303490144878879, guid: 45bce25a1dbd2f247b078ff881b2109b, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -758.7144
+      value: -765.8
       objectReference: {fileID: 0}
     - target: {fileID: 6586303490144878879, guid: 45bce25a1dbd2f247b078ff881b2109b, type: 3}
       propertyPath: m_LocalRotation.w
@@ -1396,6 +1288,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 2483311b9d71bb44983410435dc4cf0b, type: 3}
   m_PrefabInstance: {fileID: 2066061444}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &320206328 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1984014173830192501, guid: ae4628b27d3293c42b8eba5a897ae8cb, type: 3}
+  m_PrefabInstance: {fileID: 1423038410}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9839e686aa80cb24381b87369d6e6481, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &320243774 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6586303490144878879, guid: 45bce25a1dbd2f247b078ff881b2109b, type: 3}
@@ -2242,6 +2145,83 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 62aca0997650dcd4a8f19e5e18055bb6, type: 3}
+--- !u!1001 &496450417
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 584124790089960257, guid: 1863f5bd28f582a4997acd72df98bd54, type: 3}
+      propertyPath: m_RootOrder
+      value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: 584124790089960257, guid: 1863f5bd28f582a4997acd72df98bd54, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -86.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 584124790089960257, guid: 1863f5bd28f582a4997acd72df98bd54, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.84
+      objectReference: {fileID: 0}
+    - target: {fileID: 584124790089960257, guid: 1863f5bd28f582a4997acd72df98bd54, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -9.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 584124790089960257, guid: 1863f5bd28f582a4997acd72df98bd54, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 584124790089960257, guid: 1863f5bd28f582a4997acd72df98bd54, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 584124790089960257, guid: 1863f5bd28f582a4997acd72df98bd54, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 584124790089960257, guid: 1863f5bd28f582a4997acd72df98bd54, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 584124790089960257, guid: 1863f5bd28f582a4997acd72df98bd54, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 584124790089960257, guid: 1863f5bd28f582a4997acd72df98bd54, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 90
+      objectReference: {fileID: 0}
+    - target: {fileID: 584124790089960257, guid: 1863f5bd28f582a4997acd72df98bd54, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 584124790089960261, guid: 1863f5bd28f582a4997acd72df98bd54, type: 3}
+      propertyPath: path
+      value: 
+      objectReference: {fileID: 1522799644}
+    - target: {fileID: 584124790089960263, guid: 1863f5bd28f582a4997acd72df98bd54, type: 3}
+      propertyPath: m_Name
+      value: Fusca Atualizado Bot (7)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4039350921555123324, guid: 1863f5bd28f582a4997acd72df98bd54, type: 3}
+      propertyPath: RaceManager
+      value: 
+      objectReference: {fileID: 303523045}
+    - target: {fileID: 4039350921879478287, guid: 1863f5bd28f582a4997acd72df98bd54, type: 3}
+      propertyPath: RaceManager
+      value: 
+      objectReference: {fileID: 303523045}
+    - target: {fileID: 5668526049463014487, guid: 1863f5bd28f582a4997acd72df98bd54, type: 3}
+      propertyPath: TrackerNode
+      value: 
+      objectReference: {fileID: 4951452551933808590}
+    - target: {fileID: 5668526049463014487, guid: 1863f5bd28f582a4997acd72df98bd54, type: 3}
+      propertyPath: TriggerPoint
+      value: 
+      objectReference: {fileID: 320206328}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 1863f5bd28f582a4997acd72df98bd54, type: 3}
 --- !u!1001 &497738734
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2407,119 +2387,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 649c9ca46259b0644aa359f7251f6551, type: 3}
   m_PrefabInstance: {fileID: 1387827006}
   m_PrefabAsset: {fileID: 0}
---- !u!1001 &590546732
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 1302530417575205692, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
-      propertyPath: MachineGunHUD
-      value: 
-      objectReference: {fileID: 2105094878}
-    - target: {fileID: 1302530418006549644, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
-      propertyPath: DeactivatorMineHUD
-      value: 
-      objectReference: {fileID: 25891290}
-    - target: {fileID: 1302530418088730635, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
-      propertyPath: NitroHUD
-      value: 
-      objectReference: {fileID: 1705941743}
-    - target: {fileID: 1302530418134460468, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
-      propertyPath: GreaseHUD
-      value: 
-      objectReference: {fileID: 1606487117}
-    - target: {fileID: 1302530418423189939, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
-      propertyPath: MachineGunHUD
-      value: 
-      objectReference: {fileID: 152563003}
-    - target: {fileID: 1302530418458387262, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
-      propertyPath: ExplosiveMineHUD
-      value: 
-      objectReference: {fileID: 2144396329}
-    - target: {fileID: 1302530418714150570, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
-      propertyPath: ThornsHUD
-      value: 
-      objectReference: {fileID: 85781610}
-    - target: {fileID: 1302530418867645677, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
-      propertyPath: PillarHUD
-      value: 
-      objectReference: {fileID: 1420025481}
-    - target: {fileID: 1302530418983673844, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
-      propertyPath: SmokeHUD
-      value: 
-      objectReference: {fileID: 793618173}
-    - target: {fileID: 1302530419472156263, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
-      propertyPath: GlueHUD
-      value: 
-      objectReference: {fileID: 1818680770}
-    - target: {fileID: 1302530419526128984, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
-      propertyPath: ShieldHUD
-      value: 
-      objectReference: {fileID: 51999716}
-    - target: {fileID: 6098463842463320219, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
-      propertyPath: m_RootOrder
-      value: 14
-      objectReference: {fileID: 0}
-    - target: {fileID: 6098463842463320219, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -67.85
-      objectReference: {fileID: 0}
-    - target: {fileID: 6098463842463320219, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 1.84
-      objectReference: {fileID: 0}
-    - target: {fileID: 6098463842463320219, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0.39
-      objectReference: {fileID: 0}
-    - target: {fileID: 6098463842463320219, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0.7071068
-      objectReference: {fileID: 0}
-    - target: {fileID: 6098463842463320219, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6098463842463320219, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0.7071068
-      objectReference: {fileID: 0}
-    - target: {fileID: 6098463842463320219, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6098463842463320219, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6098463842463320219, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 90
-      objectReference: {fileID: 0}
-    - target: {fileID: 6098463842463320219, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6098463842463320221, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
-      propertyPath: m_Name
-      value: Fusca Atualizado Bot (2)
-      objectReference: {fileID: 0}
-    - target: {fileID: 6098463842463320223, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
-      propertyPath: path
-      value: 
-      objectReference: {fileID: 1522799644}
-    - target: {fileID: 7257421780403904422, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
-      propertyPath: RaceManager
-      value: 
-      objectReference: {fileID: 303523045}
-    - target: {fileID: 7257421780596106197, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
-      propertyPath: RaceManager
-      value: 
-      objectReference: {fileID: 303523045}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
 --- !u!1001 &611605982
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2720,119 +2587,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: 2df72ec125264584faa40cb1beef0481, type: 3}
   m_PrefabInstance: {fileID: 44394201}
   m_PrefabAsset: {fileID: 0}
---- !u!1001 &646407344
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 1302530417575205692, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
-      propertyPath: MachineGunHUD
-      value: 
-      objectReference: {fileID: 2105094878}
-    - target: {fileID: 1302530418006549644, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
-      propertyPath: DeactivatorMineHUD
-      value: 
-      objectReference: {fileID: 25891290}
-    - target: {fileID: 1302530418088730635, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
-      propertyPath: NitroHUD
-      value: 
-      objectReference: {fileID: 1705941743}
-    - target: {fileID: 1302530418134460468, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
-      propertyPath: GreaseHUD
-      value: 
-      objectReference: {fileID: 1606487117}
-    - target: {fileID: 1302530418423189939, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
-      propertyPath: MachineGunHUD
-      value: 
-      objectReference: {fileID: 152563003}
-    - target: {fileID: 1302530418458387262, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
-      propertyPath: ExplosiveMineHUD
-      value: 
-      objectReference: {fileID: 2144396329}
-    - target: {fileID: 1302530418714150570, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
-      propertyPath: ThornsHUD
-      value: 
-      objectReference: {fileID: 85781610}
-    - target: {fileID: 1302530418867645677, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
-      propertyPath: PillarHUD
-      value: 
-      objectReference: {fileID: 1420025481}
-    - target: {fileID: 1302530418983673844, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
-      propertyPath: SmokeHUD
-      value: 
-      objectReference: {fileID: 793618173}
-    - target: {fileID: 1302530419472156263, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
-      propertyPath: GlueHUD
-      value: 
-      objectReference: {fileID: 1818680770}
-    - target: {fileID: 1302530419526128984, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
-      propertyPath: ShieldHUD
-      value: 
-      objectReference: {fileID: 51999716}
-    - target: {fileID: 6098463842463320219, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
-      propertyPath: m_RootOrder
-      value: 20
-      objectReference: {fileID: 0}
-    - target: {fileID: 6098463842463320219, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -99.7
-      objectReference: {fileID: 0}
-    - target: {fileID: 6098463842463320219, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 1.84
-      objectReference: {fileID: 0}
-    - target: {fileID: 6098463842463320219, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -9.3
-      objectReference: {fileID: 0}
-    - target: {fileID: 6098463842463320219, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0.7071068
-      objectReference: {fileID: 0}
-    - target: {fileID: 6098463842463320219, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6098463842463320219, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0.7071068
-      objectReference: {fileID: 0}
-    - target: {fileID: 6098463842463320219, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6098463842463320219, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6098463842463320219, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 90
-      objectReference: {fileID: 0}
-    - target: {fileID: 6098463842463320219, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6098463842463320221, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
-      propertyPath: m_Name
-      value: Fusca Atualizado Bot (8)
-      objectReference: {fileID: 0}
-    - target: {fileID: 6098463842463320223, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
-      propertyPath: path
-      value: 
-      objectReference: {fileID: 1522799644}
-    - target: {fileID: 7257421780403904422, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
-      propertyPath: RaceManager
-      value: 
-      objectReference: {fileID: 303523045}
-    - target: {fileID: 7257421780596106197, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
-      propertyPath: RaceManager
-      value: 
-      objectReference: {fileID: 303523045}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
 --- !u!4 &648536595 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 5faec470b967a024d89ee3fbb10070a8, type: 3}
@@ -3222,7 +2976,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
 --- !u!4 &679791435 stripped
 Transform:
@@ -3401,7 +3155,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6586303490144878879, guid: 45bce25a1dbd2f247b078ff881b2109b, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -758.7144
+      value: -764.23
       objectReference: {fileID: 0}
     - target: {fileID: 6586303490144878879, guid: 45bce25a1dbd2f247b078ff881b2109b, type: 3}
       propertyPath: m_LocalRotation.w
@@ -3984,6 +3738,83 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d2a8a3ecef325a04492e6bdc892f7bcb, type: 3}
+--- !u!1001 &970555530
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 584124790089960257, guid: 1863f5bd28f582a4997acd72df98bd54, type: 3}
+      propertyPath: m_RootOrder
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 584124790089960257, guid: 1863f5bd28f582a4997acd72df98bd54, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -77.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 584124790089960257, guid: 1863f5bd28f582a4997acd72df98bd54, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.84
+      objectReference: {fileID: 0}
+    - target: {fileID: 584124790089960257, guid: 1863f5bd28f582a4997acd72df98bd54, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -9.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 584124790089960257, guid: 1863f5bd28f582a4997acd72df98bd54, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 584124790089960257, guid: 1863f5bd28f582a4997acd72df98bd54, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 584124790089960257, guid: 1863f5bd28f582a4997acd72df98bd54, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 584124790089960257, guid: 1863f5bd28f582a4997acd72df98bd54, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 584124790089960257, guid: 1863f5bd28f582a4997acd72df98bd54, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 584124790089960257, guid: 1863f5bd28f582a4997acd72df98bd54, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 90
+      objectReference: {fileID: 0}
+    - target: {fileID: 584124790089960257, guid: 1863f5bd28f582a4997acd72df98bd54, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 584124790089960261, guid: 1863f5bd28f582a4997acd72df98bd54, type: 3}
+      propertyPath: path
+      value: 
+      objectReference: {fileID: 1522799644}
+    - target: {fileID: 584124790089960263, guid: 1863f5bd28f582a4997acd72df98bd54, type: 3}
+      propertyPath: m_Name
+      value: Fusca Atualizado Bot (8)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4039350921555123324, guid: 1863f5bd28f582a4997acd72df98bd54, type: 3}
+      propertyPath: RaceManager
+      value: 
+      objectReference: {fileID: 303523045}
+    - target: {fileID: 4039350921879478287, guid: 1863f5bd28f582a4997acd72df98bd54, type: 3}
+      propertyPath: RaceManager
+      value: 
+      objectReference: {fileID: 303523045}
+    - target: {fileID: 5668526049463014487, guid: 1863f5bd28f582a4997acd72df98bd54, type: 3}
+      propertyPath: TrackerNode
+      value: 
+      objectReference: {fileID: 4951452551933808590}
+    - target: {fileID: 5668526049463014487, guid: 1863f5bd28f582a4997acd72df98bd54, type: 3}
+      propertyPath: TriggerPoint
+      value: 
+      objectReference: {fileID: 320206328}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 1863f5bd28f582a4997acd72df98bd54, type: 3}
 --- !u!1001 &981970739
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4621,6 +4452,83 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 62aca0997650dcd4a8f19e5e18055bb6, type: 3}
+--- !u!1001 &1061602423
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 584124790089960257, guid: 1863f5bd28f582a4997acd72df98bd54, type: 3}
+      propertyPath: m_RootOrder
+      value: 16
+      objectReference: {fileID: 0}
+    - target: {fileID: 584124790089960257, guid: 1863f5bd28f582a4997acd72df98bd54, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -67
+      objectReference: {fileID: 0}
+    - target: {fileID: 584124790089960257, guid: 1863f5bd28f582a4997acd72df98bd54, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.84
+      objectReference: {fileID: 0}
+    - target: {fileID: 584124790089960257, guid: 1863f5bd28f582a4997acd72df98bd54, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -9.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 584124790089960257, guid: 1863f5bd28f582a4997acd72df98bd54, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 584124790089960257, guid: 1863f5bd28f582a4997acd72df98bd54, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 584124790089960257, guid: 1863f5bd28f582a4997acd72df98bd54, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 584124790089960257, guid: 1863f5bd28f582a4997acd72df98bd54, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 584124790089960257, guid: 1863f5bd28f582a4997acd72df98bd54, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 584124790089960257, guid: 1863f5bd28f582a4997acd72df98bd54, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 90
+      objectReference: {fileID: 0}
+    - target: {fileID: 584124790089960257, guid: 1863f5bd28f582a4997acd72df98bd54, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 584124790089960261, guid: 1863f5bd28f582a4997acd72df98bd54, type: 3}
+      propertyPath: path
+      value: 
+      objectReference: {fileID: 1522799644}
+    - target: {fileID: 584124790089960263, guid: 1863f5bd28f582a4997acd72df98bd54, type: 3}
+      propertyPath: m_Name
+      value: Fusca Atualizado Bot (9)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4039350921555123324, guid: 1863f5bd28f582a4997acd72df98bd54, type: 3}
+      propertyPath: RaceManager
+      value: 
+      objectReference: {fileID: 303523045}
+    - target: {fileID: 4039350921879478287, guid: 1863f5bd28f582a4997acd72df98bd54, type: 3}
+      propertyPath: RaceManager
+      value: 
+      objectReference: {fileID: 303523045}
+    - target: {fileID: 5668526049463014487, guid: 1863f5bd28f582a4997acd72df98bd54, type: 3}
+      propertyPath: TrackerNode
+      value: 
+      objectReference: {fileID: 4951452551933808590}
+    - target: {fileID: 5668526049463014487, guid: 1863f5bd28f582a4997acd72df98bd54, type: 3}
+      propertyPath: TriggerPoint
+      value: 
+      objectReference: {fileID: 320206328}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 1863f5bd28f582a4997acd72df98bd54, type: 3}
 --- !u!4 &1075514503 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: d2a8a3ecef325a04492e6bdc892f7bcb, type: 3}
@@ -5247,119 +5155,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!1001 &1144464588
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 1302530417575205692, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
-      propertyPath: MachineGunHUD
-      value: 
-      objectReference: {fileID: 2105094878}
-    - target: {fileID: 1302530418006549644, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
-      propertyPath: DeactivatorMineHUD
-      value: 
-      objectReference: {fileID: 25891290}
-    - target: {fileID: 1302530418088730635, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
-      propertyPath: NitroHUD
-      value: 
-      objectReference: {fileID: 1705941743}
-    - target: {fileID: 1302530418134460468, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
-      propertyPath: GreaseHUD
-      value: 
-      objectReference: {fileID: 1606487117}
-    - target: {fileID: 1302530418423189939, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
-      propertyPath: MachineGunHUD
-      value: 
-      objectReference: {fileID: 152563003}
-    - target: {fileID: 1302530418458387262, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
-      propertyPath: ExplosiveMineHUD
-      value: 
-      objectReference: {fileID: 2144396329}
-    - target: {fileID: 1302530418714150570, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
-      propertyPath: ThornsHUD
-      value: 
-      objectReference: {fileID: 85781610}
-    - target: {fileID: 1302530418867645677, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
-      propertyPath: PillarHUD
-      value: 
-      objectReference: {fileID: 1420025481}
-    - target: {fileID: 1302530418983673844, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
-      propertyPath: SmokeHUD
-      value: 
-      objectReference: {fileID: 793618173}
-    - target: {fileID: 1302530419472156263, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
-      propertyPath: GlueHUD
-      value: 
-      objectReference: {fileID: 1818680770}
-    - target: {fileID: 1302530419526128984, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
-      propertyPath: ShieldHUD
-      value: 
-      objectReference: {fileID: 51999716}
-    - target: {fileID: 6098463842463320219, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
-      propertyPath: m_RootOrder
-      value: 15
-      objectReference: {fileID: 0}
-    - target: {fileID: 6098463842463320219, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -77.56
-      objectReference: {fileID: 0}
-    - target: {fileID: 6098463842463320219, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 1.84
-      objectReference: {fileID: 0}
-    - target: {fileID: 6098463842463320219, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -9.3
-      objectReference: {fileID: 0}
-    - target: {fileID: 6098463842463320219, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0.7071068
-      objectReference: {fileID: 0}
-    - target: {fileID: 6098463842463320219, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6098463842463320219, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0.7071068
-      objectReference: {fileID: 0}
-    - target: {fileID: 6098463842463320219, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6098463842463320219, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6098463842463320219, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 90
-      objectReference: {fileID: 0}
-    - target: {fileID: 6098463842463320219, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6098463842463320221, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
-      propertyPath: m_Name
-      value: Fusca Atualizado Bot (3)
-      objectReference: {fileID: 0}
-    - target: {fileID: 6098463842463320223, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
-      propertyPath: path
-      value: 
-      objectReference: {fileID: 1522799644}
-    - target: {fileID: 7257421780403904422, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
-      propertyPath: RaceManager
-      value: 
-      objectReference: {fileID: 303523045}
-    - target: {fileID: 7257421780596106197, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
-      propertyPath: RaceManager
-      value: 
-      objectReference: {fileID: 303523045}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
 --- !u!1 &1162393869 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 62aca0997650dcd4a8f19e5e18055bb6, type: 3}
@@ -5715,6 +5510,83 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1215671329}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1001 &1219682533
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 584124790089960257, guid: 1863f5bd28f582a4997acd72df98bd54, type: 3}
+      propertyPath: m_RootOrder
+      value: 21
+      objectReference: {fileID: 0}
+    - target: {fileID: 584124790089960257, guid: 1863f5bd28f582a4997acd72df98bd54, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -96.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 584124790089960257, guid: 1863f5bd28f582a4997acd72df98bd54, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.84
+      objectReference: {fileID: 0}
+    - target: {fileID: 584124790089960257, guid: 1863f5bd28f582a4997acd72df98bd54, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -9.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 584124790089960257, guid: 1863f5bd28f582a4997acd72df98bd54, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 584124790089960257, guid: 1863f5bd28f582a4997acd72df98bd54, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 584124790089960257, guid: 1863f5bd28f582a4997acd72df98bd54, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 584124790089960257, guid: 1863f5bd28f582a4997acd72df98bd54, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 584124790089960257, guid: 1863f5bd28f582a4997acd72df98bd54, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 584124790089960257, guid: 1863f5bd28f582a4997acd72df98bd54, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 90
+      objectReference: {fileID: 0}
+    - target: {fileID: 584124790089960257, guid: 1863f5bd28f582a4997acd72df98bd54, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 584124790089960261, guid: 1863f5bd28f582a4997acd72df98bd54, type: 3}
+      propertyPath: path
+      value: 
+      objectReference: {fileID: 1522799644}
+    - target: {fileID: 584124790089960263, guid: 1863f5bd28f582a4997acd72df98bd54, type: 3}
+      propertyPath: m_Name
+      value: Fusca Atualizado Bot (15)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4039350921555123324, guid: 1863f5bd28f582a4997acd72df98bd54, type: 3}
+      propertyPath: RaceManager
+      value: 
+      objectReference: {fileID: 303523045}
+    - target: {fileID: 4039350921879478287, guid: 1863f5bd28f582a4997acd72df98bd54, type: 3}
+      propertyPath: RaceManager
+      value: 
+      objectReference: {fileID: 303523045}
+    - target: {fileID: 5668526049463014487, guid: 1863f5bd28f582a4997acd72df98bd54, type: 3}
+      propertyPath: TrackerNode
+      value: 
+      objectReference: {fileID: 4951452551933808590}
+    - target: {fileID: 5668526049463014487, guid: 1863f5bd28f582a4997acd72df98bd54, type: 3}
+      propertyPath: TriggerPoint
+      value: 
+      objectReference: {fileID: 320206328}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 1863f5bd28f582a4997acd72df98bd54, type: 3}
 --- !u!1001 &1271808865
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6137,7 +6009,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6586303490144878879, guid: 45bce25a1dbd2f247b078ff881b2109b, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -758.7144
+      value: -764.86
       objectReference: {fileID: 0}
     - target: {fileID: 6586303490144878879, guid: 45bce25a1dbd2f247b078ff881b2109b, type: 3}
       propertyPath: m_LocalRotation.w
@@ -6618,7 +6490,7 @@ Transform:
   - {fileID: 1957637364}
   - {fileID: 867886326}
   - {fileID: 139549846}
-  - {fileID: 1867394311}
+  - {fileID: 1610527205}
   - {fileID: 86865964}
   m_Father: {fileID: 726233843}
   m_RootOrder: 4
@@ -7225,7 +7097,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6586303490144878879, guid: 45bce25a1dbd2f247b078ff881b2109b, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -758.7144
+      value: -764.77
       objectReference: {fileID: 0}
     - target: {fileID: 6586303490144878879, guid: 45bce25a1dbd2f247b078ff881b2109b, type: 3}
       propertyPath: m_LocalRotation.w
@@ -8385,119 +8257,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b3385cb5b160b4d499134f3be512998b, type: 3}
---- !u!1001 &1598831015
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 1302530417575205692, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
-      propertyPath: MachineGunHUD
-      value: 
-      objectReference: {fileID: 2105094878}
-    - target: {fileID: 1302530418006549644, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
-      propertyPath: DeactivatorMineHUD
-      value: 
-      objectReference: {fileID: 25891290}
-    - target: {fileID: 1302530418088730635, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
-      propertyPath: NitroHUD
-      value: 
-      objectReference: {fileID: 1705941743}
-    - target: {fileID: 1302530418134460468, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
-      propertyPath: GreaseHUD
-      value: 
-      objectReference: {fileID: 1606487117}
-    - target: {fileID: 1302530418423189939, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
-      propertyPath: MachineGunHUD
-      value: 
-      objectReference: {fileID: 152563003}
-    - target: {fileID: 1302530418458387262, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
-      propertyPath: ExplosiveMineHUD
-      value: 
-      objectReference: {fileID: 2144396329}
-    - target: {fileID: 1302530418714150570, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
-      propertyPath: ThornsHUD
-      value: 
-      objectReference: {fileID: 85781610}
-    - target: {fileID: 1302530418867645677, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
-      propertyPath: PillarHUD
-      value: 
-      objectReference: {fileID: 1420025481}
-    - target: {fileID: 1302530418983673844, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
-      propertyPath: SmokeHUD
-      value: 
-      objectReference: {fileID: 793618173}
-    - target: {fileID: 1302530419472156263, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
-      propertyPath: GlueHUD
-      value: 
-      objectReference: {fileID: 1818680770}
-    - target: {fileID: 1302530419526128984, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
-      propertyPath: ShieldHUD
-      value: 
-      objectReference: {fileID: 51999716}
-    - target: {fileID: 6098463842463320219, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
-      propertyPath: m_RootOrder
-      value: 19
-      objectReference: {fileID: 0}
-    - target: {fileID: 6098463842463320219, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -90.1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6098463842463320219, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 1.84
-      objectReference: {fileID: 0}
-    - target: {fileID: 6098463842463320219, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0.4
-      objectReference: {fileID: 0}
-    - target: {fileID: 6098463842463320219, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0.7071068
-      objectReference: {fileID: 0}
-    - target: {fileID: 6098463842463320219, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6098463842463320219, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0.7071068
-      objectReference: {fileID: 0}
-    - target: {fileID: 6098463842463320219, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6098463842463320219, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6098463842463320219, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 90
-      objectReference: {fileID: 0}
-    - target: {fileID: 6098463842463320219, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6098463842463320221, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
-      propertyPath: m_Name
-      value: Fusca Atualizado Bot (7)
-      objectReference: {fileID: 0}
-    - target: {fileID: 6098463842463320223, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
-      propertyPath: path
-      value: 
-      objectReference: {fileID: 1522799644}
-    - target: {fileID: 7257421780403904422, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
-      propertyPath: RaceManager
-      value: 
-      objectReference: {fileID: 303523045}
-    - target: {fileID: 7257421780596106197, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
-      propertyPath: RaceManager
-      value: 
-      objectReference: {fileID: 303523045}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
 --- !u!4 &1599736897 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: d2a8a3ecef325a04492e6bdc892f7bcb, type: 3}
@@ -8577,6 +8336,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d879418f7f9ba3b42af2dc6e27837317, type: 3}
+--- !u!4 &1610527205 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 97d87d8e16554904da879ed5e6876c30, type: 3}
+  m_PrefabInstance: {fileID: 2114345040}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1613931043
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8784,119 +8548,83 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fbdcc9d6879370f4c83532f3171e2b28, type: 3}
---- !u!1001 &1636419681
+--- !u!1001 &1623332637
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1302530417575205692, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
-      propertyPath: MachineGunHUD
-      value: 
-      objectReference: {fileID: 2105094878}
-    - target: {fileID: 1302530418006549644, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
-      propertyPath: DeactivatorMineHUD
-      value: 
-      objectReference: {fileID: 25891290}
-    - target: {fileID: 1302530418088730635, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
-      propertyPath: NitroHUD
-      value: 
-      objectReference: {fileID: 1705941743}
-    - target: {fileID: 1302530418134460468, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
-      propertyPath: GreaseHUD
-      value: 
-      objectReference: {fileID: 1606487117}
-    - target: {fileID: 1302530418423189939, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
-      propertyPath: MachineGunHUD
-      value: 
-      objectReference: {fileID: 152563003}
-    - target: {fileID: 1302530418458387262, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
-      propertyPath: ExplosiveMineHUD
-      value: 
-      objectReference: {fileID: 2144396329}
-    - target: {fileID: 1302530418714150570, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
-      propertyPath: ThornsHUD
-      value: 
-      objectReference: {fileID: 85781610}
-    - target: {fileID: 1302530418867645677, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
-      propertyPath: PillarHUD
-      value: 
-      objectReference: {fileID: 1420025481}
-    - target: {fileID: 1302530418983673844, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
-      propertyPath: SmokeHUD
-      value: 
-      objectReference: {fileID: 793618173}
-    - target: {fileID: 1302530419472156263, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
-      propertyPath: GlueHUD
-      value: 
-      objectReference: {fileID: 1818680770}
-    - target: {fileID: 1302530419526128984, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
-      propertyPath: ShieldHUD
-      value: 
-      objectReference: {fileID: 51999716}
-    - target: {fileID: 6098463842463320219, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
+    - target: {fileID: 584124790089960257, guid: 1863f5bd28f582a4997acd72df98bd54, type: 3}
       propertyPath: m_RootOrder
-      value: 17
+      value: 18
       objectReference: {fileID: 0}
-    - target: {fileID: 6098463842463320219, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
+    - target: {fileID: 584124790089960257, guid: 1863f5bd28f582a4997acd72df98bd54, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -77.48
+      value: -76.71
       objectReference: {fileID: 0}
-    - target: {fileID: 6098463842463320219, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
+    - target: {fileID: 584124790089960257, guid: 1863f5bd28f582a4997acd72df98bd54, type: 3}
       propertyPath: m_LocalPosition.y
       value: 1.84
       objectReference: {fileID: 0}
-    - target: {fileID: 6098463842463320219, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
+    - target: {fileID: 584124790089960257, guid: 1863f5bd28f582a4997acd72df98bd54, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.46
+      value: -0.48
       objectReference: {fileID: 0}
-    - target: {fileID: 6098463842463320219, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
+    - target: {fileID: 584124790089960257, guid: 1863f5bd28f582a4997acd72df98bd54, type: 3}
       propertyPath: m_LocalRotation.w
       value: 0.7071068
       objectReference: {fileID: 0}
-    - target: {fileID: 6098463842463320219, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
+    - target: {fileID: 584124790089960257, guid: 1863f5bd28f582a4997acd72df98bd54, type: 3}
       propertyPath: m_LocalRotation.x
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6098463842463320219, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
+    - target: {fileID: 584124790089960257, guid: 1863f5bd28f582a4997acd72df98bd54, type: 3}
       propertyPath: m_LocalRotation.y
       value: 0.7071068
       objectReference: {fileID: 0}
-    - target: {fileID: 6098463842463320219, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
+    - target: {fileID: 584124790089960257, guid: 1863f5bd28f582a4997acd72df98bd54, type: 3}
       propertyPath: m_LocalRotation.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6098463842463320219, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
+    - target: {fileID: 584124790089960257, guid: 1863f5bd28f582a4997acd72df98bd54, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6098463842463320219, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
+    - target: {fileID: 584124790089960257, guid: 1863f5bd28f582a4997acd72df98bd54, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
       value: 90
       objectReference: {fileID: 0}
-    - target: {fileID: 6098463842463320219, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
+    - target: {fileID: 584124790089960257, guid: 1863f5bd28f582a4997acd72df98bd54, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6098463842463320221, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
-      propertyPath: m_Name
-      value: Fusca Atualizado Bot (5)
-      objectReference: {fileID: 0}
-    - target: {fileID: 6098463842463320223, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
+    - target: {fileID: 584124790089960261, guid: 1863f5bd28f582a4997acd72df98bd54, type: 3}
       propertyPath: path
       value: 
       objectReference: {fileID: 1522799644}
-    - target: {fileID: 7257421780403904422, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
+    - target: {fileID: 584124790089960263, guid: 1863f5bd28f582a4997acd72df98bd54, type: 3}
+      propertyPath: m_Name
+      value: Fusca Atualizado Bot (12)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4039350921555123324, guid: 1863f5bd28f582a4997acd72df98bd54, type: 3}
       propertyPath: RaceManager
       value: 
       objectReference: {fileID: 303523045}
-    - target: {fileID: 7257421780596106197, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
+    - target: {fileID: 4039350921879478287, guid: 1863f5bd28f582a4997acd72df98bd54, type: 3}
       propertyPath: RaceManager
       value: 
       objectReference: {fileID: 303523045}
+    - target: {fileID: 5668526049463014487, guid: 1863f5bd28f582a4997acd72df98bd54, type: 3}
+      propertyPath: TrackerNode
+      value: 
+      objectReference: {fileID: 4951452551933808590}
+    - target: {fileID: 5668526049463014487, guid: 1863f5bd28f582a4997acd72df98bd54, type: 3}
+      propertyPath: TriggerPoint
+      value: 
+      objectReference: {fileID: 320206328}
     m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
+  m_SourcePrefab: {fileID: 100100000, guid: 1863f5bd28f582a4997acd72df98bd54, type: 3}
 --- !u!4 &1636483857 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: d2a8a3ecef325a04492e6bdc892f7bcb, type: 3}
@@ -8931,6 +8659,83 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!1001 &1644461304
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 584124790089960257, guid: 1863f5bd28f582a4997acd72df98bd54, type: 3}
+      propertyPath: m_RootOrder
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 584124790089960257, guid: 1863f5bd28f582a4997acd72df98bd54, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -95.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 584124790089960257, guid: 1863f5bd28f582a4997acd72df98bd54, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.84
+      objectReference: {fileID: 0}
+    - target: {fileID: 584124790089960257, guid: 1863f5bd28f582a4997acd72df98bd54, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.48
+      objectReference: {fileID: 0}
+    - target: {fileID: 584124790089960257, guid: 1863f5bd28f582a4997acd72df98bd54, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 584124790089960257, guid: 1863f5bd28f582a4997acd72df98bd54, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 584124790089960257, guid: 1863f5bd28f582a4997acd72df98bd54, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 584124790089960257, guid: 1863f5bd28f582a4997acd72df98bd54, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 584124790089960257, guid: 1863f5bd28f582a4997acd72df98bd54, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 584124790089960257, guid: 1863f5bd28f582a4997acd72df98bd54, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 90
+      objectReference: {fileID: 0}
+    - target: {fileID: 584124790089960257, guid: 1863f5bd28f582a4997acd72df98bd54, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 584124790089960261, guid: 1863f5bd28f582a4997acd72df98bd54, type: 3}
+      propertyPath: path
+      value: 
+      objectReference: {fileID: 1522799644}
+    - target: {fileID: 584124790089960263, guid: 1863f5bd28f582a4997acd72df98bd54, type: 3}
+      propertyPath: m_Name
+      value: Fusca Atualizado Bot (14)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4039350921555123324, guid: 1863f5bd28f582a4997acd72df98bd54, type: 3}
+      propertyPath: RaceManager
+      value: 
+      objectReference: {fileID: 303523045}
+    - target: {fileID: 4039350921879478287, guid: 1863f5bd28f582a4997acd72df98bd54, type: 3}
+      propertyPath: RaceManager
+      value: 
+      objectReference: {fileID: 303523045}
+    - target: {fileID: 5668526049463014487, guid: 1863f5bd28f582a4997acd72df98bd54, type: 3}
+      propertyPath: TrackerNode
+      value: 
+      objectReference: {fileID: 4951452551933808590}
+    - target: {fileID: 5668526049463014487, guid: 1863f5bd28f582a4997acd72df98bd54, type: 3}
+      propertyPath: TriggerPoint
+      value: 
+      objectReference: {fileID: 320206328}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 1863f5bd28f582a4997acd72df98bd54, type: 3}
 --- !u!1 &1644683503
 GameObject:
   m_ObjectHideFlags: 0
@@ -9225,7 +9030,7 @@ Transform:
   - {fileID: 641847544}
   - {fileID: 235281574}
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1699385191
 PrefabInstance:
@@ -9301,119 +9106,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 2543137582106128455, guid: 23bfb012d29d8704da56616d9d53974d, type: 3}
   m_PrefabInstance: {fileID: 1057306670979540325}
   m_PrefabAsset: {fileID: 0}
---- !u!1001 &1716632276
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 1302530417575205692, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
-      propertyPath: MachineGunHUD
-      value: 
-      objectReference: {fileID: 2105094878}
-    - target: {fileID: 1302530418006549644, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
-      propertyPath: DeactivatorMineHUD
-      value: 
-      objectReference: {fileID: 25891290}
-    - target: {fileID: 1302530418088730635, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
-      propertyPath: NitroHUD
-      value: 
-      objectReference: {fileID: 1705941743}
-    - target: {fileID: 1302530418134460468, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
-      propertyPath: GreaseHUD
-      value: 
-      objectReference: {fileID: 1606487117}
-    - target: {fileID: 1302530418423189939, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
-      propertyPath: MachineGunHUD
-      value: 
-      objectReference: {fileID: 152563003}
-    - target: {fileID: 1302530418458387262, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
-      propertyPath: ExplosiveMineHUD
-      value: 
-      objectReference: {fileID: 2144396329}
-    - target: {fileID: 1302530418714150570, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
-      propertyPath: ThornsHUD
-      value: 
-      objectReference: {fileID: 85781610}
-    - target: {fileID: 1302530418867645677, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
-      propertyPath: PillarHUD
-      value: 
-      objectReference: {fileID: 1420025481}
-    - target: {fileID: 1302530418983673844, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
-      propertyPath: SmokeHUD
-      value: 
-      objectReference: {fileID: 793618173}
-    - target: {fileID: 1302530419472156263, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
-      propertyPath: GlueHUD
-      value: 
-      objectReference: {fileID: 1818680770}
-    - target: {fileID: 1302530419526128984, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
-      propertyPath: ShieldHUD
-      value: 
-      objectReference: {fileID: 51999716}
-    - target: {fileID: 6098463842463320219, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
-      propertyPath: m_RootOrder
-      value: 21
-      objectReference: {fileID: 0}
-    - target: {fileID: 6098463842463320219, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -100.1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6098463842463320219, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 1.84
-      objectReference: {fileID: 0}
-    - target: {fileID: 6098463842463320219, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6098463842463320219, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0.7071068
-      objectReference: {fileID: 0}
-    - target: {fileID: 6098463842463320219, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6098463842463320219, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0.7071068
-      objectReference: {fileID: 0}
-    - target: {fileID: 6098463842463320219, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6098463842463320219, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6098463842463320219, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 90
-      objectReference: {fileID: 0}
-    - target: {fileID: 6098463842463320219, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6098463842463320221, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
-      propertyPath: m_Name
-      value: Fusca Atualizado Bot (9)
-      objectReference: {fileID: 0}
-    - target: {fileID: 6098463842463320223, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
-      propertyPath: path
-      value: 
-      objectReference: {fileID: 1522799644}
-    - target: {fileID: 7257421780403904422, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
-      propertyPath: RaceManager
-      value: 
-      objectReference: {fileID: 303523045}
-    - target: {fileID: 7257421780596106197, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
-      propertyPath: RaceManager
-      value: 
-      objectReference: {fileID: 303523045}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
 --- !u!1001 &1730521159
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9796,6 +9488,83 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 8341054359094149452, guid: 23bfb012d29d8704da56616d9d53974d, type: 3}
   m_PrefabInstance: {fileID: 1057306670979540325}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &1819058912
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 584124790089960257, guid: 1863f5bd28f582a4997acd72df98bd54, type: 3}
+      propertyPath: m_RootOrder
+      value: 17
+      objectReference: {fileID: 0}
+    - target: {fileID: 584124790089960257, guid: 1863f5bd28f582a4997acd72df98bd54, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -67.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 584124790089960257, guid: 1863f5bd28f582a4997acd72df98bd54, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.84
+      objectReference: {fileID: 0}
+    - target: {fileID: 584124790089960257, guid: 1863f5bd28f582a4997acd72df98bd54, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.48
+      objectReference: {fileID: 0}
+    - target: {fileID: 584124790089960257, guid: 1863f5bd28f582a4997acd72df98bd54, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 584124790089960257, guid: 1863f5bd28f582a4997acd72df98bd54, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 584124790089960257, guid: 1863f5bd28f582a4997acd72df98bd54, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 584124790089960257, guid: 1863f5bd28f582a4997acd72df98bd54, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 584124790089960257, guid: 1863f5bd28f582a4997acd72df98bd54, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 584124790089960257, guid: 1863f5bd28f582a4997acd72df98bd54, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 90
+      objectReference: {fileID: 0}
+    - target: {fileID: 584124790089960257, guid: 1863f5bd28f582a4997acd72df98bd54, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 584124790089960261, guid: 1863f5bd28f582a4997acd72df98bd54, type: 3}
+      propertyPath: path
+      value: 
+      objectReference: {fileID: 1522799644}
+    - target: {fileID: 584124790089960263, guid: 1863f5bd28f582a4997acd72df98bd54, type: 3}
+      propertyPath: m_Name
+      value: Fusca Atualizado Bot (10)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4039350921555123324, guid: 1863f5bd28f582a4997acd72df98bd54, type: 3}
+      propertyPath: RaceManager
+      value: 
+      objectReference: {fileID: 303523045}
+    - target: {fileID: 4039350921879478287, guid: 1863f5bd28f582a4997acd72df98bd54, type: 3}
+      propertyPath: RaceManager
+      value: 
+      objectReference: {fileID: 303523045}
+    - target: {fileID: 5668526049463014487, guid: 1863f5bd28f582a4997acd72df98bd54, type: 3}
+      propertyPath: TrackerNode
+      value: 
+      objectReference: {fileID: 4951452551933808590}
+    - target: {fileID: 5668526049463014487, guid: 1863f5bd28f582a4997acd72df98bd54, type: 3}
+      propertyPath: TriggerPoint
+      value: 
+      objectReference: {fileID: 320206328}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 1863f5bd28f582a4997acd72df98bd54, type: 3}
 --- !u!1 &1823221058 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 62aca0997650dcd4a8f19e5e18055bb6, type: 3}
@@ -10101,119 +9870,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1846704108}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!1001 &1857073984
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 1302530417575205692, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
-      propertyPath: MachineGunHUD
-      value: 
-      objectReference: {fileID: 2105094878}
-    - target: {fileID: 1302530418006549644, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
-      propertyPath: DeactivatorMineHUD
-      value: 
-      objectReference: {fileID: 25891290}
-    - target: {fileID: 1302530418088730635, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
-      propertyPath: NitroHUD
-      value: 
-      objectReference: {fileID: 1705941743}
-    - target: {fileID: 1302530418134460468, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
-      propertyPath: GreaseHUD
-      value: 
-      objectReference: {fileID: 1606487117}
-    - target: {fileID: 1302530418423189939, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
-      propertyPath: MachineGunHUD
-      value: 
-      objectReference: {fileID: 152563003}
-    - target: {fileID: 1302530418458387262, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
-      propertyPath: ExplosiveMineHUD
-      value: 
-      objectReference: {fileID: 2144396329}
-    - target: {fileID: 1302530418714150570, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
-      propertyPath: ThornsHUD
-      value: 
-      objectReference: {fileID: 85781610}
-    - target: {fileID: 1302530418867645677, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
-      propertyPath: PillarHUD
-      value: 
-      objectReference: {fileID: 1420025481}
-    - target: {fileID: 1302530418983673844, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
-      propertyPath: SmokeHUD
-      value: 
-      objectReference: {fileID: 793618173}
-    - target: {fileID: 1302530419472156263, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
-      propertyPath: GlueHUD
-      value: 
-      objectReference: {fileID: 1818680770}
-    - target: {fileID: 1302530419526128984, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
-      propertyPath: ShieldHUD
-      value: 
-      objectReference: {fileID: 51999716}
-    - target: {fileID: 6098463842463320219, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
-      propertyPath: m_RootOrder
-      value: 18
-      objectReference: {fileID: 0}
-    - target: {fileID: 6098463842463320219, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -89.7
-      objectReference: {fileID: 0}
-    - target: {fileID: 6098463842463320219, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 1.84
-      objectReference: {fileID: 0}
-    - target: {fileID: 6098463842463320219, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -9.3
-      objectReference: {fileID: 0}
-    - target: {fileID: 6098463842463320219, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0.7071068
-      objectReference: {fileID: 0}
-    - target: {fileID: 6098463842463320219, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6098463842463320219, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0.7071068
-      objectReference: {fileID: 0}
-    - target: {fileID: 6098463842463320219, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6098463842463320219, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6098463842463320219, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 90
-      objectReference: {fileID: 0}
-    - target: {fileID: 6098463842463320219, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6098463842463320221, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
-      propertyPath: m_Name
-      value: Fusca Atualizado Bot (6)
-      objectReference: {fileID: 0}
-    - target: {fileID: 6098463842463320223, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
-      propertyPath: path
-      value: 
-      objectReference: {fileID: 1522799644}
-    - target: {fileID: 7257421780403904422, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
-      propertyPath: RaceManager
-      value: 
-      objectReference: {fileID: 303523045}
-    - target: {fileID: 7257421780596106197, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
-      propertyPath: RaceManager
-      value: 
-      objectReference: {fileID: 303523045}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
 --- !u!1001 &1868713766
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -11740,6 +11396,83 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!1001 &2129669648
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 584124790089960257, guid: 1863f5bd28f582a4997acd72df98bd54, type: 3}
+      propertyPath: m_RootOrder
+      value: 19
+      objectReference: {fileID: 0}
+    - target: {fileID: 584124790089960257, guid: 1863f5bd28f582a4997acd72df98bd54, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -86.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 584124790089960257, guid: 1863f5bd28f582a4997acd72df98bd54, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.84
+      objectReference: {fileID: 0}
+    - target: {fileID: 584124790089960257, guid: 1863f5bd28f582a4997acd72df98bd54, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.48
+      objectReference: {fileID: 0}
+    - target: {fileID: 584124790089960257, guid: 1863f5bd28f582a4997acd72df98bd54, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 584124790089960257, guid: 1863f5bd28f582a4997acd72df98bd54, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 584124790089960257, guid: 1863f5bd28f582a4997acd72df98bd54, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 584124790089960257, guid: 1863f5bd28f582a4997acd72df98bd54, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 584124790089960257, guid: 1863f5bd28f582a4997acd72df98bd54, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 584124790089960257, guid: 1863f5bd28f582a4997acd72df98bd54, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 90
+      objectReference: {fileID: 0}
+    - target: {fileID: 584124790089960257, guid: 1863f5bd28f582a4997acd72df98bd54, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 584124790089960261, guid: 1863f5bd28f582a4997acd72df98bd54, type: 3}
+      propertyPath: path
+      value: 
+      objectReference: {fileID: 1522799644}
+    - target: {fileID: 584124790089960263, guid: 1863f5bd28f582a4997acd72df98bd54, type: 3}
+      propertyPath: m_Name
+      value: Fusca Atualizado Bot (13)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4039350921555123324, guid: 1863f5bd28f582a4997acd72df98bd54, type: 3}
+      propertyPath: RaceManager
+      value: 
+      objectReference: {fileID: 303523045}
+    - target: {fileID: 4039350921879478287, guid: 1863f5bd28f582a4997acd72df98bd54, type: 3}
+      propertyPath: RaceManager
+      value: 
+      objectReference: {fileID: 303523045}
+    - target: {fileID: 5668526049463014487, guid: 1863f5bd28f582a4997acd72df98bd54, type: 3}
+      propertyPath: TrackerNode
+      value: 
+      objectReference: {fileID: 4951452551933808590}
+    - target: {fileID: 5668526049463014487, guid: 1863f5bd28f582a4997acd72df98bd54, type: 3}
+      propertyPath: TriggerPoint
+      value: 
+      objectReference: {fileID: 320206328}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 1863f5bd28f582a4997acd72df98bd54, type: 3}
 --- !u!1 &2135806410
 GameObject:
   m_ObjectHideFlags: 0
@@ -11896,119 +11629,6 @@ PrefabInstance:
       objectReference: {fileID: 7253643709941081417}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 23bfb012d29d8704da56616d9d53974d, type: 3}
---- !u!1001 &3461022946626264648
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 1302530417575205692, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
-      propertyPath: MachineGunHUD
-      value: 
-      objectReference: {fileID: 2105094878}
-    - target: {fileID: 1302530418006549644, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
-      propertyPath: DeactivatorMineHUD
-      value: 
-      objectReference: {fileID: 25891290}
-    - target: {fileID: 1302530418088730635, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
-      propertyPath: NitroHUD
-      value: 
-      objectReference: {fileID: 1705941743}
-    - target: {fileID: 1302530418134460468, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
-      propertyPath: GreaseHUD
-      value: 
-      objectReference: {fileID: 1606487117}
-    - target: {fileID: 1302530418423189939, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
-      propertyPath: MachineGunHUD
-      value: 
-      objectReference: {fileID: 152563003}
-    - target: {fileID: 1302530418458387262, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
-      propertyPath: ExplosiveMineHUD
-      value: 
-      objectReference: {fileID: 2144396329}
-    - target: {fileID: 1302530418714150570, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
-      propertyPath: ThornsHUD
-      value: 
-      objectReference: {fileID: 85781610}
-    - target: {fileID: 1302530418867645677, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
-      propertyPath: PillarHUD
-      value: 
-      objectReference: {fileID: 1420025481}
-    - target: {fileID: 1302530418983673844, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
-      propertyPath: SmokeHUD
-      value: 
-      objectReference: {fileID: 793618173}
-    - target: {fileID: 1302530419472156263, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
-      propertyPath: GlueHUD
-      value: 
-      objectReference: {fileID: 1818680770}
-    - target: {fileID: 1302530419526128984, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
-      propertyPath: ShieldHUD
-      value: 
-      objectReference: {fileID: 51999716}
-    - target: {fileID: 6098463842463320219, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
-      propertyPath: m_RootOrder
-      value: 13
-      objectReference: {fileID: 0}
-    - target: {fileID: 6098463842463320219, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -67.85
-      objectReference: {fileID: 0}
-    - target: {fileID: 6098463842463320219, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 1.84
-      objectReference: {fileID: 0}
-    - target: {fileID: 6098463842463320219, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -9.3
-      objectReference: {fileID: 0}
-    - target: {fileID: 6098463842463320219, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0.7071068
-      objectReference: {fileID: 0}
-    - target: {fileID: 6098463842463320219, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6098463842463320219, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0.7071068
-      objectReference: {fileID: 0}
-    - target: {fileID: 6098463842463320219, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6098463842463320219, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6098463842463320219, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 90
-      objectReference: {fileID: 0}
-    - target: {fileID: 6098463842463320219, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6098463842463320221, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
-      propertyPath: m_Name
-      value: Fusca Atualizado Bot (1)
-      objectReference: {fileID: 0}
-    - target: {fileID: 6098463842463320223, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
-      propertyPath: path
-      value: 
-      objectReference: {fileID: 1522799644}
-    - target: {fileID: 7257421780403904422, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
-      propertyPath: RaceManager
-      value: 
-      objectReference: {fileID: 303523045}
-    - target: {fileID: 7257421780596106197, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
-      propertyPath: RaceManager
-      value: 
-      objectReference: {fileID: 303523045}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 054dbe18db51e3240aaa27366420e740, type: 3}
 --- !u!1001 &4951452551933808547
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -12859,6 +12479,18 @@ PrefabInstance:
       propertyPath: PillarHUD
       value: 
       objectReference: {fileID: 1420025481}
+    - target: {fileID: 4807407565075245480, guid: ff22c5cf6d788394ca5b8cd93979b6dc, type: 3}
+      propertyPath: TrackerNode
+      value: 
+      objectReference: {fileID: 4951452551933808590}
+    - target: {fileID: 4807407565075245480, guid: ff22c5cf6d788394ca5b8cd93979b6dc, type: 3}
+      propertyPath: TriggerPoint
+      value: 
+      objectReference: {fileID: 320206328}
+    - target: {fileID: 4807407565075245526, guid: ff22c5cf6d788394ca5b8cd93979b6dc, type: 3}
+      propertyPath: optionalMeshList.Array.size
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4807407565169107409, guid: ff22c5cf6d788394ca5b8cd93979b6dc, type: 3}
       propertyPath: SmokeHUD
       value: 
@@ -12867,6 +12499,10 @@ PrefabInstance:
       propertyPath: GreaseHUD
       value: 
       objectReference: {fileID: 1606487117}
+    - target: {fileID: 4807407565690826646, guid: ff22c5cf6d788394ca5b8cd93979b6dc, type: 3}
+      propertyPath: RifleHUD
+      value: 
+      objectReference: {fileID: 152563003}
     - target: {fileID: 4807407565690826646, guid: ff22c5cf6d788394ca5b8cd93979b6dc, type: 3}
       propertyPath: MachineGunHUD
       value: 
@@ -12894,3 +12530,80 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 290143233744352952, guid: ff22c5cf6d788394ca5b8cd93979b6dc, type: 3}
   m_PrefabInstance: {fileID: 6966177186153255921}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &7832081785314516370
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 584124790089960257, guid: 1863f5bd28f582a4997acd72df98bd54, type: 3}
+      propertyPath: m_RootOrder
+      value: 13
+      objectReference: {fileID: 0}
+    - target: {fileID: 584124790089960257, guid: 1863f5bd28f582a4997acd72df98bd54, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -57.75
+      objectReference: {fileID: 0}
+    - target: {fileID: 584124790089960257, guid: 1863f5bd28f582a4997acd72df98bd54, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.84
+      objectReference: {fileID: 0}
+    - target: {fileID: 584124790089960257, guid: 1863f5bd28f582a4997acd72df98bd54, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -9.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 584124790089960257, guid: 1863f5bd28f582a4997acd72df98bd54, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 584124790089960257, guid: 1863f5bd28f582a4997acd72df98bd54, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 584124790089960257, guid: 1863f5bd28f582a4997acd72df98bd54, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 584124790089960257, guid: 1863f5bd28f582a4997acd72df98bd54, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 584124790089960257, guid: 1863f5bd28f582a4997acd72df98bd54, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 584124790089960257, guid: 1863f5bd28f582a4997acd72df98bd54, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 90
+      objectReference: {fileID: 0}
+    - target: {fileID: 584124790089960257, guid: 1863f5bd28f582a4997acd72df98bd54, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 584124790089960261, guid: 1863f5bd28f582a4997acd72df98bd54, type: 3}
+      propertyPath: path
+      value: 
+      objectReference: {fileID: 1522799644}
+    - target: {fileID: 584124790089960263, guid: 1863f5bd28f582a4997acd72df98bd54, type: 3}
+      propertyPath: m_Name
+      value: Fusca Atualizado Bot (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4039350921555123324, guid: 1863f5bd28f582a4997acd72df98bd54, type: 3}
+      propertyPath: RaceManager
+      value: 
+      objectReference: {fileID: 303523045}
+    - target: {fileID: 4039350921879478287, guid: 1863f5bd28f582a4997acd72df98bd54, type: 3}
+      propertyPath: RaceManager
+      value: 
+      objectReference: {fileID: 303523045}
+    - target: {fileID: 5668526049463014487, guid: 1863f5bd28f582a4997acd72df98bd54, type: 3}
+      propertyPath: TrackerNode
+      value: 
+      objectReference: {fileID: 4951452551933808590}
+    - target: {fileID: 5668526049463014487, guid: 1863f5bd28f582a4997acd72df98bd54, type: 3}
+      propertyPath: TriggerPoint
+      value: 
+      objectReference: {fileID: 320206328}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 1863f5bd28f582a4997acd72df98bd54, type: 3}

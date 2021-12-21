@@ -12,14 +12,18 @@ public class MachineGunPU : MonoBehaviour {
 
     public void Activate() {
         targetCar = this.transform.parent.gameObject.transform.parent.gameObject; // get the car this script is attached
-        MachineGunHUD.SetActive(true);
+        if (MachineGunHUD != null) {
+            MachineGunHUD.SetActive(true);
+        }
         WeaponManager.GetComponent<Weapon>().PegarPoweUpArma(2);
         WeaponManager.GetComponent<WeaponMovement>().StartMovementUp();
     }
 
     public void Deactivate() {
         this.gameObject.SetActive(false);
-        MachineGunHUD.SetActive(false);
+        if (MachineGunHUD != null) {
+            MachineGunHUD.SetActive(false);
+        }
         WeaponManager.GetComponent<Weapon>().PegarPoweUpArma(2);
         WeaponManager.GetComponent<Weapon>().CanShoot = false;
         WeaponManager.GetComponent<WeaponMovement>().StartMovementDown();

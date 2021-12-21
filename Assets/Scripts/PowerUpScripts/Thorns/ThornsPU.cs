@@ -34,7 +34,9 @@ public class ThornsPU : MonoBehaviour {
         targetCar = this.transform.parent.gameObject.transform.parent.gameObject; // get the car this script is attached to
         targetCar.GetComponent<VehicleData>().SetThornsArmor(true);
         stopwatch.ResetTimer();
-        ThornsHUD.SetActive(true);
+        if (ThornsHUD != null) {
+            ThornsHUD.SetActive(true);
+        }
     }
 
     public void Deactivate() {
@@ -44,7 +46,9 @@ public class ThornsPU : MonoBehaviour {
         // set powerup gameObject inactive
         this.gameObject.SetActive(false);
         // set thorns hud
-        ThornsHUD.SetActive(false);
+        if (ThornsHUD != null) {
+            ThornsHUD.SetActive(false);
+        }
     }
     /// <summary>
     /// Returns time in seconds that this powerup has been active.

@@ -16,12 +16,16 @@ public class DeactivatorMinePU : MonoBehaviour {
 
     public void Activate() {
         remainingMines = MinesQuantity;
-        DeactivatorMineHUD.SetActive(true);
+        if (DeactivatorMineHUD != null) {
+            DeactivatorMineHUD.SetActive(true);
+        }
     }
 
     public void Deactivate() {
         this.gameObject.SetActive(false);
-        DeactivatorMineHUD.SetActive(false);
+        if (DeactivatorMineHUD != null) {
+            DeactivatorMineHUD.SetActive(false);
+        }
         this.gameObject.transform.parent.GetComponentInParent<VehicleData>().EmptyPowerUpSlot(PowerUpName.DeactivatorMine);
     }
 
