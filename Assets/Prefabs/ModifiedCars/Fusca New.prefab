@@ -270,7 +270,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5094024237859112956}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.3, y: -0.49, z: 2.97}
+  m_LocalPosition: {x: -1.3, y: -1, z: 2.97}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 5094024238757821374}
@@ -390,7 +390,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5094024237996257171}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.661, y: -0.49, z: 2.97}
+  m_LocalPosition: {x: -0.661, y: -1, z: 2.97}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 5094024238757821374}
@@ -521,7 +521,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5094024238124885217}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.3, y: -0.49, z: 2.97}
+  m_LocalPosition: {x: -1.3, y: -1, z: 2.97}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 5094024238757821374}
@@ -1243,7 +1243,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5094024238784593516}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.127, y: -0.49, z: 2.97}
+  m_LocalPosition: {x: 1.127, y: -1, z: 2.97}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 5094024238757821374}
@@ -1961,7 +1961,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5094024239259245120}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.265, y: -0.49, z: 2.97}
+  m_LocalPosition: {x: 0.265, y: -1, z: 2.97}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 5094024238757821374}
@@ -2166,7 +2166,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 2
 --- !u!65 &5094024239414337296
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2257,7 +2257,13 @@ MonoBehaviour:
   frontSensorOuterAngle: 30
   ignoredLayerMasks:
     serializedVersion: 2
-    m_Bits: 116
+    m_Bits: 52
+  roadLayerMask:
+    serializedVersion: 2
+    m_Bits: 512
+  carLayerMask:
+    serializedVersion: 2
+    m_Bits: 256
   path: {fileID: 0}
   currentNode: 0
   trackWidth: 15
@@ -2265,7 +2271,7 @@ MonoBehaviour:
   throttle: 0
   brake: 0
   nitroEnabled: 0
-  minPositiveThrottle: 0.03
+  minPositiveThrottle: 0.1
   maxThrottle: 1
   maxAngleForMinThrottle: 35
   minDistanceToReverse: 3
