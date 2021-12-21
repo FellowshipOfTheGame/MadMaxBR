@@ -23,12 +23,16 @@ public class SmokePU : MonoBehaviour {
     public void Activate() {
         targetCar = this.transform.parent.gameObject.transform.parent.gameObject; // get the car this script is attached to
         curSmokeAmount = maxSmokeAmount;
-        SmokeHUD.SetActive(true);
+        if (SmokeHUD != null) {
+            SmokeHUD.SetActive(true);
+        }
     }
 
     public void Deactivate() {
         this.gameObject.SetActive(false);
-        SmokeHUD.SetActive(false);
+        if (SmokeHUD != null) {
+            SmokeHUD.SetActive(false);
+        }
         targetCar.GetComponent<VehicleData>().EmptyPowerUpSlot(PowerUpName.Smoke);
     }
 

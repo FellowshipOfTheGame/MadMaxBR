@@ -21,13 +21,17 @@ public class NitroPU : MonoBehaviour {
 
     public void Activate() {
         curNitroAmount = maxNitroAmount; // set maximum value of nitro amount
-        NitroHUD.SetActive(true);
+        if (NitroHUD != null) {
+            NitroHUD.SetActive(true);
+        }
         targetCar = this.transform.parent.gameObject.transform.parent.gameObject; // get the car this script is attached
     }
 
     public void Deactivate() {
         this.gameObject.SetActive(false);
-        NitroHUD.SetActive(false);
+        if (NitroHUD != null) {
+            NitroHUD.SetActive(false);
+        }
         targetCar.GetComponent<CarController>().NitroEnabled = false;
         NitroEffect1.GetComponent<ParticleSystem>().Stop();
         NitroEffect2.GetComponent<ParticleSystem>().Stop();

@@ -21,12 +21,16 @@ public class GreasePU : MonoBehaviour {
     public void Activate() {
         targetCar = this.transform.parent.gameObject.transform.parent.gameObject; // get the car this script is attached to
         curGreaseAmount = maxGreaseAmount;
-        GreaseHUD.SetActive(true);
+        if (GreaseHUD != null) {
+            GreaseHUD.SetActive(true);
+        }
     }
 
     public void Deactivate() {
         this.gameObject.SetActive(false);
-        GreaseHUD.SetActive(false);
+        if (GreaseHUD != null) {
+            GreaseHUD.SetActive(false);
+        }
         LiquidSpiller.GetComponent<ParticleSystem>().Stop();
         targetCar.GetComponent<VehicleData>().EmptyPowerUpSlot(PowerUpName.Grease);
     }

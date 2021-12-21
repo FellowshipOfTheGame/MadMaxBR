@@ -16,12 +16,16 @@ public class PillarPU : MonoBehaviour {
 
     public void Activate() {
         remainingPillars = PillarsQuantity;
-        PillarHUD.SetActive(true);
+        if (PillarHUD != null) {
+            PillarHUD.SetActive(true);
+        }
     }
 
     public void Deactivate() {
         this.gameObject.SetActive(false);
-        PillarHUD.SetActive(false);
+        if (PillarHUD != null) {
+            PillarHUD.SetActive(false);
+        }
         this.gameObject.transform.parent.GetComponentInParent<VehicleData>().EmptyPowerUpSlot(PowerUpName.Pillar);
     }
 

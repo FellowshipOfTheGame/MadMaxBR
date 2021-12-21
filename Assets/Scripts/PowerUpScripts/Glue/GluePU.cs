@@ -21,12 +21,16 @@ public class GluePU : MonoBehaviour {
     public void Activate() {
         targetCar = this.transform.parent.gameObject.transform.parent.gameObject; // get the car this script is attached to
         curGlueAmount = maxGlueAmount;
-        GlueHUD.SetActive(true);
+        if (GlueHUD != null) {
+            GlueHUD.SetActive(true);
+        }
     }
 
     public void Deactivate() {
         this.gameObject.SetActive(false);
-        GlueHUD.SetActive(false);
+        if (GlueHUD != null) {
+            GlueHUD.SetActive(false);
+        }
         LiquidSpiller.GetComponent<ParticleSystem>().Stop();
         targetCar.GetComponent<VehicleData>().EmptyPowerUpSlot(PowerUpName.Glue);
     }
