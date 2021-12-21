@@ -95,8 +95,10 @@ public class CarMovementAI : MonoBehaviour
 
     private void Update()
     {
-        if (DistanceFromTrack() > trackWidth || isCapotado())
+        if (DistanceFromTrack() > 15.5f || isCapotado())
         {
+            print("Distancia da pista: " + DistanceFromTrack());
+            //print("Tamanho da pista: " + trackWidth);
             Teleport();
         }
     }
@@ -116,12 +118,17 @@ public class CarMovementAI : MonoBehaviour
 
     private void Teleport()
     {
-        //if (!Physics.Raycast(nodes[previousNode].transform.position, Vector3.down, carLayerMask))
-        //{
+        print("funcao teleport");
+        if (!Physics.Raycast(nodes[previousNode].transform.position, Vector3.forward, 2f, carLayerMask))
+        {
         //carCollider.isTrigger = true;
             print("teleportado");
+
+            transform.rotation = Quaternion.Euler(0f, transform.InverseTransformPoint(currentNodePosition).y, 0f);
             transform.position = nodes[previousNode].transform.position + new Vector3(0f, 20f, 0f);
-        //}
+            rb.velocity = Vector3.zero;
+            rb.angularVelocity = Vector3.zero;
+        }
     }
 
     public void GetThrottle()
