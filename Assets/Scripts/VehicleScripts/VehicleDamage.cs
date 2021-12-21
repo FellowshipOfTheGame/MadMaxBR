@@ -10,17 +10,8 @@ public class VehicleDamage : MonoBehaviour {
     public MeshFilter[] optionalMeshList; // car mesh that can be damaged
     public AudioSource crashSound;
 
-    private MeshFilter[] meshfilters;
-    private float sqrDemRange;
-
     public void Start() {
-        if (optionalMeshList.Length > 0) {
-            meshfilters = optionalMeshList;
-        } else {
-            meshfilters = GetComponentsInChildren<MeshFilter>();
-        }
-            
-        sqrDemRange = demolitionRange * demolitionRange;
+        
     }
 
     private Vector3 colPointToMe;
