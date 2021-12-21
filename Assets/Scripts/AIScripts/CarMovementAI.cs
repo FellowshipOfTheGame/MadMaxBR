@@ -26,7 +26,7 @@ public class CarMovementAI : MonoBehaviour
     [Header("Path to follow")]
     public Transform path;
     public int currentNode = 0;
-    [SerializeField] private float trackWidth = 15f;
+    [SerializeField] private float trackWidth = 15.6f;
     private List<BoxCollider> nodes;
     
     [Header("AI variables")]
@@ -63,17 +63,13 @@ public class CarMovementAI : MonoBehaviour
     private Vector2 currentNodePositionXZ;
     private Vector2 previousNodePositionXZ;
     private Vector2 carPositionXZ;
-    private CarController carController;
-    private BoxCollider carCollider;
 
     public AiState aiState = AiState.FollowingTrack;
 
     void Start()
     {
-        carController = GetComponent<CarController>();
         rb = GetComponent<Rigidbody>();
-        carCollider = GetComponent<BoxCollider>();
-        nodesBoxCollider = path.GetComponentsInChildren<BoxCollider>();
+        nodesBoxCollider = path.GetComponentsInChildren<BoxCollider>(true);
         nodes = new List<BoxCollider>();
 
         for (i = 0; i < nodesBoxCollider.Length; i++)
@@ -91,14 +87,9 @@ public class CarMovementAI : MonoBehaviour
             FollowPath();
             GetThrottle();
         }
-    }
 
-    private void Update()
-    {
-        if (DistanceFromTrack() > 15.5f || isCapotado())
+        if (DistanceFromTrack() > trackWidth || isCapotado())
         {
-            print("Distancia da pista: " + DistanceFromTrack());
-            //print("Tamanho da pista: " + trackWidth);
             Teleport();
         }
     }
@@ -118,12 +109,8 @@ public class CarMovementAI : MonoBehaviour
 
     private void Teleport()
     {
-        print("funcao teleport");
         if (!Physics.Raycast(nodes[previousNode].transform.position, Vector3.forward, 2f, carLayerMask))
         {
-        //carCollider.isTrigger = true;
-            print("teleportado");
-
             transform.rotation = Quaternion.Euler(0f, transform.InverseTransformPoint(currentNodePosition).y, 0f);
             transform.position = nodes[previousNode].transform.position + new Vector3(0f, 20f, 0f);
             rb.velocity = Vector3.zero;
@@ -162,8 +149,19 @@ public class CarMovementAI : MonoBehaviour
 
     public void Sensors()
     {
+
+        if (Physics.Raycast(horizontalSensorTransform.position, transform.right, out raycastHitSensor[4], horizontalSensorLength, ~ignoredLayerMasks))
+        {
+            Debug.DrawLine(horizontalSensorTransform.position, raycastHitSensor[4].point, Color.blue);
+            Debug.Log("Sensor horizontal");
+
+            aiState = AiState.Avoiding;
+            throttle = -1f;
+            steer = -1f;
+        }
+
         // first front left sensor
-        if (Physics.Raycast(leftSensorTransform.position, Quaternion.AngleAxis(-frontSensorOuterAngle, transform.up) * transform.forward, out raycastHitSensor[0], sensorLength, ~ignoredLayerMasks))
+        else if (Physics.Raycast(leftSensorTransform.position, Quaternion.AngleAxis(-frontSensorOuterAngle, transform.up) * transform.forward, out raycastHitSensor[0], sensorLength, ~ignoredLayerMasks))
         {
             Debug.DrawLine(leftSensorTransform.position, raycastHitSensor[0].point);
             Debug.Log("Sensor 1 da esquerda");
@@ -229,15 +227,7 @@ public class CarMovementAI : MonoBehaviour
                 steer = 0.5f;
             }
         }
-        else if (Physics.Raycast(horizontalSensorTransform.position, transform.right, out raycastHitSensor[4], horizontalSensorLength, ~ignoredLayerMasks))
-        {
-            Debug.DrawLine(horizontalSensorTransform.position, raycastHitSensor[4].point, Color.blue);
-            Debug.Log("Sensor horizontal");
 
-            aiState = AiState.Avoiding;
-            throttle = -1f;
-            steer = -1f;
-        }
         else
         {
             aiState = AiState.FollowingTrack;
@@ -247,11 +237,14 @@ public class CarMovementAI : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Node") && currentNode == GetSiblingIndex(other.transform, other.transform.parent))
+        if (other.transform && other.transform.parent)
         {
-            currentNode = (currentNode + 1) % nodes.Count;
-            nextNode = (currentNode + 1) % nodes.Count;
-            previousNode = (currentNode + nodes.Count - 1) % nodes.Count;
+            if (other.CompareTag("Node") && currentNode == GetSiblingIndex(other.transform, other.transform.parent))
+            {
+                currentNode = (currentNode + 1) % nodes.Count;
+                nextNode = (currentNode + 1) % nodes.Count;
+                previousNode = (currentNode + nodes.Count - 1) % nodes.Count;
+            }
         }
     }
 

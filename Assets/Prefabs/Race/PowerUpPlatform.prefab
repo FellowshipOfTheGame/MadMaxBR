@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6586303488919596307}
   - component: {fileID: 6586303488919596306}
   - component: {fileID: 6586303488919596305}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: PowerUpHitBox
   m_TagString: ThornsPU
   m_Icon: {fileID: 0}
@@ -108,7 +108,7 @@ GameObject:
   - component: {fileID: 6586303489481479158}
   - component: {fileID: 6586303489481479157}
   - component: {fileID: 6586303489481479156}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: GraphicalFeedback
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -201,7 +201,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6586303490144878879}
   - component: {fileID: 6586303490144878872}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: PowerUpPlatform
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -237,9 +237,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MaterialList:
-  - {fileID: 2100000, guid: 07cc77ce5eb84be49b49cff470cf807a, type: 2}
-  - {fileID: 2100000, guid: aa8a29f6869379c4f992226ea51d41ab, type: 2}
-  - {fileID: 2100000, guid: afa88476c68a07b45b41383bec06ae9d, type: 2}
-  - {fileID: 2100000, guid: 334c5db4f60f0934fbb947ff0de86b4a, type: 2}
-  CooldownTime: 5
-  IsOnCooldown: 0
+  - {fileID: 2100000, guid: e0118f3cb9e04dd499c09844b2027f47, type: 2}
+  - {fileID: 2100000, guid: 91f0d285fdee4a846a574b031969ce09, type: 2}
+  - {fileID: 2100000, guid: 8b326bb8eea9dea4fb8c54717c6aea27, type: 2}
+  - {fileID: 2100000, guid: 5d8d41eb2b921e54ba350f32ee8e4c28, type: 2}
+  - {fileID: 2100000, guid: 8f33778ee5452934d9a1b909875dd637, type: 2}
+  - {fileID: 2100000, guid: 1e09293f1e8b1aa468418fb042125002, type: 2}
+  - {fileID: 2100000, guid: 776eefcc7954b9f4bbb1410af3e3e4a8, type: 2}
+  - {fileID: 2100000, guid: 4c49af9951a91bc42af1e073d3aa2a6c, type: 2}
+  - {fileID: 2100000, guid: 06196c7f85186b849b9abd3bef11fe9a, type: 2}
+  - {fileID: 2100000, guid: 1d5ae26730ea59543957bf6a96bd2ece, type: 2}
+  - {fileID: 2100000, guid: b71f8fe9842d33440be2c20c6985d224, type: 2}
+  - {fileID: 2100000, guid: 8b314ac58934f3645a2b6c48c7c7a22f, type: 2}
+  CooldownTime: 8
+  isRandom: 0
+  powerUpNum: 2
+  IsOnCooldown: 1
