@@ -12,6 +12,8 @@ public class GluePU : MonoBehaviour {
     private float curGlueAmount; // amount of glue
     private GameObject targetCar; // the car this script is attached
 
+    private bool pressingButton;
+
     public PowerUpData PowerUpInfo;
 
     public float MaxGlueAmount { get { return maxGlueAmount; } }
@@ -24,6 +26,7 @@ public class GluePU : MonoBehaviour {
         if (GlueHUD != null) {
             GlueHUD.SetActive(true);
         }
+        pressingButton = false;
     }
 
     public void Deactivate() {
@@ -33,6 +36,17 @@ public class GluePU : MonoBehaviour {
         }
         LiquidSpiller.GetComponent<ParticleSystem>().Stop();
         targetCar.GetComponent<VehicleData>().EmptyPowerUpSlot(PowerUpName.Glue);
+        pressingButton = false;
+    }
+
+    public void UsePowerUp() {
+        if (curGlueAmount != 0) {
+            if (!LiquidSpiller.GetComponent<ParticleSystem>().isPlaying) {
+                LiquidSpiller.GetComponent<ParticleSystem>().Play();
+            }
+            curGlueAmount = Mathf.MoveTowards(curGlueAmount, 0f, Time.deltaTime * maxGlueAmount * UsePerSecond / 100);
+        }
+        pressingButton = false;
     }
 
     // Update is called once per frame
@@ -41,10 +55,7 @@ public class GluePU : MonoBehaviour {
             Deactivate();
         } else {
             if (Input.GetKey(useButton)) {
-                if (!LiquidSpiller.GetComponent<ParticleSystem>().isPlaying) {
-                    LiquidSpiller.GetComponent<ParticleSystem>().Play();
-                }
-                curGlueAmount = Mathf.MoveTowards(curGlueAmount, 0f, Time.deltaTime * maxGlueAmount * UsePerSecond / 100);
+
             } else {
                 if (!LiquidSpiller.GetComponent<ParticleSystem>().isStopped) {
                     LiquidSpiller.GetComponent<ParticleSystem>().Stop();

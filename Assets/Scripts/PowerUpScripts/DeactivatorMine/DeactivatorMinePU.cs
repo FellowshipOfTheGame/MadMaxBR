@@ -13,7 +13,7 @@ public class DeactivatorMinePU : MonoBehaviour {
     public PowerUpData PowerUpInfo;
 
     public int RemainingMines { get { return remainingMines; } }
-
+    
     public void Activate() {
         remainingMines = MinesQuantity;
         if (DeactivatorMineHUD != null) {
@@ -29,13 +29,14 @@ public class DeactivatorMinePU : MonoBehaviour {
         this.gameObject.transform.parent.GetComponentInParent<VehicleData>().EmptyPowerUpSlot(PowerUpName.DeactivatorMine);
     }
 
-    public void Update() {
+    public void UsePowerUp() {
         if (remainingMines != 0) {
-            if (Input.GetKeyDown(useButton)) {
-                Instantiate(MinePrefab, this.gameObject.transform.position, this.gameObject.transform.rotation);
-                remainingMines--;
-            }
-        } 
+            Instantiate(MinePrefab, this.gameObject.transform.position, this.gameObject.transform.rotation);
+            remainingMines--;
+        }
+    }
+
+    public void Update() {
         if (remainingMines == 0) { // if used all mines availabe
             Deactivate();
         }

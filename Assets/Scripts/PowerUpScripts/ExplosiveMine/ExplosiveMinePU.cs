@@ -29,13 +29,14 @@ public class ExplosiveMinePU : MonoBehaviour {
         this.gameObject.transform.parent.GetComponentInParent<VehicleData>().EmptyPowerUpSlot(PowerUpName.ExplosiveMine);
     }
 
-    public void Update() {
+    public void UsePowerUp() {
         if (remainingMines != 0) {
-            if (Input.GetKeyDown(useButton)) {
-                Instantiate(MinePrefab, this.gameObject.transform.position, this.gameObject.transform.rotation);
-                remainingMines--;
-            }
-        } 
+            Instantiate(MinePrefab, this.gameObject.transform.position, this.gameObject.transform.rotation);
+            remainingMines--;
+        }
+    }
+
+    public void Update() { 
         if (remainingMines == 0) { // if used all mines availabe
             Deactivate();
         }

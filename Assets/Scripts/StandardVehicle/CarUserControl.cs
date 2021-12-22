@@ -10,14 +10,25 @@ internal enum DriverMode
 
 [RequireComponent(typeof (CarController))]
 public class CarUserControl : MonoBehaviour {
+    public bool ControlActive;
+
     [SerializeField] DriverMode driverMode = DriverMode.Player;
+
+    public PowerUpUseBtn PowerUpUseButtons;
+
+    [System.Serializable]
+    public class PowerUpUseBtn {
+        public KeyCode Slot1UseButton = KeyCode.X;
+        public KeyCode Slot2UseButton = KeyCode.X;
+        public KeyCode Slot3UseButton = KeyCode.X;
+        public KeyCode Slot4UseButton = KeyCode.LeftShift;
+    }
+
     private CarController m_Car; // the car controller we want to use
     private float horizontalInput = 0f;
     private float verticalInput = 0f;
     private bool handbrake = false;
     private CarMovementAI carMovementAI;
-
-    public bool ControlActive;
 
     private void Awake() {
         // get the car controller
@@ -30,6 +41,20 @@ public class CarUserControl : MonoBehaviour {
             horizontalInput = Input.GetAxis("Horizontal");
             verticalInput = Input.GetAxis("Vertical");
             handbrake = Input.GetKeyDown(KeyCode.Space);
+
+            if (Input.GetKey(PowerUpUseButtons.Slot1UseButton)) {
+                // machigun & rifle
+            }
+            if (Input.GetKey(PowerUpUseButtons.Slot2UseButton)) {
+                // smoke
+            }
+            if (Input.GetKey(PowerUpUseButtons.Slot3UseButton)) {
+                // explosive mine & deactivator mine & explosion mine
+            }
+            if (Input.GetKey(PowerUpUseButtons.Slot4UseButton)) {
+                // nitro & grease & glue
+            }
+
         } else if (driverMode == DriverMode.AI) {
             horizontalInput = carMovementAI.steer;
             verticalInput = carMovementAI.throttle;
@@ -44,6 +69,5 @@ public class CarUserControl : MonoBehaviour {
         }
         
         //m_Car.Move(h, v, v, 0f);
-
     }
 }
