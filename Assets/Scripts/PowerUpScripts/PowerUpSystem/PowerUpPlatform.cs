@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 /// <summary>
@@ -7,9 +8,9 @@ using UnityEngine;
 /// </summary>
 public class PowerUpPlatform : MonoBehaviour {
     /// <summary>
-    /// List of materials to graphically represent powerups.
+    /// List of objects to graphically represent powerups.
     /// </summary>
-    public Material[] MaterialList; // 
+    public PowerUpBarrelModels BarrelModels;
     /// <summary>
     /// Time (in seconds) necessary to generate another powerUp.
     /// </summary>
@@ -21,12 +22,13 @@ public class PowerUpPlatform : MonoBehaviour {
 
     private Timer platformTimer;
     private GameObject platformHitBox;
-    private GameObject representation;
+    private GameObject instantiatedBarrel;
 
     // Start is called before the first frame update
     void Start() {
-        platformHitBox = this.gameObject.transform.GetChild(1).gameObject;
-        representation = this.gameObject.transform.GetChild(0).gameObject;
+        //platformHitBox = this.gameObject.transform.GetChild(0).gameObject;
+        platformHitBox = GetComponentInChildren<CapsuleCollider>().gameObject;
+        this.gameObject.transform.GetChild(1).gameObject.SetActive(false);
         platformTimer = this.gameObject.AddComponent<Timer>();
         ActivatePowerUpPlatform();
     }
@@ -48,7 +50,7 @@ public class PowerUpPlatform : MonoBehaviour {
         IsOnCooldown = true;
         platformTimer.ResetTimer();
         platformHitBox.SetActive(false);
-        representation.SetActive(false);
+        Destroy(instantiatedBarrel);
     }
 
     /// <summary>
@@ -57,14 +59,13 @@ public class PowerUpPlatform : MonoBehaviour {
     public void ActivatePowerUpPlatform() {
         int powerUpNumber;
         if (isRandom) {
-            powerUpNumber = Random.Range(0, MaterialList.Length);
+            powerUpNumber = Random.Range(0, BarrelModels.Barrels.Count);
         } else {
             powerUpNumber = powerUpNum;
         }
-        
-        platformHitBox.transform.tag = MaterialList[powerUpNumber].name;
-        representation.GetComponent<MeshRenderer>().material = MaterialList[powerUpNumber];
+
+        platformHitBox.transform.tag = BarrelModels.Barrels[powerUpNumber].name;
         platformHitBox.SetActive(true);
-        representation.SetActive(true);
+        instantiatedBarrel = Instantiate(BarrelModels.Barrels[powerUpNumber], platformHitBox.transform.position, this.gameObject.transform.rotation, this.gameObject.transform);
     }
 }
