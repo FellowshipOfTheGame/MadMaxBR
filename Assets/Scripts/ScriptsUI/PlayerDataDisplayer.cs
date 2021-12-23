@@ -210,11 +210,11 @@ public class PlayerDataDisplayer : MonoBehaviour {
     private void UpdatePowerUpUI() {
         // updates bullet count text with quantity of MachineGun
         if (MachineGunCountText.activeSelf) {
-            MachineGunCountText.GetComponent<TextMeshProUGUI>().text = PlayerPowerUps.GetComponentInChildren<MachineGunPU>().GetBulletAmount().ToString();
+            MachineGunCountText.GetComponent<TextMeshProUGUI>().text = PlayerPowerUps.GetComponentInChildren<MachineGunPU>().BulletAmount.ToString();
         }
         // updates bullet count text with quantity of Rifle
         if (RifleCountText.activeSelf) {
-            RifleCountText.GetComponent<TextMeshProUGUI>().text = PlayerPowerUps.GetComponentInChildren<RiflePU>().GetBulletAmount().ToString();
+            RifleCountText.GetComponent<TextMeshProUGUI>().text = PlayerPowerUps.GetComponentInChildren<RiflePU>().BulletAmount.ToString();
         }
         // update thorns timer ui
         if (ThornsTimerUI.activeSelf) {

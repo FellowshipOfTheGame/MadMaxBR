@@ -5,7 +5,7 @@ using UnityEngine;
 /// <summary>
 /// Class responsible to implement the Smoke PowerUp logic.
 /// </summary>
-public class SmokePU : MonoBehaviour {
+public class SmokePU : PowerUpBase {
     [SerializeField] private KeyCode useButton = KeyCode.C;
     [SerializeField] private float maxSmokeAmount; // maximum amount of smoke
     [SerializeField] private float usePerSecond; // use of smoke per second in percentage
@@ -20,7 +20,7 @@ public class SmokePU : MonoBehaviour {
 
     public float CurSmokeAmount { get { return curSmokeAmount; } }
 
-    public void Activate() {
+    public override void Activate() {
         targetCar = this.transform.parent.gameObject.transform.parent.gameObject; // get the car this script is attached to
         curSmokeAmount = maxSmokeAmount;
         if (SmokeHUD != null) {
@@ -28,7 +28,7 @@ public class SmokePU : MonoBehaviour {
         }
     }
 
-    public void Deactivate() {
+    public override void Deactivate() {
         this.gameObject.SetActive(false);
         if (SmokeHUD != null) {
             SmokeHUD.SetActive(false);
@@ -36,19 +36,22 @@ public class SmokePU : MonoBehaviour {
         targetCar.GetComponent<VehicleData>().EmptyPowerUpSlot(PowerUpName.Smoke);
     }
 
-    private void Update() {
-        if (curSmokeAmount == 0) {
-            Deactivate();
-        } else {
-            if (Input.GetKey(useButton)) {
+    public override void UsePowerUp(bool useActive) {
+        if (curSmokeAmount != 0) {
+            if (useActive) {
                 targetCar.GetComponent<VehicleData>().SetInvulnerability(true);
                 this.gameObject.transform.GetChild(0).gameObject.SetActive(true);
                 curSmokeAmount = Mathf.MoveTowards(curSmokeAmount, 0f, Time.deltaTime * maxSmokeAmount * usePerSecond / 100);
             } else {
                 this.gameObject.transform.GetChild(0).gameObject.SetActive(false);
                 targetCar.GetComponent<VehicleData>().SetInvulnerability(false);
-
             }
+        }
+    }
+
+    public override void Update() {
+        if (curSmokeAmount == 0) {
+            Deactivate();
         }
     }
 }

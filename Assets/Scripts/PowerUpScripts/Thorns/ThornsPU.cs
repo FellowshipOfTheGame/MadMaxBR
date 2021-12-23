@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ThornsPU : MonoBehaviour {
+public class ThornsPU : PowerUpBase {
     private Timer stopwatch;
     [SerializeField] private float durationSec;
     [SerializeField] private float thornCollisionDamage;
@@ -30,7 +30,7 @@ public class ThornsPU : MonoBehaviour {
         stopwatch = gameObject.AddComponent<Timer>();
     }
 
-    public void Activate() {
+    public override void Activate() {
         targetCar = this.transform.parent.gameObject.transform.parent.gameObject; // get the car this script is attached to
         targetCar.GetComponent<VehicleData>().SetThornsArmor(true);
         stopwatch.ResetTimer();
@@ -39,7 +39,7 @@ public class ThornsPU : MonoBehaviour {
         }
     }
 
-    public void Deactivate() {
+    public override void Deactivate() {
         targetCar.GetComponent<VehicleData>().SetThornsArmor(false);
         // unequip powerup
         this.gameObject.transform.parent.GetComponentInParent<VehicleData>().EmptyPowerUpSlot(PowerUpName.Thorns);
@@ -57,7 +57,7 @@ public class ThornsPU : MonoBehaviour {
         return stopwatch.GetTimeInSeconds();
     }
 
-    private void Update() {
+    public override void Update() {
         if (stopwatch.GetTimeInSeconds() >= durationSec) {
             Deactivate();
         }

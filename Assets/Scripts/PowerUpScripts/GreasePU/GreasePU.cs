@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GreasePU : MonoBehaviour {
+public class GreasePU : PowerUpBase {
     [SerializeField] private KeyCode useButton = KeyCode.LeftShift;
     [SerializeField] private float maxGreaseAmount; // maximum amount of grease
     [SerializeField] private float UsePerSecond; // use of grease per second in percentage
@@ -18,7 +18,7 @@ public class GreasePU : MonoBehaviour {
 
     public float CurGreaseAmount { get { return curGreaseAmount; } }
 
-    public void Activate() {
+    public override void Activate() {
         targetCar = this.transform.parent.gameObject.transform.parent.gameObject; // get the car this script is attached to
         curGreaseAmount = maxGreaseAmount;
         if (GreaseHUD != null) {
@@ -26,7 +26,7 @@ public class GreasePU : MonoBehaviour {
         }
     }
 
-    public void Deactivate() {
+    public override void Deactivate() {
         this.gameObject.SetActive(false);
         if (GreaseHUD != null) {
             GreaseHUD.SetActive(false);
@@ -35,21 +35,25 @@ public class GreasePU : MonoBehaviour {
         targetCar.GetComponent<VehicleData>().EmptyPowerUpSlot(PowerUpName.Grease);
     }
 
-    // Update is called once per frame
-    private void Update() {
-        if (curGreaseAmount == 0) {
-            Deactivate();
-        } else {
-            if (Input.GetKey(useButton)) {
+    public override void UsePowerUp(bool useActive) {
+        if (useActive) {
+            if (curGreaseAmount != 0) {
                 if (!LiquidSpiller.GetComponent<ParticleSystem>().isPlaying) {
                     LiquidSpiller.GetComponent<ParticleSystem>().Play();
                 }
                 curGreaseAmount = Mathf.MoveTowards(curGreaseAmount, 0f, Time.deltaTime * maxGreaseAmount * UsePerSecond / 100);
-            } else {
-                if (!LiquidSpiller.GetComponent<ParticleSystem>().isStopped) {
-                    LiquidSpiller.GetComponent<ParticleSystem>().Stop();
-                }
             }
+        } else {
+            if (!LiquidSpiller.GetComponent<ParticleSystem>().isStopped) {
+                LiquidSpiller.GetComponent<ParticleSystem>().Stop();
+            }
+        }
+    }
+
+    // Update is called once per frame
+    public override void Update() {
+        if (curGreaseAmount == 0) {
+            Deactivate();
         }
     }
 }

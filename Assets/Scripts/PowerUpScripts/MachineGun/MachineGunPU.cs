@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MachineGunPU : MonoBehaviour {
+public class MachineGunPU : PowerUpBase {
     [SerializeField] private GameObject MachineGunHUD; // MachineGun HUD text
     [SerializeField] private GameObject WeaponManager;
 
@@ -10,7 +10,9 @@ public class MachineGunPU : MonoBehaviour {
 
     public PowerUpData PowerUpInfo;
 
-    public void Activate() {
+    public int BulletAmount { get { return WeaponManager.GetComponent<Weapon>().GetMunicao(); } }
+
+    public override void Activate() {
         targetCar = this.transform.parent.gameObject.transform.parent.gameObject; // get the car this script is attached
         if (MachineGunHUD != null) {
             MachineGunHUD.SetActive(true);
@@ -19,7 +21,7 @@ public class MachineGunPU : MonoBehaviour {
         WeaponManager.GetComponent<WeaponMovement>().StartMovementUp();
     }
 
-    public void Deactivate() {
+    public override void Deactivate() {
         this.gameObject.SetActive(false);
         if (MachineGunHUD != null) {
             MachineGunHUD.SetActive(false);
@@ -30,11 +32,11 @@ public class MachineGunPU : MonoBehaviour {
         targetCar.GetComponent<VehicleData>().EmptyPowerUpSlot(PowerUpName.MachineGun);
     }
 
-    public float GetBulletAmount() {
-        return WeaponManager.GetComponent<Weapon>().GetMunicao();
+    public override void UsePowerUp(bool useActive) {
+        WeaponManager.GetComponent<Weapon>().Shooting = useActive;
     }
 
-    private void Update() {
+    public override void Update() {
         if (WeaponManager.GetComponent<WeaponMovement>().IsAtMaxHeight) {
             WeaponManager.GetComponent<Weapon>().CanShoot = true;
         }

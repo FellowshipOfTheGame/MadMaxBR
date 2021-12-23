@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class NitroPU : MonoBehaviour {
+public class NitroPU : PowerUpBase {
     [SerializeField] private KeyCode useButton = KeyCode.LeftShift;
     [SerializeField] private float maxNitroAmount; // maximum amount of nitro
     [SerializeField] private float UsePerSecond; // use of nitro per second in percentage
@@ -19,7 +19,7 @@ public class NitroPU : MonoBehaviour {
 
     public float CurNitroAmount { get { return curNitroAmount; } }
 
-    public void Activate() {
+    public override void Activate() {
         curNitroAmount = maxNitroAmount; // set maximum value of nitro amount
         if (NitroHUD != null) {
             NitroHUD.SetActive(true);
@@ -27,7 +27,7 @@ public class NitroPU : MonoBehaviour {
         targetCar = this.transform.parent.gameObject.transform.parent.gameObject; // get the car this script is attached
     }
 
-    public void Deactivate() {
+    public override void Deactivate() {
         this.gameObject.SetActive(false);
         if (NitroHUD != null) {
             NitroHUD.SetActive(false);
@@ -38,24 +38,28 @@ public class NitroPU : MonoBehaviour {
         targetCar.GetComponent<VehicleData>().EmptyPowerUpSlot(PowerUpName.Nitro);
     }
 
-    private void Update() {
-        if (curNitroAmount == 0) {
-            Deactivate();
-        } else {
-            if (Input.GetKey(useButton)) {
+    public override void UsePowerUp(bool useActive) {
+        if (useActive) {
+            if (curNitroAmount != 0) {
                 targetCar.GetComponent<CarController>().NitroEnabled = true;
                 if (!NitroEffect1.GetComponent<ParticleSystem>().isPlaying) {
                     NitroEffect1.GetComponent<ParticleSystem>().Play();
                     NitroEffect2.GetComponent<ParticleSystem>().Play();
                 }
                 curNitroAmount = Mathf.MoveTowards(curNitroAmount, 0f, Time.deltaTime * maxNitroAmount * UsePerSecond / 100);
-            } else {
-                targetCar.GetComponent<CarController>().NitroEnabled = false;
-                if (!NitroEffect1.GetComponent<ParticleSystem>().isStopped) {
-                    NitroEffect1.GetComponent<ParticleSystem>().Stop();
-                    NitroEffect2.GetComponent<ParticleSystem>().Stop();
-                }
             }
+        } else {
+            targetCar.GetComponent<CarController>().NitroEnabled = false;
+            if (!NitroEffect1.GetComponent<ParticleSystem>().isStopped) {
+                NitroEffect1.GetComponent<ParticleSystem>().Stop();
+                NitroEffect2.GetComponent<ParticleSystem>().Stop();
+            }
+        }
+    }
+
+    public override void Update() {
+        if (curNitroAmount == 0) {
+            Deactivate();
         }
     }
 }

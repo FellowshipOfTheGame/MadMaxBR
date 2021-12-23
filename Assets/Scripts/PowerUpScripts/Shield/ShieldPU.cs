@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-public class ShieldPU : MonoBehaviour {
+public class ShieldPU : PowerUpBase {
     private GameObject targetCar;
     // shield amount in percentage
     [SerializeField] private float ShieldAmountPercentage;
@@ -11,7 +11,7 @@ public class ShieldPU : MonoBehaviour {
     [SerializeField] private GameObject ShieldHUD;
 
     public PowerUpData PowerUpInfo;
-    public void Activate() {
+    public override void Activate() {
         targetCar = this.transform.parent.gameObject.transform.parent.gameObject; // get the car this script is attached to
         if (ShieldHUD != null) {
             ShieldHUD.SetActive(true);
@@ -19,7 +19,7 @@ public class ShieldPU : MonoBehaviour {
         targetCar.GetComponent<VehicleData>().AddShield(targetCar.GetComponent<VehicleData>().MaxCarShield * ShieldAmountPercentage / 100);
     }
 
-    public void Deactivate() {
+    public override void Deactivate() {
         if (ShieldHUD != null) {
             ShieldHUD.SetActive(false);
         }
@@ -29,7 +29,7 @@ public class ShieldPU : MonoBehaviour {
         this.gameObject.SetActive(false);
     }
 
-    private void Update() {
+    public override void Update() {
         if (targetCar.GetComponent<VehicleData>().GetCurrentShield() <= 0) {
             Deactivate();
         }

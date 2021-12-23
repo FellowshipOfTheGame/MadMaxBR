@@ -28,29 +28,30 @@ public class VehicleData : MonoBehaviour {
     /// Attack Power Up Slot. 
     /// Can receive one of the following Attack Power Up codes:
     ///     0 -> machine gun,
-    ///     1 -> rocket-launcher,
-    ///     2 -> thorns,
+    ///     1 -> rifle,
+    ///     2 -> thorns
     /// </summary>
     private int powerUpSlot1;
     /// <summary>
     /// Defense Power Up Slot. 
     /// Can receive one of the following Defense Power Up codes:
     ///     3 -> shield,
-    ///     4 -> fixing,
-    ///     5 -> smoke,
+    ///     4 -> fix,
+    ///     5 -> invulnerability
     /// </summary>
     private int powerUpSlot2;
     /// <summary>
     /// Can receive one of the following Trap Power Up codes:
     ///     6 -> explosive mine,
     ///     7 -> deactivator mine,
+    ///     8 -> pillar
     /// </summary>
     private int powerUpSlot3;
     /// <summary>
     /// Can receive one of the following Utility Power Up codes:
-    ///     8 -> nitro,
-    ///     9 -> grease,
-    ///     10 -> glue,
+    ///     9 -> nitro,
+    ///     10 -> grease,
+    ///     11 -> glue,
     /// </summary>
     private int powerUpSlot4;
 

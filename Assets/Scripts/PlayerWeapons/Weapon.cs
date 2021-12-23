@@ -50,6 +50,7 @@ public class Weapon : MonoBehaviour {
     private LineRenderer linhaDoLaser;
     private GameObject luzColisao;
     private bool canShoot = false;
+    private bool shooting = false;
 
     public bool CanShoot { 
         get { 
@@ -57,6 +58,15 @@ public class Weapon : MonoBehaviour {
         } 
         set {
             canShoot = value;
+        }
+    }
+
+    public bool Shooting {
+        get {
+            return shooting;
+        }
+        set {
+            shooting = value;
         }
     }
 
@@ -96,8 +106,7 @@ public class Weapon : MonoBehaviour {
 
     void FixedUpdate() {
         if (canShoot) {
-            //municaoTexto.text = "AMMO: " + armas[armaAtual].municao;
-            if (Input.GetMouseButton(0) && armas[armaAtual].municao > 0 && !recarregando && !atirando) {
+            if (shooting && armas[armaAtual].municao > 0 && !recarregando && !atirando) {
                 StartCoroutine(TempoTiro(armas[armaAtual].TiroPorSegundo));
                 emissorSom.clip = armas[armaAtual].somTiro;
                 emissorSom.PlayOneShot(emissorSom.clip);
@@ -112,11 +121,11 @@ public class Weapon : MonoBehaviour {
                     }
                 }
             }
-            if (!Input.GetMouseButton(0) && atirando || recarregando || armas[armaAtual].municao == 0) {
+            if (!shooting && atirando || recarregando || armas[armaAtual].municao == 0) {
                 armas[armaAtual].weaponAnimator.SetBool("IsShooting", false);
                 armas[armaAtual].weaponAnimator.SetBool("IsLoop", false);
             }
-            if (Input.GetMouseButton(0) && atirando) {
+            if (shooting && atirando) {
                 armas[armaAtual].weaponAnimator.SetBool("IsLoop", true);
             }
             //recarregar
@@ -169,7 +178,7 @@ public class Weapon : MonoBehaviour {
             } else if (armas[armaAtual].MunicaoExtraNaArma < 0) {
                 armas[armaAtual].MunicaoExtraNaArma = 0;
             }
-            if (Input.GetMouseButton(0) && armas[armaAtual].MunicaoExtraNaArma <= 0 && armas[armaAtual].municao <= 0) {
+            if (shooting && armas[armaAtual].MunicaoExtraNaArma <= 0 && armas[armaAtual].municao <= 0) {
                 PegarPoweUpArma(IdArmaVazia);
             }
         }

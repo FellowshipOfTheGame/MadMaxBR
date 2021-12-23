@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GluePU : MonoBehaviour {
+public class GluePU : PowerUpBase {
     [SerializeField] private KeyCode useButton = KeyCode.LeftShift;
     [SerializeField] private float maxGlueAmount; // maximum amount of glue
     [SerializeField] private float UsePerSecond; // use of glue per second in percentage
@@ -20,7 +20,7 @@ public class GluePU : MonoBehaviour {
 
     public float CurGlueAmount { get { return curGlueAmount; } }
 
-    public void Activate() {
+    public override void Activate() {
         targetCar = this.transform.parent.gameObject.transform.parent.gameObject; // get the car this script is attached to
         curGlueAmount = maxGlueAmount;
         if (GlueHUD != null) {
@@ -29,7 +29,7 @@ public class GluePU : MonoBehaviour {
         pressingButton = false;
     }
 
-    public void Deactivate() {
+    public override void Deactivate() {
         this.gameObject.SetActive(false);
         if (GlueHUD != null) {
             GlueHUD.SetActive(false);
@@ -39,28 +39,25 @@ public class GluePU : MonoBehaviour {
         pressingButton = false;
     }
 
-    public void UsePowerUp() {
-        if (curGlueAmount != 0) {
-            if (!LiquidSpiller.GetComponent<ParticleSystem>().isPlaying) {
-                LiquidSpiller.GetComponent<ParticleSystem>().Play();
+    public override void UsePowerUp(bool useActive) {
+        if (useActive) {
+            if (curGlueAmount != 0) {
+                if (!LiquidSpiller.GetComponent<ParticleSystem>().isPlaying) {
+                    LiquidSpiller.GetComponent<ParticleSystem>().Play();
+                }
+                curGlueAmount = Mathf.MoveTowards(curGlueAmount, 0f, Time.deltaTime * maxGlueAmount * UsePerSecond / 100);
             }
-            curGlueAmount = Mathf.MoveTowards(curGlueAmount, 0f, Time.deltaTime * maxGlueAmount * UsePerSecond / 100);
+        } else {
+            if (!LiquidSpiller.GetComponent<ParticleSystem>().isStopped) {
+                LiquidSpiller.GetComponent<ParticleSystem>().Stop();
+            }
         }
-        pressingButton = false;
     }
 
     // Update is called once per frame
-    private void Update() {
+    public override void Update() {
         if (curGlueAmount == 0) {
             Deactivate();
-        } else {
-            if (Input.GetKey(useButton)) {
-
-            } else {
-                if (!LiquidSpiller.GetComponent<ParticleSystem>().isStopped) {
-                    LiquidSpiller.GetComponent<ParticleSystem>().Stop();
-                }
-            }
         }
     }
 }
