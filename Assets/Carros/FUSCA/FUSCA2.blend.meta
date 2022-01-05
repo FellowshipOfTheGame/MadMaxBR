@@ -6,7 +6,17 @@ ModelImporter:
   - first:
       74: -623603649343465320
     second: Scene
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: BASMAT
+    second: {fileID: 2100000, guid: 8c00371af89da924d8fc4562c5f73efe, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: FUSCA MAT
+    second: {fileID: 2100000, guid: 1140103140d112341942040bce7f247c, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

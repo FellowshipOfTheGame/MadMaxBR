@@ -6,7 +6,37 @@ ModelImporter:
   - first:
       74: -623603649343465320
     second: BANDEIRA
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: BASMAT
+    second: {fileID: 2100000, guid: 8c00371af89da924d8fc4562c5f73efe, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: BASMAT.001
+    second: {fileID: 2100000, guid: 8c00371af89da924d8fc4562c5f73efe, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Material.002
+    second: {fileID: 2100000, guid: 8c00371af89da924d8fc4562c5f73efe, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Material.003
+    second: {fileID: 2100000, guid: 8c00371af89da924d8fc4562c5f73efe, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: matpadrao
+    second: {fileID: 2100000, guid: 8c00371af89da924d8fc4562c5f73efe, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: rua
+    second: {fileID: 2100000, guid: ccf38fdb9473e8444a03f5c7b88b524e, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
