@@ -153,7 +153,7 @@ public class CarMovementAI : MonoBehaviour
         if (Physics.Raycast(horizontalSensorTransform.position, transform.right, out raycastHitSensor[4], horizontalSensorLength, ~ignoredLayerMasks))
         {
             Debug.DrawLine(horizontalSensorTransform.position, raycastHitSensor[4].point, Color.blue);
-            Debug.Log("Sensor horizontal");
+            //Debug.Log("Sensor horizontal");
 
             aiState = AiState.Avoiding;
             throttle = -1f;
@@ -164,7 +164,7 @@ public class CarMovementAI : MonoBehaviour
         else if (Physics.Raycast(leftSensorTransform.position, Quaternion.AngleAxis(-frontSensorOuterAngle, transform.up) * transform.forward, out raycastHitSensor[0], sensorLength, ~ignoredLayerMasks))
         {
             Debug.DrawLine(leftSensorTransform.position, raycastHitSensor[0].point);
-            Debug.Log("Sensor 1 da esquerda");
+            //Debug.Log("Sensor 1 da esquerda");
 
             aiState = AiState.Avoiding;
             steer = 1f;
@@ -181,7 +181,7 @@ public class CarMovementAI : MonoBehaviour
         else if (Physics.Raycast(rightSensorTransform.position, Quaternion.AngleAxis(frontSensorOuterAngle, transform.up) * transform.forward, out raycastHitSensor[3], sensorLength, ~ignoredLayerMasks))
         {
             Debug.DrawLine(rightSensorTransform.position, raycastHitSensor[3].point);
-            Debug.Log("Sensor 2 da direita");
+            //Debug.Log("Sensor 2 da direita");
 
             aiState = AiState.Avoiding;
             steer = -1f;
@@ -198,7 +198,7 @@ public class CarMovementAI : MonoBehaviour
         else if (Physics.Raycast(leftInnerSensorTransform.position, Quaternion.AngleAxis(-frontSensorInnerAngle, transform.up) * transform.forward, out raycastHitSensor[1], sensorLength, ~ignoredLayerMasks))
         {
             Debug.DrawLine(leftInnerSensorTransform.position, raycastHitSensor[1].point);
-            Debug.Log("Sensor 2 da esquerda");
+            //Debug.Log("Sensor 2 da esquerda");
 
             aiState = AiState.Avoiding;
             steer = 0.5f;
@@ -215,7 +215,7 @@ public class CarMovementAI : MonoBehaviour
         else if (Physics.Raycast(rightInnerSensorTransform.position, Quaternion.AngleAxis(frontSensorInnerAngle, transform.up) * transform.forward, out raycastHitSensor[2], sensorLength, ~ignoredLayerMasks))
         {
             Debug.DrawLine(rightInnerSensorTransform.position, raycastHitSensor[2].point);
-            Debug.Log("Sensor 1 da direita");
+            //Debug.Log("Sensor 1 da direita");
 
             aiState = AiState.Avoiding;
             steer = -0.5f;
