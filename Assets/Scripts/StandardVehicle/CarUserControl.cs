@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Diagnostics.SymbolStore;
 using UnityEngine;
 
@@ -74,6 +75,127 @@ public class CarUserControl : MonoBehaviour {
         }
     }
 
+    private void VerifyPowerupAIInput()
+    {
+        if (vehicleInfo.GetPowerUpSlotValue(1) != -1)
+        {
+            if (vehicleInfo.GetPowerUpSlotValue(1) == (int)PowerUpName.MachineGun)
+            {
+                StartCoroutine(MachineGunActivator<MachineGunPU>());
+            }
+            else if (vehicleInfo.GetPowerUpSlotValue(1) == (int)PowerUpName.Rifle)
+            {
+                StartCoroutine(RifleActivator<RiflePU>());
+            }
+        }
+        if (vehicleInfo.GetPowerUpSlotValue(2) == (int)PowerUpName.Smoke)
+        {
+            StartCoroutine(SmokeActivator<SmokePU>());
+        }
+        if (vehicleInfo.GetPowerUpSlotValue(3) != -1)
+        {
+            if (vehicleInfo.GetPowerUpSlotValue(3) == (int)PowerUpName.ExplosiveMine)
+            {
+                StartCoroutine(ExplosiveMineActivator<ExplosiveMinePU>());
+            }
+            else if (vehicleInfo.GetPowerUpSlotValue(3) == (int)PowerUpName.DeactivatorMine)
+            {
+                StartCoroutine(DeactivatorMineActivator<DeactivatorMinePU>());
+            }
+            else if (vehicleInfo.GetPowerUpSlotValue(3) == (int)PowerUpName.Pillar)
+            {
+                StartCoroutine(PillarActivator<PillarPU>());
+            }
+        }
+        if (vehicleInfo.GetPowerUpSlotValue(4) != -1)
+        {
+            if (vehicleInfo.GetPowerUpSlotValue(4) == (int)PowerUpName.Grease)
+            {
+                StartCoroutine(GreaseActivator<GreasePU>());
+            }
+            else if (vehicleInfo.GetPowerUpSlotValue(4) == (int)PowerUpName.Glue)
+            {
+                StartCoroutine(GlueActivator<GluePU>());
+            }
+            else if (vehicleInfo.GetPowerUpSlotValue(4) == (int)PowerUpName.Nitro)
+            {
+                StartCoroutine(NitroActivator<NitroPU>());
+            }
+        }
+    }
+
+    private IEnumerator MachineGunActivator<T>() where T: MachineGunPU
+    {
+        T type = playerPowerUps.GetComponentInChildren<T>();
+        type.UsePowerUp(true);
+        yield return new WaitForFixedUpdate();
+        type.UsePowerUp(false);
+    }
+
+    private IEnumerator RifleActivator<T>() where T : RiflePU
+    {
+        T type = playerPowerUps.GetComponentInChildren<T>();
+        type.UsePowerUp(true);
+        yield return new WaitForFixedUpdate();
+        type.UsePowerUp(false);
+    }
+
+    private IEnumerator SmokeActivator<T>() where T : SmokePU
+    {
+        T type = playerPowerUps.GetComponentInChildren<T>();
+        type.UsePowerUp(true);
+        yield return new WaitForFixedUpdate();
+        type.UsePowerUp(false);
+    }
+
+    private IEnumerator ExplosiveMineActivator<T>() where T : ExplosiveMinePU
+    {
+        T type = playerPowerUps.GetComponentInChildren<T>();
+        type.UsePowerUp(true);
+        yield return new WaitForFixedUpdate();
+        type.UsePowerUp(false);
+    }
+
+    private IEnumerator DeactivatorMineActivator<T>() where T : DeactivatorMinePU
+    {
+        T type = playerPowerUps.GetComponentInChildren<T>();
+        type.UsePowerUp(true);
+        yield return new WaitForFixedUpdate();
+        type.UsePowerUp(false);
+    }
+
+    private IEnumerator PillarActivator<T>() where T : PillarPU
+    {
+        T type = playerPowerUps.GetComponentInChildren<T>();
+        type.UsePowerUp(true);
+        yield return new WaitForFixedUpdate();
+        type.UsePowerUp(false);
+    }
+
+    private IEnumerator GreaseActivator<T>() where T : GreasePU
+    {
+        T type = playerPowerUps.GetComponentInChildren<T>();
+        type.UsePowerUp(true);
+        yield return new WaitForFixedUpdate();
+        type.UsePowerUp(false);
+    }
+
+    private IEnumerator GlueActivator<T>() where T : GluePU
+    {
+        T type = playerPowerUps.GetComponentInChildren<T>();
+        type.UsePowerUp(true);
+        yield return new WaitForFixedUpdate();
+        type.UsePowerUp(false);
+    }
+
+    private IEnumerator NitroActivator<T>() where T : NitroPU
+    {
+        T type = playerPowerUps.GetComponentInChildren<T>();
+        type.UsePowerUp(true);
+        yield return new WaitForFixedUpdate();
+        type.UsePowerUp(false);
+    }
+
     private void Update() {
         if (driverMode == DriverMode.Player) {
             horizontalInput = Input.GetAxis("Horizontal");
@@ -84,6 +206,7 @@ public class CarUserControl : MonoBehaviour {
             horizontalInput = carMovementAI.steer;
             verticalInput = carMovementAI.throttle;
             handbrake = carMovementAI.brake;
+            VerifyPowerupAIInput();
         }
     }
 
