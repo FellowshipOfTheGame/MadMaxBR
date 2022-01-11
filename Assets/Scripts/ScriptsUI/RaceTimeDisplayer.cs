@@ -5,8 +5,6 @@ using UnityEngine.UI;
 /// This Script is responsible to show on the UI information about the player in the race, as time, position and laps completed.
 /// </summary>
 public class RaceTimeDisplayer : MonoBehaviour {
-    public GameObject Player;
-    //public GameObject RaceManager;
 
     //public GameObject LapCounterDisplay;
     //public GameObject MaxNumberOfLaps;
@@ -50,7 +48,7 @@ public class RaceTimeDisplayer : MonoBehaviour {
         
     }
     private void Start() {
-        PlayerRaceData = Player.GetComponent<VehicleRaceData>();
+        PlayerRaceData = RaceManager.Instance.Player.GetComponent<VehicleRaceData>();
     }
 
     // Update is called once per frame

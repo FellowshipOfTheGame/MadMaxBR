@@ -3,17 +3,22 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class PillarPU : PowerUpBase {
-    [SerializeField] private KeyCode useButton = KeyCode.X;
     [SerializeField] private int PillarsQuantity; // quantity of pillars to be used
     [SerializeField] private GameObject PillarPrefab;
-    [SerializeField] private GameObject PillarHUD;
-
+    
+    private GameObject PillarHUD;
     private int remainingPillars;
 
     public PowerUpData PowerUpInfo;
 
     public int RemainingPillars { get { return remainingPillars; } }
-
+    private void Awake() {
+        if (this.transform.parent.gameObject.transform.parent.gameObject.CompareTag("Player")) {
+            PillarHUD = PlayerDataDisplayer.Instance.PillarCount;
+        } else {
+            PillarHUD = null;
+        }
+    }
     public override void Activate() {
         remainingPillars = PillarsQuantity;
         if (PillarHUD != null) {
@@ -32,7 +37,8 @@ public class PillarPU : PowerUpBase {
     public override void UsePowerUp(bool useActive) {
         if (useActive) {
             if (remainingPillars != 0) {
-                Instantiate(PillarPrefab, this.gameObject.transform.position, this.gameObject.transform.rotation);
+                GameObject pillar = Instantiate(PillarPrefab, this.gameObject.transform.position, this.gameObject.transform.rotation);
+                pillar.GetComponent<PillarCollision>().Owner = this.gameObject;
                 remainingPillars--;
             }
         }

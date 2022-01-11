@@ -6,11 +6,10 @@ using UnityEngine;
 /// Class responsible to implement the Smoke PowerUp logic.
 /// </summary>
 public class SmokePU : PowerUpBase {
-    [SerializeField] private KeyCode useButton = KeyCode.C;
     [SerializeField] private float maxSmokeAmount; // maximum amount of smoke
     [SerializeField] private float usePerSecond; // use of smoke per second in percentage
-    public GameObject SmokeHUD; // smoke hud
 
+    private GameObject SmokeHUD; // smoke hud
     private float curSmokeAmount; // amount of car smoke
     private GameObject targetCar; // the car this script is attached
 
@@ -19,7 +18,13 @@ public class SmokePU : PowerUpBase {
     public float MaxSmokeAmount { get { return maxSmokeAmount; } }
 
     public float CurSmokeAmount { get { return curSmokeAmount; } }
-
+    private void Awake() {
+        if (this.transform.parent.gameObject.transform.parent.gameObject.CompareTag("Player")) {
+            SmokeHUD = PlayerDataDisplayer.Instance.SmokeHUD;
+        } else {
+            SmokeHUD = null;
+        }
+    }
     public override void Activate() {
         targetCar = this.transform.parent.gameObject.transform.parent.gameObject; // get the car this script is attached to
         curSmokeAmount = maxSmokeAmount;

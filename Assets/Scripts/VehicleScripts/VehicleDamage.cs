@@ -33,7 +33,7 @@ public class VehicleDamage : MonoBehaviour {
                     crashSound.Play();
                     crashSound.volume = collisionStrength / 200; // change the volume of the crash Sound according to the strenght of the collision
 
-                    gameObject.GetComponent<VehicleData>().ReceiveDamage(CalculateHealthDamage(collisionStrength)); // decreases health of the car
+                    gameObject.GetComponent<VehicleData>().ReceiveDamage(CalculateHealthDamage(collisionStrength), collision.gameObject); // decreases health of the car
 
                     // OnMeshForce(collision.contacts[0].point, Mathf.Clamp01(collisionStrength / maxCollisionStrength));
                     //OnMeshForce(collision.GetContact(0).point, Mathf.Clamp01(collisionStrength / maxCollisionStrength));

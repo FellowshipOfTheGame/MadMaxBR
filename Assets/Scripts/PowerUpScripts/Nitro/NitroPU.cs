@@ -3,18 +3,22 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class NitroPU : PowerUpBase {
-    [SerializeField] private KeyCode useButton = KeyCode.LeftShift;
     [SerializeField] private float maxNitroAmount; // maximum amount of nitro
     [SerializeField] private float UsePerSecond; // use of nitro per second in percentage
-    [SerializeField] private GameObject NitroHUD; // nitro HUD
-    [SerializeField] private GameObject NitroEffect1;
-    [SerializeField] private GameObject NitroEffect2;
+    [SerializeField] private GameObject[] NitroEffects;
 
+    private GameObject NitroHUD; // nitro HUD
     private float curNitroAmount; // amount of car nitro
     private GameObject targetCar; // the car this script is attached
 
     public PowerUpData PowerUpInfo;
-
+    private void Awake() {
+        if (this.transform.parent.gameObject.transform.parent.gameObject.CompareTag("Player")) {
+            NitroHUD = PlayerDataDisplayer.Instance.NitroHUD;
+        } else {
+            NitroHUD = null;
+        }
+    }
     public float MaxNitroAmount { get { return maxNitroAmount; } }
 
     public float CurNitroAmount { get { return curNitroAmount; } }
@@ -33,8 +37,10 @@ public class NitroPU : PowerUpBase {
             NitroHUD.SetActive(false);
         }
         targetCar.GetComponent<CarController>().NitroEnabled = false;
-        NitroEffect1.GetComponent<ParticleSystem>().Stop();
-        NitroEffect2.GetComponent<ParticleSystem>().Stop();
+
+        for (int i = 0; i < NitroEffects.Length; i++) {
+            NitroEffects[i].GetComponent<ParticleSystem>().Stop();
+        }
         targetCar.GetComponent<VehicleData>().EmptyPowerUpSlot(PowerUpName.Nitro);
     }
 
@@ -42,17 +48,22 @@ public class NitroPU : PowerUpBase {
         if (useActive) {
             if (curNitroAmount != 0) {
                 targetCar.GetComponent<CarController>().NitroEnabled = true;
-                if (!NitroEffect1.GetComponent<ParticleSystem>().isPlaying) {
-                    NitroEffect1.GetComponent<ParticleSystem>().Play();
-                    NitroEffect2.GetComponent<ParticleSystem>().Play();
+
+                if (!NitroEffects[0].GetComponent<ParticleSystem>().isPlaying) {
+                    for (int i = 0; i < NitroEffects.Length; i++) {
+                        NitroEffects[i].GetComponent<ParticleSystem>().Play();
+                    }
                 }
+
                 curNitroAmount = Mathf.MoveTowards(curNitroAmount, 0f, Time.deltaTime * maxNitroAmount * UsePerSecond / 100);
             }
         } else {
             targetCar.GetComponent<CarController>().NitroEnabled = false;
-            if (!NitroEffect1.GetComponent<ParticleSystem>().isStopped) {
-                NitroEffect1.GetComponent<ParticleSystem>().Stop();
-                NitroEffect2.GetComponent<ParticleSystem>().Stop();
+
+            if (!NitroEffects[0].GetComponent<ParticleSystem>().isStopped) {
+                for (int i = 0; i < NitroEffects.Length; i++) {
+                    NitroEffects[i].GetComponent<ParticleSystem>().Stop();
+                }
             }
         }
     }

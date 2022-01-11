@@ -6,10 +6,8 @@ public class GreasePoolCollision : MonoBehaviour {
     /// <summary>
     /// Get Race Manager to access the cars colliders.
     /// </summary>
-    public GameObject RaceManager;
 
     private ParticleSystem ps;
-    private RaceManager raceManager;
 
     // these lists are used to contain the particles which match
     // the trigger conditions each frame.
@@ -18,10 +16,10 @@ public class GreasePoolCollision : MonoBehaviour {
 
     void OnEnable() {
         ps = GetComponent<ParticleSystem>();
-        raceManager = RaceManager.GetComponent<RaceManager>();
+        // raceManager = RaceManager.Instance.GetComponent<RaceManager>();
 
-        for (int i = 0; i < raceManager.Racers.Count; i++) {
-            ps.trigger.AddCollider(raceManager.Racers[i].GetComponent<BoxCollider>());
+        for (int i = 0; i < RaceManager.Instance.Racers.Count; i++) {
+            ps.trigger.AddCollider(RaceManager.Instance.Racers[i].GetComponent<BoxCollider>());
         }
     }
 

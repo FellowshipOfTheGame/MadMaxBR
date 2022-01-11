@@ -24,6 +24,8 @@ public class VehicleData : MonoBehaviour {
 
     public bool UsingThornsArmor { get { return ThornsArmorActive; } }
 
+    public int KillsCount { get { return killsCount; } }
+
     /// <summary>
     /// Attack Power Up Slot. 
     /// Can receive one of the following Attack Power Up codes:
@@ -251,10 +253,6 @@ public class VehicleData : MonoBehaviour {
         killsCount++;
     }
 
-    public int GetKillsCount() {
-        return killsCount;
-    }
-
     public bool IsDead() {
         return isDead;
     }
@@ -280,7 +278,8 @@ public class VehicleData : MonoBehaviour {
     public void Update() {
         //curCarHealth--;
         //SetCurrentHealth(MaxCarHealth);
-        if (isDead) {
+        if (curCarHealth <= 0 && !isDead) {
+            isDead = true;
             Die();
         }
         //if (playerPowerUps.transform.GetChild(0).gameObject.activeSelf) { // if nitro power up is active
@@ -324,7 +323,7 @@ public class VehicleData : MonoBehaviour {
     /// Reduces health points of car and set it as Dead if health points is equal or less than 0;
     /// </summary>
     /// <param name="damage"></param>
-    public void ReceiveDamage(float damage) {
+    public void ReceiveDamage(float damage, GameObject damageSource) {
         Debug.Log("invulneravel? " + isInvulnerable);
         if (!isInvulnerable) {
             
@@ -345,9 +344,12 @@ public class VehicleData : MonoBehaviour {
                 }
             }
             curCarHealth -= damage;
-        }
-        if (curCarHealth <= 0) {
-            isDead = true;
+
+            if (curCarHealth <= 0) {
+                if (damageSource.CompareTag("Player") || damageSource.CompareTag("AI")) {
+                    damageSource.GetComponent<VehicleData>().SumKillsCount();
+                }
+            }
         }
     }
     /// <summary>

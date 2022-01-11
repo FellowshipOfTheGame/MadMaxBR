@@ -3,17 +3,22 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class ExplosiveMinePU : PowerUpBase {
-    [SerializeField] private KeyCode useButton = KeyCode.X;
     [SerializeField] private int MinesQuantity; // quantity of mines to be used
     [SerializeField] private GameObject MinePrefab;
-    [SerializeField] private GameObject ExplosiveMineHUD;
-
+    
+    private GameObject ExplosiveMineHUD;
     private int remainingMines;
 
     public PowerUpData PowerUpInfo;
 
     public int RemainingMines { get { return remainingMines; } }
-
+    private void Awake() {
+        if (this.transform.parent.gameObject.transform.parent.gameObject.CompareTag("Player")) {
+            ExplosiveMineHUD = PlayerDataDisplayer.Instance.ExplosiveMineCount;
+        } else {
+            ExplosiveMineHUD = null;
+        }
+    }
     public override void Activate() {
         remainingMines = MinesQuantity;
         if (ExplosiveMineHUD != null) {
@@ -32,7 +37,8 @@ public class ExplosiveMinePU : PowerUpBase {
     public override void UsePowerUp(bool useActive) {
         if (useActive) {
             if (remainingMines != 0) {
-                Instantiate(MinePrefab, this.gameObject.transform.position, this.gameObject.transform.rotation);
+                GameObject mine = Instantiate(MinePrefab, this.gameObject.transform.position, this.gameObject.transform.rotation);
+                mine.GetComponentInChildren<ExplosiveMine>().Owner = this.gameObject;
                 remainingMines--;
             }
         }

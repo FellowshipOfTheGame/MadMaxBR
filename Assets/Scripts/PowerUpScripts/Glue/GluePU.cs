@@ -3,30 +3,32 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class GluePU : PowerUpBase {
-    [SerializeField] private KeyCode useButton = KeyCode.LeftShift;
     [SerializeField] private float maxGlueAmount; // maximum amount of glue
     [SerializeField] private float UsePerSecond; // use of glue per second in percentage
-    [SerializeField] private GameObject GlueHUD; // glue hud
     [SerializeField] private GameObject LiquidSpiller;
 
+    private GameObject GlueHUD; // glue hud
     private float curGlueAmount; // amount of glue
     private GameObject targetCar; // the car this script is attached
-
-    private bool pressingButton;
 
     public PowerUpData PowerUpInfo;
 
     public float MaxGlueAmount { get { return maxGlueAmount; } }
 
     public float CurGlueAmount { get { return curGlueAmount; } }
-
+    private void Awake() {
+        if (this.transform.parent.gameObject.transform.parent.gameObject.CompareTag("Player")) {
+            GlueHUD = PlayerDataDisplayer.Instance.GlueHUD;
+        } else {
+            GlueHUD = null;
+        }
+    }
     public override void Activate() {
         targetCar = this.transform.parent.gameObject.transform.parent.gameObject; // get the car this script is attached to
         curGlueAmount = maxGlueAmount;
         if (GlueHUD != null) {
             GlueHUD.SetActive(true);
         }
-        pressingButton = false;
     }
 
     public override void Deactivate() {
@@ -36,7 +38,6 @@ public class GluePU : PowerUpBase {
         }
         LiquidSpiller.GetComponent<ParticleSystem>().Stop();
         targetCar.GetComponent<VehicleData>().EmptyPowerUpSlot(PowerUpName.Glue);
-        pressingButton = false;
     }
 
     public override void UsePowerUp(bool useActive) {

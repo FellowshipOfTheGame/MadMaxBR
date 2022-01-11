@@ -14,11 +14,11 @@ public class WeaponMovement : MonoBehaviour {
     /// <summary>
     /// Minimum Y value the pillar can have.
     /// </summary>
-    private float minY = 1.827f;
+    private float minY;
     /// <summary>
     /// Maximum Y value the pillar can have.
     /// </summary>
-    private float maxY = 2.764f;
+    private float maxY;
     /// <summary>
     /// Controls whether the pillar is elevating or not.
     /// </summary>
@@ -29,13 +29,15 @@ public class WeaponMovement : MonoBehaviour {
     private bool isLowering;
 
     public void Start() {
+        minY = this.gameObject.transform.localPosition.y;
+        maxY = minY + 0.937f;
         isElevating = false;
         isLowering = false;
     }
 
     public bool IsAtMaxHeight {
         get {
-            if (this.gameObject.transform.position.y == maxY) {
+            if (this.gameObject.transform.localPosition.y == maxY) {
                 return true;
             } else {
                 return false;
@@ -45,7 +47,7 @@ public class WeaponMovement : MonoBehaviour {
 
     public bool IsAtMinHeight {
         get {
-            if (this.gameObject.transform.position.y == minY) {
+            if (this.gameObject.transform.localPosition.y == minY) {
                 return true;
             } else {
                 return false;
@@ -53,8 +55,8 @@ public class WeaponMovement : MonoBehaviour {
         }
     }
     private void MoveWeapon(float targetY) {
-        float newY = Mathf.MoveTowards(this.gameObject.transform.position.y, targetY, Time.deltaTime / MovementTimeInSeconds);
-        this.gameObject.transform.position = new Vector3(this.gameObject.transform.position.x, newY, this.gameObject.transform.position.z);
+        float newY = Mathf.MoveTowards(this.gameObject.transform.localPosition.y, targetY, Time.deltaTime / MovementTimeInSeconds);
+        this.gameObject.transform.localPosition = new Vector3(this.gameObject.transform.localPosition.x, newY, this.gameObject.transform.localPosition.z);
     }
     /// <summary>
     /// Starts Weapon object movement upwards.
@@ -74,14 +76,13 @@ public class WeaponMovement : MonoBehaviour {
         movementTimer += Time.deltaTime;
         if (isElevating) {
             MoveWeapon(maxY);
-            if (this.gameObject.transform.position.y == maxY) {
+            if (this.gameObject.transform.localPosition.y == maxY) {
                 isElevating = false;
-                Debug.Log("seconds to elevate: " + movementTimer);
             }
         }
         if (isLowering) {
             MoveWeapon(minY);
-            if (this.gameObject.transform.position.y == minY) {
+            if (this.gameObject.transform.localPosition.y == minY) {
                 isLowering = false;
             }
         }

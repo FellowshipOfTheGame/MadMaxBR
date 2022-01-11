@@ -3,20 +3,29 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class ExplosiveMine : MonoBehaviour {
-    private Timer stopwatch;
     // raw damage of mine
-    public float MineDamage;
+    [SerializeField] private float MineDamage;
     // time in milliseconds for mine to be activated
-    public float MillisecondsToActivate;
+    [SerializeField] private float MillisecondsToActivate;
     // time in milliseconds for mine to explode after detection
-    public float MillisecondsToExplode;
-    // 
-    public GameObject ExplosionEffect;
-
-    private GameObject otherCar; // car that was detected
+    [SerializeField] private float MillisecondsToExplode;
+    // explosion effect
+    [SerializeField] private GameObject ExplosionEffect;
+    // mine timer
+    private Timer stopwatch;
+    // car that planted this mine
+    private GameObject owner;
+    // car that was detected
+    private GameObject otherCar;
 
     private bool isActive;
     private bool hasDetected;
+
+    public GameObject Owner {
+        set {
+            owner = value;
+        }
+    }
 
     private void Start() {
         stopwatch = gameObject.AddComponent<Timer>();
@@ -79,7 +88,7 @@ public class ExplosiveMine : MonoBehaviour {
                 Debug.Log("Explodiu em " + ab);
                 GameObject otherCar = other.gameObject; // get object of the car that was detected
                 Instantiate(ExplosionEffect, this.gameObject.transform.position, this.gameObject.transform.rotation);
-                otherCar.GetComponentInParent<VehicleData>().ReceiveDamage(MineDamage); // decreases health of the car
+                otherCar.GetComponentInParent<VehicleData>().ReceiveDamage(MineDamage, owner); // decreases health of the car
                 Destroy(this.transform.parent.gameObject);
             }
         }

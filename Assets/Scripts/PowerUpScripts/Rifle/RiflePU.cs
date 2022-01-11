@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class RiflePU : PowerUpBase {
-    [SerializeField] private GameObject RifleHUD; // MachineGun HUD
+    private GameObject RifleHUD; // MachineGun HUD
     [SerializeField] private GameObject WeaponManager;
 
     private GameObject targetCar; // the car this script is attached
@@ -11,7 +11,13 @@ public class RiflePU : PowerUpBase {
     public PowerUpData PowerUpInfo;
 
     public int BulletAmount { get { return WeaponManager.GetComponent<Weapon>().GetMunicao(); } }
-
+    private void Awake() {
+        if (this.transform.parent.gameObject.transform.parent.gameObject.CompareTag("Player")) {
+            RifleHUD = PlayerDataDisplayer.Instance.RifleCountText;
+        } else {
+            RifleHUD = null;
+        }
+    }
     public override void Activate() {
         targetCar = this.transform.parent.gameObject.transform.parent.gameObject; // get the car this script is attached
         if (RifleHUD != null) {

@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class ThornsPU : PowerUpBase {
-    private Timer stopwatch;
     [SerializeField] private float durationSec;
     [SerializeField] private float thornCollisionDamage;
     [SerializeField] private float collisionDamageReduction;
-
+    private Timer stopwatch;
     private GameObject targetCar; // the car this script is attached
+    private GameObject ThornsHUD;
 
     public PowerUpData PowerUpInfo;
     /// <summary>
@@ -23,13 +23,14 @@ public class ThornsPU : PowerUpBase {
     /// Collision damage reduction in percentage for the car this powerup is active.
     /// </summary>
     public float CollisionDamageReduction { get { return collisionDamageReduction; } }
-
-    public GameObject ThornsHUD;
-
-    void Awake() {
+    private void Awake() {
         stopwatch = gameObject.AddComponent<Timer>();
+        if (this.transform.parent.gameObject.transform.parent.gameObject.CompareTag("Player")) {
+            ThornsHUD = PlayerDataDisplayer.Instance.ThornsTimerUI;
+        } else {
+            ThornsHUD = null;
+        }
     }
-
     public override void Activate() {
         targetCar = this.transform.parent.gameObject.transform.parent.gameObject; // get the car this script is attached to
         targetCar.GetComponent<VehicleData>().SetThornsArmor(true);
