@@ -7,8 +7,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class PlayerDataDisplayer : MonoBehaviour {
-    public GameObject Player; // stores the object that represents the player
-    public RaceManager RaceManager;
+    public static PlayerDataDisplayer Instance;
 
     public GameObject VelocityDisplay;
     public GameObject LapCounterDisplay;
@@ -27,7 +26,7 @@ public class PlayerDataDisplayer : MonoBehaviour {
     public GameObject GlueHUD;
     public GameObject GreaseHUD;
     public GameObject PlayerHealthHUD;
-    public GameObject PlayerShieldHUD;
+    public GameObject ShieldHUD;
 
     public GameObject PowerUpSlot1;
     public GameObject PowerUpSlot2;
@@ -46,6 +45,9 @@ public class PlayerDataDisplayer : MonoBehaviour {
     /// Stores the time a tutorial text from an especific powerup stayed on screen. 
     /// </summary>
     private float[] tutorialTextStayedTime;
+    private void Awake() {
+        Instance = this;
+    }
 
     private void UpdateTutorialTextQueue(PowerUpData PowerUpData) {
         if (!tutorialTextIndQueue.Contains((int)PowerUpData.PowerUpName)) {
@@ -112,8 +114,8 @@ public class PlayerDataDisplayer : MonoBehaviour {
 
     // Start is called before the first frame update
     void Start() {
-        PlayerRaceData = Player.GetComponent<VehicleRaceData>();
-        PlayerPowerUps = Player.transform.GetComponentInChildren<PowerUp>().gameObject;
+        PlayerRaceData = RaceManager.Instance.Player.GetComponent<VehicleRaceData>();
+        PlayerPowerUps = RaceManager.Instance.Player.transform.GetComponentInChildren<PowerUp>().gameObject;
 
         tutorialTextIndQueue = new Queue<int>();
         tutorialTextQueue = new Queue<string>();
@@ -140,26 +142,30 @@ public class PlayerDataDisplayer : MonoBehaviour {
     private void UpdateRaceData() {
         LapCounterDisplay.GetComponent<Text>().text = "" + PlayerRaceData.GetLapCount();
         RacePositionDisplay.GetComponent<Text>().text = "" + PlayerRaceData.GetRacePosition();
-        MaxRacePositionDisplay.GetComponent<Text>().text = "" + RaceManager.Racers.Count;
-        MaxNumberOfLaps.GetComponent<Text>().text = "" + RaceManager.NumberOfLaps;
+        MaxRacePositionDisplay.GetComponent<Text>().text = "" + RaceManager.Instance.Racers.Count;
+        MaxNumberOfLaps.GetComponent<Text>().text = "" + RaceManager.Instance.NumberOfLaps;
     }
 
     private void UpdateUIBars() {
         // updates health and shield bar
-        PlayerShieldHUD.GetComponent<Image>().fillAmount = Player.GetComponent<VehicleData>().GetCurrentShield() / Player.GetComponent<VehicleData>().MaxCarShield;
-        PlayerHealthHUD.GetComponent<Image>().fillAmount = Player.GetComponent<VehicleData>().GetCurrentHealth() / Player.GetComponent<VehicleData>().MaxCarHealth;
+        /*
+        Transform[] allChildren = PlayerShieldHUD.GetComponentsInChildren<Transform>();
+        foreach (Transform child in allChildren) {
+            child.gameObject.GetComponent<Image>().fillAmount = RaceManager.Instance.Player.GetComponent<VehicleData>().GetCurrentShield() / RaceManager.Instance.Player.GetComponent<VehicleData>().MaxCarShield;
+        }*/
+        PlayerHealthHUD.GetComponent<Image>().fillAmount = RaceManager.Instance.Player.GetComponent<VehicleData>().GetCurrentHealth() / RaceManager.Instance.Player.GetComponent<VehicleData>().MaxCarHealth;
     }
 
     private void UpdatePowerupSlot() {
-        UpdatePowerUpIcon(PowerUpSlot1.GetComponent<Image>(), Player.GetComponent<VehicleData>().GetPowerUpSlotValue(1));
-        UpdatePowerUpIcon(PowerUpSlot2.GetComponent<Image>(), Player.GetComponent<VehicleData>().GetPowerUpSlotValue(2));
-        UpdatePowerUpIcon(PowerUpSlot3.GetComponent<Image>(), Player.GetComponent<VehicleData>().GetPowerUpSlotValue(3));
-        UpdatePowerUpIcon(PowerUpSlot4.GetComponent<Image>(), Player.GetComponent<VehicleData>().GetPowerUpSlotValue(4));
+        UpdatePowerUpIcon(PowerUpSlot1.GetComponent<Image>(), RaceManager.Instance.Player.GetComponent<VehicleData>().GetPowerUpSlotValue(1));
+        UpdatePowerUpIcon(PowerUpSlot2.GetComponent<Image>(), RaceManager.Instance.Player.GetComponent<VehicleData>().GetPowerUpSlotValue(2));
+        UpdatePowerUpIcon(PowerUpSlot3.GetComponent<Image>(), RaceManager.Instance.Player.GetComponent<VehicleData>().GetPowerUpSlotValue(3));
+        UpdatePowerUpIcon(PowerUpSlot4.GetComponent<Image>(), RaceManager.Instance.Player.GetComponent<VehicleData>().GetPowerUpSlotValue(4));
     }
 
     private void UpdateTutorialText() {
         for (int i = 1; i < 5; i++) {
-            switch (Player.GetComponent<VehicleData>().GetPowerUpSlotValue(i)) {
+            switch (RaceManager.Instance.Player.GetComponent<VehicleData>().GetPowerUpSlotValue(i)) {
                 case (int)PowerUpName.MachineGun:
                     UpdateTutorialTextQueue(PlayerPowerUps.GetComponentInChildren<MachineGunPU>().PowerUpInfo);
                     break;
@@ -220,6 +226,11 @@ public class PlayerDataDisplayer : MonoBehaviour {
         if (ThornsTimerUI.activeSelf) {
             ThornsTimerUI.GetComponent<Image>().fillAmount = 1 - PlayerPowerUps.GetComponentInChildren<ThornsPU>().GetRunningTime() / PlayerPowerUps.GetComponentInChildren<ThornsPU>().MaxTime;
         }
+        // updates shield
+        if (ShieldHUD.activeSelf) {
+            //SmokeHUD.transform.GetChild(0).GetComponent<Image>().fillAmount = PlayerPowerUps.GetComponentInChildren<SmokePU>().CurSmokeAmount / PlayerPowerUps.GetComponentInChildren<SmokePU>().MaxSmokeAmount;
+            ShieldHUD.transform.GetChild(0).GetComponent<Image>().fillAmount = RaceManager.Instance.Player.GetComponent<VehicleData>().GetCurrentShield() / RaceManager.Instance.Player.GetComponent<VehicleData>().MaxCarShield;
+        }
         // update explosive mine count ui
         if (ExplosiveMineCount.activeSelf) {
             ExplosiveMineCount.GetComponent<TextMeshProUGUI>().text = PlayerPowerUps.GetComponentInChildren<ExplosiveMinePU>().RemainingMines.ToString();
@@ -230,7 +241,7 @@ public class PlayerDataDisplayer : MonoBehaviour {
         }
         // update deactivator pillar count ui
         if (PillarCount.activeSelf) {
-            PillarCount.GetComponent<Text>().text = PlayerPowerUps.GetComponentInChildren<PillarPU>().RemainingPillars.ToString();
+            PillarCount.GetComponent<TextMeshProUGUI>().text = PlayerPowerUps.GetComponentInChildren<PillarPU>().RemainingPillars.ToString();
         }
         // updates smoke
         if (SmokeHUD.activeSelf) {

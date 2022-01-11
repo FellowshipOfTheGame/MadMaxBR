@@ -5,24 +5,36 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class RaceManager : MonoBehaviour {
+
+    public static RaceManager Instance { get; private set; }
+
     public float NumberOfLaps;
     public GameObject Player;
     public List<GameObject> Racers;
     // HUDs
     public GameObject GameHUD;
     public GameObject RaceResults;
+
+    private void Awake() {
+        Instance = this;
+    }
+
     public void StartRace() {
         for (int i = 0; i < Racers.Count; i++) {
             Racers[i].GetComponent<CarUserControl>().ControlActive = true; // active control for the racer 'i'
             Racers[i].GetComponent<VehicleRaceData>().ActiveTimer(true); // start timer of race data of vehicle
         }
     }
-
+    /// <summary>
+    /// Called when the player finishes the race. This function sets an AI to control the player's car
+    /// and show a table with all the racers and their information: Name, Car Name, Time and Kills.
+    /// </summary>
     public void FinishRace() {
+        // sets AI
         GameHUD.gameObject.SetActive(false);
         RaceResults.gameObject.SetActive(true);
+        
     }
-
     private void UpdateRaceResultsTable() {
         GameObject RunnersList = RaceResults.transform.GetChild(0).gameObject;
         for (int i = 0; i < Racers.Count; i++) {
@@ -41,7 +53,7 @@ public class RaceManager : MonoBehaviour {
             // car name
             RunnerRow.transform.GetChild(2).gameObject.GetComponent<Text>().text = Racers[i].name;
             // kills
-            RunnerRow.transform.GetChild(3).gameObject.GetComponent<Text>().text = VehicleInfo.GetKillsCount().ToString();
+            RunnerRow.transform.GetChild(3).gameObject.GetComponent<Text>().text = VehicleInfo.KillsCount.ToString();
             // time
             if (!VehicleInfo.IsDead()) {
                 string MinCount;

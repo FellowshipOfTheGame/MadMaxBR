@@ -5,12 +5,18 @@ using System;
 
 public class ShieldPU : PowerUpBase {
     private GameObject targetCar;
+    private GameObject ShieldHUD; // hud of shield bar
     // shield amount in percentage
     [SerializeField] private float ShieldAmountPercentage;
-    // the hud shield bar
-    [SerializeField] private GameObject ShieldHUD;
-
+    
     public PowerUpData PowerUpInfo;
+    private void Awake() {
+        if (this.transform.parent.gameObject.transform.parent.gameObject.CompareTag("Player")) {
+            ShieldHUD = PlayerDataDisplayer.Instance.ShieldHUD;
+        } else {
+            ShieldHUD = null;
+        }
+    }
     public override void Activate() {
         targetCar = this.transform.parent.gameObject.transform.parent.gameObject; // get the car this script is attached to
         if (ShieldHUD != null) {

@@ -53,6 +53,7 @@ public class AutoTarget : MonoBehaviour
                 selfColliderRemoveindex = i;
             }
         }
+
         hitCollidersList.RemoveAt(selfColliderRemoveindex);
     }
 

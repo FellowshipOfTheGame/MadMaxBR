@@ -1389,7 +1389,7 @@ MonoBehaviour:
   driverMode: 0
   PowerUpUseButtons:
     Slot1UseButton: 323
-    Slot2UseButton: 99
+    Slot2UseButton: 32
     Slot3UseButton: 120
     Slot4UseButton: 304
 --- !u!114 &290143233744352954
@@ -2716,10 +2716,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f884143a3fe219341a2886ba866e08f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  useButton: 304
   maxGlueAmount: 100
   UsePerSecond: 10
-  GlueHUD: {fileID: 0}
   LiquidSpiller: {fileID: 9069682224897605016}
   PowerUpInfo: {fileID: 11400000, guid: b01b1bb831204954cbb64dabbc1b7dd8, type: 2}
 --- !u!1 &4807407564628781951
@@ -2767,7 +2765,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShieldAmountPercentage: 50
-  ShieldHUD: {fileID: 0}
   PowerUpInfo: {fileID: 11400000, guid: 82bda1f0cdc5e9641aa0d722cbe5915b, type: 2}
 --- !u!1 &4807407564652263106
 GameObject:
@@ -3077,7 +3074,6 @@ MonoBehaviour:
   thornCollisionDamage: 10
   collisionDamageReduction: 80
   PowerUpInfo: {fileID: 11400000, guid: af5e368c71c9677488b26bf46864bb66, type: 2}
-  ThornsHUD: {fileID: 0}
 --- !u!1 &4807407564953268994
 GameObject:
   m_ObjectHideFlags: 0
@@ -3167,10 +3163,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c81dc9b86aab014ea0b24256e722b98, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  useButton: 120
   PillarsQuantity: 1
   PillarPrefab: {fileID: 3188946074096826857, guid: 205936c9e1095494c8d92db6a1935014, type: 3}
-  PillarHUD: {fileID: 0}
   PowerUpInfo: {fileID: 11400000, guid: 1261b72b48584b1438f0bda5ef8f4dae, type: 2}
 --- !u!1 &4807407565062898644
 GameObject:
@@ -3458,10 +3452,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4503bab38f46b284c97ef209f7589ef6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  useButton: 32
   maxSmokeAmount: 100
   usePerSecond: 40
-  SmokeHUD: {fileID: 0}
   PowerUpInfo: {fileID: 11400000, guid: 04704d53c0ddd574092898d4c42247c9, type: 2}
 --- !u!1 &4807407565410145811
 GameObject:
@@ -3506,10 +3498,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 16a9dfcf4f139a340b5310da2f5d5729, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  useButton: 304
   maxGreaseAmount: 100
   UsePerSecond: 10
-  GreaseHUD: {fileID: 0}
   LiquidSpiller: {fileID: 7140461477338858055}
   PowerUpInfo: {fileID: 11400000, guid: 7683c25f71a5d8d47b67cedb8cb27ed1, type: 2}
 --- !u!1 &4807407565503918042
@@ -3691,7 +3681,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf655a5a6c150f94e8a2552b9411c785, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  RifleHUD: {fileID: 0}
   WeaponManager: {fileID: 2771215911081938108}
   PowerUpInfo: {fileID: 11400000, guid: e15c1a0a27865714bb923f8e0b87c81c, type: 2}
 --- !u!1 &4807407565725883677
@@ -3737,10 +3726,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2495a801ce9e1d348a44406a83fbbe95, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  useButton: 120
   MinesQuantity: 3
   MinePrefab: {fileID: 7752708865425503834, guid: 6dc58519ff7151b48b9cb55c00ccb095, type: 3}
-  ExplosiveMineHUD: {fileID: 0}
   PowerUpInfo: {fileID: 11400000, guid: 24b6d77763973434e8ec0c5bf3fb7d0b, type: 2}
 --- !u!1 &4807407565907535131
 GameObject:
@@ -3785,7 +3772,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ceedc073cf841b4bbe5056a30e115db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MachineGunHUD: {fileID: 0}
   WeaponManager: {fileID: 2771215911081938108}
   PowerUpInfo: {fileID: 11400000, guid: c803362b9204dbe478fff2424095402f, type: 2}
 --- !u!1 &4807407566007466041
@@ -4232,10 +4218,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ca0655257a2d7e49b9fb56df5bef4e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  useButton: 120
   MinesQuantity: 3
   MinePrefab: {fileID: 7752708865425503834, guid: 656530124b3a52b4780343874faed291, type: 3}
-  DeactivatorMineHUD: {fileID: 0}
   PowerUpInfo: {fileID: 11400000, guid: 9dedb38c0f5737c44b54389426bd6ebf, type: 2}
 --- !u!1 &4807407566430035488
 GameObject:
@@ -4280,12 +4264,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4ace8b19eeeeef49b371a7c43fc51ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  useButton: 304
   maxNitroAmount: 100
   UsePerSecond: 20
-  NitroHUD: {fileID: 0}
-  NitroEffect1: {fileID: 3752441451550312201}
-  NitroEffect2: {fileID: 8284771450108150925}
+  NitroEffects:
+  - {fileID: 3752441451550312201}
+  - {fileID: 8284771450108150925}
   PowerUpInfo: {fileID: 11400000, guid: c9400bae304ceb44ca9e273bda8e917b, type: 2}
 --- !u!114 &3752441449960611312
 MonoBehaviour:
@@ -4299,7 +4282,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a0065874bb942f947ba5a79897b14d37, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  RaceManager: {fileID: 0}
 --- !u!114 &3752441449785844099
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4312,7 +4294,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1901987b65ed1a446baa3055430ee539, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  RaceManager: {fileID: 0}
 --- !u!1001 &185079452642293257
 PrefabInstance:
   m_ObjectHideFlags: 0

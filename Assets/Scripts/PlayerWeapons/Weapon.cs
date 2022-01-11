@@ -87,6 +87,10 @@ public class Weapon : MonoBehaviour {
         lineRenderer.positionCount = 2;
         linhaDoLaser = GetComponent<LineRenderer>();
 
+        if (linhaDoLaser == null) {
+            Debug.Log("linha do laser null");
+        }
+
         for (int x = 0; x < armas.Length; x++) {
             armas[x].objetoArma.SetActive(false);
             armas[x].lugarParticula.SetActive(false);
@@ -117,7 +121,7 @@ public class Weapon : MonoBehaviour {
 
                 if (Physics.Raycast(transform.position, transform.forward, out RaycastHit pontoDeColisao)) {
                     if (pontoDeColisao.transform.gameObject.GetComponent<VehicleData>() != null) {
-                        pontoDeColisao.transform.gameObject.GetComponent<VehicleData>().ReceiveDamage(armas[armaAtual].danoPorTiro);
+                        pontoDeColisao.transform.gameObject.GetComponent<VehicleData>().ReceiveDamage(armas[armaAtual].danoPorTiro, this.transform.parent.gameObject.transform.parent.gameObject);
                     }
                 }
             }

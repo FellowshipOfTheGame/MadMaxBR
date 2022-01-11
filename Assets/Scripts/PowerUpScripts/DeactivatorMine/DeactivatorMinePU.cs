@@ -3,17 +3,22 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class DeactivatorMinePU : PowerUpBase {
-    [SerializeField] private KeyCode useButton = KeyCode.X;
     [SerializeField] private int MinesQuantity; // quantity of mines to be used
     [SerializeField] private GameObject MinePrefab;
-    [SerializeField] private GameObject DeactivatorMineHUD;
-
+    
+    private GameObject DeactivatorMineHUD;
     private int remainingMines;
 
     public PowerUpData PowerUpInfo;
 
     public int RemainingMines { get { return remainingMines; } }
-    
+    private void Awake() {
+        if (this.transform.parent.gameObject.transform.parent.gameObject.CompareTag("Player")) {
+            DeactivatorMineHUD = PlayerDataDisplayer.Instance.DeactivatorMineCount;
+        } else {
+            DeactivatorMineHUD = null;
+        }
+    }
     public override void Activate() {
         remainingMines = MinesQuantity;
         if (DeactivatorMineHUD != null) {

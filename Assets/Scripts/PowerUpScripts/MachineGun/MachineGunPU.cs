@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class MachineGunPU : PowerUpBase {
-    [SerializeField] private GameObject MachineGunHUD; // MachineGun HUD text
+    private GameObject MachineGunHUD; // MachineGun HUD text
     [SerializeField] private GameObject WeaponManager;
 
     private GameObject targetCar; // the car this script is attached
@@ -12,13 +12,21 @@ public class MachineGunPU : PowerUpBase {
 
     public int BulletAmount { get { return WeaponManager.GetComponent<Weapon>().GetMunicao(); } }
 
+    private void Awake() {
+        if (this.transform.parent.gameObject.transform.parent.gameObject.CompareTag("Player")) {
+            MachineGunHUD = PlayerDataDisplayer.Instance.MachineGunCountText;
+        } else {
+            MachineGunHUD = null;
+        }
+    }
+
     public override void Activate() {
         targetCar = this.transform.parent.gameObject.transform.parent.gameObject; // get the car this script is attached
+        WeaponManager.GetComponent<Weapon>().PegarPoweUpArma(2);
+        WeaponManager.GetComponent<WeaponMovement>().StartMovementUp();
         if (MachineGunHUD != null) {
             MachineGunHUD.SetActive(true);
         }
-        WeaponManager.GetComponent<Weapon>().PegarPoweUpArma(2);
-        WeaponManager.GetComponent<WeaponMovement>().StartMovementUp();
     }
 
     public override void Deactivate() {
