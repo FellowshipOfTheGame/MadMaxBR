@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -63,8 +64,15 @@ public class CarMovementAI : MonoBehaviour
     private Vector2 currentNodePositionXZ;
     private Vector2 previousNodePositionXZ;
     private Vector2 carPositionXZ;
+    private CarMovementAI[] cars;
+    private bool capotado = false;
 
     public AiState aiState = AiState.FollowingTrack;
+
+    private void Awake()
+    {
+        cars = FindObjectsOfType<CarMovementAI>();
+    }
 
     void Start()
     {
@@ -88,34 +96,63 @@ public class CarMovementAI : MonoBehaviour
             GetThrottle();
         }
 
-        if (DistanceFromTrack() > trackWidth || isCapotado())
+        if (DistanceFromTrack() > trackWidth || IsCapotado())
         {
             Teleport();
         }
     }
 
-    private bool isCapotado()
+    private bool IsCapotado()
     {
         RaycastHit hit;
 
         if (Physics.Raycast(transform.position, -transform.up, out hit, roadLayerMask))
         {
             Debug.DrawLine(transform.position, hit.point, Color.cyan);
-            return false;
+            StartCoroutine(CapotadoTime());
         }
 
-        return true;
+        return capotado;
+    }
+
+    private IEnumerator CapotadoTime()
+    {
+        capotado = false;
+        yield return new WaitForSeconds(5f);
+
+        if (Physics.Raycast(transform.position, -transform.up, roadLayerMask))
+        {
+            capotado = false;
+        }
+        else
+        {
+            capotado = true;
+        }
+    }
+
+    private IEnumerator CollisionTime()
+    {
+        foreach (CarMovementAI car in cars)
+        {
+            Physics.IgnoreCollision(gameObject.GetComponent<Collider>(), car.GetComponent<Collider>(), true);
+        }
+
+        yield return new WaitForSeconds(5f);
+
+        foreach (CarMovementAI car in cars)
+        {
+            Physics.IgnoreCollision(gameObject.GetComponent<Collider>(), car.GetComponent<Collider>(), false);
+        }
     }
 
     private void Teleport()
     {
-        if (!Physics.Raycast(nodes[previousNode].transform.position, Vector3.forward, 2f, carLayerMask))
-        {
-            transform.rotation = Quaternion.Euler(0f, transform.InverseTransformPoint(currentNodePosition).y, 0f);
-            transform.position = nodes[previousNode].transform.position + new Vector3(0f, 20f, 0f);
-            rb.velocity = Vector3.zero;
-            rb.angularVelocity = Vector3.zero;
-        }
+        StartCoroutine(CollisionTime());
+        Vector3 rotationDirection = nodes[currentNode].transform.position - nodes[previousNode].transform.position;
+        rb.rotation = Quaternion.LookRotation(rotationDirection, Vector3.up); 
+        rb.position = nodes[previousNode].transform.position + new Vector3(0f, 3f, 0f);
+        rb.velocity = Vector3.zero;
+        rb.angularVelocity = Vector3.zero;
     }
 
     public void GetThrottle()
@@ -153,7 +190,7 @@ public class CarMovementAI : MonoBehaviour
         if (Physics.Raycast(horizontalSensorTransform.position, transform.right, out raycastHitSensor[4], horizontalSensorLength, ~ignoredLayerMasks))
         {
             Debug.DrawLine(horizontalSensorTransform.position, raycastHitSensor[4].point, Color.blue);
-            Debug.Log("Sensor horizontal");
+            //Debug.Log("Sensor horizontal");
 
             aiState = AiState.Avoiding;
             throttle = -1f;
@@ -164,7 +201,7 @@ public class CarMovementAI : MonoBehaviour
         else if (Physics.Raycast(leftSensorTransform.position, Quaternion.AngleAxis(-frontSensorOuterAngle, transform.up) * transform.forward, out raycastHitSensor[0], sensorLength, ~ignoredLayerMasks))
         {
             Debug.DrawLine(leftSensorTransform.position, raycastHitSensor[0].point);
-            Debug.Log("Sensor 1 da esquerda");
+            //Debug.Log("Sensor 1 da esquerda");
 
             aiState = AiState.Avoiding;
             steer = 1f;
@@ -181,7 +218,7 @@ public class CarMovementAI : MonoBehaviour
         else if (Physics.Raycast(rightSensorTransform.position, Quaternion.AngleAxis(frontSensorOuterAngle, transform.up) * transform.forward, out raycastHitSensor[3], sensorLength, ~ignoredLayerMasks))
         {
             Debug.DrawLine(rightSensorTransform.position, raycastHitSensor[3].point);
-            Debug.Log("Sensor 2 da direita");
+            //Debug.Log("Sensor 2 da direita");
 
             aiState = AiState.Avoiding;
             steer = -1f;
@@ -198,7 +235,7 @@ public class CarMovementAI : MonoBehaviour
         else if (Physics.Raycast(leftInnerSensorTransform.position, Quaternion.AngleAxis(-frontSensorInnerAngle, transform.up) * transform.forward, out raycastHitSensor[1], sensorLength, ~ignoredLayerMasks))
         {
             Debug.DrawLine(leftInnerSensorTransform.position, raycastHitSensor[1].point);
-            Debug.Log("Sensor 2 da esquerda");
+            //Debug.Log("Sensor 2 da esquerda");
 
             aiState = AiState.Avoiding;
             steer = 0.5f;
@@ -215,7 +252,7 @@ public class CarMovementAI : MonoBehaviour
         else if (Physics.Raycast(rightInnerSensorTransform.position, Quaternion.AngleAxis(frontSensorInnerAngle, transform.up) * transform.forward, out raycastHitSensor[2], sensorLength, ~ignoredLayerMasks))
         {
             Debug.DrawLine(rightInnerSensorTransform.position, raycastHitSensor[2].point);
-            Debug.Log("Sensor 1 da direita");
+            //Debug.Log("Sensor 1 da direita");
 
             aiState = AiState.Avoiding;
             steer = -0.5f;

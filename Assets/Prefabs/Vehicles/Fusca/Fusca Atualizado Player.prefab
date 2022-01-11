@@ -1385,8 +1385,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7f0e1c4b6411c445bcac44c0d9354c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  driverMode: 0
   ControlActive: 0
+  driverMode: 0
+  PowerUpUseButtons:
+    Slot1UseButton: 323
+    Slot2UseButton: 99
+    Slot3UseButton: 120
+    Slot4UseButton: 304
 --- !u!114 &290143233744352954
 MonoBehaviour:
   m_ObjectHideFlags: 0
