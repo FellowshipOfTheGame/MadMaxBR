@@ -276,7 +276,7 @@ public class VehicleData : MonoBehaviour {
     }
     // Update is called once per frame
     public void Update() {
-        //curCarHealth--;
+        curCarHealth--;
         //SetCurrentHealth(MaxCarHealth);
         if (curCarHealth <= 0 && !isDead) {
             isDead = true;
