@@ -11,9 +11,7 @@ public class PlayerDataDisplayer : MonoBehaviour {
 
     public GameObject VelocityDisplay;
     public GameObject LapCounterDisplay;
-    public GameObject MaxNumberOfLaps;
     public GameObject RacePositionDisplay;
-    public GameObject MaxRacePositionDisplay;
 
     public GameObject MachineGunCountText;
     public GameObject RifleCountText;
@@ -140,10 +138,8 @@ public class PlayerDataDisplayer : MonoBehaviour {
     }
 
     private void UpdateRaceData() {
-        LapCounterDisplay.GetComponent<Text>().text = "" + PlayerRaceData.GetLapCount();
-        RacePositionDisplay.GetComponent<Text>().text = "" + PlayerRaceData.GetRacePosition();
-        MaxRacePositionDisplay.GetComponent<Text>().text = "" + RaceManager.Instance.Racers.Count;
-        MaxNumberOfLaps.GetComponent<Text>().text = "" + RaceManager.Instance.NumberOfLaps;
+        LapCounterDisplay.GetComponent<Text>().text = "" + PlayerRaceData.GetLapCount() + "/" + RaceManager.Instance.NumberOfLaps;
+        RacePositionDisplay.GetComponent<Text>().text = "" + PlayerRaceData.GetRacePosition() + "/" + RaceManager.Instance.Racers.Count;
     }
 
     private void UpdateUIBars() {
