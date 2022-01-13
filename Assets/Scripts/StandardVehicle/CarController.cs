@@ -7,14 +7,8 @@ internal enum CarDriveType {
     FourWheelDrive
 }
 
-internal enum SpeedType {
-    MPH,
-    KPH
-}
-
 public class CarController : MonoBehaviour {
     [SerializeField] private CarDriveType m_CarDriveType = CarDriveType.FourWheelDrive;
-    [SerializeField] private SpeedType m_SpeedType;
     [SerializeField] private WheelCollider[] m_WheelColliders = new WheelCollider[4];
     [SerializeField] private GameObject[] m_WheelMeshes = new GameObject[4];
     [SerializeField] private WheelEffects[] m_WheelEffects = new WheelEffects[4];
@@ -100,11 +94,7 @@ public class CarController : MonoBehaviour {
     public float CurrentSteerAngle{ get { return m_SteerAngle; }}
     public float CurrentSpeed { 
         get { 
-            if (m_SpeedType == SpeedType.MPH) { 
-                return m_Rigidbody.velocity.magnitude * 2.23693629f; 
-            } else { 
-                return m_Rigidbody.velocity.magnitude * 3.6f; 
-            } 
+            return m_Rigidbody.velocity.magnitude * 2;
         }
     }
     /// <summary>
@@ -272,11 +262,7 @@ public class CarController : MonoBehaviour {
 
                         float VelocityRelativeToMax;
 
-                        if (m_SpeedType == SpeedType.MPH) {
-                            VelocityRelativeToMax = m_Rigidbody.velocity.magnitude * 2.23693629f / CarSettings.m_Topspeed;
-                        } else {
-                            VelocityRelativeToMax = m_Rigidbody.velocity.magnitude * 3.6f / CarSettings.m_Topspeed;
-                        }
+                        VelocityRelativeToMax = m_Rigidbody.velocity.magnitude * 2/ CarSettings.m_Topspeed;
 
                         float decreaseRate = 0.75f - 0.45f * VelocityRelativeToMax;
 
@@ -346,7 +332,13 @@ public class CarController : MonoBehaviour {
             }
         }
 
+        //Debug.Log(accel);
+
         ApplyDrive(accel, footbrake);
+
+        if (accel == 0) { // if player is not accelerating/deaccelerating
+            DecreaseSpeed();
+        }
 
         CapSpeed();
 
@@ -371,21 +363,46 @@ public class CarController : MonoBehaviour {
 
         TractionControl();
     }
+    /// <summary>
+    /// Decrease the speed of the car at a rate relative to the maximum speed.
+    /// </summary>
+    /// <param name="decreaseRate">.</param>
+    private void DecreaseSpeed() {
+        float maxSpeed = CarSettings.m_Topspeed * 2.23693629f;
 
+        // Decrease rate of speed given in percent of the maximum speed per second;
+        float decreaseRate; 
+
+        if (m_Rigidbody.velocity.magnitude > maxSpeed * 0.9) {
+            decreaseRate = 0.1f;
+        } else if (m_Rigidbody.velocity.magnitude > maxSpeed * 0.8 && m_Rigidbody.velocity.magnitude <= maxSpeed * 0.9) {
+            decreaseRate = 0.09f;
+        } else if (m_Rigidbody.velocity.magnitude > maxSpeed * 0.7 && m_Rigidbody.velocity.magnitude <= maxSpeed * 0.8) {
+            decreaseRate = 0.08f;
+        } else if (m_Rigidbody.velocity.magnitude > maxSpeed * 0.6 && m_Rigidbody.velocity.magnitude <= maxSpeed * 0.7) {
+            decreaseRate = 0.07f;
+        } else if (m_Rigidbody.velocity.magnitude > maxSpeed * 0.5 && m_Rigidbody.velocity.magnitude <= maxSpeed * 0.6) {
+            decreaseRate = 0.06f;
+        } else if (m_Rigidbody.velocity.magnitude > maxSpeed * 0.4 && m_Rigidbody.velocity.magnitude <= maxSpeed * 0.5) {
+            decreaseRate = 0.05f;
+        } else if (m_Rigidbody.velocity.magnitude > maxSpeed * 0.3 && m_Rigidbody.velocity.magnitude <= maxSpeed * 0.4) {
+            decreaseRate = 0.04f;
+        } else if (m_Rigidbody.velocity.magnitude > maxSpeed * 0.2 && m_Rigidbody.velocity.magnitude <= maxSpeed * 0.3) {
+            decreaseRate = 0.03f;
+        } else if (/*m_Rigidbody.velocity.magnitude > maxSpeed * 0.1 && */m_Rigidbody.velocity.magnitude <= maxSpeed * 0.2) {
+            decreaseRate = 0.02f;
+        } else {
+            decreaseRate = 0.00f;
+        }
+
+        m_Rigidbody.velocity = m_Rigidbody.velocity.normalized * Mathf.MoveTowards(m_Rigidbody.velocity.magnitude, 0, Time.deltaTime * maxSpeed * decreaseRate);
+    }
 
     private void CapSpeed() {
-        float speed = m_Rigidbody.velocity.magnitude;
-        switch (m_SpeedType) {
-            case SpeedType.MPH:
-                speed *= 2.23693629f;
-                if (speed > CarSettings.m_Topspeed)
-                    m_Rigidbody.velocity = (CarSettings.m_Topspeed /2.23693629f) * m_Rigidbody.velocity.normalized;
-                break;
-            case SpeedType.KPH:
-                speed *= 3.6f;
-                if (speed > CarSettings.m_Topspeed)
-                    m_Rigidbody.velocity = (CarSettings.m_Topspeed /3.6f) * m_Rigidbody.velocity.normalized;
-                break;
+        float speed = m_Rigidbody.velocity.magnitude * 2;
+        
+        if (speed > CarSettings.m_Topspeed) {
+            m_Rigidbody.velocity = (CarSettings.m_Topspeed / 2) * m_Rigidbody.velocity.normalized;
         }
     }
 
