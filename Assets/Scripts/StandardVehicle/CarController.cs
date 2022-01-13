@@ -332,11 +332,9 @@ public class CarController : MonoBehaviour {
             }
         }
 
-        //Debug.Log(accel);
-
         ApplyDrive(accel, footbrake);
 
-        if (accel == 0) { // if player is not accelerating/deaccelerating
+        if (accel == 0 && !NitroEnabled) { // if player is not accelerating/deaccelerating
             DecreaseSpeed();
         }
 
