@@ -12,8 +12,6 @@ internal enum SpeedType {
     KPH
 }
 
-
-
 public class CarController : MonoBehaviour {
     [SerializeField] private CarDriveType m_CarDriveType = CarDriveType.FourWheelDrive;
     [SerializeField] private SpeedType m_SpeedType;
@@ -240,8 +238,6 @@ public class CarController : MonoBehaviour {
         var revsRangeMin = ULerp(0f, CarSettings.m_RevRangeBoundary, CurveFactor(gearNumFactor));
         var revsRangeMax = ULerp(CarSettings.m_RevRangeBoundary, 1f, gearNumFactor);
         Revs = ULerp(revsRangeMin, revsRangeMax, m_GearFactor);
-
-
     }
 
 
