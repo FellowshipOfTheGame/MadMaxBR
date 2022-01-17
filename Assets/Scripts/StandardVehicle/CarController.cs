@@ -28,6 +28,7 @@ public class CarController : MonoBehaviour {
         public float m_Downforce = 500f;
         [HideInInspector] public float m_DefaultDownforce = 500f;
         public float m_Topspeed = 220f;
+        public float m_TopspeedBackwards = 60f;
         public float m_RevRangeBoundary = 1f;
         public float m_SlipLimit = 0.3f;
         public float m_BrakeTorque = 20000f;
@@ -110,11 +111,8 @@ public class CarController : MonoBehaviour {
     }
     /// <summary>
     /// Return current gear of car:
-    /// 0 to 4 means the car is moving, 
-    /// -1 if the car is stopped (neutral), 
-    /// -2 if the car is rearing
     /// </summary>
-    public int CurrentGear { get { return m_GearNumMod; }}
+    public int CurrentGear { get { return currentGear; }}
     public float MaxSpeed{ get { return CarSettings.m_Topspeed; }}
     public float Revs { get; private set; }
     public float AccelInput { get; private set; }
@@ -126,6 +124,9 @@ public class CarController : MonoBehaviour {
     private bool backward = false; // controls if the car can go backwards
 
     private float motorRPM = 0.0f; // revolutions per time of motor
+
+    public float MotorRPM { get { return motorRPM; } }
+
     private float wantedRPM = 0.0f;
 
     private float Pitch;
@@ -148,59 +149,14 @@ public class CarController : MonoBehaviour {
 
             if (!neutralGear && brake && currentGear < 2) {
                 rpm += accel * CarSettings.idleRPM;
-                Debug.Log(rpm);
-                /*
-                if (rpm > 1) {
-                    carSetting.shiftCentre.z = Mathf.PingPong(Time.time * (accel * 10), 2.0f) - 1.0f;
-                } else {
-                    carSetting.shiftCentre.z = 0.0f;
-                }
-                */
             } else {
                 if (!neutralGear) {
                     rpm += col.rpm;
-                    //rpm = carSetting.idleRPM;
-                    //Debug.Log(rpm);
                 } else {
                     rpm += (CarSettings.idleRPM * accel);
-                    //rpm = carSetting.idleRPM;
-                    //Debug.Log(rpm);
                 }
             }
             motorizedWheels++;
-            /*
-            if (brake || accel < 0.0f) { // wheels control when braking
-                Debug.Log("braking");
-                if ((accel < 0.0f) || (brake && (w == wheels[2] || w == wheels[3]))) { // if decelerating or braking when the back wheels are being verified
-                    if (brake && (accel > 0.0f)) {
-                        slip = Mathf.Lerp(slip, 5.0f, accel * 0.01f);
-                    } else if (speed > 1.0f) {
-                        slip = Mathf.Lerp(slip, 1.0f, 0.002f);
-                    } else {
-                        slip = Mathf.Lerp(slip, 1.0f, 0.02f);
-                    }
-
-                    wantedRPM = 0.0f;
-                    col.brakeTorque = carSetting.brakePower;
-                    w.rotation = w_rotate;
-                }
-            } else {
-                col.brakeTorque = accel == 0 || NeutralGear ? col.brakeTorque = 1000 : col.brakeTorque = 0;
-
-                //slip = speed > 0.0f ? (speed > 100 ? slip = Mathf.Lerp(slip, 1.0f + Mathf.Abs(steer), 0.02f) : slip = Mathf.Lerp(slip, 1.5f, 0.02f)) : slip = Mathf.Lerp(slip, 0.01f, 0.02f);
-
-                if (speed > 0.0f) {
-                    if (speed > 100) {
-                        slip = Mathf.Lerp(slip, 1.0f + Mathf.Abs(steer), 0.02f);
-                    } else {
-                        slip = Mathf.Lerp(slip, 1.5f, 0.02f);
-                    }
-                } else {
-                    slip = Mathf.Lerp(slip, 0.01f, 0.02f);
-                }
-
-                w_rotate = w.rotation;
-            }*/
         }
 
         if (motorizedWheels > 1) {
@@ -265,8 +221,6 @@ public class CarController : MonoBehaviour {
                 accel = -accel;
         } else {
             backward = false;
-            //   if (currentGear > 0)
-            //   carSetting.shiftCentre.z = -(accel / currentGear) / -5;
         }
     }
 
@@ -278,8 +232,8 @@ public class CarController : MonoBehaviour {
         }
 
         if (currentGear < CarSettings.gears.Length - 1) { // verify if currentGear is in the maximum gear
-            if (!carSounds.SwitchGear.isPlaying)
-                carSounds.SwitchGear.GetComponent<AudioSource>().Play();
+            //if (!carSounds.SwitchGear.isPlaying)
+            carSounds.SwitchGear.GetComponent<AudioSource>().Play();
 
             currentGear++;
 
@@ -296,8 +250,10 @@ public class CarController : MonoBehaviour {
         }
 
         if (currentGear > 0 || neutralGear) { // verify if currentGear is neutral or not
-            if (!carSounds.SwitchGear.isPlaying)
-                carSounds.SwitchGear.GetComponent<AudioSource>().Play();
+            //if (!carSounds.SwitchGear.isPlaying)
+            carSounds.SwitchGear.GetComponent<AudioSource>().Play();
+
+            //Debug
 
             currentGear--;
 
@@ -498,6 +454,11 @@ public class CarController : MonoBehaviour {
             m_WheelMeshes[i].transform.rotation = quat;
         }
 
+        Debug.Log("backward - " + backward);
+
+        CalculateRPM(accel, handbrake);
+        ChangeGear(accel, handbrake);
+
         //clamp input values
         steering = Mathf.Clamp(steering, -1, 1);
         AccelInput = accel = Mathf.Clamp(accel, 0, 1);
@@ -511,13 +472,25 @@ public class CarController : MonoBehaviour {
         m_WheelColliders[1].steerAngle = m_SteerAngle;
         SteerHelper();
 
-        if (NitroEnabled) {
+        if (NitroEnabled && currentGear > 1 && CurrentSpeed > 50.0f) {
+            carSounds.Nitro.volume = Mathf.Lerp(carSounds.Nitro.volume, 1.0f, Time.deltaTime * 10.0f);
+
+            if (!carSounds.Nitro.isPlaying) {
+                carSounds.Nitro.GetComponent<AudioSource>().Play();
+            }
+
             if (CarSettings.m_Topspeed >= m_DefaultTopspeed || CarSettings.m_Topspeed <= m_DefaultTopspeed * 1.5f) {
                 CarSettings.m_Topspeed = m_DefaultTopspeed * 1.5f;
             }
             m_CurrentTorque *= m_NitroMultFactor;
             CarSettings.m_TractionControl = 0;
         } else {
+            carSounds.Nitro.volume = Mathf.MoveTowards(carSounds.Nitro.volume, 0.0f, Time.deltaTime * 2.0f);
+
+            if (carSounds.Nitro.volume == 0) {
+                carSounds.Nitro.Stop();
+            }
+
             CarSettings.m_TractionControl = 1;
             if (CarSettings.m_Topspeed > m_DefaultTopspeed) { // if car just deactivated Nitro
                 CarSettings.m_Topspeed = Mathf.MoveTowards(CarSettings.m_Topspeed, m_DefaultTopspeed, Time.deltaTime * (1.5f - 1) * m_DefaultTopspeed * 20 / 100);
@@ -533,7 +506,7 @@ public class CarController : MonoBehaviour {
         ApplyDrive(accel, footbrake);
 
         if (accel == 0 && !NitroEnabled) { // if player is not accelerating/deaccelerating
-            DecreaseSpeed();
+            //DecreaseSpeed();
         }
 
         CapSpeed();
@@ -546,17 +519,14 @@ public class CarController : MonoBehaviour {
             m_WheelColliders[2].brakeTorque = hbTorque;
             m_WheelColliders[3].brakeTorque = hbTorque;
         }
-
+        
         CalculateRevs();
         GearChanging();
-
-        CalculateRPM(accel, handbrake);
-        ChangeGear(accel, handbrake);
 
         AddDownForce();
         CheckForWheelSpin();
 
-        if (NitroEnabled) {
+        if (NitroEnabled && currentGear > 1 && CurrentSpeed > 50.0f) {
             m_CurrentTorque /= m_NitroMultFactor;
         }
 
@@ -588,8 +558,8 @@ public class CarController : MonoBehaviour {
             decreaseRate = 0.04f;
         } else if (m_Rigidbody.velocity.magnitude > maxSpeed * 0.2 && m_Rigidbody.velocity.magnitude <= maxSpeed * 0.3) {
             decreaseRate = 0.03f;
-        } else if (/*m_Rigidbody.velocity.magnitude > maxSpeed * 0.1 && */m_Rigidbody.velocity.magnitude <= maxSpeed * 0.2) {
-            decreaseRate = 0.02f;
+        } else if (m_Rigidbody.velocity.magnitude <= maxSpeed * 0.2) {
+            decreaseRate = 0.01005f;
         } else {
             decreaseRate = 0.00f;
         }
@@ -604,7 +574,6 @@ public class CarController : MonoBehaviour {
             m_Rigidbody.velocity = (CarSettings.m_Topspeed / 2) * m_Rigidbody.velocity.normalized;
         }
     }
-
 
     private void ApplyDrive(float accel, float footbrake) {
         float thrustTorque;
