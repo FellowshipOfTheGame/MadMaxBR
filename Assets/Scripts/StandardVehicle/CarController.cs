@@ -506,7 +506,7 @@ public class CarController : MonoBehaviour {
         ApplyDrive(accel, footbrake);
 
         if (accel == 0 && !NitroEnabled) { // if player is not accelerating/deaccelerating
-            //DecreaseSpeed();
+            DecreaseSpeed();
         }
 
         CapSpeed();
