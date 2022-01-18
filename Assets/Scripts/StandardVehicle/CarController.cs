@@ -28,13 +28,23 @@ public class CarController : MonoBehaviour {
         public float m_Downforce = 500f;
         [HideInInspector] public float m_DefaultDownforce = 500f;
         public float m_Topspeed = 220f;
+        public float m_TopspeedBackwards = 60f;
         public float m_RevRangeBoundary = 1f;
         public float m_SlipLimit = 0.3f;
         public float m_BrakeTorque = 20000f;
+
+        /////////////////////////////////////////////
+
+        public float shiftDownRPM = 1500.0f;
+        public float shiftUpRPM = 2500.0f;
+        public float idleRPM = 500.0f;
+
+        public float[] gears = { -10f, 9f, 6f, 4.5f, 3f, 2.5f }; // Number of gears of the car
+        /////////////////////////////////////////////                                              /////////////////////////////////////////////
     }
 
     /// <summary>
-    /// Value that will multiply current torque when nitro is enabled.
+    /// Value that will multiply current torque when Nitro is enabled.
     /// </summary>
     [SerializeField] private float m_NitroMultFactor;
 
@@ -68,6 +78,7 @@ public class CarController : MonoBehaviour {
     private Quaternion[] m_WheelMeshLocalRotations;
     private Vector3 m_Prevpos, m_Pos;
     private float m_SteerAngle;
+    
     private int m_GearNum;
     /// <summary>
     /// 0 if the car is moving, 1 if neutral, 2 if rear
@@ -75,6 +86,7 @@ public class CarController : MonoBehaviour {
     private int m_GearNumMod;
     private float m_GearFactor;
     private float m_OldRotation;
+    
     private float m_CurrentTorque;
     private Rigidbody m_Rigidbody;
     private const float k_ReversingThreshold = 0.01f;
@@ -85,8 +97,8 @@ public class CarController : MonoBehaviour {
     public class CarSounds {
         public AudioSource IdleEngine, LowEngine, HighEngine;
 
-        public AudioSource nitro;
-        public AudioSource switchGear;
+        public AudioSource Nitro;
+        public AudioSource SwitchGear;
     }
 
     public bool Skidding { get; private set; }
@@ -99,14 +111,156 @@ public class CarController : MonoBehaviour {
     }
     /// <summary>
     /// Return current gear of car:
-    /// 0 to 4 means the car is moving, 
-    /// -1 if the car is stopped (neutral), 
-    /// -2 if the car is rearing
     /// </summary>
-    public int CurrentGear { get { return m_GearNumMod; }}
+    public int CurrentGear { get { return currentGear; }}
     public float MaxSpeed{ get { return CarSettings.m_Topspeed; }}
     public float Revs { get; private set; }
     public float AccelInput { get; private set; }
+
+    ///////////////////////////////////////////
+    // new rpm count system
+    private int currentGear = 0;
+    private bool neutralGear = false;
+    private bool backward = false; // controls if the car can go backwards
+
+    private float motorRPM = 0.0f; // revolutions per time of motor
+
+    public float MotorRPM { get { return motorRPM; } }
+
+    private float wantedRPM = 0.0f;
+
+    private float Pitch;
+    private float PitchDelay;
+
+    private float shiftTime = 0.0f;
+    private float shiftDelay = 0.0f;
+    ///////////////////////////////////////////
+
+    private void CalculateRPM(float accel, bool brake) {
+        wantedRPM = (5500.0f * accel) * 0.1f + wantedRPM * 0.9f;
+
+        float rpm = 0.0f;
+        int motorizedWheels = 0;
+        //int currentWheel = 0; // determine what wheel is being controlled (manage sound)
+
+        foreach (WheelCollider w in m_WheelColliders) {
+            //WheelHit hit; variable to manage sound
+            WheelCollider col = w;
+
+            if (!neutralGear && brake && currentGear < 2) {
+                rpm += accel * CarSettings.idleRPM;
+            } else {
+                if (!neutralGear) {
+                    rpm += col.rpm;
+                } else {
+                    rpm += (CarSettings.idleRPM * accel);
+                }
+            }
+            motorizedWheels++;
+        }
+
+        if (motorizedWheels > 1) {
+            rpm /= motorizedWheels;
+        }
+
+        // changes the RPM of the motor
+        motorRPM = 0.95f * motorRPM + 0.05f * Mathf.Abs(rpm * CarSettings.gears[currentGear]);
+        
+        if (motorRPM > 5500.0f) {
+            motorRPM = 5200.0f;
+        }
+
+        // calculate pitch (keep it within reasonable bounds)
+        Pitch = Mathf.Clamp(1.2f + ((motorRPM - CarSettings.idleRPM) / (CarSettings.shiftUpRPM - CarSettings.idleRPM)), 1.0f, 10.0f);
+
+        shiftTime = Mathf.MoveTowards(shiftTime, 0.0f, 0.1f);
+
+        if (Pitch == 1) {
+            carSounds.IdleEngine.volume = Mathf.Lerp(carSounds.IdleEngine.volume, 1.0f, 0.1f);
+            carSounds.LowEngine.volume = Mathf.Lerp(carSounds.LowEngine.volume, 0.5f, 0.1f);
+            carSounds.HighEngine.volume = Mathf.Lerp(carSounds.HighEngine.volume, 0.0f, 0.1f);
+        } else {
+            carSounds.IdleEngine.volume = Mathf.Lerp(carSounds.IdleEngine.volume, 1.8f - Pitch, 0.1f);
+            if ((Pitch > PitchDelay || accel > 0) && shiftTime == 0.0f) {
+                carSounds.LowEngine.volume = Mathf.Lerp(carSounds.LowEngine.volume, 0.0f, 0.2f);
+                carSounds.HighEngine.volume = Mathf.Lerp(carSounds.HighEngine.volume, 1.0f, 0.1f);
+            } else {
+                carSounds.LowEngine.volume = Mathf.Lerp(carSounds.LowEngine.volume, 0.5f, 0.1f);
+                carSounds.HighEngine.volume = Mathf.Lerp(carSounds.HighEngine.volume, 0.0f, 0.2f);
+            }
+
+            carSounds.HighEngine.pitch = Pitch;
+            carSounds.LowEngine.pitch = Pitch;
+
+            PitchDelay = Pitch;
+        }
+    }
+
+    private void ChangeGear(float accel, bool brake) {
+        if (currentGear == 1 && accel < 0.0f) { // if player decelerates during the first gear
+            if (CurrentSpeed < 5.0f) {
+                ShiftGearDown();
+            }
+        } else if (currentGear == 0 && accel > 0.0f) { // if player accelerates during neutral gear
+            if (CurrentSpeed < 5.0f) {
+                ShiftGearUp();
+            }
+        } else if (motorRPM > CarSettings.shiftUpRPM && accel > 0.0f && CurrentSpeed > 10.0f && !brake) {
+            ShiftGearUp();
+        } else if (motorRPM < CarSettings.shiftDownRPM && currentGear > 1) {
+            ShiftGearDown();
+        }
+
+        if (CurrentSpeed < 1.0f) { // if speed is less than 1, the car can go backwards
+            backward = true;
+        }
+
+        if (currentGear == 0 && backward == true) {
+            //  carSetting.shiftCentre.z = -accel / -5;
+            if (CurrentSpeed < -10 * CarSettings.gears[0])
+                accel = -accel;
+        } else {
+            backward = false;
+        }
+    }
+
+    private void ShiftGearUp() {
+        float now = Time.timeSinceLevelLoad;
+
+        if (now < shiftDelay) {
+            return;
+        }
+
+        if (currentGear < CarSettings.gears.Length - 1) { // verify if currentGear is in the maximum gear
+            //if (!carSounds.SwitchGear.isPlaying)
+            carSounds.SwitchGear.GetComponent<AudioSource>().Play();
+
+            currentGear++;
+
+            shiftDelay = now + 1.0f;
+            shiftTime = 1.5f;
+        }
+    }
+
+    public void ShiftGearDown() {
+        float now = Time.timeSinceLevelLoad;
+
+        if (now < shiftDelay) {
+            return;
+        }
+
+        if (currentGear > 0 || neutralGear) { // verify if currentGear is neutral or not
+            //if (!carSounds.SwitchGear.isPlaying)
+            carSounds.SwitchGear.GetComponent<AudioSource>().Play();
+
+            //Debug
+
+            currentGear--;
+
+            shiftDelay = now + 0.1f;
+            shiftTime = 2.0f;
+        }
+    }
 
     // Use this for initialization
     private void Start() {
@@ -300,6 +454,9 @@ public class CarController : MonoBehaviour {
             m_WheelMeshes[i].transform.rotation = quat;
         }
 
+        CalculateRPM(accel, handbrake);
+        ChangeGear(accel, handbrake);
+
         //clamp input values
         steering = Mathf.Clamp(steering, -1, 1);
         AccelInput = accel = Mathf.Clamp(accel, 0, 1);
@@ -314,14 +471,26 @@ public class CarController : MonoBehaviour {
         SteerHelper();
 
         if (NitroEnabled) {
+            carSounds.Nitro.volume = Mathf.Lerp(carSounds.Nitro.volume, 1.0f, Time.deltaTime * 10.0f);
+
+            if (!carSounds.Nitro.isPlaying) {
+                carSounds.Nitro.GetComponent<AudioSource>().Play();
+            }
+
             if (CarSettings.m_Topspeed >= m_DefaultTopspeed || CarSettings.m_Topspeed <= m_DefaultTopspeed * 1.5f) {
                 CarSettings.m_Topspeed = m_DefaultTopspeed * 1.5f;
             }
             m_CurrentTorque *= m_NitroMultFactor;
             CarSettings.m_TractionControl = 0;
         } else {
+            carSounds.Nitro.volume = Mathf.MoveTowards(carSounds.Nitro.volume, 0.0f, Time.deltaTime * 2.0f);
+
+            if (carSounds.Nitro.volume == 0) {
+                carSounds.Nitro.Stop();
+            }
+
             CarSettings.m_TractionControl = 1;
-            if (CarSettings.m_Topspeed > m_DefaultTopspeed) { // if car just deactivated nitro
+            if (CarSettings.m_Topspeed > m_DefaultTopspeed) { // if car just deactivated Nitro
                 CarSettings.m_Topspeed = Mathf.MoveTowards(CarSettings.m_Topspeed, m_DefaultTopspeed, Time.deltaTime * (1.5f - 1) * m_DefaultTopspeed * 20 / 100);
                 
                 if (CurrentSpeed <= m_DefaultTopspeed) {
@@ -335,7 +504,9 @@ public class CarController : MonoBehaviour {
         ApplyDrive(accel, footbrake);
 
         if (accel == 0 && !NitroEnabled) { // if player is not accelerating/deaccelerating
-            DecreaseSpeed();
+            if (!backward) {
+                DecreaseSpeed();
+            }  
         }
 
         CapSpeed();
@@ -348,7 +519,7 @@ public class CarController : MonoBehaviour {
             m_WheelColliders[2].brakeTorque = hbTorque;
             m_WheelColliders[3].brakeTorque = hbTorque;
         }
-
+        
         CalculateRevs();
         GearChanging();
 
@@ -387,8 +558,8 @@ public class CarController : MonoBehaviour {
             decreaseRate = 0.04f;
         } else if (m_Rigidbody.velocity.magnitude > maxSpeed * 0.2 && m_Rigidbody.velocity.magnitude <= maxSpeed * 0.3) {
             decreaseRate = 0.03f;
-        } else if (/*m_Rigidbody.velocity.magnitude > maxSpeed * 0.1 && */m_Rigidbody.velocity.magnitude <= maxSpeed * 0.2) {
-            decreaseRate = 0.02f;
+        } else if (m_Rigidbody.velocity.magnitude <= maxSpeed * 0.2) {
+            decreaseRate = 0.01005f;
         } else {
             decreaseRate = 0.00f;
         }
@@ -399,11 +570,16 @@ public class CarController : MonoBehaviour {
     private void CapSpeed() {
         float speed = m_Rigidbody.velocity.magnitude * 2;
         
-        if (speed > CarSettings.m_Topspeed) {
-            m_Rigidbody.velocity = (CarSettings.m_Topspeed / 2) * m_Rigidbody.velocity.normalized;
+        if (backward) {
+            if (speed > CarSettings.m_TopspeedBackwards) {
+                m_Rigidbody.velocity = (CarSettings.m_TopspeedBackwards / 2) * m_Rigidbody.velocity.normalized;
+            }
+        } else {
+            if (speed > CarSettings.m_Topspeed) {
+                m_Rigidbody.velocity = (CarSettings.m_Topspeed / 2) * m_Rigidbody.velocity.normalized;
+            }
         }
     }
-
 
     private void ApplyDrive(float accel, float footbrake) {
         float thrustTorque;

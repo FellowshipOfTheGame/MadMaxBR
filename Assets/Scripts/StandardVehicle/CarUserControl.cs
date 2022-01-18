@@ -198,24 +198,28 @@ public class CarUserControl : MonoBehaviour {
 
     private void Update() {
         if (driverMode == DriverMode.Player) {
-            horizontalInput = Input.GetAxis("Horizontal");
-            verticalInput = Input.GetAxis("Vertical");  
-            handbrake = Input.GetKeyDown(KeyCode.Space);
-            VerifyPowerupPlayerInput();     
+            if (ControlActive) {
+                horizontalInput = Input.GetAxis("Horizontal");
+                verticalInput = Input.GetAxis("Vertical");
+                handbrake = Input.GetKeyDown(KeyCode.Space);
+                VerifyPowerupPlayerInput();
+            }
         } else if (driverMode == DriverMode.AI) {
-            horizontalInput = carMovementAI.steer;
-            verticalInput = carMovementAI.throttle;
-            handbrake = carMovementAI.brake;
-            VerifyPowerupAIInput();
+            if (ControlActive) {
+                horizontalInput = carMovementAI.steer;
+                verticalInput = carMovementAI.throttle;
+                handbrake = carMovementAI.brake;
+                VerifyPowerupAIInput();
+            }
         }
     }
 
     private void FixedUpdate() {
         // pass the input to the car!
         if (ControlActive) {
-            m_Car.Move(horizontalInput, verticalInput, verticalInput, handbrake);
+            
         }
-        
+        m_Car.Move(horizontalInput, verticalInput, verticalInput, handbrake);
         //m_Car.Move(h, v, v, 0f);
     }
 }
