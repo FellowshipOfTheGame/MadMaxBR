@@ -454,8 +454,6 @@ public class CarController : MonoBehaviour {
             m_WheelMeshes[i].transform.rotation = quat;
         }
 
-        Debug.Log("backward - " + backward);
-
         CalculateRPM(accel, handbrake);
         ChangeGear(accel, handbrake);
 
@@ -472,7 +470,7 @@ public class CarController : MonoBehaviour {
         m_WheelColliders[1].steerAngle = m_SteerAngle;
         SteerHelper();
 
-        if (NitroEnabled && currentGear > 1 && CurrentSpeed > 50.0f) {
+        if (NitroEnabled) {
             carSounds.Nitro.volume = Mathf.Lerp(carSounds.Nitro.volume, 1.0f, Time.deltaTime * 10.0f);
 
             if (!carSounds.Nitro.isPlaying) {
@@ -506,7 +504,9 @@ public class CarController : MonoBehaviour {
         ApplyDrive(accel, footbrake);
 
         if (accel == 0 && !NitroEnabled) { // if player is not accelerating/deaccelerating
-            DecreaseSpeed();
+            if (!backward) {
+                DecreaseSpeed();
+            }  
         }
 
         CapSpeed();
@@ -526,7 +526,7 @@ public class CarController : MonoBehaviour {
         AddDownForce();
         CheckForWheelSpin();
 
-        if (NitroEnabled && currentGear > 1 && CurrentSpeed > 50.0f) {
+        if (NitroEnabled) {
             m_CurrentTorque /= m_NitroMultFactor;
         }
 
@@ -570,8 +570,14 @@ public class CarController : MonoBehaviour {
     private void CapSpeed() {
         float speed = m_Rigidbody.velocity.magnitude * 2;
         
-        if (speed > CarSettings.m_Topspeed) {
-            m_Rigidbody.velocity = (CarSettings.m_Topspeed / 2) * m_Rigidbody.velocity.normalized;
+        if (backward) {
+            if (speed > CarSettings.m_TopspeedBackwards) {
+                m_Rigidbody.velocity = (CarSettings.m_TopspeedBackwards / 2) * m_Rigidbody.velocity.normalized;
+            }
+        } else {
+            if (speed > CarSettings.m_Topspeed) {
+                m_Rigidbody.velocity = (CarSettings.m_Topspeed / 2) * m_Rigidbody.velocity.normalized;
+            }
         }
     }
 

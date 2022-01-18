@@ -205,10 +205,12 @@ public class CarUserControl : MonoBehaviour {
                 VerifyPowerupPlayerInput();
             }
         } else if (driverMode == DriverMode.AI) {
-            horizontalInput = carMovementAI.steer;
-            verticalInput = carMovementAI.throttle;
-            handbrake = carMovementAI.brake;
-            VerifyPowerupAIInput();
+            if (ControlActive) {
+                horizontalInput = carMovementAI.steer;
+                verticalInput = carMovementAI.throttle;
+                handbrake = carMovementAI.brake;
+                VerifyPowerupAIInput();
+            }
         }
     }
 

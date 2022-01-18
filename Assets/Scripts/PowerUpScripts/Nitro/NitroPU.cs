@@ -45,24 +45,26 @@ public class NitroPU : PowerUpBase {
     }
 
     public override void UsePowerUp(bool useActive) {
-        if (useActive) {
-            if (curNitroAmount != 0) {
-                targetCar.GetComponent<CarController>().NitroEnabled = true;
+        if (targetCar.GetComponent<CarController>().CurrentSpeed >= 50f) {
+            if (useActive) {
+                if (curNitroAmount != 0) {
+                    targetCar.GetComponent<CarController>().NitroEnabled = true;
 
-                if (!NitroEffects[0].GetComponent<ParticleSystem>().isPlaying) {
-                    for (int i = 0; i < NitroEffects.Length; i++) {
-                        NitroEffects[i].GetComponent<ParticleSystem>().Play();
+                    if (!NitroEffects[0].GetComponent<ParticleSystem>().isPlaying) {
+                        for (int i = 0; i < NitroEffects.Length; i++) {
+                            NitroEffects[i].GetComponent<ParticleSystem>().Play();
+                        }
                     }
+
+                    curNitroAmount = Mathf.MoveTowards(curNitroAmount, 0f, Time.deltaTime * maxNitroAmount * UsePerSecond / 100);
                 }
+            } else {
+                targetCar.GetComponent<CarController>().NitroEnabled = false;
 
-                curNitroAmount = Mathf.MoveTowards(curNitroAmount, 0f, Time.deltaTime * maxNitroAmount * UsePerSecond / 100);
-            }
-        } else {
-            targetCar.GetComponent<CarController>().NitroEnabled = false;
-
-            if (!NitroEffects[0].GetComponent<ParticleSystem>().isStopped) {
-                for (int i = 0; i < NitroEffects.Length; i++) {
-                    NitroEffects[i].GetComponent<ParticleSystem>().Stop();
+                if (!NitroEffects[0].GetComponent<ParticleSystem>().isStopped) {
+                    for (int i = 0; i < NitroEffects.Length; i++) {
+                        NitroEffects[i].GetComponent<ParticleSystem>().Stop();
+                    }
                 }
             }
         }

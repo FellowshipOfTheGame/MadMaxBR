@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 /// <summary>
 /// This class is responsible to store information about the car such health, shield, powerUps, etc.
@@ -19,7 +20,6 @@ public class VehicleData : MonoBehaviour {
     private int killsCount; // kills count of car
 
     public bool isDead; // if car is dead
-    public GameObject DeadCarPrefab;
     public GameObject DeathEffect;
 
     public bool UsingThornsArmor { get { return ThornsArmorActive; } }
@@ -276,7 +276,7 @@ public class VehicleData : MonoBehaviour {
     }
     // Update is called once per frame
     public void Update() {
-        //curCarHealth--;
+        //curCarHealth -= 0.7f;
         //SetCurrentHealth(MaxCarHealth);
         if (curCarHealth <= 0 && !isDead) {
             isDead = true;
@@ -324,15 +324,12 @@ public class VehicleData : MonoBehaviour {
     /// </summary>
     /// <param name="damage"></param>
     public void ReceiveDamage(float damage, GameObject damageSource) {
-        Debug.Log("invulneravel? " + isInvulnerable);
         if (!isInvulnerable) {
             
             // diminishes
             if (playerPowerUps.GetComponentInChildren<ThornsPU>() != null) {
                 damage *= 1 - (playerPowerUps.GetComponentInChildren<ThornsPU>().CollisionDamageReduction / 100);
             }
-            
-            Debug.Log("dano recebido: " + damage);
 
             if (curCarShield > 0) {
                 if (damage < curCarShield) {
@@ -357,17 +354,17 @@ public class VehicleData : MonoBehaviour {
     /// </summary>
     public void Die() {
         Instantiate(DeathEffect, this.gameObject.transform.position, DeathEffect.gameObject.transform.rotation);
-        Instantiate(DeadCarPrefab, this.gameObject.transform.position, this.gameObject.transform.rotation);
-        Rigidbody CarRigidBody = this.gameObject.GetComponent<Rigidbody>();
-        Rigidbody DeadCarRigidBody = DeadCarPrefab.GetComponent<Rigidbody>();
 
-        DeadCarRigidBody.velocity = CarRigidBody.velocity;
-        DeadCarRigidBody.angularVelocity = CarRigidBody.velocity;
-        DeadCarRigidBody.inertiaTensor = CarRigidBody.inertiaTensor;
-        DeadCarRigidBody.inertiaTensorRotation = CarRigidBody.inertiaTensorRotation;
-        DeadCarRigidBody.centerOfMass = CarRigidBody.centerOfMass;
+        GameObject originalGameObject = this.gameObject;
 
-        this.gameObject.SetActive(false);
+        for (int i = 0; i < originalGameObject.transform.childCount; i++) {
+            GameObject child = originalGameObject.transform.GetChild(i).gameObject;
+            //Do something with child
+            child.SetActive(false);
+        }
+
+        originalGameObject.transform.GetChild(originalGameObject.transform.childCount - 1).gameObject.SetActive(true);
+
         isDead = true;
     }
 
