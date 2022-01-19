@@ -6070,7 +6070,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8621398421127915969, guid: 738139b140002734cafe23b3bf0de02c, type: 3}
       propertyPath: powerUpNum
-      value: 9
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 8621398421127915969, guid: 738139b140002734cafe23b3bf0de02c, type: 3}
       propertyPath: IsOnCooldown
@@ -21366,6 +21366,10 @@ PrefabInstance:
       propertyPath: TriggerPoint
       value: 
       objectReference: {fileID: 320206328}
+    - target: {fileID: 5965041243860568194, guid: ad87f1f788968c14590a839ccb75ab4a, type: 3}
+      propertyPath: ShieldAmountPercentage
+      value: 50
+      objectReference: {fileID: 0}
     - target: {fileID: 6143662049740273516, guid: ad87f1f788968c14590a839ccb75ab4a, type: 3}
       propertyPath: m_RootOrder
       value: 0
