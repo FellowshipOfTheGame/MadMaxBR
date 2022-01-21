@@ -3906,12 +3906,20 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3160482386426048471, guid: d18372d6e0626b540afe2db9e15f2179, type: 3}
       propertyPath: m_Name
-      value: CanvasGame (1)
+      value: CanvasGame
       objectReference: {fileID: 0}
     - target: {fileID: 4905473413689450147, guid: d18372d6e0626b540afe2db9e15f2179, type: 3}
       propertyPath: RaceManager
       value: 
       objectReference: {fileID: 303523046}
+    - target: {fileID: 8780025355852385663, guid: d18372d6e0626b540afe2db9e15f2179, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -1.2230835
+      objectReference: {fileID: 0}
+    - target: {fileID: 8780025355852385663, guid: d18372d6e0626b540afe2db9e15f2179, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -8.11792
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d18372d6e0626b540afe2db9e15f2179, type: 3}
 --- !u!1 &494949434 stripped
@@ -6070,7 +6078,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8621398421127915969, guid: 738139b140002734cafe23b3bf0de02c, type: 3}
       propertyPath: powerUpNum
-      value: 5
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 8621398421127915969, guid: 738139b140002734cafe23b3bf0de02c, type: 3}
       propertyPath: IsOnCooldown

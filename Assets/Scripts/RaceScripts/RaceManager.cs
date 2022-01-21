@@ -14,6 +14,7 @@ public class RaceManager : MonoBehaviour {
     // HUDs
     public GameObject GameHUD;
     public GameObject RaceResults;
+    public GameObject DeathScreen;
 
     private void Awake() {
         Instance = this;
@@ -151,16 +152,23 @@ public class RaceManager : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
-        UpdateRacersPositions();
-        for (int i = 0; i < Racers.Count; i++) {
-            // if a car completes the last lap and hasnt completed the race yet
-            if (!Racers[i].GetComponent<VehicleRaceData>().HasCompletedRace() && Racers[i].GetComponent<VehicleRaceData>().GetLapCount() == NumberOfLaps) {
-                Racers[i].GetComponent<VehicleRaceData>().CompleteRace();
-                if (Racers[i].tag == "Player") {
-                    FinishRace();
+        if (Player.GetComponent<VehicleData>().isDead) {
+            if (!DeathScreen.activeSelf) {
+                GameHUD.SetActive(false);
+                DeathScreen.SetActive(true);
+            }
+        } else {
+            UpdateRacersPositions();
+            for (int i = 0; i < Racers.Count; i++) {
+                // if a car completes the last lap and hasnt completed the race yet
+                if (!Racers[i].GetComponent<VehicleRaceData>().HasCompletedRace() && Racers[i].GetComponent<VehicleRaceData>().GetLapCount() == NumberOfLaps) {
+                    Racers[i].GetComponent<VehicleRaceData>().CompleteRace();
+                    if (Racers[i].tag == "Player") {
+                        FinishRace();
+                    }
                 }
             }
+            UpdateRaceResultsTable();
         }
-        UpdateRaceResultsTable();
     }
 }
