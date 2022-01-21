@@ -20,10 +20,12 @@ public class VehicleData : MonoBehaviour {
     private int killsCount; // kills count of car
 
     public bool isDead; // if car is dead
+    private float deadTime;
     public GameObject DeathEffect;
-
+    
+    public bool IsDead { get { return isDead; } }
+    public float DeadTime { get { return deadTime; } }
     public bool UsingThornsArmor { get { return ThornsArmorActive; } }
-
     public int KillsCount { get { return killsCount; } }
 
     /// <summary>
@@ -253,10 +255,6 @@ public class VehicleData : MonoBehaviour {
         killsCount++;
     }
 
-    public bool IsDead() {
-        return isDead;
-    }
-
     // Start is called before the first frame update
     public void Start() {
         playerPowerUps = this.transform.GetComponentInChildren<PowerUp>().gameObject;
@@ -266,6 +264,7 @@ public class VehicleData : MonoBehaviour {
         // setup number of kills
         killsCount = 0;
         isDead = false;
+        deadTime = 0;
         //playerPowerUps = gameObject.transform.GetChild(8).gameObject;
         powerUpSlot1 = -1;
         powerUpSlot2 = -1;
@@ -276,11 +275,14 @@ public class VehicleData : MonoBehaviour {
     }
     // Update is called once per frame
     public void Update() {
-        //curCarHealth -= 0.7f;
+        curCarHealth -= 0.7f;
         //SetCurrentHealth(MaxCarHealth);
-        if (curCarHealth <= 0 && !isDead) {
+        if (curCarHealth <= 0 && !IsDead) {
             isDead = true;
             Die();
+        }
+        if (isDead) {
+            deadTime += Time.deltaTime;
         }
         //if (playerPowerUps.transform.GetChild(0).gameObject.activeSelf) { // if nitro power up is active
 

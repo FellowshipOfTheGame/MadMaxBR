@@ -609,7 +609,6 @@ GameObject:
   - component: {fileID: 7099557099110074456}
   - component: {fileID: 7099557099110074461}
   - component: {fileID: 7099557099110074462}
-  - component: {fileID: 7099557099110074463}
   m_Layer: 0
   m_Name: Opala Bot
   m_TagString: AI
@@ -869,30 +868,6 @@ MonoBehaviour:
   impactDirManipulator: 0
   optionalMeshList: []
   crashSound: {fileID: 7505460763178168695}
---- !u!114 &7099557099110074463
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7099557099110074532}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 20fa55eb64c5cea4aa3c71ae19c434bf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  engineSoundStyle: 1
-  lowAccelClip: {fileID: 0}
-  lowDecelClip: {fileID: 0}
-  highAccelClip: {fileID: 0}
-  highDecelClip: {fileID: 0}
-  pitchMultiplier: 1
-  lowPitchMin: 1
-  lowPitchMax: 6
-  highPitchMultiplier: 0.25
-  maxRolloffDistance: 500
-  dopplerLevel: 1
-  useDoppler: 1
 --- !u!1 &7637996133075862132
 GameObject:
   m_ObjectHideFlags: 0

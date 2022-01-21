@@ -59,7 +59,7 @@ public class RaceManager : MonoBehaviour {
             // kills
             RunnerRow.transform.GetChild(3).gameObject.GetComponent<Text>().text = VehicleInfo.KillsCount.ToString();
             // time
-            if (!VehicleInfo.IsDead()) {
+            if (!VehicleInfo.IsDead) {
                 string MinCount;
                 string SecCount;
                 string MilliCount;
@@ -153,8 +153,10 @@ public class RaceManager : MonoBehaviour {
     // Update is called once per frame
     void Update() {
         if (Player.GetComponent<VehicleData>().isDead) {
-            if (!DeathScreen.activeSelf) {
+            if (GameHUD.activeSelf) {
                 GameHUD.SetActive(false);
+            }
+            if (!DeathScreen.activeSelf && Player.GetComponent<VehicleData>().DeadTime >= 2f) {
                 DeathScreen.SetActive(true);
             }
         } else {
