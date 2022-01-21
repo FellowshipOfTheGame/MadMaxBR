@@ -21435,6 +21435,18 @@ PrefabInstance:
       propertyPath: path
       value: 
       objectReference: {fileID: 1522799644}
+    - target: {fileID: 6776084252466441515, guid: ad87f1f788968c14590a839ccb75ab4a, type: 3}
+      propertyPath: CarSettings.shiftUpRPM
+      value: 4000
+      objectReference: {fileID: 0}
+    - target: {fileID: 6776084252466441515, guid: ad87f1f788968c14590a839ccb75ab4a, type: 3}
+      propertyPath: CarSettings.shiftDownRPM
+      value: 2000
+      objectReference: {fileID: 0}
+    - target: {fileID: 6776084252466441515, guid: ad87f1f788968c14590a839ccb75ab4a, type: 3}
+      propertyPath: CarSettings.gears.Array.data[2]
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 6776084252466441686, guid: ad87f1f788968c14590a839ccb75ab4a, type: 3}
       propertyPath: m_Name
       value: Opala Player
