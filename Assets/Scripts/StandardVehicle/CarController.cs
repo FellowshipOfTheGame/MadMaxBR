@@ -35,8 +35,8 @@ public class CarController : MonoBehaviour {
 
         /////////////////////////////////////////////
 
-        public float shiftDownRPM = 1500.0f;
-        public float shiftUpRPM = 2500.0f;
+        public float shiftDownRPM = 2000.0f;
+        public float shiftUpRPM = 4000.0f;
         public float idleRPM = 500.0f;
 
         public float[] gears = { -10f, 9f, 6f, 4.5f, 3f, 2.5f }; // Number of gears of the car

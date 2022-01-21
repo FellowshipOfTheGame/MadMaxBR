@@ -14,6 +14,7 @@ public class RaceManager : MonoBehaviour {
     // HUDs
     public GameObject GameHUD;
     public GameObject RaceResults;
+    public GameObject DeathScreen;
 
     private void Awake() {
         Instance = this;
@@ -30,10 +31,13 @@ public class RaceManager : MonoBehaviour {
     /// and show a table with all the racers and their information: Name, Car Name, Time and Kills.
     /// </summary>
     public void FinishRace() {
-        // sets AI
+        // sets AI on player car
+        Player.GetComponent<CarUserControl>().SetAIControl(true);
+        Player.transform.GetChild(4).gameObject.SetActive(true);
+
+        // show Final results
         GameHUD.gameObject.SetActive(false);
         RaceResults.gameObject.SetActive(true);
-        
     }
     private void UpdateRaceResultsTable() {
         GameObject RunnersList = RaceResults.transform.GetChild(0).gameObject;
@@ -55,7 +59,7 @@ public class RaceManager : MonoBehaviour {
             // kills
             RunnerRow.transform.GetChild(3).gameObject.GetComponent<Text>().text = VehicleInfo.KillsCount.ToString();
             // time
-            if (!VehicleInfo.IsDead()) {
+            if (!VehicleInfo.IsDead) {
                 string MinCount;
                 string SecCount;
                 string MilliCount;
@@ -148,16 +152,25 @@ public class RaceManager : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
-        UpdateRacersPositions();
-        for (int i = 0; i < Racers.Count; i++) {
-            // if a car completes the last lap and hasnt completed the race yet
-            if (!Racers[i].GetComponent<VehicleRaceData>().HasCompletedRace() && Racers[i].GetComponent<VehicleRaceData>().GetLapCount() == NumberOfLaps) {
-                Racers[i].GetComponent<VehicleRaceData>().CompleteRace();
-                if (Racers[i].tag == "Player") {
-                    FinishRace();
+        if (Player.GetComponent<VehicleData>().isDead) {
+            if (GameHUD.activeSelf) {
+                GameHUD.SetActive(false);
+            }
+            if (!DeathScreen.activeSelf && Player.GetComponent<VehicleData>().DeadTime >= 2f) {
+                DeathScreen.SetActive(true);
+            }
+        } else {
+            UpdateRacersPositions();
+            for (int i = 0; i < Racers.Count; i++) {
+                // if a car completes the last lap and hasnt completed the race yet
+                if (!Racers[i].GetComponent<VehicleRaceData>().HasCompletedRace() && Racers[i].GetComponent<VehicleRaceData>().GetLapCount() == NumberOfLaps) {
+                    Racers[i].GetComponent<VehicleRaceData>().CompleteRace();
+                    if (Racers[i].tag == "Player") {
+                        FinishRace();
+                    }
                 }
             }
+            UpdateRaceResultsTable();
         }
-        UpdateRaceResultsTable();
     }
 }

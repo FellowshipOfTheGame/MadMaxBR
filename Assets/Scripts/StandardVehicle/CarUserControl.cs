@@ -34,6 +34,14 @@ public class CarUserControl : MonoBehaviour {
     private VehicleData vehicleInfo;
     private GameObject playerPowerUps;
 
+    public void SetAIControl(bool set) {
+        if (set) {
+            driverMode = DriverMode.AI;
+        } else {
+            driverMode = DriverMode.Player;
+        }
+    }
+
     private void Awake() {
         // get the car controller
         m_Car = GetComponent<CarController>();
