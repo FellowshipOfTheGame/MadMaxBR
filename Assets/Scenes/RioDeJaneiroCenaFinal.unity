@@ -21435,6 +21435,14 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 2100000, guid: 8c00371af89da924d8fc4562c5f73efe, type: 2}
     - target: {fileID: 290143233744352929, guid: ff22c5cf6d788394ca5b8cd93979b6dc, type: 3}
+      propertyPath: CarSettings.shiftUpRPM
+      value: 4000
+      objectReference: {fileID: 0}
+    - target: {fileID: 290143233744352929, guid: ff22c5cf6d788394ca5b8cd93979b6dc, type: 3}
+      propertyPath: CarSettings.shiftDownRPM
+      value: 2000
+      objectReference: {fileID: 0}
+    - target: {fileID: 290143233744352929, guid: ff22c5cf6d788394ca5b8cd93979b6dc, type: 3}
       propertyPath: CarSettings.m_FullTorqueOverAllWheels
       value: 2500
       objectReference: {fileID: 0}
