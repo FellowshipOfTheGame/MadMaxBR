@@ -31,6 +31,8 @@ public class RaceManager : MonoBehaviour {
     /// </summary>
     public void FinishRace() {
         // sets AI on player car
+        Player.GetComponent<CarUserControl>().SetAIControl(true);
+        Player.transform.GetChild(4).gameObject.SetActive(true);
 
         // show Final results
         GameHUD.gameObject.SetActive(false);
