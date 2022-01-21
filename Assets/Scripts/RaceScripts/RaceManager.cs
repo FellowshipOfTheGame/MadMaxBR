@@ -30,10 +30,11 @@ public class RaceManager : MonoBehaviour {
     /// and show a table with all the racers and their information: Name, Car Name, Time and Kills.
     /// </summary>
     public void FinishRace() {
-        // sets AI
+        // sets AI on player car
+
+        // show Final results
         GameHUD.gameObject.SetActive(false);
         RaceResults.gameObject.SetActive(true);
-        
     }
     private void UpdateRaceResultsTable() {
         GameObject RunnersList = RaceResults.transform.GetChild(0).gameObject;
