@@ -6205,7 +6205,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8621398421127915969, guid: 738139b140002734cafe23b3bf0de02c, type: 3}
       propertyPath: powerUpNum
-      value: 9
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 8621398421127915974, guid: 738139b140002734cafe23b3bf0de02c, type: 3}
       propertyPath: m_RootOrder
@@ -6213,15 +6213,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8621398421127915974, guid: 738139b140002734cafe23b3bf0de02c, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 1207.7
+      value: 1155.97
       objectReference: {fileID: 0}
     - target: {fileID: 8621398421127915974, guid: 738139b140002734cafe23b3bf0de02c, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 316.2
+      value: 196.8
       objectReference: {fileID: 0}
     - target: {fileID: 8621398421127915974, guid: 738139b140002734cafe23b3bf0de02c, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -755.6
+      value: -757.89
       objectReference: {fileID: 0}
     - target: {fileID: 8621398421127915974, guid: 738139b140002734cafe23b3bf0de02c, type: 3}
       propertyPath: m_LocalRotation.w
@@ -22036,6 +22036,10 @@ PrefabInstance:
       objectReference: {fileID: 303523046}
     - target: {fileID: 4905473413936605693, guid: d18372d6e0626b540afe2db9e15f2179, type: 3}
       propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7635003162736404962, guid: d18372d6e0626b540afe2db9e15f2179, type: 3}
+      propertyPath: m_hasFontAssetChanged
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
