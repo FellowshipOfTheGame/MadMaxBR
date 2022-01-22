@@ -6217,11 +6217,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8621398421127915974, guid: 738139b140002734cafe23b3bf0de02c, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 196.8
+      value: 205.6
       objectReference: {fileID: 0}
     - target: {fileID: 8621398421127915974, guid: 738139b140002734cafe23b3bf0de02c, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -757.89
+      value: -1012
       objectReference: {fileID: 0}
     - target: {fileID: 8621398421127915974, guid: 738139b140002734cafe23b3bf0de02c, type: 3}
       propertyPath: m_LocalRotation.w
@@ -10958,11 +10958,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 62aca0997650dcd4a8f19e5e18055bb6, type: 3}
---- !u!1 &1420025481 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1484451213421233907, guid: d18372d6e0626b540afe2db9e15f2179, type: 3}
-  m_PrefabInstance: {fileID: 7635003163345669577}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1420684485 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: c40df940c951d3d479cd38070dce8dfe, type: 3}
@@ -21549,7 +21544,7 @@ PrefabInstance:
     - target: {fileID: 4807407565052351176, guid: ff22c5cf6d788394ca5b8cd93979b6dc, type: 3}
       propertyPath: PillarHUD
       value: 
-      objectReference: {fileID: 1420025481}
+      objectReference: {fileID: 0}
     - target: {fileID: 4807407565075245480, guid: ff22c5cf6d788394ca5b8cd93979b6dc, type: 3}
       propertyPath: TrackerNode
       value: 
