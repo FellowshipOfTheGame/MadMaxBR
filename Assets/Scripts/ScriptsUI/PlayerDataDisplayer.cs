@@ -31,6 +31,11 @@ public class PlayerDataDisplayer : MonoBehaviour {
     public GameObject PowerUpSlot3;
     public GameObject PowerUpSlot4;
 
+    private GameObject ButtonSlot1;
+    private GameObject ButtonSlot2;
+    private GameObject ButtonSlot3;
+    private GameObject ButtonSlot4;
+
     public TextMeshProUGUI PowerUpTutorialText;
 
     private GameObject PlayerPowerUps;
@@ -64,14 +69,16 @@ public class PlayerDataDisplayer : MonoBehaviour {
         }
     }
 
-    private void UpdatePowerUpIcon(Image imgComponent, int powerupIndex) {
+    private void UpdatePowerUpIcon(Image imgComponent, int powerupIndex, GameObject powerupButtonImg) {
         imgComponent.color = new Color(255, 255, 255, 255);
         switch (powerupIndex) {
             case (int)PowerUpName.MachineGun:
                 imgComponent.sprite = PlayerPowerUps.GetComponentInChildren<MachineGunPU>().PowerUpInfo.Icon;
+                powerupButtonImg.SetActive(true);
                 break;
             case (int)PowerUpName.Rifle:
                 imgComponent.sprite = PlayerPowerUps.GetComponentInChildren<RiflePU>().PowerUpInfo.Icon;
+                powerupButtonImg.SetActive(true);
                 break;
             case (int)PowerUpName.Thorns:
                 imgComponent.sprite = PlayerPowerUps.GetComponentInChildren<ThornsPU>().PowerUpInfo.Icon;
@@ -84,28 +91,36 @@ public class PlayerDataDisplayer : MonoBehaviour {
                 break;
             case (int)PowerUpName.Smoke:
                 imgComponent.sprite = PlayerPowerUps.GetComponentInChildren<SmokePU>().PowerUpInfo.Icon;
+                powerupButtonImg.SetActive(true);
                 break;
             case (int)PowerUpName.ExplosiveMine:
                 imgComponent.sprite = PlayerPowerUps.GetComponentInChildren<ExplosiveMinePU>().PowerUpInfo.Icon;
+                powerupButtonImg.SetActive(true);
                 break;
             case (int)PowerUpName.DeactivatorMine:
                 imgComponent.sprite = PlayerPowerUps.GetComponentInChildren<DeactivatorMinePU>().PowerUpInfo.Icon;
+                powerupButtonImg.SetActive(true);
                 break;
             case (int)PowerUpName.Pillar:
                 imgComponent.sprite = PlayerPowerUps.GetComponentInChildren<PillarPU>().PowerUpInfo.Icon;
+                powerupButtonImg.SetActive(true);
                 break;
             case (int)PowerUpName.Nitro:
                 imgComponent.sprite = PlayerPowerUps.GetComponentInChildren<NitroPU>().PowerUpInfo.Icon;
+                powerupButtonImg.SetActive(true);
                 break;
             case (int)PowerUpName.Glue:
                 imgComponent.sprite = PlayerPowerUps.GetComponentInChildren<GluePU>().PowerUpInfo.Icon;
+                powerupButtonImg.SetActive(true);
                 break;
             case (int)PowerUpName.Grease:
                 imgComponent.sprite = PlayerPowerUps.GetComponentInChildren<GreasePU>().PowerUpInfo.Icon;
+                powerupButtonImg.SetActive(true);
                 break;
             default:
                 imgComponent.sprite = null;
                 imgComponent.color = new Color(255, 255, 255, 0);
+                powerupButtonImg.SetActive(false);
                 break;
         }
     }
@@ -114,6 +129,11 @@ public class PlayerDataDisplayer : MonoBehaviour {
     void Start() {
         PlayerRaceData = RaceManager.Instance.Player.GetComponent<VehicleRaceData>();
         PlayerPowerUps = RaceManager.Instance.Player.transform.GetComponentInChildren<PowerUp>().gameObject;
+
+        ButtonSlot1 = PowerUpSlot1.transform.GetChild(PowerUpSlot1.transform.childCount - 1).gameObject;
+        ButtonSlot2 = PowerUpSlot2.transform.GetChild(PowerUpSlot2.transform.childCount - 1).gameObject;
+        ButtonSlot3 = PowerUpSlot3.transform.GetChild(PowerUpSlot3.transform.childCount - 1).gameObject;
+        ButtonSlot4 = PowerUpSlot4.transform.GetChild(PowerUpSlot4.transform.childCount - 1).gameObject;
 
         tutorialTextIndQueue = new Queue<int>();
         tutorialTextQueue = new Queue<string>();
@@ -153,10 +173,10 @@ public class PlayerDataDisplayer : MonoBehaviour {
     }
 
     private void UpdatePowerupSlot() {
-        UpdatePowerUpIcon(PowerUpSlot1.GetComponent<Image>(), RaceManager.Instance.Player.GetComponent<VehicleData>().GetPowerUpSlotValue(1));
-        UpdatePowerUpIcon(PowerUpSlot2.GetComponent<Image>(), RaceManager.Instance.Player.GetComponent<VehicleData>().GetPowerUpSlotValue(2));
-        UpdatePowerUpIcon(PowerUpSlot3.GetComponent<Image>(), RaceManager.Instance.Player.GetComponent<VehicleData>().GetPowerUpSlotValue(3));
-        UpdatePowerUpIcon(PowerUpSlot4.GetComponent<Image>(), RaceManager.Instance.Player.GetComponent<VehicleData>().GetPowerUpSlotValue(4));
+        UpdatePowerUpIcon(PowerUpSlot1.GetComponent<Image>(), RaceManager.Instance.Player.GetComponent<VehicleData>().GetPowerUpSlotValue(1), ButtonSlot1);
+        UpdatePowerUpIcon(PowerUpSlot2.GetComponent<Image>(), RaceManager.Instance.Player.GetComponent<VehicleData>().GetPowerUpSlotValue(2), ButtonSlot2);
+        UpdatePowerUpIcon(PowerUpSlot3.GetComponent<Image>(), RaceManager.Instance.Player.GetComponent<VehicleData>().GetPowerUpSlotValue(3), ButtonSlot3);
+        UpdatePowerUpIcon(PowerUpSlot4.GetComponent<Image>(), RaceManager.Instance.Player.GetComponent<VehicleData>().GetPowerUpSlotValue(4), ButtonSlot4);
     }
 
     private void UpdateTutorialText() {
