@@ -43,18 +43,22 @@ public class AutoTarget : MonoBehaviour
     private void detectTarget()
     {
         Collider[] hitColliders = Physics.OverlapSphere(transform.position, shootRadius, carMask);
-        hitCollidersList = new List<Collider>(hitColliders);
-        int selfColliderRemoveindex = 0;
 
-        for (int i = 0; i < hitCollidersList.Count; i++)
+        if (hitColliders.Length > 1)
         {
-            if (hitCollidersList[i].transform.root == transform.root)
-            {
-                selfColliderRemoveindex = i;
-            }
-        }
+            hitCollidersList = new List<Collider>(hitColliders);
+            int selfColliderRemoveindex = 0;
 
-        hitCollidersList.RemoveAt(selfColliderRemoveindex);
+            for (int i = 0; i < hitCollidersList.Count; i++)
+            {
+                if (hitCollidersList[i].transform.root == transform.root)
+                {
+                    selfColliderRemoveindex = i;
+                }
+            }
+
+            hitCollidersList.RemoveAt(selfColliderRemoveindex);
+        }
     }
 
     private void AMITarget()
