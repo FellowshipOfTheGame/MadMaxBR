@@ -86,7 +86,7 @@ public class CarMovementAI : MonoBehaviour
         }
     }
 
-    void FixedUpdate()
+    private void FixedUpdate()
     {
         Sensors();
         
@@ -98,7 +98,7 @@ public class CarMovementAI : MonoBehaviour
 
         if (DistanceFromTrack() > trackWidth || IsCapotado())
         {
-            Teleport();
+            StartCoroutine(Teleport());
         }
     }
 
@@ -130,8 +130,14 @@ public class CarMovementAI : MonoBehaviour
         }
     }
 
-    private IEnumerator CollisionTime()
+    private IEnumerator ChangeCollision()
     {
+        Vector3 rotationDirection = nodes[currentNode].transform.position - nodes[previousNode].transform.position;
+        rb.rotation = Quaternion.LookRotation(rotationDirection, Vector3.up);
+        rb.position = nodes[previousNode].transform.position + new Vector3(0f, 3f, 0f);
+        rb.velocity = Vector3.zero;
+        rb.angularVelocity = Vector3.zero;
+
         foreach (CarMovementAI car in cars)
         {
             Physics.IgnoreCollision(gameObject.GetComponent<Collider>(), car.GetComponent<Collider>(), true);
@@ -139,20 +145,30 @@ public class CarMovementAI : MonoBehaviour
 
         yield return new WaitForSeconds(5f);
 
+        StartCoroutine(VerifyCollision());
+
         foreach (CarMovementAI car in cars)
         {
             Physics.IgnoreCollision(gameObject.GetComponent<Collider>(), car.GetComponent<Collider>(), false);
         }
     }
 
-    private void Teleport()
+    private IEnumerator VerifyCollision()
     {
-        StartCoroutine(CollisionTime());
-        Vector3 rotationDirection = nodes[currentNode].transform.position - nodes[previousNode].transform.position;
-        rb.rotation = Quaternion.LookRotation(rotationDirection, Vector3.up); 
-        rb.position = nodes[previousNode].transform.position + new Vector3(0f, 3f, 0f);
-        rb.velocity = Vector3.zero;
-        rb.angularVelocity = Vector3.zero;
+        while (Physics.OverlapSphere(nodes[currentNode].transform.position, 10f, carLayerMask).Length > 0)
+        {
+            yield return new WaitForFixedUpdate();
+        }
+    }
+
+    private IEnumerator Teleport()
+    {
+        while (Physics.OverlapSphere(nodes[currentNode].transform.position, 10f, carLayerMask).Length > 0)
+        {
+            yield return new WaitForFixedUpdate();
+        }
+
+        StartCoroutine(ChangeCollision());
     }
 
     public void GetThrottle()
