@@ -163,10 +163,9 @@ public class CarMovementAI : MonoBehaviour
 
     private IEnumerator Teleport()
     {
-        while (Physics.OverlapSphere(nodes[currentNode].transform.position, 10f, carLayerMask).Length > 0)
-        {
-            yield return new WaitForFixedUpdate();
-        }
+        StartCoroutine(VerifyCollision());
+
+        yield return new WaitForSeconds(2f);
 
         StartCoroutine(ChangeCollision());
     }
