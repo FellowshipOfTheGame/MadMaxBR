@@ -3946,7 +3946,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8780025355852385663, guid: d18372d6e0626b540afe2db9e15f2179, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -1.2230835
+      value: -1.2231445
       objectReference: {fileID: 0}
     - target: {fileID: 8780025355852385663, guid: d18372d6e0626b540afe2db9e15f2179, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -11429,6 +11429,10 @@ PrefabInstance:
       propertyPath: RaceResults
       value: 
       objectReference: {fileID: 1937664167}
+    - target: {fileID: 3486642482772157038, guid: ae4628b27d3293c42b8eba5a897ae8cb, type: 3}
+      propertyPath: NumberOfLaps
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 3486642482772157038, guid: ae4628b27d3293c42b8eba5a897ae8cb, type: 3}
       propertyPath: Racers.Array.size
       value: 1
@@ -19725,6 +19729,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 878017467872557317, guid: 682f008a0232c15438a806da0a15e3b3, type: 3}
+      propertyPath: InitialModule.startLifetime.scalar
+      value: 600
+      objectReference: {fileID: 0}
     - target: {fileID: 3694627796648777688, guid: 682f008a0232c15438a806da0a15e3b3, type: 3}
       propertyPath: TrackerNode
       value: 

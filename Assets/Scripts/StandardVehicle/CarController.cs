@@ -254,8 +254,6 @@ public class CarController : MonoBehaviour {
             //if (!carSounds.SwitchGear.isPlaying)
             carSounds.SwitchGear.GetComponent<AudioSource>().Play();
 
-            //Debug
-
             currentGear--;
 
             shiftDelay = now + 0.1f;
@@ -419,7 +417,8 @@ public class CarController : MonoBehaviour {
 
                         VelocityRelativeToMax = m_Rigidbody.velocity.magnitude * 2/ CarSettings.m_Topspeed;
 
-                        float decreaseRate = 0.75f - 0.45f * VelocityRelativeToMax;
+                        //float decreaseRate = 0.75f - 0.45f * VelocityRelativeToMax;
+                        float decreaseRate = 0.3f;
 
                         m_Rigidbody.velocity = new Vector3(m_Rigidbody.velocity.x * (1 - decreaseRate), m_Rigidbody.velocity.y * (1 - decreaseRate), m_Rigidbody.velocity.z) * (1 - decreaseRate);
                     }
