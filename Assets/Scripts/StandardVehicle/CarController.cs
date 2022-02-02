@@ -413,10 +413,6 @@ public class CarController : MonoBehaviour {
                     if (!justEnteredGlue) {
                         justEnteredGlue = true;
 
-                        float VelocityRelativeToMax;
-
-                        VelocityRelativeToMax = m_Rigidbody.velocity.magnitude * 2/ CarSettings.m_Topspeed;
-
                         //float decreaseRate = 0.75f - 0.45f * VelocityRelativeToMax;
                         float decreaseRate = 0.3f;
 
@@ -538,7 +534,7 @@ public class CarController : MonoBehaviour {
     /// </summary>
     /// <param name="decreaseRate">.</param>
     private void DecreaseSpeed() {
-        float maxSpeed = CarSettings.m_Topspeed * 2f;
+        float maxSpeed = CarSettings.m_Topspeed / 2f;
 
         // Decrease rate of speed given in percent of the maximum speed per second;
         float decreaseRate; 
@@ -585,14 +581,12 @@ public class CarController : MonoBehaviour {
     }
 
     private void CapSpeed() {
-        float speed = m_Rigidbody.velocity.magnitude * 2;
-        
         if (backward) {
-            if (speed > CarSettings.m_TopspeedBackwards) {
+            if (CurrentSpeed > CarSettings.m_TopspeedBackwards) {
                 m_Rigidbody.velocity = (CarSettings.m_TopspeedBackwards / 2) * m_Rigidbody.velocity.normalized;
             }
         } else {
-            if (speed > CarSettings.m_Topspeed) {
+            if (CurrentSpeed > CarSettings.m_Topspeed) {
                 m_Rigidbody.velocity = (CarSettings.m_Topspeed / 2) * m_Rigidbody.velocity.normalized;
             }
         }
