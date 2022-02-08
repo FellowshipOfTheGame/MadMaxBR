@@ -2911,7 +2911,8 @@ MonoBehaviour:
   - {fileID: 0}
   CarSettings:
     m_CentreOfMassOffset: {x: 0, y: 0, z: 0}
-    m_MaximumSteerAngle: 25
+    m_SteerAngleSuperiorLimit: 25
+    m_SteerAngleInferiorLimit: 5
     m_SteerHelper: 0.644
     m_TractionControl: 0
     m_FullTorqueOverAllWheels: 3500
