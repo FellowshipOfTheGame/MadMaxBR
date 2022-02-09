@@ -31,10 +31,10 @@ public class PlayerDataDisplayer : MonoBehaviour {
     public GameObject PowerUpSlot3;
     public GameObject PowerUpSlot4;
 
-    private GameObject ButtonSlot1;
-    private GameObject ButtonSlot2;
-    private GameObject ButtonSlot3;
-    private GameObject ButtonSlot4;
+    private TextMeshProUGUI ButtonSlot1;
+    private TextMeshProUGUI ButtonSlot2;
+    private TextMeshProUGUI ButtonSlot3;
+    private TextMeshProUGUI ButtonSlot4;
 
     public TextMeshProUGUI PowerUpTutorialText;
 
@@ -69,16 +69,171 @@ public class PlayerDataDisplayer : MonoBehaviour {
         }
     }
 
-    private void UpdatePowerUpIcon(Image imgComponent, int powerupIndex, GameObject powerupButtonImg) {
+    private string GetKeySprite(KeyCode keyCode) {
+        string keySpriteVal;
+
+        switch((int)keyCode) {
+            case (int)KeyCode.Q:
+                keySpriteVal = "<sprite=\"KeyboardBlack\" name=\"Q\">";
+                break;
+            case (int)KeyCode.W:
+                keySpriteVal = "<sprite=\"KeyboardBlack\" name=\"W\">";
+                break;
+            case (int)KeyCode.E:
+                keySpriteVal = "<sprite=\"KeyboardBlack\" name=\"E\">";
+                break;
+            case (int)KeyCode.R:
+                keySpriteVal = "<sprite=\"KeyboardBlack\" name=\"R\">";
+                break;
+            case (int)KeyCode.T:
+                keySpriteVal = "<sprite=\"KeyboardBlack\" name=\"T\">";
+                break;
+            case (int)KeyCode.Y:
+                keySpriteVal = "<sprite=\"KeyboardBlack\" name=\"Y\">";
+                break;
+            case (int)KeyCode.U:
+                keySpriteVal = "<sprite=\"KeyboardBlack\" name=\"U\">";
+                break;
+            case (int)KeyCode.I:
+                keySpriteVal = "<sprite=\"KeyboardBlack\" name=\"I\">";
+                break;
+            case (int)KeyCode.O:
+                keySpriteVal = "<sprite=\"KeyboardBlack\" name=\"O\">";
+                break;
+            case (int)KeyCode.P:
+                keySpriteVal = "<sprite=\"KeyboardBlack\" name=\"P\">";
+                break;
+            case (int)KeyCode.A:
+                keySpriteVal = "<sprite=\"KeyboardBlack\" name=\"A\">";
+                break;
+            case (int)KeyCode.S:
+                keySpriteVal = "<sprite=\"KeyboardBlack\" name=\"S\">";
+                break;
+            case (int)KeyCode.D:
+                keySpriteVal = "<sprite=\"KeyboardBlack\" name=\"D\">";
+                break;
+            case (int)KeyCode.F:
+                keySpriteVal = "<sprite=\"KeyboardBlack\" name=\"F\">";
+                break;
+            case (int)KeyCode.G:
+                keySpriteVal = "<sprite=\"KeyboardBlack\" name=\"G\">";
+                break;
+            case (int)KeyCode.H:
+                keySpriteVal = "<sprite=\"KeyboardBlack\" name=\"H\">";
+                break;
+            case (int)KeyCode.J:
+                keySpriteVal = "<sprite=\"KeyboardBlack\" name=\"J\">";
+                break;
+            case (int)KeyCode.K:
+                keySpriteVal = "<sprite=\"KeyboardBlack\" name=\"K\">";
+                break;
+            case (int)KeyCode.L:
+                keySpriteVal = "<sprite=\"KeyboardBlack\" name=\"L\">";
+                break;
+            case (int)KeyCode.Z:
+                keySpriteVal = "<sprite=\"KeyboardBlack\" name=\"Z\">";
+                break;
+            case (int)KeyCode.X:
+                keySpriteVal = "<sprite=\"KeyboardBlack\" name=\"X\">";
+                break;
+            case (int)KeyCode.C:
+                keySpriteVal = "<sprite=\"KeyboardBlack\" name=\"C\">";
+                break;
+            case (int)KeyCode.V:
+                keySpriteVal = "<sprite=\"KeyboardBlack\" name=\"V\">";
+                break;
+            case (int)KeyCode.B:
+                keySpriteVal = "<sprite=\"KeyboardBlack\" name=\"B\">";
+                break;
+            case (int)KeyCode.N:
+                keySpriteVal = "<sprite=\"KeyboardBlack\" name=\"N\">";
+                break;
+            case (int)KeyCode.M:
+                keySpriteVal = "<sprite=\"KeyboardBlack\" name=\"M\">";
+                break;
+            case (int)KeyCode.LeftAlt:
+                keySpriteVal = "<sprite=\"KeyboardBlack\" name=\"Alt\">";
+                break;
+            case (int)KeyCode.Alpha1:
+                keySpriteVal = "<sprite=\"KeyboardBlack\" name=\"Alpha1\">";
+                break;
+            case (int)KeyCode.Alpha2:
+                keySpriteVal = "<sprite=\"KeyboardBlack\" name=\"Alpha2\">";
+                break;
+            case (int)KeyCode.Alpha3:
+                keySpriteVal = "<sprite=\"KeyboardBlack\" name=\"Alpha3\">";
+                break;
+            case (int)KeyCode.Alpha4:
+                keySpriteVal = "<sprite=\"KeyboardBlack\" name=\"Alpha4\">";
+                break;
+            case (int)KeyCode.Alpha5:
+                keySpriteVal = "<sprite=\"KeyboardBlack\" name=\"Alpha5\">";
+                break;
+            case (int)KeyCode.Alpha6:
+                keySpriteVal = "<sprite=\"KeyboardBlack\" name=\"Alpha6\">";
+                break;
+            case (int)KeyCode.Alpha7:
+                keySpriteVal = "<sprite=\"KeyboardBlack\" name=\"Alpha7\">";
+                break;
+            case (int)KeyCode.Alpha8:
+                keySpriteVal = "<sprite=\"KeyboardBlack\" name=\"Alpha8\">";
+                break;
+            case (int)KeyCode.Alpha9:
+                keySpriteVal = "<sprite=\"KeyboardBlack\" name=\"Alpha9\">";
+                break;
+            case (int)KeyCode.Alpha0:
+                keySpriteVal = "<sprite=\"KeyboardBlack\" name=\"Alpha0\">";
+                break;
+            case (int)KeyCode.Keypad1:
+                keySpriteVal = "<sprite=\"KeyboardBlack\" name=\"Alpha1\">";
+                break;
+            case (int)KeyCode.Keypad2:
+                keySpriteVal = "<sprite=\"KeyboardBlack\" name=\"Alpha2\">";
+                break;
+            case (int)KeyCode.Keypad3:
+                keySpriteVal = "<sprite=\"KeyboardBlack\" name=\"Alpha3\">";
+                break;
+            case (int)KeyCode.Keypad4:
+                keySpriteVal = "<sprite=\"KeyboardBlack\" name=\"Alpha4\">";
+                break;
+            case (int)KeyCode.Keypad5:
+                keySpriteVal = "<sprite=\"KeyboardBlack\" name=\"Alpha5\">";
+                break;
+            case (int)KeyCode.Keypad6:
+                keySpriteVal = "<sprite=\"KeyboardBlack\" name=\"Alpha6\">";
+                break;
+            case (int)KeyCode.Keypad7:
+                keySpriteVal = "<sprite=\"KeyboardBlack\" name=\"Alpha7\">";
+                break;
+            case (int)KeyCode.Keypad8:
+                keySpriteVal = "<sprite=\"KeyboardBlack\" name=\"Alpha8\">";
+                break;
+            case (int)KeyCode.Keypad9:
+                keySpriteVal = "<sprite=\"KeyboardBlack\" name=\"Alpha9\">";
+                break;
+            case (int)KeyCode.Keypad0:
+                keySpriteVal = "<sprite=\"KeyboardBlack\" name=\"Alpha0\">";
+                break;
+            default:
+                keySpriteVal = "";
+                break;
+        }
+
+        return keySpriteVal;
+    }
+
+    private void UpdatePowerUpIcon(Image imgComponent, int powerupIndex, TextMeshProUGUI powerupButtonImg) {
         imgComponent.color = new Color(255, 255, 255, 255);
         switch (powerupIndex) {
             case (int)PowerUpName.MachineGun:
                 imgComponent.sprite = PlayerPowerUps.GetComponentInChildren<MachineGunPU>().PowerUpInfo.Icon;
-                powerupButtonImg.SetActive(true);
+                powerupButtonImg.text = GetKeySprite(RaceManager.Instance.Player.GetComponent<CarUserControl>().PowerUpUseButtons.Slot1UseButton);
+                powerupButtonImg.gameObject.SetActive(true);
                 break;
             case (int)PowerUpName.Rifle:
                 imgComponent.sprite = PlayerPowerUps.GetComponentInChildren<RiflePU>().PowerUpInfo.Icon;
-                powerupButtonImg.SetActive(true);
+                powerupButtonImg.text = GetKeySprite(RaceManager.Instance.Player.GetComponent<CarUserControl>().PowerUpUseButtons.Slot1UseButton);
+                powerupButtonImg.gameObject.SetActive(true);
                 break;
             case (int)PowerUpName.Thorns:
                 imgComponent.sprite = PlayerPowerUps.GetComponentInChildren<ThornsPU>().PowerUpInfo.Icon;
@@ -91,36 +246,43 @@ public class PlayerDataDisplayer : MonoBehaviour {
                 break;
             case (int)PowerUpName.Smoke:
                 imgComponent.sprite = PlayerPowerUps.GetComponentInChildren<SmokePU>().PowerUpInfo.Icon;
-                powerupButtonImg.SetActive(true);
+                powerupButtonImg.text = GetKeySprite(RaceManager.Instance.Player.GetComponent<CarUserControl>().PowerUpUseButtons.Slot2UseButton);
+                powerupButtonImg.gameObject.SetActive(true);
                 break;
             case (int)PowerUpName.ExplosiveMine:
                 imgComponent.sprite = PlayerPowerUps.GetComponentInChildren<ExplosiveMinePU>().PowerUpInfo.Icon;
-                powerupButtonImg.SetActive(true);
+                powerupButtonImg.text = GetKeySprite(RaceManager.Instance.Player.GetComponent<CarUserControl>().PowerUpUseButtons.Slot3UseButton);
+                powerupButtonImg.gameObject.SetActive(true);
                 break;
             case (int)PowerUpName.DeactivatorMine:
                 imgComponent.sprite = PlayerPowerUps.GetComponentInChildren<DeactivatorMinePU>().PowerUpInfo.Icon;
-                powerupButtonImg.SetActive(true);
+                powerupButtonImg.text = GetKeySprite(RaceManager.Instance.Player.GetComponent<CarUserControl>().PowerUpUseButtons.Slot3UseButton);
+                powerupButtonImg.gameObject.SetActive(true);
                 break;
             case (int)PowerUpName.Pillar:
                 imgComponent.sprite = PlayerPowerUps.GetComponentInChildren<PillarPU>().PowerUpInfo.Icon;
-                powerupButtonImg.SetActive(true);
+                powerupButtonImg.text = GetKeySprite(RaceManager.Instance.Player.GetComponent<CarUserControl>().PowerUpUseButtons.Slot3UseButton);
+                powerupButtonImg.gameObject.SetActive(true);
                 break;
             case (int)PowerUpName.Nitro:
                 imgComponent.sprite = PlayerPowerUps.GetComponentInChildren<NitroPU>().PowerUpInfo.Icon;
-                powerupButtonImg.SetActive(true);
+                powerupButtonImg.text = GetKeySprite(RaceManager.Instance.Player.GetComponent<CarUserControl>().PowerUpUseButtons.Slot4UseButton);
+                powerupButtonImg.gameObject.SetActive(true);
                 break;
             case (int)PowerUpName.Glue:
                 imgComponent.sprite = PlayerPowerUps.GetComponentInChildren<GluePU>().PowerUpInfo.Icon;
-                powerupButtonImg.SetActive(true);
+                powerupButtonImg.text = GetKeySprite(RaceManager.Instance.Player.GetComponent<CarUserControl>().PowerUpUseButtons.Slot4UseButton);
+                powerupButtonImg.gameObject.SetActive(true);
                 break;
             case (int)PowerUpName.Grease:
                 imgComponent.sprite = PlayerPowerUps.GetComponentInChildren<GreasePU>().PowerUpInfo.Icon;
-                powerupButtonImg.SetActive(true);
+                powerupButtonImg.text = GetKeySprite(RaceManager.Instance.Player.GetComponent<CarUserControl>().PowerUpUseButtons.Slot4UseButton);
+                powerupButtonImg.gameObject.SetActive(true);
                 break;
             default:
                 imgComponent.sprite = null;
                 imgComponent.color = new Color(255, 255, 255, 0);
-                powerupButtonImg.SetActive(false);
+                powerupButtonImg.gameObject.SetActive(false);
                 break;
         }
     }
@@ -130,10 +292,10 @@ public class PlayerDataDisplayer : MonoBehaviour {
         PlayerRaceData = RaceManager.Instance.Player.GetComponent<VehicleRaceData>();
         PlayerPowerUps = RaceManager.Instance.Player.transform.GetComponentInChildren<PowerUp>().gameObject;
 
-        ButtonSlot1 = PowerUpSlot1.transform.GetChild(PowerUpSlot1.transform.childCount - 1).gameObject;
-        ButtonSlot2 = PowerUpSlot2.transform.GetChild(PowerUpSlot2.transform.childCount - 1).gameObject;
-        ButtonSlot3 = PowerUpSlot3.transform.GetChild(PowerUpSlot3.transform.childCount - 1).gameObject;
-        ButtonSlot4 = PowerUpSlot4.transform.GetChild(PowerUpSlot4.transform.childCount - 1).gameObject;
+        ButtonSlot1 = PowerUpSlot1.transform.GetChild(PowerUpSlot1.transform.childCount - 1).GetComponent<TextMeshProUGUI>();
+        ButtonSlot2 = PowerUpSlot2.transform.GetChild(PowerUpSlot2.transform.childCount - 1).GetComponent<TextMeshProUGUI>();
+        ButtonSlot3 = PowerUpSlot3.transform.GetChild(PowerUpSlot3.transform.childCount - 1).GetComponent<TextMeshProUGUI>();
+        ButtonSlot4 = PowerUpSlot4.transform.GetChild(PowerUpSlot4.transform.childCount - 1).GetComponent<TextMeshProUGUI>();
 
         tutorialTextIndQueue = new Queue<int>();
         tutorialTextQueue = new Queue<string>();
