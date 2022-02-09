@@ -340,8 +340,8 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 1
+  m_audioClip: {fileID: 8300000, guid: 242d43841edd8544d83dca6bc97a41f0, type: 3}
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0
@@ -351,9 +351,9 @@ AudioSource:
   Priority: 128
   DopplerLevel: 1
   MinDistance: 1
-  MaxDistance: 500
+  MaxDistance: 200
   Pan2D: 0
-  rolloffMode: 0
+  rolloffMode: 2
   BypassEffects: 0
   BypassListenerEffects: 0
   BypassReverbZones: 0
@@ -386,7 +386,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -479,8 +479,6 @@ MonoBehaviour:
     lugarParticula: {fileID: 1063237125}
     particulaFumaca: {fileID: 9010772358347829355, guid: 06c9659945c9ec9499d3fa2481a02b0a, type: 3}
     tempoVidaParticula: 0.01
-    somTiro: {fileID: 0}
-    somRecarga: {fileID: 8300000, guid: 242d43841edd8544d83dca6bc97a41f0, type: 3}
     weaponState: 0
     weaponAnimator: {fileID: 1325764381436536372}
   - MunicaoExtraNaArma: 0
@@ -498,8 +496,6 @@ MonoBehaviour:
     lugarParticula: {fileID: 1325764381375445221}
     particulaFumaca: {fileID: 2142667012493496771, guid: d78811582f9fc934bbff50d5b2d644c4, type: 3}
     tempoVidaParticula: 0.54
-    somTiro: {fileID: 8300000, guid: 242d43841edd8544d83dca6bc97a41f0, type: 3}
-    somRecarga: {fileID: 8300000, guid: f7d708df0dab5ba409fa6b53ec3ad0d2, type: 3}
     weaponState: 0
     weaponAnimator: {fileID: 1325764381811790393}
   - MunicaoExtraNaArma: 0
@@ -517,8 +513,6 @@ MonoBehaviour:
     lugarParticula: {fileID: 1325764380370480857}
     particulaFumaca: {fileID: 2142667012493496771, guid: d78811582f9fc934bbff50d5b2d644c4, type: 3}
     tempoVidaParticula: 0.74
-    somTiro: {fileID: 8300000, guid: 242d43841edd8544d83dca6bc97a41f0, type: 3}
-    somRecarga: {fileID: 8300000, guid: 242d43841edd8544d83dca6bc97a41f0, type: 3}
     weaponState: 0
     weaponAnimator: {fileID: 1325764381436536372}
 --- !u!1 &1325764381375445221
