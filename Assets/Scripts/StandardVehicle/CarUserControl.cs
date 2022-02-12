@@ -185,7 +185,7 @@ public class CarUserControl : MonoBehaviour {
         T type = playerPowerUps.GetComponentInChildren<T>();
         type.UsePowerUp(true);
         yield return new WaitForFixedUpdate();
-        type.UsePowerUp(false);
+        //type.UsePowerUp(false);
     }
 
     private IEnumerator GlueActivator<T>() where T : GluePU
@@ -193,7 +193,7 @@ public class CarUserControl : MonoBehaviour {
         T type = playerPowerUps.GetComponentInChildren<T>();
         type.UsePowerUp(true);
         yield return new WaitForFixedUpdate();
-        type.UsePowerUp(false);
+        //type.UsePowerUp(false);
     }
 
     private IEnumerator NitroActivator<T>() where T : NitroPU
@@ -201,7 +201,7 @@ public class CarUserControl : MonoBehaviour {
         T type = playerPowerUps.GetComponentInChildren<T>();
         type.UsePowerUp(true);
         yield return new WaitForFixedUpdate();
-        type.UsePowerUp(false);
+        //type.UsePowerUp(false);
     }
 
     private void Update() {
