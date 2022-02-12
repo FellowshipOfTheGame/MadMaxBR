@@ -28,7 +28,7 @@ public class CarMovementAI : MonoBehaviour
 
     public int currentNode;
     [SerializeField] private float trackWidth = 15.6f;
-    private List<BoxCollider> nodes;
+    public List<BoxCollider> nodes;
 
     [Header("AI variables")] 
     public float steer;
