@@ -10,10 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c2fc9da70ee1c224fa4de2f9172fef48, type: 3}
-  m_Name: Smoke_pt-br
+  m_Name: ExplosiveMine_pt-br
   m_EditorClassIdentifier: 
-  Name: Smoke
-  TutorialText: "Voc\xEA recebeu Invencibilidade!               Pressione a mantenha
-    a tecla de Espa\xE7o para torn\xE1-lo ativo e deixar seu carro imune a dano."
-  Icon: {fileID: 21300000, guid: eac4ae0984895e04eb2c51e0b77d2e48, type: 3}
-  PowerUpName: 5
+  Name: ExplosiveMine
+  TutorialText: "Voc\xEA recebeu Minas Explosivas! <size=150%>  <sprite name=\"ExplosiveMine\">
+    <br><size=100%> Ative-a para plantar na pista uma mina que explode quando um
+    carro passa por cima. "
+  Icon: {fileID: 21300000, guid: c4d71479145ee8142b9cc35bba76545c, type: 3}
+  PowerUpName: 6

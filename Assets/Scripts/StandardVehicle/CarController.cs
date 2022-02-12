@@ -462,7 +462,6 @@ public class CarController : MonoBehaviour {
         //Set the steer on the front wheels.
         //Assuming that wheels 0 and 1 are the front wheels.
         m_SteerAngle = steering * GetMaxSteerAngle();
-        Debug.Log("CurrentSteerAngle = " + m_SteerAngle + " MaxSteerAngle = " + GetMaxSteerAngle());
         m_WheelColliders[0].steerAngle = (float)m_SteerAngle;
         m_WheelColliders[1].steerAngle = (float)m_SteerAngle;
         SteerHelper();
@@ -512,7 +511,6 @@ public class CarController : MonoBehaviour {
         //Assuming that wheels 2 and 3 are the rear wheels.
         if (handbrake) {
             var hbTorque = handbrake == true ? 1f : 0f * CarSettings.m_MaxHandbrakeTorque;
-            Debug.Log(hbTorque);
             m_WheelColliders[2].brakeTorque = hbTorque;
             m_WheelColliders[3].brakeTorque = hbTorque;
         }

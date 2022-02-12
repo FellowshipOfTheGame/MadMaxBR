@@ -467,7 +467,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3694627794919509194}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.661, y: -0.49, z: 3}
+  m_LocalPosition: {x: -0.661, y: -1, z: 3}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 3694627795795616728}
@@ -1175,7 +1175,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3694627795449769351}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.3, y: -0.49, z: 3}
+  m_LocalPosition: {x: -1.3, y: -1, z: 3}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 3694627795795616728}
@@ -1205,7 +1205,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3694627795518968229}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.265, y: -0.49, z: 3}
+  m_LocalPosition: {x: 0.265, y: -1, z: 3}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 3694627795795616728}
@@ -1235,7 +1235,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3694627795529851120}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.218, y: -0.49, z: 3}
+  m_LocalPosition: {x: -1.218, y: -1, z: 3}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 3694627795795616728}
@@ -2911,7 +2911,8 @@ MonoBehaviour:
   - {fileID: 0}
   CarSettings:
     m_CentreOfMassOffset: {x: 0, y: 0, z: 0}
-    m_MaximumSteerAngle: 25
+    m_SteerAngleSuperiorLimit: 25
+    m_SteerAngleInferiorLimit: 5
     m_SteerHelper: 0.644
     m_TractionControl: 0
     m_FullTorqueOverAllWheels: 3500
@@ -2997,12 +2998,11 @@ MonoBehaviour:
   steer: 0
   throttle: 0
   brake: 0
-  nitroEnabled: 0
-  minPositiveThrottle: 0.03
+  minPositiveThrottle: 0.1
   maxThrottle: 1
-  maxAngleForMinThrottle: 35
-  minDistanceToReverse: 3
-  distanceFromTrackToBreak: 30
+  maxAngleForMinThrottle: 30
+  minDistanceToReverse: 8
+  distanceFromTrackToBreak: 20
   aiState: 1
 --- !u!114 &3694627796648777688
 MonoBehaviour:
@@ -3104,7 +3104,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3694627796744734058}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.072, y: -0.49, z: 3}
+  m_LocalPosition: {x: 1.072, y: -1, z: 3}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 3694627795795616728}

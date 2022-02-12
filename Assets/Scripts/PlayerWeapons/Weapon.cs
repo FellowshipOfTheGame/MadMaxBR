@@ -32,7 +32,6 @@ public class Arma {
     public GameObject particulaFumaca;
     [Range(0.01f, 2.0f)]
     public float tempoVidaParticula = 0.5f;
-    public AudioClip somTiro, somRecarga;
     public WeaponState weaponState = WeaponState.idle;
     public Animator weaponAnimator;
 }
@@ -112,8 +111,8 @@ public class Weapon : MonoBehaviour {
         if (canShoot) {
             if (shooting && armas[armaAtual].municao > 0 && !recarregando && !atirando) {
                 StartCoroutine(TempoTiro(armas[armaAtual].TiroPorSegundo));
-                emissorSom.clip = armas[armaAtual].somTiro;
-                emissorSom.PlayOneShot(emissorSom.clip);
+                //emissorSom.clip = armas[armaAtual].somTiro;
+                emissorSom.Play();
                 armas[armaAtual].municao--;
                 armas[armaAtual].weaponAnimator.SetBool("IsShooting", true);
                 GameObject balaTemp = Instantiate(armas[armaAtual].particulaFumaca, armas[armaAtual].lugarParticula.transform.position, transform.rotation) as GameObject;
@@ -134,8 +133,8 @@ public class Weapon : MonoBehaviour {
             }
             //recarregar
             if (Input.GetKeyDown(botaoRecarregar) && !recarregando && !atirando && (armas[armaAtual].municao < armas[armaAtual].municaoMaxima) && (armas[armaAtual].MunicaoExtraNaArma > 0)) {
-                emissorSom.clip = armas[armaAtual].somRecarga;
-                emissorSom.PlayOneShot(emissorSom.clip);
+                //emissorSom.clip = armas[armaAtual].somRecarga;
+                //emissorSom.PlayOneShot(emissorSom.clip);
                 int todasAsBalas = armas[armaAtual].municao + armas[armaAtual].MunicaoExtraNaArma;
                 if (todasAsBalas >= armas[armaAtual].municaoMaxima) {
                     armas[armaAtual].municao = armas[armaAtual].municaoMaxima;
