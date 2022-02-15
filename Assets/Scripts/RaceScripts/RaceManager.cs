@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,7 +11,9 @@ public class RaceManager : MonoBehaviour {
 
     public float NumberOfLaps;
     public GameObject Player;
-    public List<GameObject> Racers;
+    public RunnerAttributeList RunnerAttributesList;
+    [HideInInspector]public List<GameObject> Racers;
+    public List<Transform> InitialRacerPositions;
     // HUDs
     public GameObject GameHUD;
     public GameObject RaceResults;
@@ -18,6 +21,10 @@ public class RaceManager : MonoBehaviour {
 
     private void Awake() {
         Instance = this;
+        for (int i = 0; i < InitialRacerPositions.Count - 1; i++) {
+            //Random
+            //RunnerAttributesList.CarList.Length
+        }
     }
 
     public void StartRace() {
@@ -55,7 +62,7 @@ public class RaceManager : MonoBehaviour {
             // runner name
             RunnerRow.transform.GetChild(1).gameObject.GetComponent<Text>().text = VehicleInfo.RunnerName;
             // car name
-            RunnerRow.transform.GetChild(2).gameObject.GetComponent<Text>().text = Racers[i].name;
+            RunnerRow.transform.GetChild(2).gameObject.GetComponent<Text>().text = VehicleInfo.RunnerName;
             // kills
             RunnerRow.transform.GetChild(3).gameObject.GetComponent<Text>().text = VehicleInfo.KillsCount.ToString();
             // time
@@ -145,6 +152,7 @@ public class RaceManager : MonoBehaviour {
 
     // Start is called before the first frame update
     void Start() {
+
         for (int i = 0; i < Racers.Count; i++) {
             Racers[i].GetComponent<VehicleRaceData>().SetRacePosition(i + 1);
         }

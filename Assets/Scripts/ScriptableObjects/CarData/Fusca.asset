@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 47d236e6883eb374aa70ad108b485597, type: 3}
+  m_Name: Fusca
+  m_EditorClassIdentifier: 
+  carName: Fusca
+  carPrefabPlayer: {fileID: 290143233744352952, guid: ff22c5cf6d788394ca5b8cd93979b6dc, type: 3}
+  carMaterialsPlayer:
+  - {fileID: 2100000, guid: 1140103140d112341942040bce7f247c, type: 2}
+  - {fileID: 2100000, guid: 8ff9540b1335704408779e434e67b3b5, type: 2}
+  - {fileID: 2100000, guid: 5eb81bb454a6d2a4688c0d3546f41cfb, type: 2}
+  - {fileID: 2100000, guid: ca7a7936a1ca1c243921934ef4a20074, type: 2}
+  carPrefabBot: {fileID: 584124790089960263, guid: 1863f5bd28f582a4997acd72df98bd54, type: 3}
+  carMaterialsBot:
+  - {fileID: 2100000, guid: 89311209e5293ca429d51ca722077f00, type: 2}
+  - {fileID: 2100000, guid: ec2ef808855aff04fbf49ec2708eb03f, type: 2}
+  - {fileID: 2100000, guid: 4d473a208e13b124ebda93d1571c8468, type: 2}
+  - {fileID: 2100000, guid: 7fe4c2f418bebae40b3cb4535cad2457, type: 2}

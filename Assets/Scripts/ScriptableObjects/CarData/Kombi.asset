@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 47d236e6883eb374aa70ad108b485597, type: 3}
+  m_Name: Kombi
+  m_EditorClassIdentifier: 
+  carName: Kombi
+  carPrefabPlayer: {fileID: 3694627796648777694, guid: 682f008a0232c15438a806da0a15e3b3, type: 3}
+  carMaterialsPlayer:
+  - {fileID: 2100000, guid: 0f2d1d677a1fbd147b1d633cd40092cb, type: 2}
+  - {fileID: 2100000, guid: 730a7e471e0d8f441ab6af8d685504b7, type: 2}
+  - {fileID: 2100000, guid: e1ba33e1ccd786e4ab1b591b7a34db24, type: 2}
+  - {fileID: 2100000, guid: bca1c10a98759ad4c90b6ae70fab1dc8, type: 2}
+  carPrefabBot: {fileID: 3694627796648777694, guid: b1090f69261245e4b890732f45937838, type: 3}
+  carMaterialsBot:
+  - {fileID: 2100000, guid: 614f90fc152e41d449246249378891ab, type: 2}
+  - {fileID: 2100000, guid: 17ef500b86458df4a8810477e693354c, type: 2}
+  - {fileID: 2100000, guid: f5c0fa83d63264941ab217d75f31f2cb, type: 2}
+  - {fileID: 2100000, guid: c104c5bd60346b54aa1468a7f491f535, type: 2}

@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 47d236e6883eb374aa70ad108b485597, type: 3}
+  m_Name: Opala
+  m_EditorClassIdentifier: 
+  carName: Opala
+  carPrefabPlayer: {fileID: 6776084252466441686, guid: ad87f1f788968c14590a839ccb75ab4a, type: 3}
+  carMaterialsPlayer:
+  - {fileID: 2100000, guid: 20fd9e1a44fe39449b5634f2cfe7cee4, type: 2}
+  - {fileID: 2100000, guid: 3cef84f9def34d646b00a7fd8b8aeb59, type: 2}
+  - {fileID: 2100000, guid: 8effe42b8b9c9204cba5d8c775d933d2, type: 2}
+  - {fileID: 2100000, guid: 5f14b3ed3df3f904599992d8a85b051e, type: 2}
+  carPrefabBot: {fileID: 7099557099110074532, guid: a84565b639064ba438d0348a2f05d316, type: 3}
+  carMaterialsBot:
+  - {fileID: 2100000, guid: fb57734a4c311314cb8e37495764cd0e, type: 2}
+  - {fileID: 2100000, guid: 5f674fdeda25b3c46b31a9ad4a805440, type: 2}
+  - {fileID: 2100000, guid: 60f5fa2ba57b17e40afaab6d52346226, type: 2}
+  - {fileID: 2100000, guid: 19b84ad846f44ec40893ca20bbdcaa1c, type: 2}
+  - {fileID: 2100000, guid: 7f5638d72fb1e8442ac98883513bea69, type: 2}
