@@ -11,20 +11,91 @@ public class RaceManager : MonoBehaviour {
 
     public float NumberOfLaps;
     public GameObject Player;
+    public GameObject RacePath;
     public RunnerAttributeList RunnerAttributesList;
-    [HideInInspector]public List<GameObject> Racers;
+    public List<GameObject> Racers;
     public List<Transform> InitialRacerPositions;
     // HUDs
     public GameObject GameHUD;
     public GameObject RaceResults;
     public GameObject DeathScreen;
+    /// <summary>
+    /// Returns a random car with a random color and random non repeating Runner Name.
+    /// </summary>
+    /// <returns></returns>
+    private GameObject SortCar(int maxCarPerType, int[] carsDrawn, List<int> namesDrawn, List<string> materialsDrawn) {
+        // select a random car prefab that doesn't repeat more than maxCarPerType times
+        int drawnCarNumber = UnityEngine.Random.Range(0, RunnerAttributesList.CarList.Length);
+        
+        while (carsDrawn[drawnCarNumber] == maxCarPerType) {
+            drawnCarNumber = UnityEngine.Random.Range(0, RunnerAttributesList.CarList.Length);
+        }
+
+        carsDrawn[drawnCarNumber]++;
+        
+        Car car = (Car)RunnerAttributesList.CarList[drawnCarNumber];
+        GameObject carPrefab = car.GetCarPrefabPlayer(false);
+        // select a random material of the selected car and applies to its chassi
+        Material[] carMaterialsList = car.GetCarMaterialsPlayer(false);
+
+        int drawnCarMatNumber = UnityEngine.Random.Range(0, carMaterialsList.Length);
+
+        while (materialsDrawn.Contains(carMaterialsList[drawnCarMatNumber].name)) {
+            drawnCarMatNumber = UnityEngine.Random.Range(0, carMaterialsList.Length);
+        }
+
+        foreach (Transform child in carPrefab.transform.GetChild(0).transform) {
+            if (child.gameObject.CompareTag("Chassi")) {
+                child.gameObject.GetComponent<Renderer>().material = carMaterialsList[drawnCarMatNumber];
+                materialsDrawn.Add(carMaterialsList[drawnCarMatNumber].name);
+            }
+        }
+
+        // select a random runner name
+        int drawnNameNumber = UnityEngine.Random.Range(0, RunnerAttributesList.RunnerNameList.Length);
+
+        while (namesDrawn.Contains(drawnNameNumber)) {
+            drawnNameNumber = UnityEngine.Random.Range(0, RunnerAttributesList.RunnerNameList.Length);
+        }
+
+        namesDrawn.Add(drawnNameNumber);
+        carPrefab.GetComponent<VehicleRaceData>().TrackerNode = RacePath.transform.GetChild(RacePath.transform.childCount - 1).gameObject.GetComponent<TrackerNode>();
+        carPrefab.GetComponent<VehicleRaceData>().TriggerPoint = gameObject.transform.GetChild(gameObject.transform.childCount - 1).gameObject.GetComponentInChildren<TriggerPoint>();
+        carPrefab.GetComponent<VehicleData>().RunnerName = RunnerAttributesList.RunnerNameList[drawnNameNumber];
+        carPrefab.GetComponent<CarMovementAI>().path = RacePath.transform;
+
+        return carPrefab;
+    }
+
+    private void SpawnAI() {
+        // limit the maximum amount of cars per brand
+        int MaxCarPerType = ((InitialRacerPositions.Count - 1) / RunnerAttributesList.CarList.Length);
+        if ((InitialRacerPositions.Count - 1) % RunnerAttributesList.CarList.Length != 0) {
+            MaxCarPerType++;
+        }
+        // the quantity of cars drawn for each type
+        int[] carsDrawn = new int[RunnerAttributesList.CarList.Length];
+        for (int i = 0; i < RunnerAttributesList.CarList.Length; i++) {
+            carsDrawn[i] = 0;
+        }
+        // list of materials drawn
+        List<string> materialsDrawn = new List<string>();
+        // the value of a name stored in RunnerAttributesList.RunnerNameList[i] is given by i
+        List<int> namesDrawn = new List<int>();
+        
+        for (int i = 0; i < InitialRacerPositions.Count - 1; i++) {
+            GameObject drawnCar = SortCar(MaxCarPerType, carsDrawn, namesDrawn, materialsDrawn);
+            Instantiate(drawnCar, InitialRacerPositions[i].transform.position, InitialRacerPositions[i].transform.rotation);
+            Racers.Add(drawnCar);
+        }
+    }
 
     private void Awake() {
         Instance = this;
-        for (int i = 0; i < InitialRacerPositions.Count - 1; i++) {
-            //UnityEngine.Random.Range(0, );
-            //RunnerAttributesList.CarList.Length
-        }
+        // spawn ai
+        SpawnAI();
+        // TODO: spawn car player
+        Racers.Add(Player);
     }
 
     public void StartRace() {
@@ -52,6 +123,12 @@ public class RaceManager : MonoBehaviour {
             int position = i + 1;
             VehicleData VehicleInfo = Racers[i].GetComponent<VehicleData>();
             VehicleRaceData VehicleRaceInfo = Racers[i].GetComponent<VehicleRaceData>();
+            if (VehicleRaceInfo.LapTime == null) {
+                VehicleRaceInfo.LapTime = gameObject.AddComponent<Timer>();
+            }
+            if (VehicleRaceInfo.RaceTime == null) {
+                VehicleRaceInfo.RaceTime = gameObject.AddComponent<Timer>();
+            }
             GameObject RunnerRow = RunnersList.transform.GetChild(position).gameObject;
             // position
             if (position < 10) {
@@ -62,7 +139,7 @@ public class RaceManager : MonoBehaviour {
             // runner name
             RunnerRow.transform.GetChild(1).gameObject.GetComponent<Text>().text = VehicleInfo.RunnerName;
             // car name
-            RunnerRow.transform.GetChild(2).gameObject.GetComponent<Text>().text = VehicleInfo.RunnerName;
+            RunnerRow.transform.GetChild(2).gameObject.GetComponent<Text>().text = VehicleInfo.CarName;
             // kills
             RunnerRow.transform.GetChild(3).gameObject.GetComponent<Text>().text = VehicleInfo.KillsCount.ToString();
             // time
@@ -152,7 +229,6 @@ public class RaceManager : MonoBehaviour {
 
     // Start is called before the first frame update
     void Start() {
-
         for (int i = 0; i < Racers.Count; i++) {
             Racers[i].GetComponent<VehicleRaceData>().SetRacePosition(i + 1);
         }

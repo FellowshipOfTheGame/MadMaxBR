@@ -2546,7 +2546,7 @@ GameObject:
   - component: {fileID: 3694627796566601181}
   m_Layer: 8
   m_Name: Cube.001
-  m_TagString: Untagged
+  m_TagString: Chassi
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2592,7 +2592,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 730a7e471e0d8f441ab6af8d685504b7, type: 2}
+  - {fileID: 2100000, guid: 17ef500b86458df4a8810477e693354c, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -3034,7 +3034,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CarName: Kombi
-  RunnerName: Bot
+  RunnerName: "Ant\xF4nio Nunes"
   MaxCarHealth: 1000
   MaxCarShield: 1000
   DeathEffect: {fileID: 4735445525407823977, guid: bfe6e24b84512bf4a9759b06b61af3d2, type: 3}
