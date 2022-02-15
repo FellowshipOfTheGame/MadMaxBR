@@ -1264,7 +1264,7 @@ GameObject:
   - component: {fileID: 4807407565075245526}
   - component: {fileID: 7253643709941081427}
   m_Layer: 8
-  m_Name: Fusca Atualizado Player
+  m_Name: Fusca Player
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1475,11 +1475,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 21b66410723648246869f177ce64c12f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  CarName: Fusca
   RunnerName: Nina
   MaxCarHealth: 1000
   MaxCarShield: 1000
-  isDead: 0
   DeathEffect: {fileID: 4735445525407823977, guid: bfe6e24b84512bf4a9759b06b61af3d2, type: 3}
+  isDead: 0
 --- !u!114 &4807407565075245481
 MonoBehaviour:
   m_ObjectHideFlags: 0

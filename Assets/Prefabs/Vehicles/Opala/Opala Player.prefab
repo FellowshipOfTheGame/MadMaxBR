@@ -1556,7 +1556,8 @@ MonoBehaviour:
   - {fileID: 0}
   CarSettings:
     m_CentreOfMassOffset: {x: 0, y: 0, z: 0}
-    m_MaximumSteerAngle: 25
+    m_SteerAngleSuperiorLimit: 25
+    m_SteerAngleInferiorLimit: 5
     m_SteerHelper: 0.644
     m_TractionControl: 0
     m_FullTorqueOverAllWheels: 2500
@@ -1639,10 +1640,10 @@ MonoBehaviour:
   path: {fileID: 0}
   currentNode: 0
   trackWidth: 15
+  nodes: []
   steer: 0
   throttle: 0
   brake: 0
-  nitroEnabled: 0
   minPositiveThrottle: 0.03
   maxThrottle: 1
   maxAngleForMinThrottle: 35
@@ -1677,11 +1678,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 21b66410723648246869f177ce64c12f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  RunnerName: Nona
+  CarName: Opala
+  RunnerName: Nina
   MaxCarHealth: 1000
   MaxCarShield: 1000
-  isDead: 0
   DeathEffect: {fileID: 4735445525407823977, guid: bfe6e24b84512bf4a9759b06b61af3d2, type: 3}
+  isDead: 0
 --- !u!114 &6776084252466441519
 MonoBehaviour:
   m_ObjectHideFlags: 0
