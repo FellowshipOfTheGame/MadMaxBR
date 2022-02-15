@@ -22,7 +22,7 @@ public class RaceManager : MonoBehaviour {
     private void Awake() {
         Instance = this;
         for (int i = 0; i < InitialRacerPositions.Count - 1; i++) {
-            //Random
+            //UnityEngine.Random.Range(0, );
             //RunnerAttributesList.CarList.Length
         }
     }
