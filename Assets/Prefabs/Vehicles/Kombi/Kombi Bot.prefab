@@ -2546,7 +2546,7 @@ GameObject:
   - component: {fileID: 3694627796566601181}
   m_Layer: 8
   m_Name: Cube.001
-  m_TagString: Untagged
+  m_TagString: Chassi
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2592,7 +2592,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 730a7e471e0d8f441ab6af8d685504b7, type: 2}
+  - {fileID: 2100000, guid: 17ef500b86458df4a8810477e693354c, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2995,6 +2995,7 @@ MonoBehaviour:
   path: {fileID: 0}
   currentNode: 0
   trackWidth: 23
+  nodes: []
   steer: 0
   throttle: 0
   brake: 0
@@ -3032,11 +3033,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 21b66410723648246869f177ce64c12f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  RunnerName: Bot
+  CarName: Kombi
+  RunnerName: 
   MaxCarHealth: 1000
   MaxCarShield: 1000
-  isDead: 0
   DeathEffect: {fileID: 4735445525407823977, guid: bfe6e24b84512bf4a9759b06b61af3d2, type: 3}
+  isDead: 0
 --- !u!114 &3694627796648777670
 MonoBehaviour:
   m_ObjectHideFlags: 0

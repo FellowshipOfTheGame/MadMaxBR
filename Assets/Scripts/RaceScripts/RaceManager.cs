@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,21 +11,142 @@ public class RaceManager : MonoBehaviour {
 
     public float NumberOfLaps;
     public GameObject Player;
+    public GameObject RacePath;
+    public RunnerAttributeList RunnerAttributesList;
     public List<GameObject> Racers;
+    public List<Transform> InitialRacerPositions;
     // HUDs
     public GameObject GameHUD;
     public GameObject RaceResults;
     public GameObject DeathScreen;
 
+
+
+    /// <summary>
+    /// Instantiate a random car with a random non repeating color and Runner Name.
+    /// </summary>
+    private GameObject GenerateRandomCar(Transform spawnPoint, int maxCarPerType, int[] carsGenerated, List<int> namesDrawn, List<string> materialsDrawn) {
+        // select a random car prefab that doesn't repeat more than maxCarPerType times
+        int drawnCarNumber = UnityEngine.Random.Range(0, RunnerAttributesList.CarList.Length); 
+
+        while (carsGenerated[drawnCarNumber] == maxCarPerType) {
+            drawnCarNumber = UnityEngine.Random.Range(0, RunnerAttributesList.CarList.Length);
+        }
+
+        carsGenerated[drawnCarNumber]++;
+
+        Car selectedCar = (Car)RunnerAttributesList.CarList[drawnCarNumber];
+
+        // select a random non repeating material of the selected car
+        Material[] carMaterialsList = selectedCar.GetCarMaterialsPlayer(false);
+
+        int drawnCarMatNumber = UnityEngine.Random.Range(0, carMaterialsList.Length);
+
+        while (materialsDrawn.Contains(carMaterialsList[drawnCarMatNumber].name)) {
+            drawnCarMatNumber = UnityEngine.Random.Range(0, carMaterialsList.Length);
+        }
+
+        materialsDrawn.Add(carMaterialsList[drawnCarMatNumber].name);
+
+        // select a random runner name
+        int drawnNameNumber = UnityEngine.Random.Range(0, RunnerAttributesList.RunnerNameList.Length);
+
+        while (namesDrawn.Contains(drawnNameNumber)) {
+            drawnNameNumber = UnityEngine.Random.Range(0, RunnerAttributesList.RunnerNameList.Length);
+        }
+
+        namesDrawn.Add(drawnNameNumber);
+
+        GameObject carDrawn = selectedCar.GetCarPrefabPlayer(false);
+        carDrawn.GetComponent<CarMovementAI>().path = RacePath.transform;
+
+        GameObject carPrefab = Instantiate(carDrawn, spawnPoint.position, spawnPoint.rotation);
+
+        // configure instantiated car
+        foreach (Transform child in carPrefab.transform.GetChild(0).transform) {
+            if (child.gameObject.CompareTag("Chassi")) {
+                child.gameObject.GetComponent<Renderer>().material = carMaterialsList[drawnCarMatNumber];
+            }
+        }
+
+        carPrefab.GetComponent<VehicleData>().RunnerName = RunnerAttributesList.RunnerNameList[drawnNameNumber];
+        carPrefab.GetComponent<VehicleRaceData>().TrackerNode = RacePath.transform.GetChild(RacePath.transform.childCount - 1).gameObject.GetComponent<TrackerNode>();
+        carPrefab.GetComponent<VehicleRaceData>().TriggerPoint = gameObject.transform.GetChild(gameObject.transform.childCount - 1).gameObject.GetComponentInChildren<TriggerPoint>();
+
+        return carPrefab;
+    }
+    /// <summary>
+    /// Spawn a number of AI car based on how many starting positions there are.
+    /// </summary>
+    /// <param name="startingPositions"></param>
+    public void SpawnAI(List<Transform> startingPoints) {
+        // limit the maximum amount of cars per brand
+        int MaxCarPerType = ((InitialRacerPositions.Count - 1) / RunnerAttributesList.CarList.Length);
+        if ((InitialRacerPositions.Count - 1) % RunnerAttributesList.CarList.Length != 0) {
+            MaxCarPerType++;
+        }
+        // the quantity of cars drawn for each type
+        int[] carsDrawn = new int[RunnerAttributesList.CarList.Length];
+        for (int i = 0; i < RunnerAttributesList.CarList.Length; i++) {
+            carsDrawn[i] = 0;
+        }
+        // list of materials drawn in game
+        List<string> materialsDrawn = new List<string>();
+        // the value of a name stored in RunnerAttributesList.RunnerNameList[i] is given by i
+        List<int> namesDrawn = new List<int>();
+        
+        for (int i = 0; i < InitialRacerPositions.Count - 1; i++) {        
+            Racers.Add(GenerateRandomCar(startingPoints[i].transform, MaxCarPerType, carsDrawn, namesDrawn, materialsDrawn));
+        }
+    }
+    /// <summary>
+    /// Spawn the car's player.
+    /// </summary>
+    /// <param name="startingPoint">Initial Position of car</param>
+    /// <param name="playerCar">Prefab of car</param>
+    /// <param name="playerCarMat">Material of car</param>
+    public void SpawnPlayer(Transform startingPoint, CarName carName, CarColor carColor, string playerName) {
+        // deactivate other cars
+        for (int i = 0; i < startingPoint.childCount; i++) {
+            if ((int)carName != i) {
+                startingPoint.GetChild(i).gameObject.SetActive(false);
+            }
+        }
+        // get reference to car
+        GameObject chosenCar = startingPoint.GetChild((int)carName).gameObject;
+        // change car color
+        Car chosenCarData = (Car)RunnerAttributesList.CarList[0];
+
+        foreach (Transform child in chosenCar.transform) {
+            if (child.gameObject.CompareTag("Chassi")) {
+                child.gameObject.GetComponent<Renderer>().material = chosenCarData.GetCarMaterialsPlayer(true)[(int)carColor];
+            }
+        }
+        // change car name
+        chosenCar.GetComponent<VehicleData>().RunnerName = playerName;
+
+        Player = chosenCar;
+
+        Racers.Add(Player);
+    }
+
     private void Awake() {
         Instance = this;
+        // spawn car player
+        SpawnPlayer(InitialRacerPositions[InitialRacerPositions.Count - 1], CarName.Fusca, CarColor.Amarelo, "Nina");
+        // spawn ai
+        SpawnAI(InitialRacerPositions);
+        //Racers.Add(Player);
     }
 
     public void StartRace() {
         for (int i = 0; i < Racers.Count; i++) {
             Racers[i].GetComponent<CarUserControl>().ControlActive = true; // active control for the racer 'i'
             Racers[i].GetComponent<VehicleRaceData>().ActiveTimer(true); // start timer of race data of vehicle
+            Racers[i].GetComponentInChildren<GreasePoolCollision>().ActivateTrigger();
+            Racers[i].GetComponentInChildren<GluePoolCollision>().ActivateTrigger();
         }
+
     }
     /// <summary>
     /// Called when the player finishes the race. This function sets an AI to control the player's car
@@ -45,6 +167,12 @@ public class RaceManager : MonoBehaviour {
             int position = i + 1;
             VehicleData VehicleInfo = Racers[i].GetComponent<VehicleData>();
             VehicleRaceData VehicleRaceInfo = Racers[i].GetComponent<VehicleRaceData>();
+            if (VehicleRaceInfo.LapTime == null) {
+                VehicleRaceInfo.LapTime = gameObject.AddComponent<Timer>();
+            }
+            if (VehicleRaceInfo.RaceTime == null) {
+                VehicleRaceInfo.RaceTime = gameObject.AddComponent<Timer>();
+            }
             GameObject RunnerRow = RunnersList.transform.GetChild(position).gameObject;
             // position
             if (position < 10) {
@@ -55,7 +183,7 @@ public class RaceManager : MonoBehaviour {
             // runner name
             RunnerRow.transform.GetChild(1).gameObject.GetComponent<Text>().text = VehicleInfo.RunnerName;
             // car name
-            RunnerRow.transform.GetChild(2).gameObject.GetComponent<Text>().text = Racers[i].name;
+            RunnerRow.transform.GetChild(2).gameObject.GetComponent<Text>().text = VehicleInfo.CarName;
             // kills
             RunnerRow.transform.GetChild(3).gameObject.GetComponent<Text>().text = VehicleInfo.KillsCount.ToString();
             // time

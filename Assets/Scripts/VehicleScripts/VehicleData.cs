@@ -3,13 +3,29 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
 
+public enum CarName {
+    Fusca,
+    Kombi,
+    Opala
+}
+
+public enum CarColor {
+    Amarelo,
+    Azul,
+    Vermelho,
+    Preto
+}
+
 /// <summary>
 /// This class is responsible to store information about the car such health, shield, powerUps, etc.
 /// </summary>
 public class VehicleData : MonoBehaviour {
+    public string CarName;
     public string RunnerName;
     public float MaxCarHealth;
     public float MaxCarShield;
+
+    public GameObject DeathEffect;
 
     private float curCarHealth; // current car health
     private float curCarShield; // current car shield
@@ -21,7 +37,6 @@ public class VehicleData : MonoBehaviour {
 
     public bool isDead; // if car is dead
     private float deadTime;
-    public GameObject DeathEffect;
     
     public bool IsDead { get { return isDead; } }
     public float DeadTime { get { return deadTime; } }

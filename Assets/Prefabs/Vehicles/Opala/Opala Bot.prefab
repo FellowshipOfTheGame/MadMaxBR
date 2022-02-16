@@ -268,7 +268,7 @@ GameObject:
   - component: {fileID: 1622490296704934718}
   m_Layer: 8
   m_Name: Circle.017
-  m_TagString: Untagged
+  m_TagString: Chassi
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -314,7 +314,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 8effe42b8b9c9204cba5d8c775d933d2, type: 2}
+  - {fileID: 2100000, guid: 7f5638d72fb1e8442ac98883513bea69, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -783,6 +783,7 @@ MonoBehaviour:
   path: {fileID: 0}
   currentNode: 0
   trackWidth: 23
+  nodes: []
   steer: 0
   throttle: 0
   brake: 0
@@ -820,11 +821,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 21b66410723648246869f177ce64c12f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  RunnerName: Nona
+  CarName: Opala
+  RunnerName: 
   MaxCarHealth: 1000
   MaxCarShield: 1000
-  isDead: 0
   DeathEffect: {fileID: 4735445525407823977, guid: bfe6e24b84512bf4a9759b06b61af3d2, type: 3}
+  isDead: 0
 --- !u!114 &7099557099110074461
 MonoBehaviour:
   m_ObjectHideFlags: 0
