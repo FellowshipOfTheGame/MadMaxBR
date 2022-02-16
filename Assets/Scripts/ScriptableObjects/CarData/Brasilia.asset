@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 47d236e6883eb374aa70ad108b485597, type: 3}
+  m_Name: Brasilia
+  m_EditorClassIdentifier: 
+  carName: Brasilia
+  carPrefabPlayer: {fileID: 6308561613668286240, guid: 37ec039e50bfd6940bb41787cae0f2d7, type: 3}
+  carMaterialsPlayer:
+  - {fileID: 2100000, guid: fb5b2383a5ef465438e61225481675c0, type: 2}
+  - {fileID: 2100000, guid: 67d69b857734ab04eae2444e68928310, type: 2}
+  - {fileID: 2100000, guid: 62082a5d14871164cb01dc011bf097cc, type: 2}
+  - {fileID: 2100000, guid: fe399f2a321432442b9beea1595e9441, type: 2}
+  carPrefabBot: {fileID: 5180253905230132885, guid: 3b9b007413e60d347afe40ac940960ba, type: 3}
+  carMaterialsBot:
+  - {fileID: 2100000, guid: 3e9c0f61b42e2ff449df6ff37fa7b7ba, type: 2}
+  - {fileID: 2100000, guid: fac7480fa8cd2b04aad99f39c5b8c88c, type: 2}
+  - {fileID: 2100000, guid: 0ad7208ffbb655d40b31f7db51cef55f, type: 2}
+  - {fileID: 2100000, guid: 2bd1d780d6160824ab792cbf1c095316, type: 2}

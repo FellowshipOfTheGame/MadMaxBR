@@ -133,7 +133,7 @@ public class RaceManager : MonoBehaviour {
     private void Awake() {
         Instance = this;
         // spawn car player
-        SpawnPlayer(InitialRacerPositions[InitialRacerPositions.Count - 1], CarName.Fusca, CarColor.Amarelo, "Nina");
+        SpawnPlayer(InitialRacerPositions[InitialRacerPositions.Count - 1], CarName.Brasilia, CarColor.Amarelo, "Nina");
         // spawn ai
         SpawnAI(InitialRacerPositions);
         //Racers.Add(Player);

@@ -169,7 +169,7 @@ public class CarMovementAI : MonoBehaviour
         {
             throttle = minPositiveThrottle;
 
-            print(rb.velocity.magnitude + " velocity");
+            //print(rb.velocity.magnitude + " velocity");
             
             if (rb.velocity.magnitude > 10f && DistanceFromTrack() < distanceFromTrackToBreak)
             {
