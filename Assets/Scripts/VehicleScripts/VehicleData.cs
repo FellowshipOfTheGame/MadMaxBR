@@ -3,6 +3,19 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
 
+enum CarName {
+    Fusca,
+    Kombi,
+    Opala
+}
+
+enum CarColor {
+    Amarelo,
+    Azul,
+    Vermelho,
+    Preto
+}
+
 /// <summary>
 /// This class is responsible to store information about the car such health, shield, powerUps, etc.
 /// </summary>

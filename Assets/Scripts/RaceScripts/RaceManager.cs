@@ -73,8 +73,11 @@ public class RaceManager : MonoBehaviour {
 
         return carPrefab;
     }
-
-    private void SpawnAI() {
+    /// <summary>
+    /// Spawn a number of AI car based on how many starting positions there are.
+    /// </summary>
+    /// <param name="startingPositions"></param>
+    public void SpawnAI(List<Transform> startingPoints) {
         // limit the maximum amount of cars per brand
         int MaxCarPerType = ((InitialRacerPositions.Count - 1) / RunnerAttributesList.CarList.Length);
         if ((InitialRacerPositions.Count - 1) % RunnerAttributesList.CarList.Length != 0) {
@@ -91,16 +94,42 @@ public class RaceManager : MonoBehaviour {
         List<int> namesDrawn = new List<int>();
         
         for (int i = 0; i < InitialRacerPositions.Count - 1; i++) {        
-            Racers.Add(GenerateRandomCar(InitialRacerPositions[i].transform, MaxCarPerType, carsDrawn, namesDrawn, materialsDrawn));
+            Racers.Add(GenerateRandomCar(startingPoints[i].transform, MaxCarPerType, carsDrawn, namesDrawn, materialsDrawn));
         }
+    }
+    /// <summary>
+    /// Spawn the car's player.
+    /// </summary>
+    /// <param name="startingPoint">Initial Position of car</param>
+    /// <param name="playerCar">Prefab of car</param>
+    /// <param name="playerCarMat">Material of car</param>
+    public void SpawnPlayer(Transform startingPoint, int playerCarID, Material playerCarMat, string playerName) {
+        /*
+        // configure instantiated car
+        foreach (Transform child in carPrefab.transform.GetChild(0).transform) {
+            if (child.gameObject.CompareTag("Chassi")) {
+                child.gameObject.GetComponent<Renderer>().material = playerCarMat;
+            }
+        }
+
+        carPrefab.GetComponent<VehicleData>().RunnerName = playerName;
+        carPrefab.GetComponent<VehicleRaceData>().TrackerNode = RacePath.transform.GetChild(RacePath.transform.childCount - 1).gameObject.GetComponent<TrackerNode>();
+        carPrefab.GetComponent<VehicleRaceData>().TriggerPoint = gameObject.transform.GetChild(gameObject.transform.childCount - 1).gameObject.GetComponentInChildren<TriggerPoint>();
+
+        Player = carPrefab;
+
+        Racers.Add(Player);*/
     }
 
     private void Awake() {
         Instance = this;
         // spawn ai
-        SpawnAI();
-        // TODO: spawn car player
-        Racers.Add(Player);
+        SpawnAI(InitialRacerPositions);
+        // spawn car player
+        Car selectedCar = (Car)RunnerAttributesList.CarList[0];
+        Material selectedCarMat = selectedCar.GetCarMaterialsPlayer(true)[0];
+        SpawnPlayer(InitialRacerPositions[InitialRacerPositions.Count - 1], (int)CarName.Fusca, selectedCarMat, "Nina");
+        //Racers.Add(Player);
     }
 
     public void StartRace() {
