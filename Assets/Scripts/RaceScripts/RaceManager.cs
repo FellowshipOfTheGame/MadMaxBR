@@ -20,7 +20,8 @@ public class RaceManager : MonoBehaviour {
     public GameObject RaceResults;
     public GameObject DeathScreen;
 
-
+    public CarColor CorDoCarro;
+    public CarName NomeDoCarro;
 
     /// <summary>
     /// Instantiate a random car with a random non repeating color and Runner Name.
@@ -80,7 +81,7 @@ public class RaceManager : MonoBehaviour {
     /// </summary>
     /// <param name="startingPositions"></param>
     public void SpawnAI(List<Transform> startingPoints) {
-        // limit the maximum amount of cars per brand
+        // limit the maximum amount of cars per name
         int MaxCarPerType = ((InitialRacerPositions.Count - 1) / RunnerAttributesList.CarList.Length);
         if ((InitialRacerPositions.Count - 1) % RunnerAttributesList.CarList.Length != 0) {
             MaxCarPerType++;
@@ -100,7 +101,7 @@ public class RaceManager : MonoBehaviour {
         }
     }
     /// <summary>
-    /// Spawn the car's player.
+    /// Spawn the car's player in the intended starting point.
     /// </summary>
     /// <param name="startingPoint">Initial Position of car</param>
     /// <param name="playerCar">Prefab of car</param>
@@ -116,8 +117,8 @@ public class RaceManager : MonoBehaviour {
         GameObject chosenCar = startingPoint.GetChild((int)carName).gameObject;
         // change car color
         Car chosenCarData = (Car)RunnerAttributesList.CarList[0];
-
-        foreach (Transform child in chosenCar.transform) {
+        
+        foreach (Transform child in chosenCar.transform.GetChild(0).transform) {
             if (child.gameObject.CompareTag("Chassi")) {
                 child.gameObject.GetComponent<Renderer>().material = chosenCarData.GetCarMaterialsPlayer(true)[(int)carColor];
             }
@@ -133,7 +134,7 @@ public class RaceManager : MonoBehaviour {
     private void Awake() {
         Instance = this;
         // spawn car player
-        SpawnPlayer(InitialRacerPositions[InitialRacerPositions.Count - 1], CarName.Fusca, CarColor.Amarelo, "Nina");
+        SpawnPlayer(InitialRacerPositions[InitialRacerPositions.Count - 1], NomeDoCarro, CorDoCarro, "Nina");
         // spawn ai
         SpawnAI(InitialRacerPositions);
         //Racers.Add(Player);

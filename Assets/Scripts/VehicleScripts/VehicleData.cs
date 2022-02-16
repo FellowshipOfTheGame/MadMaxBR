@@ -6,7 +6,8 @@ using UnityEngine.UIElements;
 public enum CarName {
     Fusca,
     Kombi,
-    Opala
+    Opala,
+    Brasilia
 }
 
 public enum CarColor {
