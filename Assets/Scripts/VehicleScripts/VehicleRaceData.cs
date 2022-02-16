@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class VehicleRaceData : MonoBehaviour {
-    public Timer RaceTime;
-    public Timer LapTime;
+    [HideInInspector] public Timer RaceTime;
+    [HideInInspector] public Timer LapTime;
 
     public TrackerNode TrackerNode;
     public TriggerPoint TriggerPoint;
