@@ -14,7 +14,7 @@ public class GluePoolCollision : MonoBehaviour {
     List<ParticleSystem.Particle> enter = new List<ParticleSystem.Particle>();
     List<ParticleSystem.Particle> inside = new List<ParticleSystem.Particle>();
 
-    void OnEnable() {
+    public void ActivateTrigger() {
         ps = GetComponent<ParticleSystem>();
 
         for (int i = 0; i < RaceManager.Instance.Racers.Count; i++) {

@@ -14,9 +14,8 @@ public class GreasePoolCollision : MonoBehaviour {
     List<ParticleSystem.Particle> enter = new List<ParticleSystem.Particle>();
     List<ParticleSystem.Particle> inside = new List<ParticleSystem.Particle>();
 
-    void OnEnable() {
+    public void ActivateTrigger() {
         ps = GetComponent<ParticleSystem>();
-        // raceManager = RaceManager.Instance.GetComponent<RaceManager>();
 
         for (int i = 0; i < RaceManager.Instance.Racers.Count; i++) {
             ps.trigger.AddCollider(RaceManager.Instance.Racers[i].GetComponent<BoxCollider>());

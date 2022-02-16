@@ -20,6 +20,8 @@ public class RaceManager : MonoBehaviour {
     public GameObject RaceResults;
     public GameObject DeathScreen;
 
+
+
     /// <summary>
     /// Instantiate a random car with a random non repeating color and Runner Name.
     /// </summary>
@@ -88,7 +90,7 @@ public class RaceManager : MonoBehaviour {
         for (int i = 0; i < RunnerAttributesList.CarList.Length; i++) {
             carsDrawn[i] = 0;
         }
-        // list of materials drawn
+        // list of materials drawn in game
         List<string> materialsDrawn = new List<string>();
         // the value of a name stored in RunnerAttributesList.RunnerNameList[i] is given by i
         List<int> namesDrawn = new List<int>();
@@ -103,40 +105,46 @@ public class RaceManager : MonoBehaviour {
     /// <param name="startingPoint">Initial Position of car</param>
     /// <param name="playerCar">Prefab of car</param>
     /// <param name="playerCarMat">Material of car</param>
-    public void SpawnPlayer(Transform startingPoint, int playerCarID, Material playerCarMat, string playerName) {
-        /*
-        // configure instantiated car
-        foreach (Transform child in carPrefab.transform.GetChild(0).transform) {
-            if (child.gameObject.CompareTag("Chassi")) {
-                child.gameObject.GetComponent<Renderer>().material = playerCarMat;
+    public void SpawnPlayer(Transform startingPoint, CarName carName, CarColor carColor, string playerName) {
+        // deactivate other cars
+        for (int i = 0; i < startingPoint.childCount; i++) {
+            if ((int)carName != i) {
+                startingPoint.GetChild(i).gameObject.SetActive(false);
             }
         }
+        // get reference to car
+        GameObject chosenCar = startingPoint.GetChild((int)carName).gameObject;
+        // change car color
+        Car chosenCarData = (Car)RunnerAttributesList.CarList[0];
 
-        carPrefab.GetComponent<VehicleData>().RunnerName = playerName;
-        carPrefab.GetComponent<VehicleRaceData>().TrackerNode = RacePath.transform.GetChild(RacePath.transform.childCount - 1).gameObject.GetComponent<TrackerNode>();
-        carPrefab.GetComponent<VehicleRaceData>().TriggerPoint = gameObject.transform.GetChild(gameObject.transform.childCount - 1).gameObject.GetComponentInChildren<TriggerPoint>();
+        foreach (Transform child in chosenCar.transform) {
+            if (child.gameObject.CompareTag("Chassi")) {
+                child.gameObject.GetComponent<Renderer>().material = chosenCarData.GetCarMaterialsPlayer(true)[(int)carColor];
+            }
+        }
+        // change car name
+        chosenCar.GetComponent<VehicleData>().RunnerName = playerName;
 
-        Player = carPrefab;
+        Player = chosenCar;
 
-        Racers.Add(Player);*/
+        Racers.Add(Player);
     }
 
     private void Awake() {
         Instance = this;
+        // spawn car player
+        SpawnPlayer(InitialRacerPositions[InitialRacerPositions.Count - 1], CarName.Fusca, CarColor.Amarelo, "Nina");
         // spawn ai
         SpawnAI(InitialRacerPositions);
-        // spawn car player
-        Car selectedCar = (Car)RunnerAttributesList.CarList[0];
-        Material selectedCarMat = selectedCar.GetCarMaterialsPlayer(true)[0];
-        SpawnPlayer(InitialRacerPositions[InitialRacerPositions.Count - 1], (int)CarName.Fusca, selectedCarMat, "Nina");
         //Racers.Add(Player);
     }
 
     public void StartRace() {
-        Debug.Log(Racers.Count + " racers ");
         for (int i = 0; i < Racers.Count; i++) {
             Racers[i].GetComponent<CarUserControl>().ControlActive = true; // active control for the racer 'i'
             Racers[i].GetComponent<VehicleRaceData>().ActiveTimer(true); // start timer of race data of vehicle
+            Racers[i].GetComponentInChildren<GreasePoolCollision>().ActivateTrigger();
+            Racers[i].GetComponentInChildren<GluePoolCollision>().ActivateTrigger();
         }
 
     }

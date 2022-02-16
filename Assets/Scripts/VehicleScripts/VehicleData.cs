@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-enum CarName {
+public enum CarName {
     Fusca,
     Kombi,
     Opala
 }
 
-enum CarColor {
+public enum CarColor {
     Amarelo,
     Azul,
     Vermelho,
