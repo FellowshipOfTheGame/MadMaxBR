@@ -246,8 +246,51 @@ Transform:
   - {fileID: 2679915156803799884}
   - {fileID: 2679915156823079024}
   m_Father: {fileID: 8628939255668994704}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &8296210196162476321
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 376368813278516840}
+  - component: {fileID: 3711373906983302553}
+  m_Layer: 0
+  m_Name: RaceTimer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &376368813278516840
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8296210196162476321}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -1132.4683, y: -20.87564, z: 84.97606}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 8628939255668994704}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3711373906983302553
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8296210196162476321}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f72dc0c3a527d3148aeea3b17002fd8d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &9220282495745097609
 GameObject:
   m_ObjectHideFlags: 0
@@ -276,6 +319,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
+  - {fileID: 376368813278516840}
   - {fileID: 2679915157132664437}
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -294,7 +338,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   NumberOfLaps: 1
   Player: {fileID: 0}
+  RacePath: {fileID: 0}
+  RaceTime: {fileID: 0}
+  RunnerAttributesList: {fileID: 0}
   Racers:
   - {fileID: 0}
+  InitialRacerPositions: []
   GameHUD: {fileID: 0}
   RaceResults: {fileID: 0}
+  DeathScreen: {fileID: 0}

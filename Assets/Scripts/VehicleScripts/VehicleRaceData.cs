@@ -3,15 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class VehicleRaceData : MonoBehaviour {
-    [HideInInspector]
-    public Timer RaceTime;
-    [HideInInspector]
-    public Timer LapTime;
+    [HideInInspector] public Timer RaceTime;
+    [HideInInspector] public Timer LapTime;
 
     public TrackerNode TrackerNode;
     public TriggerPoint TriggerPoint;
 
-    private bool isTimerStarted;
+    private bool hasTimerStarted;
 
     private float lapCounter;
     private float racePosition;
@@ -29,7 +27,7 @@ public class VehicleRaceData : MonoBehaviour {
     private bool firstTrigger;
 
     public void ActiveTimer(bool val) {
-        isTimerStarted = val;
+        hasTimerStarted = val;
     }
 
     // when a Lap is completed, the time of the best lap is stored
@@ -94,8 +92,7 @@ public class VehicleRaceData : MonoBehaviour {
         racePosition = pos;
     }
 
-    // Start is called before the first frame update
-    void Start() {
+    private void Awake() {
         RaceTime = gameObject.AddComponent<Timer>();
         LapTime = gameObject.AddComponent<Timer>();
         minCountBest = 9999;
@@ -105,13 +102,14 @@ public class VehicleRaceData : MonoBehaviour {
         secCountTotal = 0;
         milliCountTotal = 0;
         lapCounter = 0;
-        isTimerStarted = false;
+        hasTimerStarted = false;
         completedRace = false;
         firstTrigger = true;
+
     }
 
     private void Update() {
-        if (!isTimerStarted) {
+        if (!hasTimerStarted) {
             RaceTime.ResetTimer();
             LapTime.ResetTimer();
         }

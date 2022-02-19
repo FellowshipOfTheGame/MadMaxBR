@@ -19,7 +19,8 @@ public class CarController : MonoBehaviour {
     [System.Serializable]
     public class CarSetting {
         public Vector3 m_CentreOfMassOffset;
-        public float m_MaximumSteerAngle = 25f;
+        public float m_SteerAngleSuperiorLimit = 25f;
+        public float m_SteerAngleInferiorLimit = 5f;
         [Range(0, 1)] public float m_SteerHelper; // 0 is raw physics , 1 the car will grip in the direction it is facing
         [Range(0, 1)] public float m_TractionControl; // 0 is no traction control, 1 is full interference
         public float m_FullTorqueOverAllWheels = 2500f;
@@ -77,7 +78,7 @@ public class CarController : MonoBehaviour {
     private float m_DefaultTopspeed;
     private Quaternion[] m_WheelMeshLocalRotations;
     private Vector3 m_Prevpos, m_Pos;
-    private float m_SteerAngle;
+    private double m_SteerAngle;
     
     private int m_GearNum;
     /// <summary>
@@ -103,7 +104,7 @@ public class CarController : MonoBehaviour {
 
     public bool Skidding { get; private set; }
     public float BrakeInput { get; private set; }
-    public float CurrentSteerAngle{ get { return m_SteerAngle; }}
+    public double CurrentSteerAngle{ get { return m_SteerAngle; }}
     public float CurrentSpeed { 
         get { 
             return m_Rigidbody.velocity.magnitude * 2;
@@ -252,8 +253,6 @@ public class CarController : MonoBehaviour {
         if (currentGear > 0 || neutralGear) { // verify if currentGear is neutral or not
             //if (!carSounds.SwitchGear.isPlaying)
             carSounds.SwitchGear.GetComponent<AudioSource>().Play();
-
-            //Debug
 
             currentGear--;
 
@@ -414,11 +413,8 @@ public class CarController : MonoBehaviour {
                     if (!justEnteredGlue) {
                         justEnteredGlue = true;
 
-                        float VelocityRelativeToMax;
-
-                        VelocityRelativeToMax = m_Rigidbody.velocity.magnitude * 2/ CarSettings.m_Topspeed;
-
-                        float decreaseRate = 0.75f - 0.45f * VelocityRelativeToMax;
+                        //float decreaseRate = 0.75f - 0.45f * VelocityRelativeToMax;
+                        float decreaseRate = 0.3f;
 
                         m_Rigidbody.velocity = new Vector3(m_Rigidbody.velocity.x * (1 - decreaseRate), m_Rigidbody.velocity.y * (1 - decreaseRate), m_Rigidbody.velocity.z) * (1 - decreaseRate);
                     }
@@ -465,9 +461,9 @@ public class CarController : MonoBehaviour {
 
         //Set the steer on the front wheels.
         //Assuming that wheels 0 and 1 are the front wheels.
-        m_SteerAngle = steering * CarSettings.m_MaximumSteerAngle;
-        m_WheelColliders[0].steerAngle = m_SteerAngle;
-        m_WheelColliders[1].steerAngle = m_SteerAngle;
+        m_SteerAngle = steering * GetMaxSteerAngle();
+        m_WheelColliders[0].steerAngle = (float)m_SteerAngle;
+        m_WheelColliders[1].steerAngle = (float)m_SteerAngle;
         SteerHelper();
 
         if (NitroEnabled) {
@@ -515,7 +511,6 @@ public class CarController : MonoBehaviour {
         //Assuming that wheels 2 and 3 are the rear wheels.
         if (handbrake) {
             var hbTorque = handbrake == true ? 1f : 0f * CarSettings.m_MaxHandbrakeTorque;
-            Debug.Log(hbTorque);
             m_WheelColliders[2].brakeTorque = hbTorque;
             m_WheelColliders[3].brakeTorque = hbTorque;
         }
@@ -537,7 +532,7 @@ public class CarController : MonoBehaviour {
     /// </summary>
     /// <param name="decreaseRate">.</param>
     private void DecreaseSpeed() {
-        float maxSpeed = CarSettings.m_Topspeed * 2.23693629f;
+        float maxSpeed = CarSettings.m_Topspeed / 2f;
 
         // Decrease rate of speed given in percent of the maximum speed per second;
         float decreaseRate; 
@@ -566,16 +561,30 @@ public class CarController : MonoBehaviour {
 
         m_Rigidbody.velocity = m_Rigidbody.velocity.normalized * Mathf.MoveTowards(m_Rigidbody.velocity.magnitude, 0, Time.deltaTime * maxSpeed * decreaseRate);
     }
+    /// <summary>
+    /// Get the maximum Steer Angle based on the velocity of the car.
+    /// </summary>
+    private double GetMaxSteerAngle() {
+        double SpeedRatio = 100 * CurrentSpeed / MaxSpeed;
+        
+        if (SpeedRatio < 50) {
+            return -0.0041f * SpeedRatio * SpeedRatio - 0.1061f * SpeedRatio + 25.25f;
+        } else if (SpeedRatio == 50) {
+            return 10;
+        } else if (SpeedRatio > 50 && SpeedRatio < 90) {
+            return 0.005f * SpeedRatio * SpeedRatio - 0.89f * SpeedRatio + 41.8f;
+        } else {
+            return 2.2f;
+        }
+    }
 
     private void CapSpeed() {
-        float speed = m_Rigidbody.velocity.magnitude * 2;
-        
         if (backward) {
-            if (speed > CarSettings.m_TopspeedBackwards) {
+            if (CurrentSpeed > CarSettings.m_TopspeedBackwards) {
                 m_Rigidbody.velocity = (CarSettings.m_TopspeedBackwards / 2) * m_Rigidbody.velocity.normalized;
             }
         } else {
-            if (speed > CarSettings.m_Topspeed) {
+            if (CurrentSpeed > CarSettings.m_Topspeed) {
                 m_Rigidbody.velocity = (CarSettings.m_Topspeed / 2) * m_Rigidbody.velocity.normalized;
             }
         }
