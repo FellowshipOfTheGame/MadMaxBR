@@ -14,9 +14,9 @@ public class WrongWay : MonoBehaviour
         ColorAlfaZero();
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
-        if (!gameObject || _carMovementAI.nodes.Count == 0) return;
+        if (_carMovementAI.nodes.Count == 0) return;
         
         if (Vector3.Dot(_carMovementAI.nodes[_carMovementAI.currentNode].transform.right,
                 gameObject.transform.forward) < -0.3f)
