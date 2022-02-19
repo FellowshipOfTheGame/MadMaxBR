@@ -1,14 +1,13 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 using System;
 
 [Serializable]
 public class Car
 {
-    public String name;
     public GameObject car;
     public GameObject carBody;
-    public String carBodyName;
     public Texture[] materials;
 }
 
@@ -17,8 +16,18 @@ public class SelectCar : MonoBehaviour
     public Car[] cars;
     public string gameCene;
 
-    private int selectedId = 0;
-    private int selectedIdColor = 0;
+    [SerializeField] private int selectedId = 0;
+    [SerializeField] private int selectedIdColor = 0;
+
+    [SerializeField] private Button selectButton;
+    [SerializeField] private Button backButton;
+    [SerializeField] private Button leftButton;
+    [SerializeField] private Button rightButton;
+    [SerializeField] private Button blackButton;
+    [SerializeField] private Button blueButton;
+    [SerializeField] private Button redButton;
+    [SerializeField] private Button yellowButton;
+
     private MeshRenderer m_Renderer;
     private Camera mainCamera;
 
@@ -33,6 +42,24 @@ public class SelectCar : MonoBehaviour
         mainCamera = Camera.main;
         ShowCar();
         SetCarColor();
+
+        selectButton.onClick = new Button.ButtonClickedEvent(); 
+        backButton.onClick = new Button.ButtonClickedEvent(); 
+        leftButton.onClick = new Button.ButtonClickedEvent(); 
+        rightButton.onClick = new Button.ButtonClickedEvent(); 
+        blackButton.onClick = new Button.ButtonClickedEvent(); 
+        blueButton.onClick = new Button.ButtonClickedEvent(); 
+        redButton.onClick = new Button.ButtonClickedEvent(); 
+        yellowButton.onClick = new Button.ButtonClickedEvent();
+
+        selectButton.onClick.AddListener(() => LoadGame());
+        backButton.onClick.AddListener(() => Back());
+        leftButton.onClick.AddListener(() => LeftCar());
+        rightButton.onClick.AddListener(() => RightCar());
+        blackButton.onClick.AddListener(() => SetCarColorID(2));
+        blueButton.onClick.AddListener(() => SetCarColorID(1));
+        redButton.onClick.AddListener(() => SetCarColorID(3));
+        yellowButton.onClick.AddListener(() => SetCarColorID(0));
     }
 
     void Update()
@@ -56,6 +83,11 @@ public class SelectCar : MonoBehaviour
         {
             DownColor();
         }
+
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            LoadGame();
+        }
     }
 
     public void LoadGame()
@@ -63,6 +95,11 @@ public class SelectCar : MonoBehaviour
         PlayerPrefs.SetInt("selectedIdColor", selectedIdColor);//grava no salve
         PlayerPrefs.SetInt("SelectedCar", selectedId);//grava no salve
         SceneManager.LoadScene(gameCene, LoadSceneMode.Single);
+    }
+
+    public void Back()
+    {
+        Debug.Log("IMPLEMENTR");
     }
 
     private void UpColor()
@@ -96,11 +133,13 @@ public class SelectCar : MonoBehaviour
 
     private void SetCarColorID(int idColor)
     {
-        if (idColor <= 0 && idColor >= (cars[selectedId].materials.Length - 1))
+        Debug.Log(idColor >= 0 );
+        if (idColor >= 0 && idColor <= (cars[selectedId].materials.Length - 1))
         {
             selectedIdColor = idColor;
             PlayerPrefs.SetInt("selectedIdColor", idColor);//grava no salve
             SetCarColor();
+            Debug.Log("rodou");
         }
     }
 
@@ -109,11 +148,7 @@ public class SelectCar : MonoBehaviour
         m_Renderer = cars[selectedId].carBody.GetComponent<MeshRenderer>();
         for (int i = 0; i < m_Renderer.sharedMaterials.Length; i++)
         {
-            // Debug.Log(m_Renderer.sharedMaterials[i].name);
-            // if (m_Renderer.sharedMaterials[i].name == cars[selectedId].carBodyName)
-            // {
             m_Renderer.sharedMaterials[i].mainTexture = cars[selectedId].materials[selectedIdColor];
-            // }
         }
     }
 
