@@ -132,7 +132,11 @@ public class RaceManager : MonoBehaviour {
     }
 
     private void Awake() {
-        Instance = this;
+        if (Instance != null && Instance != this) {
+            Destroy(this.gameObject);
+        } else {
+            Instance = this;
+        }
         // spawn car player
         SpawnPlayer(InitialRacerPositions[InitialRacerPositions.Count - 1], NomeDoCarro, CorDoCarro, "Nina");
         // spawn ai
