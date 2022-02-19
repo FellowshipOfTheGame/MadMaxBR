@@ -4,7 +4,7 @@ using UnityEngine.UI;
 using System;
 
 [Serializable]
-public class Car
+public class Carro
 {
     public GameObject car;
     public GameObject carBody;
@@ -13,8 +13,9 @@ public class Car
 
 public class SelectCar : MonoBehaviour
 {
-    public Car[] cars;
+    public Carro[] cars;
     public string gameCene;
+    public string menuCene;
 
     [SerializeField] private int selectedId = 0;
     [SerializeField] private int selectedIdColor = 0;
@@ -33,8 +34,16 @@ public class SelectCar : MonoBehaviour
 
     private void Awake()
     {
-        selectedId = PlayerPrefs.GetInt("selectedId");
-        selectedIdColor = PlayerPrefs.GetInt("selectedIdColor");
+        if (PlayerPrefs.GetInt("selectedId") != 0)
+        {
+            selectedId = PlayerPrefs.GetInt("selectedId");
+        }
+
+        if (PlayerPrefs.GetInt("selectedIdColor") != 0)
+        {
+            selectedIdColor = PlayerPrefs.GetInt("selectedIdColor");
+        }
+
     }
 
     private void Start()
@@ -43,13 +52,13 @@ public class SelectCar : MonoBehaviour
         ShowCar();
         SetCarColor();
 
-        selectButton.onClick = new Button.ButtonClickedEvent(); 
-        backButton.onClick = new Button.ButtonClickedEvent(); 
-        leftButton.onClick = new Button.ButtonClickedEvent(); 
-        rightButton.onClick = new Button.ButtonClickedEvent(); 
-        blackButton.onClick = new Button.ButtonClickedEvent(); 
-        blueButton.onClick = new Button.ButtonClickedEvent(); 
-        redButton.onClick = new Button.ButtonClickedEvent(); 
+        selectButton.onClick = new Button.ButtonClickedEvent();
+        backButton.onClick = new Button.ButtonClickedEvent();
+        leftButton.onClick = new Button.ButtonClickedEvent();
+        rightButton.onClick = new Button.ButtonClickedEvent();
+        blackButton.onClick = new Button.ButtonClickedEvent();
+        blueButton.onClick = new Button.ButtonClickedEvent();
+        redButton.onClick = new Button.ButtonClickedEvent();
         yellowButton.onClick = new Button.ButtonClickedEvent();
 
         selectButton.onClick.AddListener(() => LoadGame());
@@ -99,7 +108,7 @@ public class SelectCar : MonoBehaviour
 
     public void Back()
     {
-        Debug.Log("IMPLEMENTR");
+        SceneManager.LoadScene(menuCene, LoadSceneMode.Single);
     }
 
     private void UpColor()
@@ -133,13 +142,11 @@ public class SelectCar : MonoBehaviour
 
     private void SetCarColorID(int idColor)
     {
-        Debug.Log(idColor >= 0 );
         if (idColor >= 0 && idColor <= (cars[selectedId].materials.Length - 1))
         {
             selectedIdColor = idColor;
             PlayerPrefs.SetInt("selectedIdColor", idColor);//grava no salve
             SetCarColor();
-            Debug.Log("rodou");
         }
     }
 
@@ -183,7 +190,6 @@ public class SelectCar : MonoBehaviour
 
     private void ShowCar()
     {
-        selectedIdColor = 0;
         mainCamera.transform.position =
             new Vector3(cars[selectedId].car.transform.position.x, mainCamera.transform.position.y, mainCamera.transform.position.z);
 

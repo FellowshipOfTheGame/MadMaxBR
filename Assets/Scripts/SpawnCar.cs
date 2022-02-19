@@ -11,7 +11,7 @@ public class SpawnCar : MonoBehaviour
     public GameObject playerSpawnPoint;
     private MeshRenderer m_Renderer;
     private RaceManager raceManager;
-    public Car[] cars;
+    public Carro[] cars;
 
     private void Awake()
     {
