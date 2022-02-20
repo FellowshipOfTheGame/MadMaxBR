@@ -77,7 +77,7 @@ public class RaceManager : MonoBehaviour {
         return carPrefab;
     }
     /// <summary>
-    /// Spawn a number of AI car based on how many starting positions there are.
+    /// Spawn a number of AI cars based on how many starting positions there are.
     /// </summary>
     /// <param name="startingPositions"></param>
     public void SpawnAI(List<Transform> startingPoints) {
@@ -116,7 +116,7 @@ public class RaceManager : MonoBehaviour {
         // get reference to car
         GameObject chosenCar = startingPoint.GetChild((int)carName).gameObject;
         // change car color
-        Car chosenCarData = (Car)RunnerAttributesList.CarList[0];
+        Car chosenCarData = (Car)RunnerAttributesList.CarList[(int)carName];
         
         foreach (Transform child in chosenCar.transform.GetChild(0).transform) {
             if (child.gameObject.CompareTag("Chassi")) {
@@ -132,7 +132,11 @@ public class RaceManager : MonoBehaviour {
     }
 
     private void Awake() {
-        Instance = this;
+        if (Instance != null && Instance != this) {
+            Destroy(this.gameObject);
+        } else {
+            Instance = this;
+        }
         // spawn car player
         SpawnPlayer(InitialRacerPositions[InitialRacerPositions.Count - 1], NomeDoCarro, CorDoCarro, "Nina");
         // spawn ai
