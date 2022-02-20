@@ -9,14 +9,17 @@ public class WrongWay : MonoBehaviour
     
     private void Awake()
     {
-        _carMovementAI = GameObject.FindWithTag("Player").GetComponent<CarMovementAI>();
+        _carMovementAI = gameObject.GetComponent<CarMovementAI>();
         _wrongWayImage = GameObject.FindWithTag("WrongWayImage").GetComponent<Image>();
         ColorAlfaZero();
     }
 
     private void Update()
     {
-        if (Vector3.Dot(_carMovementAI.nodes[_carMovementAI.currentNode].transform.right, gameObject.transform.forward) < -0.3f)
+        if (!gameObject || _carMovementAI.nodes.Count == 0) return;
+        
+        if (Vector3.Dot(_carMovementAI.nodes[_carMovementAI.currentNode].transform.right,
+                gameObject.transform.forward) < -0.3f)
         {
             FadeInOut();
         }
