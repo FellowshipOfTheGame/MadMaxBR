@@ -6,20 +6,22 @@ public class WrongWay : MonoBehaviour
     private Image _wrongWayImage;
     private float _time;
     private CarMovementAI _carMovementAI;
+    private CarController _carController;
     
     private void Awake()
     {
-        _carMovementAI = gameObject.GetComponent<CarMovementAI>();
+        _carMovementAI = GetComponent<CarMovementAI>();
+        _carController = GetComponent<CarController>();
         _wrongWayImage = GameObject.FindWithTag("WrongWayImage").GetComponent<Image>();
         ColorAlfaZero();
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
-        if (!gameObject || _carMovementAI.nodes.Count == 0) return;
+        if (_carMovementAI.nodes.Count == 0) return;
         
         if (Vector3.Dot(_carMovementAI.nodes[_carMovementAI.currentNode].transform.right,
-                gameObject.transform.forward) < -0.3f)
+                gameObject.transform.forward) < -0.3f && !_carController.backward)
         {
             FadeInOut();
         }
