@@ -137,6 +137,9 @@ public class RaceManager : MonoBehaviour {
         } else {
             Instance = this;
         }
+        //Load nome e cor do carro
+        //NomeDoCarro = (CarName)PlayerPrefs.GetInt("selectedId");
+        //CorDoCarro = (CarColor)PlayerPrefs.GetInt("selectedIdColor");
         // spawn car player
         SpawnPlayer(InitialRacerPositions[InitialRacerPositions.Count - 1], NomeDoCarro, CorDoCarro, "Nina");
         // spawn ai
