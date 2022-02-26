@@ -584,7 +584,7 @@ MonoBehaviour:
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
-        m_CallState: 1
+        m_CallState: 2
 --- !u!1 &131684131
 GameObject:
   m_ObjectHideFlags: 0
@@ -1190,7 +1190,7 @@ MonoBehaviour:
   m_CaptionImage: {fileID: 0}
   m_ItemText: {fileID: 826389575}
   m_ItemImage: {fileID: 0}
-  m_Value: 3
+  m_Value: 1
   m_Options:
     m_Options:
     - m_Text: Baixo
@@ -1617,7 +1617,7 @@ MonoBehaviour:
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
-        m_CallState: 1
+        m_CallState: 2
 --- !u!1 &422076413
 GameObject:
   m_ObjectHideFlags: 0
@@ -2495,7 +2495,7 @@ GameObject:
   - component: {fileID: 676942597}
   - component: {fileID: 676942598}
   m_Layer: 5
-  m_Name: Toggle
+  m_Name: fullScreenToggle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2580,7 +2580,7 @@ MonoBehaviour:
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
-        m_CallState: 2
+        m_CallState: 1
   m_IsOn: 1
 --- !u!1 &729747963
 GameObject:
@@ -3049,7 +3049,7 @@ GameObject:
   - component: {fileID: 877292313}
   - component: {fileID: 877292312}
   m_Layer: 5
-  m_Name: OptiobCanvas
+  m_Name: OptionCanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4271,7 +4271,7 @@ GameObject:
   - component: {fileID: 1204980228}
   - component: {fileID: 1204980226}
   m_Layer: 5
-  m_Name: resolutionDropdown (1)
+  m_Name: resolutionDropdown
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4337,7 +4337,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1809422797}
         m_TargetAssemblyTypeName: SettingsMenu, Assembly-CSharp
-        m_MethodName: SetGraphicQuality
+        m_MethodName: SetResolution
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -6079,7 +6079,7 @@ MonoBehaviour:
   m_MinValue: -80
   m_MaxValue: 0
   m_WholeNumbers: 0
-  m_Value: 0
+  m_Value: -1
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
@@ -6094,7 +6094,7 @@ MonoBehaviour:
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
-        m_CallState: 1
+        m_CallState: 2
 --- !u!1 &1554618351
 GameObject:
   m_ObjectHideFlags: 0
@@ -7546,6 +7546,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   resolutionsDropdown: {fileID: 1204980226}
   qualityDropdown: {fileID: 257431919}
+  isFullScreenToggle: {fileID: 676942598}
+  mainSlider: {fileID: 1545532282}
+  musicSlider: {fileID: 407764195}
+  effectdSlider: {fileID: 84368808}
   mainAudioMixer: {fileID: 24100000, guid: 83473e35e7f8e274aadd238bfb0fcbf9, type: 2}
 --- !u!4 &1809422798
 Transform:
