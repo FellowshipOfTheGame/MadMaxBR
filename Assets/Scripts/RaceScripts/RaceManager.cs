@@ -101,7 +101,7 @@ public class RaceManager : MonoBehaviour {
         }
     }
     /// <summary>
-    /// Spawn the car's player in the intended starting point.
+    /// Spawn a car in the intended starting point with carName and carColor for the player to control.
     /// </summary>
     /// <param name="startingPoint">Initial Position of car</param>
     /// <param name="playerCar">Prefab of car</param>

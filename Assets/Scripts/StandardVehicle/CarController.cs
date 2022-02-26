@@ -122,7 +122,7 @@ public class CarController : MonoBehaviour {
     // new rpm count system
     private int currentGear = 0;
     private bool neutralGear = false;
-    private bool backward = false; // controls if the car can go backwards
+    public bool backward = false; // controls if the car can go backwards
 
     private float motorRPM = 0.0f; // revolutions per time of motor
 
