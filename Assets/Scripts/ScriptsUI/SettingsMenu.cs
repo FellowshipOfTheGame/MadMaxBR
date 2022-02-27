@@ -13,7 +13,7 @@ public class SettingsMenu : MonoBehaviour
     [SerializeField] private Toggle isFullScreenToggle;
     [SerializeField] private Slider mainSlider;
     [SerializeField] private Slider musicSlider;
-    [SerializeField] private Slider effectdSlider;
+    [SerializeField] private Slider effectsSlider;
 
     public AudioMixer mainAudioMixer;
 
@@ -78,7 +78,7 @@ public class SettingsMenu : MonoBehaviour
 
         mainSlider.value = mainVolume;
         musicSlider.value = musicVolume;
-        effectdSlider.value = effectVolume;
+        effectsSlider.value = effectVolume;
     }
 
 
