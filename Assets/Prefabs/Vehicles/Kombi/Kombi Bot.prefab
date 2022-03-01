@@ -443,6 +443,36 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e10f6b915a8d72041af2e803d5a07df9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &3408074802432777623
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6087825988204981948}
+  m_Layer: 8
+  m_Name: Sensor Esquerdo da Mureta
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6087825988204981948
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3408074802432777623}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -1.3, y: -1, z: 3}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 3694627795795616728}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3694627794919509194
 GameObject:
   m_ObjectHideFlags: 0
@@ -453,7 +483,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3694627794919509195}
   m_Layer: 8
-  m_Name: Sensor da Esquerda 2
+  m_Name: Sensor da Esquerda de Dentro
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -467,7 +497,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3694627794919509194}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.661, y: -1, z: 3}
+  m_LocalPosition: {x: -0.661, y: -0.3, z: 3}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 3694627795795616728}
@@ -1175,7 +1205,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3694627795449769351}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.3, y: -1, z: 3}
+  m_LocalPosition: {x: -1.3, y: -0.29999995, z: 3}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 3694627795795616728}
@@ -1191,7 +1221,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3694627795518968226}
   m_Layer: 8
-  m_Name: Sensor da Direita
+  m_Name: Sensor da Direita de Dentro
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1205,7 +1235,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3694627795518968229}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.265, y: -1, z: 3}
+  m_LocalPosition: {x: 0.265, y: -0.29999995, z: 3}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 3694627795795616728}
@@ -1221,7 +1251,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3694627795529851121}
   m_Layer: 8
-  m_Name: Sensor da Esquerda
+  m_Name: Sensor da Esquerda de Fora
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1235,7 +1265,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3694627795529851120}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.218, y: -1, z: 3}
+  m_LocalPosition: {x: -1.218, y: -0.29999995, z: 3}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 3694627795795616728}
@@ -1562,6 +1592,8 @@ Transform:
   - {fileID: 3694627795518968226}
   - {fileID: 3694627796744734059}
   - {fileID: 3694627795449769348}
+  - {fileID: 6087825988204981948}
+  - {fileID: 3532040451554875087}
   m_Father: {fileID: 3805344987279437861}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2943,6 +2975,7 @@ MonoBehaviour:
     HighEngine: {fileID: 7774387026656108728}
     Nitro: {fileID: 7774387025781671864}
     SwitchGear: {fileID: 7774387026728558361}
+  backward: 0
 --- !u!114 &3694627796648777690
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2974,11 +3007,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b2ad9f42a8ed664ab0a309506008e3d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  leftSensorTransform: {fileID: 3694627795529851121}
+  leftOuterSensorTransform: {fileID: 3694627795529851121}
   leftInnerSensorTransform: {fileID: 3694627794919509195}
-  rightSensorTransform: {fileID: 3694627795518968226}
-  rightInnerSensorTransform: {fileID: 3694627796744734059}
+  rightOuterSensorTransform: {fileID: 3694627796744734059}
+  rightInnerSensorTransform: {fileID: 3694627795518968226}
   horizontalSensorTransform: {fileID: 3694627795449769348}
+  muretaLeftSensorTransform: {fileID: 6087825988204981948}
+  muretaRightSensorTransform: {fileID: 3532040451554875087}
   sensorLength: 5
   horizontalSensorLength: 2
   frontSensorInnerAngle: 15
@@ -2992,19 +3027,22 @@ MonoBehaviour:
   carLayerMask:
     serializedVersion: 2
     m_Bits: 256
-  path: {fileID: 0}
-  currentNode: 0
+  muretaLayerMask:
+    serializedVersion: 2
+    m_Bits: 1024
   trackWidth: 23
+  path: {fileID: 0}
   nodes: []
-  steer: 0
-  throttle: 0
-  brake: 0
+  currentNode: 0
   minPositiveThrottle: 0.1
   maxThrottle: 1
   maxAngleForMinThrottle: 25
   minDistanceToReverse: 8
   distanceFromTrackToBreak: 20
   aiState: 1
+  steer: 0
+  throttle: 0
+  brake: 0
 --- !u!114 &3694627796648777688
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3092,7 +3130,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3694627796744734059}
   m_Layer: 8
-  m_Name: Sensor da Direita 2
+  m_Name: Sensor da Direita de Fora
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3106,7 +3144,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3694627796744734058}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.072, y: -1, z: 3}
+  m_LocalPosition: {x: 1.072, y: -0.29999995, z: 3}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 3694627795795616728}
@@ -3294,6 +3332,36 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1 &4025603652631565588
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3532040451554875087}
+  m_Layer: 8
+  m_Name: Sensor Direito da Mureta
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3532040451554875087
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4025603652631565588}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1.072, y: -1, z: 3}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 3694627795795616728}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4613535218022386457
 GameObject:
   m_ObjectHideFlags: 0
@@ -4104,14 +4172,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5e51592a0767c5e468bd670435dc1ecc, type: 3}
---- !u!4 &8480214623008992072 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 5109951854985648635, guid: 5e51592a0767c5e468bd670435dc1ecc, type: 3}
-  m_PrefabInstance: {fileID: 3694627794966459059}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &8480214623008992073 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5109951854985648634, guid: 5e51592a0767c5e468bd670435dc1ecc, type: 3}
+  m_PrefabInstance: {fileID: 3694627794966459059}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &8480214623008992072 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5109951854985648635, guid: 5e51592a0767c5e468bd670435dc1ecc, type: 3}
   m_PrefabInstance: {fileID: 3694627794966459059}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &3694627795150014825
@@ -4482,14 +4550,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fbd2662eb7be13d4b98f2d7b80aada2b, type: 3}
---- !u!4 &2388029070311508544 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 1325764380780707593, guid: fbd2662eb7be13d4b98f2d7b80aada2b, type: 3}
-  m_PrefabInstance: {fileID: 3694627795187922249}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2388029070311508551 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1325764380780707598, guid: fbd2662eb7be13d4b98f2d7b80aada2b, type: 3}
+  m_PrefabInstance: {fileID: 3694627795187922249}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &2388029070311508544 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1325764380780707593, guid: fbd2662eb7be13d4b98f2d7b80aada2b, type: 3}
   m_PrefabInstance: {fileID: 3694627795187922249}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &3694627795610359161
@@ -4808,9 +4876,9 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 923ee23851b69ca4b82f6d6867899e44, type: 3}
---- !u!1 &878017469203402707 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4569654281826829762, guid: 923ee23851b69ca4b82f6d6867899e44, type: 3}
+--- !u!4 &878017469203402706 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4569654281826829763, guid: 923ee23851b69ca4b82f6d6867899e44, type: 3}
   m_PrefabInstance: {fileID: 3694627795915590161}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &878017467872557336 stripped
@@ -4818,9 +4886,9 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 4569654282654380809, guid: 923ee23851b69ca4b82f6d6867899e44, type: 3}
   m_PrefabInstance: {fileID: 3694627795915590161}
   m_PrefabAsset: {fileID: 0}
---- !u!4 &878017469203402706 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 4569654281826829763, guid: 923ee23851b69ca4b82f6d6867899e44, type: 3}
+--- !u!1 &878017469203402707 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4569654281826829762, guid: 923ee23851b69ca4b82f6d6867899e44, type: 3}
   m_PrefabInstance: {fileID: 3694627795915590161}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &3694627796071926815
@@ -5087,6 +5155,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: da689759974e5714a877dddd0fd7eda8, type: 3}
+--- !u!4 &7774387025486167395 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6685273693413397942, guid: da689759974e5714a877dddd0fd7eda8, type: 3}
+  m_PrefabInstance: {fileID: 3973009186499422421}
+  m_PrefabAsset: {fileID: 0}
 --- !u!82 &7774387025950514823 stripped
 AudioSource:
   m_CorrespondingSourceObject: {fileID: 6685273694962906706, guid: da689759974e5714a877dddd0fd7eda8, type: 3}
@@ -5115,11 +5188,6 @@ AudioSource:
 --- !u!82 &7774387026656108728 stripped
 AudioSource:
   m_CorrespondingSourceObject: {fileID: 6685273694527768685, guid: da689759974e5714a877dddd0fd7eda8, type: 3}
-  m_PrefabInstance: {fileID: 3973009186499422421}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &7774387025486167395 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 6685273693413397942, guid: da689759974e5714a877dddd0fd7eda8, type: 3}
   m_PrefabInstance: {fileID: 3973009186499422421}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &6551580155590889081
