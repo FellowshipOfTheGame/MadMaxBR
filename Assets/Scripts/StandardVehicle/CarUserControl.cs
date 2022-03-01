@@ -209,13 +209,16 @@ public class CarUserControl : MonoBehaviour {
     private void Update() {
         if (driverMode == DriverMode.Player) {
             if (ControlActive) {
+                carMovementAI.enabled = false;
                 horizontalInput = Input.GetAxis("Horizontal");
                 verticalInput = Input.GetAxis("Vertical");
                 handbrake = Input.GetKeyDown(KeyCode.Space);
                 VerifyPowerupPlayerInput();
             }
         } else if (driverMode == DriverMode.AI) {
-            if (ControlActive) {
+            if (ControlActive)
+            {
+                carMovementAI.enabled = true;
                 horizontalInput = carMovementAI.steer;
                 verticalInput = carMovementAI.throttle;
                 handbrake = carMovementAI.brake;
