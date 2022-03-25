@@ -3,7 +3,17 @@ guid: 4b6045d364030e947a093342f89a1e61
 ModelImporter:
   serializedVersion: 20200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: BASMAT
+    second: {fileID: 2100000, guid: 9ca32231d2d29ff428b60ba54adf915f, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: matpadrao.002
+    second: {fileID: 2100000, guid: 9ca32231d2d29ff428b60ba54adf915f, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
