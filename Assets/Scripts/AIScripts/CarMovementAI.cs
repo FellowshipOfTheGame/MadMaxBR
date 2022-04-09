@@ -95,7 +95,7 @@ public class CarMovementAI : MonoBehaviour
 
     private void FixedUpdate()
     {
-        Sensors();
+        //Sensors();
         
         if (aiState == AiState.FollowingTrack)
         {
@@ -192,7 +192,7 @@ public class CarMovementAI : MonoBehaviour
         if (Physics.Raycast(horizontalSensorTransform.position, 
                 transform.right, out _raycastHitSensor[4], horizontalSensorLength, ~ignoredLayerMasks))
         {
-            Debug.DrawLine(horizontalSensorTransform.position, _raycastHitSensor[4].point, Color.blue);
+            //Debug.DrawLine(horizontalSensorTransform.position, _raycastHitSensor[4].point, Color.blue);
             //Debug.Log("Sensor horizontal");
 
             brake = false;
@@ -205,7 +205,7 @@ public class CarMovementAI : MonoBehaviour
                      Quaternion.AngleAxis(-frontSensorOuterAngle, _carTransform.up) * _carTransform.forward, 
                      out _raycastHitSensor[5], sensorLength, muretaLayerMask))
         {
-            Debug.DrawLine(muretaLeftSensorTransform.position, _raycastHitSensor[5].point);
+            //Debug.DrawLine(muretaLeftSensorTransform.position, _raycastHitSensor[5].point);
             //Debug.Log("Sensor esquerdo da mureta");
 
             aiState = AiState.Avoiding;
@@ -227,7 +227,7 @@ public class CarMovementAI : MonoBehaviour
                      Quaternion.AngleAxis(frontSensorOuterAngle, _carTransform.up) * _carTransform.forward, 
                      out _raycastHitSensor[6], sensorLength, muretaLayerMask))
         {
-            Debug.DrawLine(muretaRightSensorTransform.position, _raycastHitSensor[6].point);
+            //Debug.DrawLine(muretaRightSensorTransform.position, _raycastHitSensor[6].point);
             //Debug.Log("Sensor direito da mureta");
 
             aiState = AiState.Avoiding;
@@ -248,7 +248,7 @@ public class CarMovementAI : MonoBehaviour
                      Quaternion.AngleAxis(-frontSensorOuterAngle, _carTransform.up) * _carTransform.forward, 
                      out _raycastHitSensor[0], sensorLength, ~ignoredLayerMasks))
         {
-            Debug.DrawLine(leftOuterSensorTransform.position, _raycastHitSensor[0].point);
+            //Debug.DrawLine(leftOuterSensorTransform.position, _raycastHitSensor[0].point);
             //Debug.Log("Sensor 1 da esquerda");
 
             aiState = AiState.Avoiding;
@@ -269,7 +269,7 @@ public class CarMovementAI : MonoBehaviour
                      Quaternion.AngleAxis(frontSensorOuterAngle, _carTransform.up) * _carTransform.forward,
                      out _raycastHitSensor[3], sensorLength, ~ignoredLayerMasks))
         {
-            Debug.DrawLine(rightOuterSensorTransform.position, _raycastHitSensor[3].point);
+            //Debug.DrawLine(rightOuterSensorTransform.position, _raycastHitSensor[3].point);
             //Debug.Log("Sensor 2 da direita");
 
             aiState = AiState.Avoiding;
@@ -290,7 +290,7 @@ public class CarMovementAI : MonoBehaviour
                      Quaternion.AngleAxis(-frontSensorInnerAngle, _carTransform.up) * _carTransform.forward, 
                      out _raycastHitSensor[1], sensorLength, ~ignoredLayerMasks))
         {
-            Debug.DrawLine(leftInnerSensorTransform.position, _raycastHitSensor[1].point);
+            //Debug.DrawLine(leftInnerSensorTransform.position, _raycastHitSensor[1].point);
             //Debug.Log("Sensor 2 da esquerda");
 
             aiState = AiState.Avoiding;
@@ -311,7 +311,7 @@ public class CarMovementAI : MonoBehaviour
                      Quaternion.AngleAxis(frontSensorInnerAngle, _carTransform.up) * _carTransform.forward, 
                      out _raycastHitSensor[2], sensorLength, ~ignoredLayerMasks))
         {
-            Debug.DrawLine(rightInnerSensorTransform.position, _raycastHitSensor[2].point);
+            //Debug.DrawLine(rightInnerSensorTransform.position, _raycastHitSensor[2].point);
             //Debug.Log("Sensor 1 da direita");
 
             aiState = AiState.Avoiding;
@@ -348,7 +348,7 @@ public class CarMovementAI : MonoBehaviour
     private float CurveAngle()
     {
         _directionToNextNode = nodes[_nextNode].transform.position - nodes[currentNode].transform.position;
-        Debug.DrawRay(_carTransform.position, _directionToNextNode);
+        //Debug.DrawRay(_carTransform.position, _directionToNextNode);
 
         return Vector3.Angle(_directionToNextNode, _carTransform.forward);
     }
@@ -363,19 +363,20 @@ public class CarMovementAI : MonoBehaviour
         _carToWaypoint = _currentNodePosition - _position;
 
         _percentDistance = _carToWaypoint.magnitude * Mathf.Cos(Vector3.Angle(_trackDirection, _carToWaypoint) * Mathf.Deg2Rad) / _trackDirection.magnitude;
-
+        
         if (DistanceFromTrack() > trackWidth || Vector3.Angle(_trackDirection, _carToWaypoint) > 90f) // Distancia maior que a largura da pista
         {
             _relativeVector = _carTransform.InverseTransformPoint(_currentNodePosition);
         }
         else
         {
-            _interpolatedDirection = Vector3.Lerp(_trackDirection, _nextTrackDirection, Mathf.Clamp((1 - _percentDistance) * (1 - _percentDistance), 0, 1)); // ease function
+            _interpolatedDirection = Vector3.Lerp(_trackDirection, _nextTrackDirection,
+                Mathf.Clamp((1 - _percentDistance) * (1 - _percentDistance), 0, 1)); // ease function
             _trackDirectionPosition = _position + _interpolatedDirection;
             _relativeVector = _carTransform.InverseTransformPoint(_trackDirectionPosition);
         }
 
-        Debug.DrawLine(_position, _carTransform.TransformPoint(_relativeVector), Color.red);
+        //Debug.DrawLine(_position, _carTransform.TransformPoint(_relativeVector), Color.red);
 
         _newSteer = _relativeVector.x / _relativeVector.magnitude;
         steer = _newSteer;
