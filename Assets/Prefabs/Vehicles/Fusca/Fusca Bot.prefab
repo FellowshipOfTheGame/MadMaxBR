@@ -2347,6 +2347,18 @@ PrefabInstance:
       propertyPath: NitroEffect2
       value: 
       objectReference: {fileID: 9143602881723758962}
+    - target: {fileID: 4992089527314215196, guid: badabe3de2db6904c8bf81b1c6750b79, type: 3}
+      propertyPath: NitroEffects.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4992089527314215196, guid: badabe3de2db6904c8bf81b1c6750b79, type: 3}
+      propertyPath: NitroEffects.Array.data[0]
+      value: 
+      objectReference: {fileID: 4039350923469060854}
+    - target: {fileID: 4992089527314215196, guid: badabe3de2db6904c8bf81b1c6750b79, type: 3}
+      propertyPath: NitroEffects.Array.data[1]
+      value: 
+      objectReference: {fileID: 9143602881723758962}
     - target: {fileID: 4992089527389853319, guid: badabe3de2db6904c8bf81b1c6750b79, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
