@@ -190,7 +190,7 @@ public class CarUserControl : MonoBehaviour {
         T type = playerPowerUps.GetComponentInChildren<T>();
         type.UsePowerUp(true);
         yield return new WaitForFixedUpdate();
-        if (type.CurGreaseAmount <= 0) 
+        if (type.CurGreaseAmount <= 0)
             type.UsePowerUp(false);
     }
 
@@ -214,8 +214,6 @@ public class CarUserControl : MonoBehaviour {
     private void Update() {
         if (driverMode == DriverMode.Player) {
             if (ControlActive) {
-                Debug.Log(PowerUpUseButtons.Slot1UseButton + "/" + PowerUpUseButtons.Slot2UseButton + "/" + PowerUpUseButtons.Slot3UseButton + "/" + PowerUpUseButtons.Slot4UseButton);
-                carMovementAI.enabled = false;
                 horizontalInput = Input.GetAxis("Horizontal");
                 verticalInput = Input.GetAxis("Vertical");
                 handbrake = Input.GetKeyDown(KeyCode.Space);
@@ -224,7 +222,6 @@ public class CarUserControl : MonoBehaviour {
         } else if (driverMode == DriverMode.AI) {
             if (ControlActive)
             {
-                carMovementAI.enabled = true;
                 horizontalInput = carMovementAI.steer;
                 verticalInput = carMovementAI.throttle;
                 handbrake = carMovementAI.brake;
@@ -236,7 +233,7 @@ public class CarUserControl : MonoBehaviour {
     private void FixedUpdate() {
         // pass the input to the car!
         if (ControlActive) {
-            
+
         }
         m_Car.Move(horizontalInput, verticalInput, verticalInput, handbrake);
         //m_Car.Move(h, v, v, 0f);

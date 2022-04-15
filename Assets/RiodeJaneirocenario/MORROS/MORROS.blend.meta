@@ -3,7 +3,12 @@ guid: ca7526735cbf42a4fb70d02be6015c85
 ModelImporter:
   serializedVersion: 20200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: BASMAT
+    second: {fileID: 2100000, guid: 530ac4f8420395d4d93ede6b89ad9fda, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
