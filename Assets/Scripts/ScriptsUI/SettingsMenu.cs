@@ -25,17 +25,33 @@ public class SettingsMenu : MonoBehaviour
     private int qualityLevel = 2;
     private int resolutionLevel = 0;
 
+    [SerializeField] private KeyCode slot1UseButton = KeyCode.I;
+    [SerializeField] private KeyCode slot2UseButton = KeyCode.J;
+    [SerializeField] private KeyCode slot3UseButton = KeyCode.K;
+    [SerializeField] private KeyCode slot4UseButton = KeyCode.L;
+    [SerializeField] private int lastKeyCode = 0;
+
+    [SerializeField] private Text slot1UseButtonText;
+    [SerializeField] private Text slot2UseButtonText;
+    [SerializeField] private Text slot3UseButtonText;
+    [SerializeField] private Text slot4UseButtonText;
+
 
     private void Awake()
     {
         mainVolume = PlayerPrefs.HasKey("mainVolume") ? PlayerPrefs.GetFloat("mainVolume") : 0;
         effectVolume = PlayerPrefs.HasKey("effectVolume") ? PlayerPrefs.GetFloat("effectVolume") : 0;
         musicVolume = PlayerPrefs.HasKey("musicVolume") ? PlayerPrefs.GetFloat("musicVolume") : 0;
+       
+        slot1UseButton = PlayerPrefs.HasKey("Slot1UseButtonIndex") ? (KeyCode) PlayerPrefs.GetInt("Slot1UseButtonIndex") : KeyCode.I;
+        slot2UseButton = PlayerPrefs.HasKey("Slot2UseButtonIndex") ? (KeyCode) PlayerPrefs.GetInt("Slot2UseButtonIndex") : KeyCode.J;
+        slot3UseButton = PlayerPrefs.HasKey("Slot3UseButtonIndex") ? (KeyCode) PlayerPrefs.GetInt("Slot3UseButtonIndex") : KeyCode.K;
+        slot4UseButton = PlayerPrefs.HasKey("Slot4UseButtonIndex") ? (KeyCode) PlayerPrefs.GetInt("Slot4UseButtonIndex") : KeyCode.L;
 
         qualityLevel = PlayerPrefs.HasKey("qualityLevel") ? PlayerPrefs.GetInt("qualityLevel") : 2;
         resolutionLevel = PlayerPrefs.HasKey("resolutionLevel") ? PlayerPrefs.GetInt("resolutionLevel") : 0;
 
-        if (PlayerPrefs.GetString("isFullscreen") == "True")
+        if (PlayerPrefs.GetInt("isFullscreenIndex") == 1)
         {
             isFullscreen = true;
         }
@@ -46,8 +62,9 @@ public class SettingsMenu : MonoBehaviour
     }
 
 
-    void Start()
+    private void Start()
     {
+        lastKeyCode = 0;
         resolutions = Screen.resolutions;
 
         resolutionsDropdown.ClearOptions();
@@ -69,7 +86,6 @@ public class SettingsMenu : MonoBehaviour
         resolutionsDropdown.RefreshShownValue();
         resolutionsDropdown.value = resolutionLevel;
         SetResolution(resolutionLevel);
-
         isFullScreenToggle.isOn = isFullscreen;
         SetFullScreen(isFullscreen);
 
@@ -79,8 +95,54 @@ public class SettingsMenu : MonoBehaviour
         mainSlider.value = mainVolume;
         musicSlider.value = musicVolume;
         effectsSlider.value = effectVolume;
+
+        slot1UseButtonText.text = slot1UseButton.ToString();
+        slot2UseButtonText.text = slot2UseButton.ToString();
+        slot3UseButtonText.text = slot3UseButton.ToString();
+        slot4UseButtonText.text = slot4UseButton.ToString();
     }
 
+    private void OnGUI()
+    {
+        Event e = Event.current;
+        if (e.type == EventType.KeyDown)
+        {
+            if (Input.GetKeyDown(e.keyCode))
+            {
+                if (e.keyCode == KeyCode.W || e.keyCode == KeyCode.A || e.keyCode == KeyCode.S || e.keyCode == KeyCode.D)
+                {
+                    return;
+                }
+
+                if (lastKeyCode == 1 && !(e.keyCode == slot2UseButton || e.keyCode == slot3UseButton || e.keyCode == slot4UseButton))
+                {
+                    slot1UseButton = e.keyCode;
+                    slot1UseButtonText.text = e.keyCode.ToString();
+                    PlayerPrefs.SetInt("Slot1UseButtonIndex", (int) e.keyCode);
+                }
+                else if (lastKeyCode == 2 && !(e.keyCode == slot1UseButton || e.keyCode == slot3UseButton || e.keyCode == slot4UseButton))
+                {
+                    slot2UseButton = e.keyCode;
+                    slot2UseButtonText.text = e.keyCode.ToString();
+                    PlayerPrefs.SetInt("Slot2UseButtonIndex", (int) e.keyCode);
+                }
+                else if (lastKeyCode == 3 && !(e.keyCode == slot1UseButton || e.keyCode == slot2UseButton || e.keyCode == slot4UseButton))
+                {
+                    slot3UseButton = e.keyCode;
+                    slot3UseButtonText.text = e.keyCode.ToString();
+                    PlayerPrefs.SetInt("Slot3UseButtonIndex", (int) e.keyCode);
+                }
+                else if (lastKeyCode == 4 && !(e.keyCode == slot1UseButton || e.keyCode == slot2UseButton || e.keyCode == slot3UseButton))
+                {
+                    slot4UseButton = e.keyCode;
+                    slot4UseButtonText.text = e.keyCode.ToString();
+                    PlayerPrefs.SetInt("Slot4UseButtonIndex", (int) e.keyCode);
+                }
+
+                lastKeyCode = 0;
+            }
+        }
+    }
 
     public void SetMainVolume(float volume)
     {
@@ -109,7 +171,14 @@ public class SettingsMenu : MonoBehaviour
     public void SetFullScreen(bool isFullScreenMode)
     {
         Screen.fullScreen = isFullScreenMode;
-        PlayerPrefs.SetString("isFullScreen", isFullScreenMode ? "True" : "False");
+        if (isFullScreenMode)
+        {
+            PlayerPrefs.SetInt("isFullScreenIndex", 1);
+        }
+        else
+        {
+            PlayerPrefs.SetInt("isFullScreenIndex", 0);
+        }
     }
 
     public void SetResolution(int resolutionIndex)
@@ -117,5 +186,10 @@ public class SettingsMenu : MonoBehaviour
         Resolution resolution = resolutions[resolutionIndex];
         Screen.SetResolution(resolution.width, resolution.height, Screen.fullScreen);
         PlayerPrefs.SetInt("resolutionLevel", resolutionIndex);
+    }
+
+    public void f1(int buttonIndex)
+    {
+        lastKeyCode = buttonIndex;
     }
 }
