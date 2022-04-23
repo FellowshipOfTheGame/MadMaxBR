@@ -48,6 +48,11 @@ public class CarUserControl : MonoBehaviour {
         carMovementAI = GetComponent<CarMovementAI>();
         vehicleInfo = this.transform.GetComponentInChildren<VehicleData>();
         playerPowerUps = this.transform.GetComponentInChildren<PowerUp>().gameObject;
+
+        PowerUpUseButtons.Slot1UseButton = PlayerPrefs.HasKey("Slot1UseButtonIndex") ? (KeyCode)PlayerPrefs.GetInt("Slot1UseButtonIndex") : PowerUpUseButtons.Slot1UseButton;
+        PowerUpUseButtons.Slot2UseButton = PlayerPrefs.HasKey("Slot2UseButtonIndex") ? (KeyCode)PlayerPrefs.GetInt("Slot2UseButtonIndex") : PowerUpUseButtons.Slot2UseButton;
+        PowerUpUseButtons.Slot3UseButton = PlayerPrefs.HasKey("Slot3UseButtonIndex") ? (KeyCode)PlayerPrefs.GetInt("Slot3UseButtonIndex") : PowerUpUseButtons.Slot3UseButton;
+        PowerUpUseButtons.Slot4UseButton = PlayerPrefs.HasKey("Slot4UseButtonIndex") ? (KeyCode)PlayerPrefs.GetInt("Slot4UseButtonIndex") : PowerUpUseButtons.Slot4UseButton;
     }
     /// <summary>
     /// Verify if player has pressed any powerup button.
@@ -185,7 +190,7 @@ public class CarUserControl : MonoBehaviour {
         T type = playerPowerUps.GetComponentInChildren<T>();
         type.UsePowerUp(true);
         yield return new WaitForFixedUpdate();
-        if (type.CurGreaseAmount <= 0) 
+        if (type.CurGreaseAmount <= 0)
             type.UsePowerUp(false);
     }
 
@@ -228,7 +233,7 @@ public class CarUserControl : MonoBehaviour {
     private void FixedUpdate() {
         // pass the input to the car!
         if (ControlActive) {
-            
+
         }
         m_Car.Move(horizontalInput, verticalInput, verticalInput, handbrake);
         //m_Car.Move(h, v, v, 0f);
