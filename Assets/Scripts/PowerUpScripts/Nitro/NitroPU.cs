@@ -12,6 +12,10 @@ public class NitroPU : PowerUpBase {
     private GameObject targetCar; // the car this script is attached
 
     public PowerUpData PowerUpInfo;
+
+    public float MaxNitroAmount { get { return maxNitroAmount; } }
+
+    public float CurNitroAmount { get { return curNitroAmount; } }
     private void Awake() {
         if (this.transform.parent.gameObject.transform.parent.gameObject.CompareTag("Player")) {
             NitroHUD = PlayerDataDisplayer.Instance.NitroHUD;
@@ -19,9 +23,6 @@ public class NitroPU : PowerUpBase {
             NitroHUD = null;
         }
     }
-    public float MaxNitroAmount { get { return maxNitroAmount; } }
-
-    public float CurNitroAmount { get { return curNitroAmount; } }
 
     public override void Activate() {
         curNitroAmount = maxNitroAmount; // set maximum value of nitro amount
