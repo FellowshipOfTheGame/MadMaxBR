@@ -196,6 +196,8 @@ public class RaceManager : MonoBehaviour {
                 string MinCount;
                 string SecCount;
                 string MilliCount;
+
+                RunnerRow.GetComponent<Image>().color = new Color32(0, 0, 0, 100);
                 if (VehicleRaceInfo.HasCompletedRace()) {
                     if (Racers[i].CompareTag("Player")) {
                         RunnerRow.GetComponent<Image>().color = new Color32(0, 0, 200, 100);
@@ -250,20 +252,37 @@ public class RaceManager : MonoBehaviour {
         }
     }
 
-    private void UpdateRacersPositions() {
+    /// <summary>
+    /// Update Racers positions. In order for this method to function correctly, the initial order of the cars in the Racers list must exactly the same 
+    /// as the initial order of its respective object cars in the game world.
+    /// </summary>
+    private void UpdateRacersPositions() {        
+        VehicleRaceData curCar;
+        VehicleRaceData followCar;
+
         for (int i = 0; i < Racers.Count; i++) {
+            curCar = Racers[i].GetComponent<VehicleRaceData>();
             for (int j = i + 1; j < Racers.Count; j++) {
-                if (!Racers[i].GetComponent<VehicleRaceData>().HasCompletedRace() && !Racers[j].GetComponent<VehicleRaceData>().HasCompletedRace()) {
+                followCar = Racers[j].GetComponent<VehicleRaceData>();
+                if (!curCar.HasCompletedRace()) {
                     // if last tracker node of car i and last tracker node of car j are the same
-                    if (Racers[j].GetComponent<VehicleRaceData>().TrackerNode == Racers[i].GetComponent<VehicleRaceData>().TrackerNode) {
+                    if (followCar.TrackerNode == curCar.TrackerNode) {
                         // if car j passed car i, change their race positions and resort list of racers
-                        if (Racers[j].GetComponent<VehicleRaceData>().TrackerNode.GetDistance(Racers[j]) > Racers[i].GetComponent<VehicleRaceData>().TrackerNode.GetDistance(Racers[i]) && Racers[j].GetComponent<VehicleRaceData>().GetRacePosition() > Racers[i].GetComponent<VehicleRaceData>().GetRacePosition() && Racers[j].GetComponent<VehicleRaceData>().GetLapCount() == Racers[i].GetComponent<VehicleRaceData>().GetLapCount()) {
-                            float aux = Racers[i].GetComponent<VehicleRaceData>().GetRacePosition();
-                            Racers[i].GetComponent<VehicleRaceData>().SetRacePosition(Racers[j].GetComponent<VehicleRaceData>().GetRacePosition());
-                            Racers[j].GetComponent<VehicleRaceData>().SetRacePosition(aux);
-                            // sort list of racers based on race position
+                        if (followCar.TrackerNode.GetDistance(Racers[j]) > curCar.TrackerNode.GetDistance(Racers[i]) 
+                            && followCar.GetRacePosition() > curCar.GetRacePosition() 
+                            && followCar.GetLapCount() == curCar.GetLapCount()) {
+                            float aux = curCar.GetRacePosition();
+                            curCar.SetRacePosition(followCar.GetRacePosition());
+                            followCar.SetRacePosition(aux);
+                            // sort list of racers based on race position and whether its alive
                             Racers.Sort(delegate (GameObject car1, GameObject car2) {
-                                if (car1.GetComponent<VehicleRaceData>().GetRacePosition() > car2.GetComponent<VehicleRaceData>().GetRacePosition()) {
+                                if (car1.GetComponent<VehicleData>().isDead && car2.GetComponent<VehicleData>().isDead) {
+                                    return 0;
+                                } else if (car2.GetComponent<VehicleData>().isDead) {
+                                    return -1;
+                                } else if (car1.GetComponent<VehicleData>().isDead) {
+                                    return 1;
+                                } else if (car1.GetComponent<VehicleRaceData>().GetRacePosition() > car2.GetComponent<VehicleRaceData>().GetRacePosition()) {
                                     return 1;
                                 } else {
                                     return -1;
@@ -279,8 +298,15 @@ public class RaceManager : MonoBehaviour {
     // Start is called before the first frame update
     void Start() {
         for (int i = 0; i < Racers.Count; i++) {
-            Racers[i].GetComponent<VehicleRaceData>().SetRacePosition(i + 1);
+            Racers[i].GetComponent<VehicleRaceData>().SetRacePosition(Racers.Count - i);
         }
+        Racers.Sort(delegate (GameObject car1, GameObject car2) {
+            if (car1.GetComponent<VehicleRaceData>().GetRacePosition() > car2.GetComponent<VehicleRaceData>().GetRacePosition()) {
+                return 1;
+            } else {
+                return -1;
+            }
+        });
     }
 
     // Update is called once per frame
