@@ -359,7 +359,7 @@ public class VehicleData : MonoBehaviour {
             }
             curCarHealth -= damage;
 
-            if (curCarHealth <= 0) {
+            if (curCarHealth <= 0 && !isDead) {
                 if (damageSource.CompareTag("Player") || damageSource.CompareTag("AI")) {
                     Debug.Log(damageSource.name + " matou " + this.name);
                     damageSource.GetComponent<VehicleData>().SumKillsCount();
