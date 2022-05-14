@@ -2,6 +2,8 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using System;
+using System.Collections;
+using TMPro;
 
 [Serializable]
 public class Carro
@@ -16,6 +18,10 @@ public class SelectCar : MonoBehaviour
     public Carro[] cars;
     public string gameCene;
     public string menuCene;
+    
+    [SerializeField] private GameObject loadingScreen;
+    [SerializeField] private Slider slider;
+    [SerializeField] private TMP_Text progressText;
 
     [SerializeField] private int selectedId = 0;
     [SerializeField] private int selectedIdColor = 0;
@@ -103,12 +109,26 @@ public class SelectCar : MonoBehaviour
     {
         PlayerPrefs.SetInt("selectedIdColor", selectedIdColor);//grava no salve
         PlayerPrefs.SetInt("SelectedCar", selectedId);//grava no salve
-        SceneManager.LoadScene(gameCene, LoadSceneMode.Single);
+        StartCoroutine(LoadSceneAsync(gameCene));
     }
 
     public void Back()
     {
-        SceneManager.LoadScene(menuCene, LoadSceneMode.Single);
+        StartCoroutine(LoadSceneAsync(menuCene));
+    }
+    
+    IEnumerator LoadSceneAsync(string scene)
+    {
+        AsyncOperation operation = SceneManager.LoadSceneAsync(scene, LoadSceneMode.Single);
+        loadingScreen.SetActive(true);
+        
+        while (!operation.isDone)
+        {
+            float progress = Mathf.Clamp01(operation.progress / .9f);
+            slider.value = progress;
+            progressText.text = $"{progress * 100f}%";
+            yield return null;
+        }
     }
 
     private void UpColor()
