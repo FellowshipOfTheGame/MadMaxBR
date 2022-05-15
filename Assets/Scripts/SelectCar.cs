@@ -108,7 +108,7 @@ public class SelectCar : MonoBehaviour
     public void LoadGame()
     {
         PlayerPrefs.SetInt("selectedIdColor", selectedIdColor);//grava no salve
-        PlayerPrefs.SetInt("SelectedCar", selectedId);//grava no salve
+        PlayerPrefs.SetInt("SelectedId", selectedId);//grava no salve
         StartCoroutine(LoadSceneAsync(gameCene));
     }
 
@@ -189,8 +189,7 @@ public class SelectCar : MonoBehaviour
         {
             selectedId--;
         }
-
-        PlayerPrefs.SetInt("SelectedCar", selectedId);//grava no salve
+        PlayerPrefs.SetInt("selectedId", selectedId);//grava no salve
         ShowCar();//carrega
     }
 
