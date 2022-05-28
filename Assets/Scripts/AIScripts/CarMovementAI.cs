@@ -95,7 +95,10 @@ public class CarMovementAI : MonoBehaviour
 
     private void FixedUpdate()
     {
-        //Sensors();
+        if (_carController.CurrentSpeed < 40f)
+        {
+            Sensors();
+        }
         
         if (aiState == AiState.FollowingTrack)
         {
@@ -166,13 +169,14 @@ public class CarMovementAI : MonoBehaviour
     {
         _curveAngle = CurveAngle();
 
-        if (_curveAngle > maxAngleForMinThrottle && _curveAngle < 90f)
+        if (_curveAngle > maxAngleForMinThrottle && _curveAngle < 90f) //Entre 35 e 90
         {
             throttle = minPositiveThrottle;
 
             //print(rb.velocity.magnitude + " velocity");
 
-            brake = DistanceFromTrack() < distanceFromTrackToBreak && _carController.CurrentSpeed > 80f;
+            brake = //DistanceFromTrack() < distanceFromTrackToBreak &&
+                    _carController.CurrentSpeed > 60f;
         }
         else if (_curveAngle > 90f)
         {
