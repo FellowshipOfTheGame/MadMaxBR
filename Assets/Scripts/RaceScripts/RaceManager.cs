@@ -9,11 +9,28 @@ public class RaceManager : MonoBehaviour {
 
     public static RaceManager Instance { get; private set; }
 
+    [Serializable]
+    public class Racer
+    {
+        public readonly GameObject RacerGameObject;
+        public readonly VehicleData VehicleData;
+        public readonly VehicleRaceData VehicleRaceData;
+        public readonly BoxCollider RacerCollider;
+
+        public Racer(GameObject racerGameObject, VehicleData vehicleData, VehicleRaceData vehicleRaceData, BoxCollider racerCollider)
+        {
+            RacerGameObject = racerGameObject;
+            VehicleData = vehicleData;
+            VehicleRaceData = vehicleRaceData;
+            RacerCollider = racerCollider;
+        }
+    }
+
     public float NumberOfLaps;
     public GameObject Player;
     public GameObject RacePath;
     public RunnerAttributeList RunnerAttributesList;
-    public List<GameObject> Racers;
+    public List<Racer> RacersList;
     public List<Transform> InitialRacerPositions;
     // HUDs
     public GameObject GameHUD;
@@ -22,6 +39,14 @@ public class RaceManager : MonoBehaviour {
 
     public CarColor CorDoCarro;
     public CarName NomeDoCarro;
+    
+    private CarUserControl playerCarUserControl;
+    private VehicleData playerVehicleData;
+
+    private CarUserControl[] carUserControls;
+    private VehicleRaceData[] vehicleRaceDatas;
+    private GreasePoolCollision[] greasePoolCollisions;
+    private GluePoolCollision[] gluePoolCollisions;
 
     /// <summary>
     /// Instantiate a random car with a random non repeating color and Runner Name.
@@ -96,8 +121,12 @@ public class RaceManager : MonoBehaviour {
         // the value of a name stored in RunnerAttributesList.RunnerNameList[i] is given by i
         List<int> namesDrawn = new List<int>();
         
-        for (int i = 0; i < InitialRacerPositions.Count - 1; i++) {        
-            Racers.Add(GenerateRandomCar(startingPoints[i].transform, MaxCarPerType, carsDrawn, namesDrawn, materialsDrawn));
+        for (int i = 0; i < InitialRacerPositions.Count - 1; i++)
+        {
+            GameObject car = GenerateRandomCar(startingPoints[i].transform, MaxCarPerType, carsDrawn, namesDrawn,
+                materialsDrawn);
+            RacersList.Add(new Racer(car, car.GetComponent<VehicleData>(),
+                car.GetComponent<VehicleRaceData>(), car.GetComponent<BoxCollider>()));
         }
     }
     /// <summary>
@@ -128,12 +157,13 @@ public class RaceManager : MonoBehaviour {
 
         Player = chosenCar;
 
-        Racers.Add(Player);
+        RacersList.Add(new Racer(Player, Player.GetComponent<VehicleData>(), 
+            Player.GetComponent<VehicleRaceData>(), Player.GetComponent<BoxCollider>()));
     }
 
     private void Awake() {
         if (Instance != null && Instance != this) {
-            Destroy(this.gameObject);
+            Destroy(gameObject);
         } else {
             Instance = this;
         }
@@ -145,14 +175,28 @@ public class RaceManager : MonoBehaviour {
         // spawn ai
         SpawnAI(InitialRacerPositions);
         //Racers.Add(Player);
+
+        playerCarUserControl = Player.GetComponent<CarUserControl>();
+        playerVehicleData = Player.GetComponent<VehicleData>();
+        carUserControls = new CarUserControl[RacersList.Count];
+        vehicleRaceDatas = new VehicleRaceData[RacersList.Count];
+        greasePoolCollisions = new GreasePoolCollision[RacersList.Count];
+        gluePoolCollisions = new GluePoolCollision[RacersList.Count];
+        
+        for (int i = 0; i < RacersList.Count; i++) {
+            carUserControls[i] = RacersList[i].RacerGameObject.GetComponent<CarUserControl>();
+            vehicleRaceDatas[i] = RacersList[i].VehicleRaceData;
+            greasePoolCollisions[i] = RacersList[i].RacerGameObject.GetComponentInChildren<GreasePoolCollision>();
+            gluePoolCollisions[i] = RacersList[i].RacerGameObject.GetComponentInChildren<GluePoolCollision>();
+        }
     }
 
     public void StartRace() {
-        for (int i = 0; i < Racers.Count; i++) {
-            Racers[i].GetComponent<CarUserControl>().ControlActive = true; // active control for the racer 'i'
-            Racers[i].GetComponent<VehicleRaceData>().ActiveTimer(true); // start timer of race data of vehicle
-            Racers[i].GetComponentInChildren<GreasePoolCollision>().ActivateTrigger();
-            Racers[i].GetComponentInChildren<GluePoolCollision>().ActivateTrigger();
+        for (int i = 0; i < RacersList.Count; i++) {
+            carUserControls[i].ControlActive = true; // active control for the racer 'i'
+            vehicleRaceDatas[i].ActiveTimer(true); // start timer of race data of vehicle
+            greasePoolCollisions[i].ActivateTrigger();
+            gluePoolCollisions[i].ActivateTrigger();
         }
 
     }
@@ -162,7 +206,7 @@ public class RaceManager : MonoBehaviour {
     /// </summary>
     public void FinishRace() {
         // sets AI on player car
-        Player.GetComponent<CarUserControl>().SetAIControl(true);
+        playerCarUserControl.SetAIControl(true);
         Player.transform.GetChild(4).gameObject.SetActive(true);
 
         // show Final results
@@ -171,10 +215,10 @@ public class RaceManager : MonoBehaviour {
     }
     private void UpdateRaceResultsTable() {
         GameObject RunnersList = RaceResults.transform.GetChild(0).gameObject;
-        for (int i = 0; i < Racers.Count; i++) {
+        for (int i = 0; i < RacersList.Count; i++) {
             int position = i + 1;
-            VehicleData VehicleInfo = Racers[i].GetComponent<VehicleData>();
-            VehicleRaceData VehicleRaceInfo = Racers[i].GetComponent<VehicleRaceData>();
+            VehicleData VehicleInfo = RacersList[i].VehicleData;
+            VehicleRaceData VehicleRaceInfo = RacersList[i].VehicleRaceData;
             if (VehicleRaceInfo.LapTime == null) {
                 VehicleRaceInfo.LapTime = gameObject.AddComponent<Timer>();
             }
@@ -184,9 +228,9 @@ public class RaceManager : MonoBehaviour {
             GameObject RunnerRow = RunnersList.transform.GetChild(position).gameObject;
             // position
             if (position < 10) {
-                RunnerRow.transform.GetChild(0).gameObject.GetComponent<Text>().text = "0" + position.ToString();
+                RunnerRow.transform.GetChild(0).gameObject.GetComponent<Text>().text = "0" + position;
             } else {
-                RunnerRow.transform.GetChild(0).gameObject.GetComponent<Text>().text = "" + position.ToString();
+                RunnerRow.transform.GetChild(0).gameObject.GetComponent<Text>().text = "" + position;
             }
             // runner name
             RunnerRow.transform.GetChild(1).gameObject.GetComponent<Text>().text = VehicleInfo.RunnerName;
@@ -202,17 +246,17 @@ public class RaceManager : MonoBehaviour {
 
                 RunnerRow.GetComponent<Image>().color = new Color32(0, 0, 0, 100);
                 if (VehicleRaceInfo.HasCompletedRace()) {
-                    if (Racers[i].CompareTag("Player")) {
+                    if (RacersList[i].RacerGameObject.CompareTag("Player")) {
                         RunnerRow.GetComponent<Image>().color = new Color32(0, 0, 200, 100);
                     }
                     if (VehicleRaceInfo.GetMinCountTotal() <= 9) {
-                        MinCount = "0" + VehicleRaceInfo.GetMinCountTotal().ToString();
+                        MinCount = "0" + VehicleRaceInfo.GetMinCountTotal();
                     } else {
                         MinCount = VehicleRaceInfo.GetMinCountTotal().ToString();
                     }
                 
                     if (VehicleRaceInfo.GetSecCountTotal() <= 9) {
-                        SecCount = "0" + VehicleRaceInfo.GetSecCountTotal().ToString();
+                        SecCount = "0" + VehicleRaceInfo.GetSecCountTotal();
                     } else {
                         SecCount = VehicleRaceInfo.GetSecCountTotal().ToString();
                     }
@@ -226,13 +270,13 @@ public class RaceManager : MonoBehaviour {
                     }
                 } else {
                     if (VehicleRaceInfo.RaceTime.GetMinutes() <= 9) {
-                        MinCount = "0" + VehicleRaceInfo.RaceTime.GetMinutes().ToString();
+                        MinCount = "0" + VehicleRaceInfo.RaceTime.GetMinutes();
                     } else {
                         MinCount = VehicleRaceInfo.RaceTime.GetMinutes().ToString();
                     }
 
                     if (VehicleRaceInfo.RaceTime.GetSeconds() <= 9) {
-                        SecCount = "0" + VehicleRaceInfo.RaceTime.GetSeconds().ToString();
+                        SecCount = "0" + VehicleRaceInfo.RaceTime.GetSeconds();
                     } else {
                         SecCount = VehicleRaceInfo.RaceTime.GetSeconds().ToString();
                     }
@@ -263,33 +307,38 @@ public class RaceManager : MonoBehaviour {
         VehicleRaceData curCar;
         VehicleRaceData followCar;
 
-        for (int i = 0; i < Racers.Count; i++) {
-            curCar = Racers[i].GetComponent<VehicleRaceData>();
-            for (int j = i + 1; j < Racers.Count; j++) {
-                followCar = Racers[j].GetComponent<VehicleRaceData>();
+        for (int i = 0; i < RacersList.Count; i++) {
+            curCar = vehicleRaceDatas[i];
+            for (int j = i + 1; j < RacersList.Count; j++) {
+                followCar = vehicleRaceDatas[j];
                 if (!curCar.HasCompletedRace()) {
                     // if last tracker node of car i and last tracker node of car j are the same
                     if (followCar.TrackerNode == curCar.TrackerNode) {
                         // if car j passed car i, change their race positions and resort list of racers
-                        if (followCar.TrackerNode.GetDistance(Racers[j]) > curCar.TrackerNode.GetDistance(Racers[i]) 
+                        if (followCar.TrackerNode.GetDistance(RacersList[j].RacerGameObject) > curCar.TrackerNode.GetDistance(RacersList[i].RacerGameObject) 
                             && followCar.GetRacePosition() > curCar.GetRacePosition() 
                             && followCar.GetLapCount() == curCar.GetLapCount()) {
                             float aux = curCar.GetRacePosition();
                             curCar.SetRacePosition(followCar.GetRacePosition());
                             followCar.SetRacePosition(aux);
                             // sort list of racers based on race position and whether its alive
-                            Racers.Sort(delegate (GameObject car1, GameObject car2) {
-                                if (car1.GetComponent<VehicleData>().isDead && car2.GetComponent<VehicleData>().isDead) {
+                            RacersList.Sort(delegate (Racer car1, Racer car2)
+                            {
+                                VehicleData car1VehicleData = car1.VehicleData;
+                                VehicleData car2VehicleData = car2.VehicleData;
+                                VehicleRaceData car1VehicleRaceData = car1.VehicleRaceData;
+                                VehicleRaceData car2VehicleRaceData = car2.VehicleRaceData;
+                                
+                                if (car1VehicleData.isDead && car2VehicleData.isDead) {
                                     return 0;
-                                } else if (car2.GetComponent<VehicleData>().isDead) {
+                                } if (car2VehicleData.isDead) {
                                     return -1;
-                                } else if (car1.GetComponent<VehicleData>().isDead) {
+                                } if (car1VehicleData.isDead) {
                                     return 1;
-                                } else if (car1.GetComponent<VehicleRaceData>().GetRacePosition() > car2.GetComponent<VehicleRaceData>().GetRacePosition()) {
+                                } if (car1VehicleRaceData.GetRacePosition() > car2VehicleRaceData.GetRacePosition()) {
                                     return 1;
-                                } else {
-                                    return -1;
                                 }
+                                return -1;
                             });
                         }
                     }
@@ -300,34 +349,35 @@ public class RaceManager : MonoBehaviour {
 
     // Start is called before the first frame update
     void Start() {
-        for (int i = 0; i < Racers.Count; i++) {
-            Racers[i].GetComponent<VehicleRaceData>().SetRacePosition(Racers.Count - i);
+        for (int i = 0; i < RacersList.Count; i++) {
+            RacersList[i].VehicleRaceData.SetRacePosition(RacersList.Count - i);
         }
-        Racers.Sort(delegate (GameObject car1, GameObject car2) {
-            if (car1.GetComponent<VehicleRaceData>().GetRacePosition() > car2.GetComponent<VehicleRaceData>().GetRacePosition()) {
+        RacersList.Sort(delegate (Racer car1, Racer car2)
+        {
+            if (car1.VehicleRaceData.GetRacePosition() > car2.VehicleRaceData.GetRacePosition()) {
                 return 1;
-            } else {
-                return -1;
             }
+
+            return -1;
         });
     }
 
     // Update is called once per frame
     void Update() {
-        if (Player.GetComponent<VehicleData>().isDead) {
+        if (playerVehicleData.isDead) {
             if (GameHUD.activeSelf) {
                 GameHUD.SetActive(false);
             }
-            if (!DeathScreen.activeSelf && Player.GetComponent<VehicleData>().DeadTime >= 2f) {
+            if (!DeathScreen.activeSelf && playerVehicleData.DeadTime >= 2f) {
                 DeathScreen.SetActive(true);
             }
         } else {
             UpdateRacersPositions();
-            for (int i = 0; i < Racers.Count; i++) {
+            for (int i = 0; i < RacersList.Count; i++) {
                 // if a car completes the last lap and hasnt completed the race yet
-                if (!Racers[i].GetComponent<VehicleRaceData>().HasCompletedRace() && Racers[i].GetComponent<VehicleRaceData>().GetLapCount() == NumberOfLaps) {
-                    Racers[i].GetComponent<VehicleRaceData>().CompleteRace();
-                    if (Racers[i].tag == "Player") {
+                if (!vehicleRaceDatas[i].HasCompletedRace() && vehicleRaceDatas[i].GetLapCount() == NumberOfLaps) {
+                    vehicleRaceDatas[i].CompleteRace();
+                    if (RacersList[i].RacerGameObject.CompareTag("Player")) {
                         FinishRace();
                     }
                 }

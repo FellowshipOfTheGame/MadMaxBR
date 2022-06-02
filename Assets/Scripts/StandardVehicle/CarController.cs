@@ -234,7 +234,7 @@ public class CarController : MonoBehaviour {
 
         if (currentGear < CarSettings.gears.Length - 1) { // verify if currentGear is in the maximum gear
             //if (!carSounds.SwitchGear.isPlaying)
-            carSounds.SwitchGear.GetComponent<AudioSource>().Play();
+            carSounds.SwitchGear.Play();
 
             currentGear++;
 
@@ -252,7 +252,7 @@ public class CarController : MonoBehaviour {
 
         if (currentGear > 0 || neutralGear) { // verify if currentGear is neutral or not
             //if (!carSounds.SwitchGear.isPlaying)
-            carSounds.SwitchGear.GetComponent<AudioSource>().Play();
+            carSounds.SwitchGear.Play();
 
             currentGear--;
 
@@ -290,10 +290,10 @@ public class CarController : MonoBehaviour {
 
         CarSettings.m_DefaultDownforce = CarSettings.m_Downforce;
 
-        WheelFrictionCurve fF = m_WheelColliders[0].GetComponent<WheelCollider>().forwardFriction;
+        WheelFrictionCurve fF = m_WheelColliders[0].forwardFriction;
         defaultForwardFrictionCurve = CreateFrictionCurve(fF.extremumSlip, fF.extremumValue, fF.asymptoteSlip, fF.asymptoteValue, fF.stiffness);
 
-        WheelFrictionCurve sF = m_WheelColliders[0].GetComponent<WheelCollider>().sidewaysFriction;
+        WheelFrictionCurve sF = m_WheelColliders[0].sidewaysFriction;
         defaultSidewaysFrictionCurve = CreateFrictionCurve(sF.extremumSlip, sF.extremumValue, sF.asymptoteSlip, sF.asymptoteValue, sF.stiffness);
     }
 
@@ -389,9 +389,9 @@ public class CarController : MonoBehaviour {
             if (glueTimer.GetSeconds() * 1000 + glueTimer.GetMilliseconds() >= timeGlued * 1000) {
                 SetIsGlued(false);
                 for (int i = 0; i < 4; i++) {
-                    m_WheelColliders[i].GetComponent<WheelCollider>().forwardFriction = defaultForwardFrictionCurve;
+                    m_WheelColliders[i].forwardFriction = defaultForwardFrictionCurve;
 
-                    m_WheelColliders[i].GetComponent<WheelCollider>().sidewaysFriction = defaultSidewaysFrictionCurve;
+                    m_WheelColliders[i].sidewaysFriction = defaultSidewaysFrictionCurve;
 
                     CarSettings.m_Downforce = CarSettings.m_DefaultDownforce;
 
@@ -400,11 +400,11 @@ public class CarController : MonoBehaviour {
             } else {
                 // modify wheel colliders values
                 for (int i = 0; i < 4; i++) {
-                    var forwardFriction = m_WheelColliders[i].GetComponent<WheelCollider>().forwardFriction;
-                    m_WheelColliders[i].GetComponent<WheelCollider>().forwardFriction = CreateFrictionCurve(forwardFriction.extremumSlip, forwardFriction.extremumValue, forwardFriction.asymptoteSlip, forwardFriction.asymptoteValue, 0.2f);
+                    var forwardFriction = m_WheelColliders[i].forwardFriction;
+                    m_WheelColliders[i].forwardFriction = CreateFrictionCurve(forwardFriction.extremumSlip, forwardFriction.extremumValue, forwardFriction.asymptoteSlip, forwardFriction.asymptoteValue, 0.2f);
 
-                    var sidewaysFriction = m_WheelColliders[i].GetComponent<WheelCollider>().sidewaysFriction;
-                    m_WheelColliders[i].GetComponent<WheelCollider>().sidewaysFriction = CreateFrictionCurve(sidewaysFriction.extremumSlip, sidewaysFriction.extremumValue, sidewaysFriction.asymptoteSlip, sidewaysFriction.asymptoteValue, 0.2f);
+                    var sidewaysFriction = m_WheelColliders[i].sidewaysFriction;
+                    m_WheelColliders[i].sidewaysFriction = CreateFrictionCurve(sidewaysFriction.extremumSlip, sidewaysFriction.extremumValue, sidewaysFriction.asymptoteSlip, sidewaysFriction.asymptoteValue, 0.2f);
 
                     CarSettings.m_Downforce = CarSettings.m_DefaultDownforce * 2;
 
@@ -426,18 +426,18 @@ public class CarController : MonoBehaviour {
             if (greaseTimer.GetSeconds() * 1000 + greaseTimer.GetMilliseconds() >= timeGreased * 1000) {
                 SetIsGreased(false);
                 for (int i = 0; i < 4; i++) {
-                    m_WheelColliders[i].GetComponent<WheelCollider>().forwardFriction = defaultForwardFrictionCurve;
+                    m_WheelColliders[i].forwardFriction = defaultForwardFrictionCurve;
 
-                    m_WheelColliders[i].GetComponent<WheelCollider>().sidewaysFriction = defaultSidewaysFrictionCurve;
+                    m_WheelColliders[i].sidewaysFriction = defaultSidewaysFrictionCurve;
                 }
             } else {
                 // modify wheel colliders values
                 for (int i = 0; i < 4; i++) {
-                    var forwardFriction = m_WheelColliders[i].GetComponent<WheelCollider>().forwardFriction;
-                    m_WheelColliders[i].GetComponent<WheelCollider>().forwardFriction = CreateFrictionCurve(forwardFriction.extremumSlip, forwardFriction.extremumValue, forwardFriction.asymptoteSlip, forwardFriction.asymptoteValue, 0.01f);
+                    var forwardFriction = m_WheelColliders[i].forwardFriction;
+                    m_WheelColliders[i].forwardFriction = CreateFrictionCurve(forwardFriction.extremumSlip, forwardFriction.extremumValue, forwardFriction.asymptoteSlip, forwardFriction.asymptoteValue, 0.01f);
 
-                    var sidewaysFriction = m_WheelColliders[i].GetComponent<WheelCollider>().sidewaysFriction;
-                    m_WheelColliders[i].GetComponent<WheelCollider>().sidewaysFriction = CreateFrictionCurve(sidewaysFriction.extremumSlip, sidewaysFriction.extremumValue, sidewaysFriction.asymptoteSlip, sidewaysFriction.asymptoteValue, 0.01f);
+                    var sidewaysFriction = m_WheelColliders[i].sidewaysFriction;
+                    m_WheelColliders[i].sidewaysFriction = CreateFrictionCurve(sidewaysFriction.extremumSlip, sidewaysFriction.extremumValue, sidewaysFriction.asymptoteSlip, sidewaysFriction.asymptoteValue, 0.01f);
                 }
             }
         }
@@ -470,7 +470,7 @@ public class CarController : MonoBehaviour {
             carSounds.Nitro.volume = Mathf.Lerp(carSounds.Nitro.volume, 1.0f, Time.deltaTime * 10.0f);
 
             if (!carSounds.Nitro.isPlaying) {
-                carSounds.Nitro.GetComponent<AudioSource>().Play();
+                carSounds.Nitro.Play();
             }
 
             if (CarSettings.m_Topspeed >= m_DefaultTopspeed || CarSettings.m_Topspeed <= m_DefaultTopspeed * 1.5f) {
@@ -640,7 +640,7 @@ public class CarController : MonoBehaviour {
 
     // this is used to add more grip in relation to speed
     private void AddDownForce() {
-        m_WheelColliders[0].attachedRigidbody.AddForce(-transform.up * CarSettings.m_Downforce * m_WheelColliders[0].attachedRigidbody.velocity.magnitude);
+        m_WheelColliders[0].attachedRigidbody.AddForce(-transform.up * (CarSettings.m_Downforce * m_WheelColliders[0].attachedRigidbody.velocity.magnitude));
     }
 
 
