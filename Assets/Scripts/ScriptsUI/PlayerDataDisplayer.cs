@@ -12,9 +12,6 @@ public class PlayerDataDisplayer : MonoBehaviour {
     public GameObject VelocityDisplay;
     public GameObject LapCounterDisplay;
     public GameObject RacePositionDisplay;
-    
-    private Text lapCounterDisplayText;
-    private Text racePositionDisplayText;
 
     public GameObject MachineGunCountText;
     public GameObject RifleCountText;
@@ -43,33 +40,6 @@ public class PlayerDataDisplayer : MonoBehaviour {
 
     private GameObject PlayerPowerUps;
     private VehicleRaceData PlayerRaceData;
-    private VehicleData playerData;
-    
-    private MachineGunPU machineGunPowerUp;
-    private RiflePU riflePowerUp;
-    private ThornsPU thornsPowerUp;
-    private FixPU fixPowerUp;
-    private NitroPU nitroPowerUp;
-    private SmokePU smokePowerUp;
-    private ExplosiveMinePU explosiveMinePowerUp;
-    private DeactivatorMinePU deactivatorMinePowerUp;
-    private PillarPU pillarPowerUp;
-    private GluePU gluePowerUp;
-    private GreasePU greasePowerUp;
-    private ShieldPU shieldPowerUp;
-    
-    private Image thornsImage;
-    private Image nitroImage;
-    private Image smokeImage;
-    private Image glueImage;
-    private Image greaseImage;
-    private Image shieldImage;
-    
-    private TextMeshProUGUI machineGunCountTextMeshProUGUI;
-    private TextMeshProUGUI rifleCountTextMeshProUGUI;
-    private TextMeshProUGUI explosiveMineCountTextMeshProUGUI;
-    private TextMeshProUGUI deactivatorMineCountTextMeshProUGUI;
-    private TextMeshProUGUI pillarCountTextMeshProUGUI;
 
     private Queue<int> tutorialTextIndQueue;
     private Queue<string> tutorialTextQueue;
@@ -80,7 +50,6 @@ public class PlayerDataDisplayer : MonoBehaviour {
     private float[] tutorialTextStayedTime;
     private void Awake() {
         Instance = this;
-        print(RaceManager.Instance);
     }
 
     private void UpdateTutorialTextQueue(PowerUpData PowerUpData) {
@@ -257,56 +226,56 @@ public class PlayerDataDisplayer : MonoBehaviour {
         imgComponent.color = new Color(255, 255, 255, 255);
         switch (powerupIndex) {
             case (int)PowerUpName.MachineGun:
-                imgComponent.sprite = machineGunPowerUp.PowerUpInfo.Icon;
+                imgComponent.sprite = PlayerPowerUps.GetComponentInChildren<MachineGunPU>().PowerUpInfo.Icon;
                 powerupButtonImg.text = GetKeySprite(RaceManager.Instance.Player.GetComponent<CarUserControl>().PowerUpUseButtons.Slot1UseButton);
                 powerupButtonImg.gameObject.SetActive(true);
                 break;
             case (int)PowerUpName.Rifle:
-                imgComponent.sprite = riflePowerUp.PowerUpInfo.Icon;
+                imgComponent.sprite = PlayerPowerUps.GetComponentInChildren<RiflePU>().PowerUpInfo.Icon;
                 powerupButtonImg.text = GetKeySprite(RaceManager.Instance.Player.GetComponent<CarUserControl>().PowerUpUseButtons.Slot1UseButton);
                 powerupButtonImg.gameObject.SetActive(true);
                 break;
             case (int)PowerUpName.Thorns:
-                imgComponent.sprite = thornsPowerUp.PowerUpInfo.Icon;
+                imgComponent.sprite = PlayerPowerUps.GetComponentInChildren<ThornsPU>().PowerUpInfo.Icon;
                 break;
             case (int)PowerUpName.Shield:
-                imgComponent.sprite = shieldPowerUp.PowerUpInfo.Icon;
+                imgComponent.sprite = PlayerPowerUps.GetComponentInChildren<ShieldPU>().PowerUpInfo.Icon;
                 break;
             case (int)PowerUpName.Fix:
-                imgComponent.sprite = fixPowerUp.PowerUpInfo.Icon;
+                imgComponent.sprite = PlayerPowerUps.GetComponentInChildren<FixPU>().PowerUpInfo.Icon;
                 break;
             case (int)PowerUpName.Smoke:
-                imgComponent.sprite = smokePowerUp.PowerUpInfo.Icon;
+                imgComponent.sprite = PlayerPowerUps.GetComponentInChildren<SmokePU>().PowerUpInfo.Icon;
                 powerupButtonImg.text = GetKeySprite(RaceManager.Instance.Player.GetComponent<CarUserControl>().PowerUpUseButtons.Slot2UseButton);
                 powerupButtonImg.gameObject.SetActive(true);
                 break;
             case (int)PowerUpName.ExplosiveMine:
-                imgComponent.sprite = explosiveMinePowerUp.PowerUpInfo.Icon;
+                imgComponent.sprite = PlayerPowerUps.GetComponentInChildren<ExplosiveMinePU>().PowerUpInfo.Icon;
                 powerupButtonImg.text = GetKeySprite(RaceManager.Instance.Player.GetComponent<CarUserControl>().PowerUpUseButtons.Slot3UseButton);
                 powerupButtonImg.gameObject.SetActive(true);
                 break;
             case (int)PowerUpName.DeactivatorMine:
-                imgComponent.sprite = deactivatorMinePowerUp.PowerUpInfo.Icon;
+                imgComponent.sprite = PlayerPowerUps.GetComponentInChildren<DeactivatorMinePU>().PowerUpInfo.Icon;
                 powerupButtonImg.text = GetKeySprite(RaceManager.Instance.Player.GetComponent<CarUserControl>().PowerUpUseButtons.Slot3UseButton);
                 powerupButtonImg.gameObject.SetActive(true);
                 break;
             case (int)PowerUpName.Pillar:
-                imgComponent.sprite = pillarPowerUp.PowerUpInfo.Icon;
+                imgComponent.sprite = PlayerPowerUps.GetComponentInChildren<PillarPU>().PowerUpInfo.Icon;
                 powerupButtonImg.text = GetKeySprite(RaceManager.Instance.Player.GetComponent<CarUserControl>().PowerUpUseButtons.Slot3UseButton);
                 powerupButtonImg.gameObject.SetActive(true);
                 break;
             case (int)PowerUpName.Nitro:
-                imgComponent.sprite = nitroPowerUp.PowerUpInfo.Icon;
+                imgComponent.sprite = PlayerPowerUps.GetComponentInChildren<NitroPU>().PowerUpInfo.Icon;
                 powerupButtonImg.text = GetKeySprite(RaceManager.Instance.Player.GetComponent<CarUserControl>().PowerUpUseButtons.Slot4UseButton);
                 powerupButtonImg.gameObject.SetActive(true);
                 break;
             case (int)PowerUpName.Glue:
-                imgComponent.sprite = gluePowerUp.PowerUpInfo.Icon;
+                imgComponent.sprite = PlayerPowerUps.GetComponentInChildren<GluePU>().PowerUpInfo.Icon;
                 powerupButtonImg.text = GetKeySprite(RaceManager.Instance.Player.GetComponent<CarUserControl>().PowerUpUseButtons.Slot4UseButton);
                 powerupButtonImg.gameObject.SetActive(true);
                 break;
             case (int)PowerUpName.Grease:
-                imgComponent.sprite = greasePowerUp.PowerUpInfo.Icon;
+                imgComponent.sprite = PlayerPowerUps.GetComponentInChildren<GreasePU>().PowerUpInfo.Icon;
                 powerupButtonImg.text = GetKeySprite(RaceManager.Instance.Player.GetComponent<CarUserControl>().PowerUpUseButtons.Slot4UseButton);
                 powerupButtonImg.gameObject.SetActive(true);
                 break;
@@ -320,50 +289,24 @@ public class PlayerDataDisplayer : MonoBehaviour {
 
     // Start is called before the first frame update
     void Start() {
-        print(RaceManager.Instance);
         PlayerRaceData = RaceManager.Instance.Player.GetComponent<VehicleRaceData>();
         PlayerPowerUps = RaceManager.Instance.Player.transform.GetComponentInChildren<PowerUp>().gameObject;
-        playerData = RaceManager.Instance.Player.GetComponent<VehicleData>();
+
         ButtonSlot1 = PowerUpSlot1.transform.GetChild(PowerUpSlot1.transform.childCount - 1).GetComponent<TextMeshProUGUI>();
         ButtonSlot2 = PowerUpSlot2.transform.GetChild(PowerUpSlot2.transform.childCount - 1).GetComponent<TextMeshProUGUI>();
         ButtonSlot3 = PowerUpSlot3.transform.GetChild(PowerUpSlot3.transform.childCount - 1).GetComponent<TextMeshProUGUI>();
         ButtonSlot4 = PowerUpSlot4.transform.GetChild(PowerUpSlot4.transform.childCount - 1).GetComponent<TextMeshProUGUI>();
+
         tutorialTextIndQueue = new Queue<int>();
         tutorialTextQueue = new Queue<string>();
         tutorialTextStayedTime = new float[12];
         for (int i = 0; i < tutorialTextStayedTime.Length; i++) {
             tutorialTextStayedTime[i] = 0;
         }
-        
-        machineGunPowerUp = PlayerPowerUps.GetComponentInChildren<MachineGunPU>();
-        riflePowerUp = PlayerPowerUps.GetComponentInChildren<RiflePU>();
-        thornsPowerUp = PlayerPowerUps.GetComponentInChildren<ThornsPU>();
-        fixPowerUp = PlayerPowerUps.GetComponentInChildren<FixPU>();
-        nitroPowerUp = PlayerPowerUps.GetComponentInChildren<NitroPU>();
-        smokePowerUp = PlayerPowerUps.GetComponentInChildren<SmokePU>();
-        explosiveMinePowerUp = PlayerPowerUps.GetComponentInChildren<ExplosiveMinePU>();
-        deactivatorMinePowerUp = PlayerPowerUps.GetComponentInChildren<DeactivatorMinePU>();
-        pillarPowerUp = PlayerPowerUps.GetComponentInChildren<PillarPU>();
-        gluePowerUp = PlayerPowerUps.GetComponentInChildren<GluePU>();
-        greasePowerUp = PlayerPowerUps.GetComponentInChildren<GreasePU>();
-        shieldPowerUp = PlayerPowerUps.GetComponentInChildren<ShieldPU>();
-        lapCounterDisplayText = LapCounterDisplay.GetComponent<Text>();
-        racePositionDisplayText = RacePositionDisplay.GetComponent<Text>();
-        thornsImage = ThornsTimerUI.GetComponent<Image>();
-        shieldImage = ShieldHUD.transform.GetChild(0).GetComponent<Image>();
-        smokeImage = SmokeHUD.transform.GetChild(0).GetComponent<Image>();
-        nitroImage = NitroHUD.transform.GetChild(0).GetComponent<Image>();
-        greaseImage = GlueHUD.transform.GetChild(0).GetComponent<Image>();
-        glueImage = GlueHUD.transform.GetChild(0).GetComponent<Image>();
-        machineGunCountTextMeshProUGUI = MachineGunCountText.GetComponent<TextMeshProUGUI>();
-        rifleCountTextMeshProUGUI = RifleCountText.GetComponent<TextMeshProUGUI>();
-        explosiveMineCountTextMeshProUGUI = ExplosiveMineCount.GetComponent<TextMeshProUGUI>();
-        deactivatorMineCountTextMeshProUGUI = DeactivatorMineCount.GetComponent<TextMeshProUGUI>();
-        pillarCountTextMeshProUGUI = PillarCount.GetComponent<TextMeshProUGUI>();
     }
 
     // Update is called once per frameGetPosition
-    void FixedUpdate() {
+    void Update() {
         // update race data
         UpdateRaceData();
         // update health and shield bars
@@ -377,8 +320,8 @@ public class PlayerDataDisplayer : MonoBehaviour {
     }
 
     private void UpdateRaceData() {
-        lapCounterDisplayText.text = "" + PlayerRaceData.GetLapCount() + "/" + RaceManager.Instance.NumberOfLaps;
-        racePositionDisplayText.text = "" + PlayerRaceData.GetRacePosition() + "/" + RaceManager.Instance.RacersList.Count;
+        LapCounterDisplay.GetComponent<Text>().text = "" + PlayerRaceData.GetLapCount() + "/" + RaceManager.Instance.NumberOfLaps;
+        RacePositionDisplay.GetComponent<Text>().text = "" + PlayerRaceData.GetRacePosition() + "/" + RaceManager.Instance.RacersList.Count;
     }
 
     private void UpdateUIBars() {
@@ -388,54 +331,54 @@ public class PlayerDataDisplayer : MonoBehaviour {
         foreach (Transform child in allChildren) {
             child.gameObject.GetComponent<Image>().fillAmount = RaceManager.Instance.Player.GetComponent<VehicleData>().GetCurrentShield() / RaceManager.Instance.Player.GetComponent<VehicleData>().MaxCarShield;
         }*/
-        PlayerHealthHUD.GetComponent<Image>().fillAmount = playerData.GetCurrentHealth() / playerData.MaxCarHealth;
+        PlayerHealthHUD.GetComponent<Image>().fillAmount = RaceManager.Instance.Player.GetComponent<VehicleData>().GetCurrentHealth() / RaceManager.Instance.Player.GetComponent<VehicleData>().MaxCarHealth;
     }
 
     private void UpdatePowerupSlot() {
-        UpdatePowerUpIcon(PowerUpSlot1.GetComponent<Image>(), playerData.GetPowerUpSlotValue(1), ButtonSlot1);
-        UpdatePowerUpIcon(PowerUpSlot2.GetComponent<Image>(), playerData.GetPowerUpSlotValue(2), ButtonSlot2);
-        UpdatePowerUpIcon(PowerUpSlot3.GetComponent<Image>(), playerData.GetPowerUpSlotValue(3), ButtonSlot3);
-        UpdatePowerUpIcon(PowerUpSlot4.GetComponent<Image>(), playerData.GetPowerUpSlotValue(4), ButtonSlot4);
+        UpdatePowerUpIcon(PowerUpSlot1.GetComponent<Image>(), RaceManager.Instance.Player.GetComponent<VehicleData>().GetPowerUpSlotValue(1), ButtonSlot1);
+        UpdatePowerUpIcon(PowerUpSlot2.GetComponent<Image>(), RaceManager.Instance.Player.GetComponent<VehicleData>().GetPowerUpSlotValue(2), ButtonSlot2);
+        UpdatePowerUpIcon(PowerUpSlot3.GetComponent<Image>(), RaceManager.Instance.Player.GetComponent<VehicleData>().GetPowerUpSlotValue(3), ButtonSlot3);
+        UpdatePowerUpIcon(PowerUpSlot4.GetComponent<Image>(), RaceManager.Instance.Player.GetComponent<VehicleData>().GetPowerUpSlotValue(4), ButtonSlot4);
     }
 
     private void UpdateTutorialText() {
         for (int i = 1; i < 5; i++) {
-            switch (playerData.GetPowerUpSlotValue(i)) {
+            switch (RaceManager.Instance.Player.GetComponent<VehicleData>().GetPowerUpSlotValue(i)) {
                 case (int)PowerUpName.MachineGun:
-                    UpdateTutorialTextQueue(machineGunPowerUp.PowerUpInfo);
+                    UpdateTutorialTextQueue(PlayerPowerUps.GetComponentInChildren<MachineGunPU>().PowerUpInfo);
                     break;
                 case (int)PowerUpName.Rifle:
-                    UpdateTutorialTextQueue(riflePowerUp.PowerUpInfo);
+                    UpdateTutorialTextQueue(PlayerPowerUps.GetComponentInChildren<RiflePU>().PowerUpInfo);
                     break;
                 case (int)PowerUpName.Thorns:
-                    UpdateTutorialTextQueue(thornsPowerUp.PowerUpInfo);
+                    UpdateTutorialTextQueue(PlayerPowerUps.GetComponentInChildren<ThornsPU>().PowerUpInfo);
                     break;
                 case (int)PowerUpName.Shield:
-                    UpdateTutorialTextQueue(shieldPowerUp.PowerUpInfo);
+                    UpdateTutorialTextQueue(PlayerPowerUps.GetComponentInChildren<ShieldPU>().PowerUpInfo);
                     break;
                 case (int)PowerUpName.Fix:
-                    UpdateTutorialTextQueue(fixPowerUp.PowerUpInfo);
+                    UpdateTutorialTextQueue(PlayerPowerUps.GetComponentInChildren<FixPU>().PowerUpInfo);
                     break;
                 case (int)PowerUpName.Smoke:
-                    UpdateTutorialTextQueue(smokePowerUp.PowerUpInfo);
+                    UpdateTutorialTextQueue(PlayerPowerUps.GetComponentInChildren<SmokePU>().PowerUpInfo);
                     break;
                 case (int)PowerUpName.ExplosiveMine:
-                    UpdateTutorialTextQueue(explosiveMinePowerUp.PowerUpInfo);
+                    UpdateTutorialTextQueue(PlayerPowerUps.GetComponentInChildren<ExplosiveMinePU>().PowerUpInfo);
                     break;
                 case (int)PowerUpName.DeactivatorMine:
-                    UpdateTutorialTextQueue(deactivatorMinePowerUp.PowerUpInfo);
+                    UpdateTutorialTextQueue(PlayerPowerUps.GetComponentInChildren<DeactivatorMinePU>().PowerUpInfo);
                     break;
                 case (int)PowerUpName.Pillar:
-                    UpdateTutorialTextQueue(pillarPowerUp.PowerUpInfo);
+                    UpdateTutorialTextQueue(PlayerPowerUps.GetComponentInChildren<PillarPU>().PowerUpInfo);
                     break;
                 case (int)PowerUpName.Nitro:
-                    UpdateTutorialTextQueue(nitroPowerUp.PowerUpInfo);
+                    UpdateTutorialTextQueue(PlayerPowerUps.GetComponentInChildren<NitroPU>().PowerUpInfo);
                     break;
                 case (int)PowerUpName.Glue:
-                    UpdateTutorialTextQueue(gluePowerUp.PowerUpInfo);
+                    UpdateTutorialTextQueue(PlayerPowerUps.GetComponentInChildren<GluePU>().PowerUpInfo);
                     break;
                 case (int)PowerUpName.Grease:
-                    UpdateTutorialTextQueue(greasePowerUp.PowerUpInfo);
+                    UpdateTutorialTextQueue(PlayerPowerUps.GetComponentInChildren<GreasePU>().PowerUpInfo);
                     break;
             }
         }
@@ -451,48 +394,48 @@ public class PlayerDataDisplayer : MonoBehaviour {
     private void UpdatePowerUpUI() {
         // updates bullet count text with quantity of MachineGun
         if (MachineGunCountText.activeSelf) {
-            machineGunCountTextMeshProUGUI.text = machineGunPowerUp.BulletAmount.ToString();
+            MachineGunCountText.GetComponent<TextMeshProUGUI>().text = PlayerPowerUps.GetComponentInChildren<MachineGunPU>().BulletAmount.ToString();
         }
         // updates bullet count text with quantity of Rifle
         if (RifleCountText.activeSelf) {
-            rifleCountTextMeshProUGUI.text = riflePowerUp.BulletAmount.ToString();
+            RifleCountText.GetComponent<TextMeshProUGUI>().text = PlayerPowerUps.GetComponentInChildren<RiflePU>().BulletAmount.ToString();
         }
         // update thorns timer ui
         if (ThornsTimerUI.activeSelf) {
-            thornsImage.fillAmount = 1 - thornsPowerUp.GetRunningTime() / thornsPowerUp.MaxTime;
+            ThornsTimerUI.GetComponent<Image>().fillAmount = 1 - PlayerPowerUps.GetComponentInChildren<ThornsPU>().GetRunningTime() / PlayerPowerUps.GetComponentInChildren<ThornsPU>().MaxTime;
         }
         // updates shield
         if (ShieldHUD.activeSelf) {
             //SmokeHUD.transform.GetChild(0).GetComponent<Image>().fillAmount = PlayerPowerUps.GetComponentInChildren<SmokePU>().CurSmokeAmount / PlayerPowerUps.GetComponentInChildren<SmokePU>().MaxSmokeAmount;
-            shieldImage.fillAmount = playerData.GetCurrentShield() / playerData.MaxCarShield;
+            ShieldHUD.transform.GetChild(0).GetComponent<Image>().fillAmount = RaceManager.Instance.Player.GetComponent<VehicleData>().GetCurrentShield() / RaceManager.Instance.Player.GetComponent<VehicleData>().MaxCarShield;
         }
         // update explosive mine count ui
         if (ExplosiveMineCount.activeSelf) {
-            explosiveMineCountTextMeshProUGUI.text = explosiveMinePowerUp.RemainingMines.ToString();
+            ExplosiveMineCount.GetComponent<TextMeshProUGUI>().text = PlayerPowerUps.GetComponentInChildren<ExplosiveMinePU>().RemainingMines.ToString();
         }
         // update deactivator mine count ui
         if (DeactivatorMineCount.activeSelf) {
-            deactivatorMineCountTextMeshProUGUI.text = deactivatorMinePowerUp.RemainingMines.ToString();
+            DeactivatorMineCount.GetComponent<TextMeshProUGUI>().text = PlayerPowerUps.GetComponentInChildren<DeactivatorMinePU>().RemainingMines.ToString();
         }
         // update deactivator pillar count ui
         if (PillarCount.activeSelf) {
-            pillarCountTextMeshProUGUI.text = pillarPowerUp.RemainingPillars.ToString();
+            PillarCount.GetComponent<TextMeshProUGUI>().text = PlayerPowerUps.GetComponentInChildren<PillarPU>().RemainingPillars.ToString();
         }
         // updates smoke
         if (SmokeHUD.activeSelf) {
-            smokeImage.fillAmount = smokePowerUp.CurSmokeAmount / smokePowerUp.MaxSmokeAmount;
+            SmokeHUD.transform.GetChild(0).GetComponent<Image>().fillAmount = PlayerPowerUps.GetComponentInChildren<SmokePU>().CurSmokeAmount / PlayerPowerUps.GetComponentInChildren<SmokePU>().MaxSmokeAmount;
         }
         // updates nitro
         if (NitroHUD.activeSelf) {
-            nitroImage.fillAmount = nitroPowerUp.CurNitroAmount / nitroPowerUp.MaxNitroAmount;
+            NitroHUD.transform.GetChild(0).GetComponent<Image>().fillAmount = PlayerPowerUps.GetComponentInChildren<NitroPU>().CurNitroAmount / PlayerPowerUps.GetComponentInChildren<NitroPU>().MaxNitroAmount;
         }
         // updates grease
         if (GreaseHUD.activeSelf) {
-            greaseImage.fillAmount = greasePowerUp.CurGreaseAmount / greasePowerUp.MaxGreaseAmount;
+            GreaseHUD.transform.GetChild(0).GetComponent<Image>().fillAmount = PlayerPowerUps.GetComponentInChildren<GreasePU>().CurGreaseAmount / PlayerPowerUps.GetComponentInChildren<GreasePU>().MaxGreaseAmount;
         }
         // updates glue
         if (GlueHUD.activeSelf) {
-            glueImage.fillAmount = gluePowerUp.CurGlueAmount / gluePowerUp.MaxGlueAmount;
+            GlueHUD.transform.GetChild(0).GetComponent<Image>().fillAmount = PlayerPowerUps.GetComponentInChildren<GluePU>().CurGlueAmount / PlayerPowerUps.GetComponentInChildren<GluePU>().MaxGlueAmount;
         }
     }
 }
