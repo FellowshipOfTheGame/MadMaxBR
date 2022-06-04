@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -10,25 +11,31 @@ public class Countdown : MonoBehaviour {
     public GameObject PlayerRaceTimeDisplayer;
     public AudioSource GetReadyAudio;
     public AudioSource GoAudio;
+    
+    private Text countdownText;
 
-    // Start is called before the first frame update
+    private void Awake()
+    {
+        countdownText = CountdownUI.GetComponent<Text>();
+    }
+
     void Start() {
         StartCoroutine(CountStart());
     }
     
     IEnumerator CountStart() {
         yield return new WaitForSeconds(0.5f);
-        CountdownUI.GetComponent<Text>().text = "3";
+        countdownText.text = "3";
         GetReadyAudio.Play();
         CountdownUI.SetActive(true);
         yield return new WaitForSeconds(1);
         CountdownUI.SetActive(false);
-        CountdownUI.GetComponent<Text>().text = "2";
+        countdownText.text = "2";
         GetReadyAudio.Play();
         CountdownUI.SetActive(true);
         yield return new WaitForSeconds(1);
         CountdownUI.SetActive(false);
-        CountdownUI.GetComponent<Text>().text = "1";
+        countdownText.text = "1";
         GetReadyAudio.Play();
         CountdownUI.SetActive(true);
         yield return new WaitForSeconds(1);

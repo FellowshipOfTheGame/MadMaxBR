@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,25 +8,29 @@ public class GreasePoolCollision : MonoBehaviour {
     /// Get Race Manager to access the cars colliders.
     /// </summary>
 
-    private ParticleSystem ps;
+    private ParticleSystem particleSystem;
 
     // these lists are used to contain the particles which match
     // the trigger conditions each frame.
     List<ParticleSystem.Particle> enter = new List<ParticleSystem.Particle>();
     List<ParticleSystem.Particle> inside = new List<ParticleSystem.Particle>();
 
-    public void ActivateTrigger() {
-        ps = GetComponent<ParticleSystem>();
+    private void Awake()
+    {
+        particleSystem = GetComponent<ParticleSystem>();
+    }
 
-        for (int i = 0; i < RaceManager.Instance.Racers.Count; i++) {
-            ps.trigger.AddCollider(RaceManager.Instance.Racers[i].GetComponent<BoxCollider>());
+    public void ActivateTrigger() {
+
+        for (int i = 0; i < RaceManager.Instance.RacersList.Count; i++) {
+            particleSystem.trigger.AddCollider(RaceManager.Instance.RacersList[i].RacerCollider);
         }
     }
 
     void OnParticleTrigger() {
         // get the particles which matched the trigger conditions this frame
-        int numEnter = ps.GetTriggerParticles(ParticleSystemTriggerEventType.Enter, enter, out var colliderDataEnter);
-        int numInside = ps.GetTriggerParticles(ParticleSystemTriggerEventType.Inside, inside, out var colliderDataInside);
+        int numEnter = particleSystem.GetTriggerParticles(ParticleSystemTriggerEventType.Enter, enter, out var colliderDataEnter);
+        int numInside = particleSystem.GetTriggerParticles(ParticleSystemTriggerEventType.Inside, inside, out var colliderDataInside);
 
         // iterate through the particles which entered the trigger
         for (int i = 0; i < numEnter; i++) {

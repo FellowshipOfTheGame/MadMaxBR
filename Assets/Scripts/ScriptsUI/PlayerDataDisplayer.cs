@@ -321,7 +321,7 @@ public class PlayerDataDisplayer : MonoBehaviour {
 
     private void UpdateRaceData() {
         LapCounterDisplay.GetComponent<Text>().text = "" + PlayerRaceData.GetLapCount() + "/" + RaceManager.Instance.NumberOfLaps;
-        RacePositionDisplay.GetComponent<Text>().text = "" + PlayerRaceData.GetRacePosition() + "/" + RaceManager.Instance.Racers.Count;
+        RacePositionDisplay.GetComponent<Text>().text = "" + PlayerRaceData.GetRacePosition() + "/" + RaceManager.Instance.RacersList.Count;
     }
 
     private void UpdateUIBars() {
